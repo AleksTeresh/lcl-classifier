@@ -1,0 +1,12 @@
+thesis*.pdf
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.blg
+*.aux
+*.bbl
+.DS_Store
+.vscode
+.idea
