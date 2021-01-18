@@ -1,0 +1,10 @@
+__pycache__/
+tlp_classifier.code-workspace
+t.py
+.vscode/
+.DS_Store
+*.pyc
+Graph.py
+ttt.py
+server
+output.graphml
