@@ -2,8 +2,93 @@
 \label{chapter:background}
 
 In this chapter, we introduce the necessary theoretical background as well as
-explain the reasons for why the current work is important given the lastest
+explain the reasons for why the current work is important given the latest
 developments in the theory of distributed computing.
+
+\section{Graphs}
+
+This section will outline the necessary theory background on graphs. 
+Most of the notation related graph theoretic concepts in the current
+section and in the rest of the thesis will follow that of a
+recent introductory textbook on distributed algorithms~\cite{Hirvonen2020},
+unless specified otherwise.
+
+A \emph{graph} is a pair $G = (V, E)$, where $V$ denotes the set of all \emph{vertices}
+and $E$ denotes a set of all \emph{edges}. Each edge in $E$ is represented as a set of
+2 nodes i.e. the nodes the given edge is connecting e.g. $e = \{v, u\}$ such that 
+$v \in V$ and $u \in V$.
+
+When talking about the \emph{size of a graph}, or \emph{cardinality} of the graph, we refer
+to the number of nodes in the graph. Or in other words, the size of a graph $G$
+is always $|V|$.
+
+Among other things, edges can be categorised into \emph{directed} and \emph{undirected}.
+The latter ones simply connect a pair of nodes in a graph, while the latter
+ones also contain extra information about which of the 2 connected nodes is
+a "source" and which one is a "destination". Informally, such a directed edge
+can be visualised as an error that starts in a "source" node and ends in a 
+"destination" node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
+where all edges are undirected, and \emph{directed graphs} - such graphs where  all
+edges are directed. Formally, while an undirected edge $e$ is defined as a
+set of 2 nodes $e = \{v, u\}$, a directed edge $e$ is defined as a set tuple
+of 2 nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
+elements does matter, hence, the tuple allows us to encode the direction of
+the edge. Unless mentioned otherwise, we assume that an edge is directed
+from the first element of the tuple to the second. Also note that in this
+thesis, unless specified explicitely, all graphs are assumed to be undirected.
+
+If two nodes are connected by an edge, we call such nodes \emph{neighbours}. We
+also say that such nodes are \emph{adjacent} to each other. Moreover, in an undirected graph
+if there are two edges $e_1$ and $e_2$ such that $e_1 \neq e_2$ and $e_1 \cap e_2 \neq \emptyset$
+such edges are said to be \emph{adjacent} to each other. Similarly, we can talk about adjacent 
+edges in a directed graph. In that case, two edges $e_1$ and $e_2$ are adjacent if
+$e_1 \neq e_2$ and either first or second element of tuple $e_1$ contains the same
+element as either first or second element of tuple $e_2$.
+
+Besides we often talk about edges and nodes being \emph{incident} to each other.
+In an undirected graph, an edge $e$ is incident to a node $v$ if and only if $v \in e$. In this
+case, we also say that the node $v$ is incident to the edge $e$. Similarly, in a
+directed graph, an edge $e$ is incident to a node $v$ if and only if $v$ is the
+first or the second element of the tuple $e$. Again, in the case described in the
+previous sentence, the node $v$ is said to be incident to the edge $e$.
+
+A \emph{degree} of a node $v \in V$ in a graph $G = (V, E)$ is the number of all
+edges incident to $v$. That is it is the number of edges such that for an edge
+$e$, $v \in e$ if $e$ is an undirect edge, or $v$ is the first or second element of
+tuple $e$ if $e$ is a directed edge. Moreover, for directed graphs, we often talk
+about \emph{indegrees} and \emph{outdegrees}. Indegree of a node $v$ is the number
+of edges incident to $v$ directed towards the node, while outdegree of a node $v$ is the 
+number of edges incident to $v$ directed outwards from the node. Finally, we are 
+often interested in a maximum degree of a graph $G$, that is the maximum value of
+degrees of all nodes belonging to the graph $G$. We denote such maximum degree as
+$\Delta$
+
+A \emph{walk} in an undirected graph $G = (V, E)$ is a sequence $w$ of a form
+$w = (v_0, e_1, v_1, e_2, ..., e_l, v_l)$,
+where $v_i \in V$ and $e_i \in E$, and $e_i = {v_{i-1}, v_i}$ for all $i$. A walk from some
+node $v$ to some other node $u$ is then a walk $w$ such that its first element i.e. $v_0 = v$
+and its last element i.e. $v_l = u$. Having defined a walk, we can talk about a \emph{
+connected graph}. A connected graph, when talking about undirected
+graphs, is a graph $G = (V, E)$ in which for any pair of nodes $v$ and $u$ such that
+$v \neq u$ there is a walk from $v$ to $u$.
+
+An \emph{isomorphism} between two graphs $G_1$ and $G_2$ is is a function $f$ such that $f$ is a 
+bijection, and $f$ maps a vertex of the graph $G_1$ to a vertex of the graph $G_2$, and 
+an edge between some nodes $v$ and $u$ exists in the graph $G_1$ if and only if
+an edge between nodes $f(v)$ and $f(u)$ exists in the graph $G_2$. From this,
+it is rather easy to see that if an isomorphism exists from $G_1$ to $G_2$, then
+also an isomorphism exists from $G_2$ to $G_1$. If there exists an
+isomorphism between some two graphs, we say that such graphs are isomorphic
+(to each other).
+
+* Radius-X neighbourhood
+
+* Path, cycle
+
+* Trees, Leaves, Rooted, unrooted
+
+* Homogeneous, non-Homogeneous
+
 
 \section{Distributed computing}
 
@@ -31,13 +116,15 @@ model of computation is currently known as Linial's or LOCAL model~\cite{Linial1
 
 \section{Locally Checkable Labelling problems}
 
+* Graph labelling problems
+
 As the field developed, it became clear that some classes of problems
 are of a particular intereset to the theoretical resdearch community.
 One class of such problems has been first introduced in 1993 by
 Moni Naor and Larry Stockmeyer under the name of Locally Checkable 
 Labelling (LCL) problems.~\cite{Naor1993}.
 
-// Exaplain LCLs in short here.
+// Exaplain LCLs in short here.asdasdasdasds
 
 The study of LCL problems has been one of the major research directions
 during the last 6-7 years, with numerous papers published in major
@@ -46,16 +133,15 @@ distributed computing conferences
 
 \section{Major LCL problems}
 
-MM, MIS, vertex-coloring, edge coloring.....
+MM, MIS, vertex-coloring, edge coloring, etc.
+
+\section{Misc}
+
+* log-star function
+
+* Problem Approximations
 
 \section{Recent developments in automated classification of LCL probems}
-
-
-
-
-
-\chapter{Previous work in automating distributed algorithms classification}
-
 
 
 
