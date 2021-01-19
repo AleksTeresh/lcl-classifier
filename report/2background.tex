@@ -154,8 +154,23 @@ This model of computation is currently known as Linial's or \emph{LOCAL model}~\
 
 \subsection{Model of computation}
 
+Here, we will describe the model of computation that we are going to
+assume throughout the rest of the thesis. Note that there is a number
+of different models, which are also widely studied in the research
+community.
 
-
+First, as it was already stated, unlike in the case of centralised
+computation, we are concerned with a number of interconnected computing entities
+that together form a graph. Each such an entity is referred to as a vertex or
+a node in a graph. Connections between the vertices are referred to as edges.
+The entities only can transfer information along the edges and in no other way
+between each other. Apart from senting infromation to each other, nodes can also
+do local computation based on the local information each nodes posesses. One thing
+to note that differs significantly from some of the centralised models of computation
+is that each vertex in a graph has unlimited storage and computation resources.
+Informally, this means that anything that can be computed in a centralised setting,
+can also be computed locally by a node in an arbitrarily small amount of time.
+Furthermore, the nodes in a graph act in a synchronous manner.
 
 * Synchronous model of computation
 
