@@ -121,27 +121,49 @@ still use the notion of leaves to denote nodes of degree 1.
 
 \section{Distributed computing}
 
-Distributed computing studies computation in distributed systems, which
+Now that we have introduced some of the key graph theoretic concepts, we will
+next outline some of the foundations of distributed computing. We'll start with
+a short historical node about the field of distributed computing. Then, we'll
+explain some of the aspects of the model of computation we're concerned with. Finally, 
+we'll give some formal definitions to the model of computation that will be our
+major concern throughout the rest of the thesis.
+
+\subsection{General background}
+
+The field of distributed computing studies computation in distributed systems, which
 have become ubiquitous in the modern world, being especially prevalent
-in the field technology~\cite{Attiya2004}.
+in the area of technology~\cite{Attiya2004}.
 A distributed system consists of a number of relatively independent
 computing modules, which usually need to cooperate in order to
 fulfill a computational task the system has been given. Usually,
-each computing module in such as system has only a part of the whole
-input and is required to produce only part of the whole output.
+each computing module in such a system only has a part of the whole
+input and is required to produce only a part of the whole output.
 This is in contrast with a centralised system, in which there 
-exists a all-knowing entity taking all of the input, performing all
+exists an all-knowing entity taking all of the input, performing all
 of the computation and producing the whole of a result as its output.
 Due to its modularised and parallel nature, distributed computing
 has many applications in communication, computation, the Internet,
 but also in biology and sociology~\cite{Wattenhofer2016}.
 
-The feild of distributed computing appeared already in late 1980s, with several
+The field of distributed computing appeared already in late 1980s, with several
 prominent papers exploring potentialities of computation performed
-by multiple interconnected prcessing units~\cite{Cole1986, Linial1987, Naor1991}.
+by multiple interconnected processing units~\cite{Cole1986, Linial1987, Naor1991}.
 The first major step in the field happened in 1987, when Linial formalised
-some of the principles of one variant of a distributed system. This
-model of computation is currently known as Linial's or LOCAL model~\cite{Linial1987}.
+some of the principles of one variant of a distributed system.
+This model of computation is currently known as Linial's or \emph{LOCAL model}~\cite{Linial1987}.
+
+\subsection{Model of computation}
+
+
+
+
+* Synchronous model of computation
+
+
+* LOCAL model
+
+
+
 
 \section{Locally Checkable Labelling problems}
 
