@@ -81,14 +81,43 @@ also an isomorphism exists from $G_2$ to $G_1$. If there exists an
 isomorphism between some two graphs, we say that such graphs are isomorphic
 (to each other).
 
-* Radius-X neighbourhood
+A \emph{radius-x neighbourhood} of a node $v$ in a graph $G = (V, E)$ is a set of
+all such nodes $u \in V$ that there exists a walk between $v$ and $u$ and 
+the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
+$v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
-* Path, cycle
+\subsection{Some important graph families}
 
-* Trees, Leaves, Rooted, unrooted
+This subsection will introduce some of the graph families that will be necessary
+for understanding the content of the thesis. First, we'll define paths and cycles.
+Then, we'll briefly introduce trees and explain the difference between rooted
+and unrooted trees.
 
-* Homogeneous, non-Homogeneous
+A \emph{path} graph is a sequence of nodes that are joined together by edges and
+that have the following properties:
 
+\begin{enumerate}
+  \item The whole graph is connected. That is there is a walk from any node of
+  the path to any other node of the path.
+
+  \item The graph consists of at least 2 nodes.
+
+  \item Exactly 2 nodes have a degree 1 and all the other nodes have a degree 2.
+\end{enumerate}
+
+A \emph{cycle} is a connected graph where each node has a degree 2.
+
+A \emph{tree} is an undirected acyclic connected graph. A \emph{rooted tree}
+has a single \emph{root vertex}, and thus some nodes have a \emph{parent} node
+(some because e.g. a root node never has a parent) and one or more \emph{children}
+nodes. For a node $v$, a node $u$ is its parent if and only if $v$ and $u$ are
+neighbour nodes and the shortest walk from the root to $u$ is shorter by exactly
+1 compared to the shortest walk from the root to $v$. Node $v$ is a child of node
+$u$ if and only if $u$ is a parent of node $v$. Finally, in the context of rooted trees,
+a node $l$ that has no children is referred to as a \emph{leaf} node.
+On the other hand, an \emph{unrooted tree} has no single root, and therefore notion of parent
+or child is not defined. Instead, we talk about neighbours of some node $v$. However, we 
+still use the notion of leaves to denote nodes of degree 1.
 
 \section{Distributed computing}
 
