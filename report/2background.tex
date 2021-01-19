@@ -1,16 +1,16 @@
-\chapter{Theory background}
+\chapter{Theoretical background}
 \label{chapter:background}
 
 In this chapter, we introduce the necessary theoretical background as well as
-explain the reasons for why the current work is important given the latest
+explain the reasons why the current work is important given the latest
 developments in the theory of distributed computing.
 
 \section{Graphs}
 
-This section will outline the necessary theory background on graphs. 
+This section will outline the necessary theoretical background on graphs. 
 Most of the notation related graph theoretic concepts in the current
-section and in the rest of the thesis will follow that of a
-recent introductory textbook on distributed algorithms~\cite{Hirvonen2020},
+section and in the rest of the thesis will follow that of
+a recent introductory textbook on distributed algorithms~\cite{Hirvonen2020},
 unless specified otherwise.
 
 A \emph{graph} is a pair $G = (V, E)$, where $V$ denotes the set of all \emph{vertices}
@@ -28,14 +28,14 @@ ones also contain extra information about which of the 2 connected nodes is
 a "source" and which one is a "destination". Informally, such a directed edge
 can be visualised as an error that starts in a "source" node and ends in a 
 "destination" node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
-where all edges are undirected, and \emph{directed graphs} - such graphs where  all
+where all edges are undirected, and \emph{directed graphs} - such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
 set of 2 nodes $e = \{v, u\}$, a directed edge $e$ is defined as a set tuple
 of 2 nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
 elements does matter, hence, the tuple allows us to encode the direction of
 the edge. Unless mentioned otherwise, we assume that an edge is directed
 from the first element of the tuple to the second. Also note that in this
-thesis, unless specified explicitely, all graphs are assumed to be undirected.
+thesis, unless specified explicitly, all graphs are assumed to be undirected.
 
 If two nodes are connected by an edge, we call such nodes \emph{neighbours}. We
 also say that such nodes are \emph{adjacent} to each other. Moreover, in an undirected graph
@@ -86,7 +86,7 @@ all such nodes $u \in V$ that there exists a walk between $v$ and $u$ and
 the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
-\subsection{Some important graph families}
+\subsection{Several important graph families}
 
 This subsection will introduce some of the graph families that will be necessary
 for understanding the content of the thesis. First, we'll define paths and cycles.
@@ -115,14 +115,14 @@ neighbour nodes and the shortest walk from the root to $u$ is shorter by exactly
 1 compared to the shortest walk from the root to $v$. Node $v$ is a child of node
 $u$ if and only if $u$ is a parent of node $v$. Finally, in the context of rooted trees,
 a node $l$ that has no children is referred to as a \emph{leaf} node.
-On the other hand, an \emph{unrooted tree} has no single root, and therefore notion of parent
+On the other hand, an \emph{unrooted tree} has no single root, and therefore the notion of parent
 or child is not defined. Instead, we talk about neighbours of some node $v$. However, we 
 still use the notion of leaves to denote nodes of degree 1.
 
 \section{Distributed computing}
 
 Distributed computing studies computation in distributed systems, which
-have become uniquitous in the modern world, being especially prevalent
+have become ubiquitous in the modern world, being especially prevalent
 in the field technology~\cite{Attiya2004}.
 A distributed system consists of a number of relatively independent
 computing modules, which usually need to cooperate in order to
