@@ -234,8 +234,29 @@ or undelivered. Therefore, we can always assume that messages sent and received 
 are all in accordence to the actual algorithm that is being executed by the nodes 
 and not a result of an accidental fault or an intentional adversary effort.
 
+\subsection{Distinctive qualities of LOCAL model}
 
-\subsection{LOCAL model}
+As was already mentioned previously, our model of computation is known
+as Linial's or \emph{LOCAL model}~\cite{Linial1987}. Therefore, to complete the
+description, we will describe in more detail two distinctive qualities of LOCAL model
+from other models of distributed computing, namely unique identifiers and arbitraryly large
+bandwidth.
+
+Each node in LOCAL model is provided with a unique identifier as part of initial input.
+The identifiers are usually assumed to be integer numbers between 1 and $|V|^c$, where
+$|V|$ is the number of nodes in the graph and $c$ is some constant. Unless specified, we
+assume that such a constant $c$ is not known by the nodes at the beginning of
+algorithm execution. Thus, unique identifiers are guaranteed to be positive integer
+numbers bounded by a polynomial in the number of nodes, but it is not known - by the nodes
+at the start of algorith execution - what is the largest unique identifier in the graph. Moreover,
+the identifiers of the node are not necessarily from a continuous range of integers. That is
+if an integer $x$ is used as a unique identifier for some node $v$, it is possible
+that an integer $x+1$ is not used as an identifier in the graph. This implies that at
+the beginning, nodes do not known what integers have been used for unique identifiers
+and what has not beem, with the exception of only one integer - their own identifier.
+
+
+
 
 * LOCAL model
 
