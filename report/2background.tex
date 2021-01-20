@@ -52,6 +52,10 @@ directed graph, an edge $e$ is incident to a node $v$ if and only if $v$ is the
 first or the second element of the tuple $e$. Again, in the case described in the
 previous sentence, the node $v$ is said to be incident to the edge $e$.
 
+A \emph{simple graph} is an undirected graph where no 2 nodes are connected by more
+than one edge and no edge starts and ends at the same node. In other words, there are
+no multiple edges or self-loops in a simple graph.
+
 A \emph{degree} of a node $v \in V$ in a graph $G = (V, E)$ is the number of all
 edges incident to $v$. That is it is the number of edges such that for an edge
 $e$, $v \in e$ if $e$ is an undirect edge, or $v$ is the first or second element of
@@ -160,25 +164,55 @@ of different models, which are also widely studied in the research
 community.
 
 First, as it was already stated, unlike in the case of centralised
-computation, we are concerned with a number of interconnected computing entities
+computation, we are concerned with multiple interconnected computing entities
 that together form a graph. Each such an entity is referred to as a vertex or
 a node in a graph. Connections between the vertices are referred to as edges.
 The entities only can transfer information along the edges and in no other way
-between each other. Apart from senting infromation to each other, nodes can also
-do local computation based on the local information each nodes posesses. One thing
+between each other. Unless specified otherwise, the graphs are assumed to be
+simple graphs, and all edges are assumed to be undirected. Moreover,
+communication along the edges can simultaneously happen in both direction.
+
+Apart from sending infromation to each other, nodes can also
+do local computation based on the local information each node possesses. One thing
 to note that differs significantly from some of the centralised models of computation
-is that each vertex in a graph has unlimited storage and computation resources.
-Informally, this means that anything that can be computed in a centralised setting,
+is that each vertex in a graph has arbitrarily huge, but finite, storage and computation resources.
+Informally, this means that anything that can be computed in a centralised setting
+in a finite amount of time,
 can also be computed locally by a node in an arbitrarily small amount of time.
-Furthermore, the nodes in a graph act in a synchronous manner.
+It is also worth noticing that in the model of computation described here,
+every node of a graph executed the same algorithm. Nevertheless, the
+algorithm might lead to different commands being executed by different nodes
+if, for example, nodes' unique identifiers or initial local inputs are different.
+Besides, behaviour might also differ if two nodes have somewhat different neighbourhoods
+around themselves and therefore will receive potentially different
+information during their communication rounds.
 
-* Synchronous model of computation
+Furthermore, computation in a graph happens in synchronous rounds. That implies,
+for example, that round $x+1$ is not started by any of the nodes before all of the
+nodes have completed round $x$. Moreover, each round is divided into three stages:
+sending some information to some (or all) of its neighbours, receiving information
+from some (or all) of its neighbours, and performing some local computaiton based
+on the information that has been stored by a node locally before and the information
+received during the current round from its neighbours. Each of these stages is also executed
+completely synchronously by all nodes in a graph, meaning that e.g. no node starts processing
+any of its data, before all other nodes have received data from their neighbours.
 
+Another important thing that has to be mentioned when describing the mode of computation
+is that all of the operations withing each individual node as well as inter-vertex
+communication is absolutely error-free. In other words, all nodes can be assumed to
+always act in a fault-free manner, all sent messages can be assumed to never be lost
+or undelivered. Therefore, we can always assume that messages sent and received by nodes
+are all in accordence to the actual algorithm that is being executed by the nodes 
+and not a result of an accidental fault or an intentional adversary effort.
+
+\subsection{LOCAL model}
 
 * LOCAL model
 
 
+\subsection{Randomised algorithms}
 
+* intro to a randomised model
 
 \section{Locally Checkable Labelling problems}
 
@@ -206,6 +240,8 @@ MM, MIS, vertex-coloring, edge coloring, etc.
 * log-star function
 
 * Problem Approximations
+
+
 
 \section{Recent developments in automated classification of LCL probems}
 
@@ -426,6 +462,22 @@ source that refers to the original source. Note also that the
 reference marking is never used as sentence element (example of how 
 \textbf{not} to do it: \emph{ describes
 an optimal algorithm for indexing multiversiond databases.}).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
