@@ -29,13 +29,6 @@ class GenericProblem(NamedTuple):
   isTree: bool
   isRooted: bool
 
-  constrainedDegrees: Set[int]
-
   isBipartite: bool
-  rootDegree: int
-  degree1: int
-  degree2: int
-  
-
-
+  isRegular: bool
   

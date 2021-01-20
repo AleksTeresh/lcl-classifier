@@ -9,11 +9,8 @@ REtorProblem = GenericProblem(
   {}, True,
   False, False, False,
   True, False,
-  {4},
   True,
-  4,
-  4,
-  4
+  True
 )
  
 # AB CC BC
@@ -25,11 +22,8 @@ tlpProblem = GenericProblem(
   {}, True,
   False, False, False,
   True, False,
-  {2, 3},
   True,
-  0,
-  2,
-  3
+  True
 )
 
 # "111",
@@ -44,11 +38,8 @@ binaryRootedTreeProblem = GenericProblem(
   {}, True,
   False, False, False,
   True, True,
-  {3, 2},
   True,
-  0,
-  3,
-  2
+  True
 )
 
 
@@ -62,11 +53,8 @@ cyclePathTreeProblem = GenericProblem(
   {}, True,
   False, False, False,
   True, True,
-  {5, 2},
   True,
-  0,
-  5,
-  2
+  True
 )
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
@@ -79,11 +67,8 @@ cyclePathProblem = GenericProblem(
   {'B'}, False, # root constraint = start-constr
   False, True, True,
   False, False,
-  {1, 2},
   False,
-  0,
-  1,
-  2
+  True
 )
 
 # -undir -n "{ 11, 22, 33 }" -e "{ 12, 21, 13, 31, 23, 32 }"
@@ -95,11 +80,8 @@ cyclePathProblem = GenericProblem(
   {}, True, # root constraint = start-constr
   True, False, False,
   False, False,
-  {2},
   False,
-  0,
-  2,
-  2
+  True
 )
 
 
