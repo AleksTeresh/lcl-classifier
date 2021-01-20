@@ -185,17 +185,46 @@ algorithm might lead to different commands being executed by different nodes
 if, for example, nodes' unique identifiers or initial local inputs are different.
 Besides, behaviour might also differ if two nodes have somewhat different neighbourhoods
 around themselves and therefore will receive potentially different
-information during their communication rounds.
+information during their communication rounds. Finally, at the beginning of
+execution, each node knows only its own input (including its own unique identifier
+if such has been provided as part of the input) and its own degree i.e. the number of
+its neighbour nodes in the graph.
 
 Furthermore, computation in a graph happens in synchronous rounds. That implies,
 for example, that round $x+1$ is not started by any of the nodes before all of the
 nodes have completed round $x$. Moreover, each round is divided into three stages:
-sending some information to some (or all) of its neighbours, receiving information
-from some (or all) of its neighbours, and performing some local computaiton based
+
+\begin{enumerate}
+\item Sending some information to some (or all) of its neighbours
+
+\item Receiving information
+from some (or all) of its neighbours
+
+\item Performing some local computaiton based
 on the information that has been stored by a node locally before and the information
-received during the current round from its neighbours. Each of these stages is also executed
+received during the current round from its neighbours
+
+\item Updating its local state i.e. replacing and adding data in its own local storage
+\end{enumerate}
+
+Each of these stages is also executed
 completely synchronously by all nodes in a graph, meaning that e.g. no node starts processing
-any of its data, before all other nodes have received data from their neighbours.
+any of its data, before all other nodes have received data from their neighbours. The computation
+of a graph is said to be finished when all of the nodes have outputted their final states
+and halted. More formally, this means that there are a set of node states that are
+considered as "halting states". Whenever a node switches its internal state to one of the 
+halting state, it does not perform any of the actions from that point in time, or - to
+be even more formal - it does not send any messages to its neighbours, ignores all of the 
+messages sent to it and does not update its internal state in all of the subsequent rounds.
+Similar to the requirement that local computation of each node on each round has to be finite
+and needs to stop after a finite amount of time passed, all nodes are required to eventually
+transition into one of the halting states. That is a valid distributed algorithm - in our model of
+computing - cannot continue for an infinite number of rounds. Finally,
+the complexity of a distributed algorithm is measured as number of such synchronous rounds
+of computation before the algorithm ends i.e. before all nodes transition into one of 
+the halting states. Notice that different from a centralised model of computation,
+algorithms complexity (or in other words its running time) is not affected by the
+amount of local computation on a single node.
 
 Another important thing that has to be mentioned when describing the mode of computation
 is that all of the operations withing each individual node as well as inter-vertex
@@ -204,6 +233,7 @@ always act in a fault-free manner, all sent messages can be assumed to never be 
 or undelivered. Therefore, we can always assume that messages sent and received by nodes
 are all in accordence to the actual algorithm that is being executed by the nodes 
 and not a result of an accidental fault or an intentional adversary effort.
+
 
 \subsection{LOCAL model}
 
