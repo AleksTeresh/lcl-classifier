@@ -287,7 +287,10 @@ all information that was initailly available in its radius-$x$ neighbourhood.
 Therefore, when considering LOCAl model,
 time and space are in certain sense equivalent. In other words, the number of rounds
 needed to solve a certain problem is always equal to the distance (or radius) to which a node needs to
-see to solve a certain problem.
+see to solve a certain problem. One technicality to note here is that because all nodes have
+unique identifiers, and these identifiers are sent together with the rest of data,
+receiving nodes can differentiate what nodes the received data belongs to, and consequently,
+reconstruct the structure of the neighbourhood in the graph.
 
 As a consequence of the above,
 we can observe that after $diam(G)$ rounds, node $v$ will have all the information there is in the 
@@ -297,9 +300,6 @@ graph have collected all the information there is in the graph and thus can just
 computation locally. And because local computation in LOCAL model is virtually free,
 anytihng that could be computed in a centralised setting will be computed locally by each
 node individually. On the next round, each node can output their part of the solution.
-
-
-* how unique identifiers help when computinng everything in a LOCAL model
 
 \subsection{Randomised algorithms}
 
