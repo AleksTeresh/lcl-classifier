@@ -90,7 +90,12 @@ all such nodes $u \in V$ that there exists a walk between $v$ and $u$ and
 the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
-* diameter G == diam(G)
+A diameter of a graph (denoted as $diam(G)$) is the length of the longest walk
+in a list $W$, where $W$ is a list of the shortest walks - one between each pair of nodes
+$v$ and $u$ in a graph $G = (V, E)$ such that $v \in V$ and $u \in V$. If a graph
+$G$ is nont connected and therefore there is a pair of nodes $v$ and $u$ that do not
+have a walk between them, we say that a diameter of such a graph $G$ is infinity. That
+is $diam(G) = \inf$.
 
 \subsection{Several important graph families}
 
@@ -294,7 +299,7 @@ anytihng that could be computed in a centralised setting will be computed locall
 node individually. On the next round, each node can output their part of the solution.
 
 
-* how uinque identifiers help when computinng everything in a LOCAL model
+* how unique identifiers help when computinng everything in a LOCAL model
 
 \subsection{Randomised algorithms}
 
