@@ -3,7 +3,8 @@
 
 In this chapter, we introduce the necessary theoretical background as well as
 explain the reasons why the current work is important given the latest
-developments in the theory of distributed computing.
+developments in the theory of distributed computing. Unless specified otherwise,
+the material presented in this chapter is based on Hirvonen 2020~\cite{Hirvonen2020}.
 
 \section{Graphs}
 
@@ -239,7 +240,7 @@ communication is absolutely error-free. In other words, all nodes can be assumed
 always act in a fault-free manner, all sent messages can be assumed to never be lost
 or undelivered. Therefore, we can always assume that messages sent and received by nodes
 are all in accordence to the actual algorithm that is being executed by the nodes 
-and not a result of an accidental fault or an intentional adversary effort.
+and not a result of an accidental fault or an intentional adversary effort
 
 \subsection{Distinctive qualities of LOCAL model}
 
@@ -301,9 +302,49 @@ computation locally. And because local computation in LOCAL model is virtually f
 anytihng that could be computed in a centralised setting will be computed locally by each
 node individually. On the next round, each node can output their part of the solution.
 
+\subsection{Formalising LOCAL model}
+
+In this subsection we will formalise LOCAl model that we informally described above.
+This will, first of all, help to clarify the aspects of the model that are still left ambiguous
+after reading the previous subsections. Besides, it will allow us to introduce
+a randomised model below once the basic deterministic one is unambiguously defined.
+
+An algorithm being executed by each node consists of 
+three functions. One for local state initialization that is executed only once, after
+a node $v$ has received its initial local inputs $u(v)$ but before the first round
+
+$$init_A(u(v), d)$$
+where $A$ is a given distributed algorithm and $d$ is the degree of the node $v$.
+The function return an initial local state of the node $v$.
+
+The second function takes as an input an internal state $x(v)$ of a node $v$
+and returns a tuple of size $d$, where $d$ is a degree of node $v$. The
+tuple contains messages that are to be sent to $d$ neighbours of the node $v$
+during the current round.
+
+$$send_A(x(v), d)$$
+
+The third function takes as an input a local internal state $x(v)$ of a node
+$v$, and a tuple $m(v)$ of size $d$ that contains messages received from $d$ neighbours
+of the node $v$.
+
+$$receive_A(x(v), m(v), d)$$
+The function returns a new local internal state of the node $v$, which becomes a
+starting internal state $x(v)$ in the next round.
+
 \subsection{Randomised algorithms}
 
-* intro to a randomised model
+This subsection will introduce a randomised distributed model of computation
+and highlight some of the difference between randomised and deterministic
+models. In this section, the focus will be specifically on randomised LOCAL
+model as opposed to some other distributed algorithms models.
+
+
+
+* Intro to a randomised LOCAL model
+
+
+* With high probability, and what it means to solve a problem in a probabilistic model
 
 \section{Locally Checkable Labelling problems}
 
@@ -329,6 +370,8 @@ distributed computing conferences
 \section{Major LCL problems}
 
 MM, MIS, vertex-coloring, edge coloring, etc.
+
+
 
 
 
