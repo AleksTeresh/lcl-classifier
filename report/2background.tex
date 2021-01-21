@@ -90,6 +90,8 @@ all such nodes $u \in V$ that there exists a walk between $v$ and $u$ and
 the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
+* diameter G == diam(G)
+
 \subsection{Several important graph families}
 
 This subsection will introduce some of the graph families that will be necessary
@@ -239,7 +241,7 @@ and not a result of an accidental fault or an intentional adversary effort.
 As was already mentioned previously, our model of computation is known
 as Linial's or \emph{LOCAL model}~\cite{Linial1987}. Therefore, to complete the
 description, we will describe in more detail two distinctive qualities of LOCAL model
-from other models of distributed computing, namely unique identifiers and arbitraryly large
+from other models of distributed computing, namely unique identifiers and arbitrarily large
 bandwidth.
 
 Each node in LOCAL model is provided with a unique identifier as part of initial input.
@@ -249,17 +251,50 @@ assume that such a constant $c$ is not known by the nodes at the beginning of
 algorithm execution. Thus, unique identifiers are guaranteed to be positive integer
 numbers bounded by a polynomial in the number of nodes, but it is not known - by the nodes
 at the start of algorith execution - what is the largest unique identifier in the graph. Moreover,
-the identifiers of the node are not necessarily from a continuous range of integers. That is
+the identifiers of the node do not necessarily form a continuous range of integers. That is
 if an integer $x$ is used as a unique identifier for some node $v$, it is possible
 that an integer $x+1$ is not used as an identifier in the graph. This implies that at
 the beginning, nodes do not known what integers have been used for unique identifiers
-and what has not beem, with the exception of only one integer - their own identifier.
+and what have not been, with the exception of only one integer - their own identifier.
+
+Another characteristic of LOCAL model, which also was already mentioned before, is the fact
+that nodes can send (and receive) an arbitrarily large (but nevertheless finite)
+amount of bytes of information over a single edge during one round. This fact,
+combined with the existence of unique identifiers, renders the model as a rather strong one.
+In particular, this implies that a node can send all of its information - no matter how
+large it is - to all its neighbours in just one round.
+
+This, in turn, implies a rather
+curious property. Imagine that every node sends all of its information during the first round,
+and having received some data from its neighbours, saves all this information locally. Consider
+some node $v$ in the middle of a graph $G = (V, E)$. Since all nodes send all its data,
+after the first round, node $v$
+will have all the data that all its neighbours had initially, plus its own initial information.
+Notice that each of $v$'s neighbours now have all the information of their neighbours. Thus,
+if we combine all the data in posession of $v$ and $v$'s neighbours after the first round, it
+is easy to observe that they together have all the information of $v$'s radius-2 neighbourhood.
+But this means that after the second round, when all $v$'s neighbours have sent all their
+information to $v$, $v$ alone posessses all the data that its radius-2 neighbourhood had at the
+beginning of the algorithm execution. Similarly, after the 3rd round, $v$ will have all the
+radius-3 neighbourhood's data, and so on.
+In general, after round $x$, node $v$ will have
+all information that was initailly available in its radius-$x$ neighbourhood.
+Therefore, when considering LOCAl model,
+time and space are in certain sense equivalent. In other words, the number of rounds
+needed to solve a certain problem is always equal to the distance (or radius) to which a node needs to
+see to solve a certain problem.
+
+As a consequence of the above,
+we can observe that after $diam(G)$ rounds, node $v$ will have all the information there is in the 
+graph $G$. This implies that after $diam(G)$ rounds, in LOCAL model, we can solve anything that can
+be solved in a centralised setting. That is because at the end of $diam(G)$'th round, each node in the
+graph have collected all the information there is in the graph and thus can just run the
+computation locally. And because local computation in LOCAL model is virtually free,
+anytihng that could be computed in a centralised setting will be computed locally by each
+node individually. On the next round, each node can output their part of the solution.
 
 
-
-
-* LOCAL model
-
+* how uinque identifiers help when computinng everything in a LOCAL model
 
 \subsection{Randomised algorithms}
 
@@ -282,15 +317,13 @@ during the last 6-7 years, with numerous papers published in major
 distributed computing conferences
 ~\cite{Balliu2016, Chang2016, Brandt2017, Chang2017, Fischer2017a, Rozhon2019, Balliu2020-1, Balliu2020-2}.
 
-\section{Major LCL problems}
-
-MM, MIS, vertex-coloring, edge coloring, etc.
-
 \section{Misc}
 
 * log-star function
 
-* Problem Approximations
+\section{Major LCL problems}
+
+MM, MIS, vertex-coloring, edge coloring, etc.
 
 
 
