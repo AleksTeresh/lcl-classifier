@@ -350,7 +350,48 @@ discrete probability distribution. Everything else in the model remains exactly
 as it is in the deterministic case, that is no changes are made to the $send_A(x(v), d)$
 function.
 
-* With high probability, and what it means to solve a problem in a probabilistic model
+Since probabilities are involved when in randomised setting, it might not be
+drectly obvious what it means to "solve" a problem. The major problem is that
+since states of the nodes are chosen from a discrete probability distribution,
+there is always a probability that the output of the nodes will not be valid.
+Therefore, there is often a probability that the problem has not been solved
+after a certain number of rounds.
+
+But before we define what it means to solve a problem in a randomised setting, it's
+worth noting that there exist two kinds of randomised algorithms: "Monte Carlo" and
+"Las Vegas". \emph{Monte Carlo} algorithms always stop after a specified $f(n)$
+number of rounds, where $n$ is the number of nodes in the graph, but
+it is not guaranteed that the output will a valid one. Monte Carlo algorithm
+only guarantee their execution time, and succeed only with probability $p$.
+\emph{Las Vegas} algorithms, on the other hand, always produce a correct output,
+once all the nodes in a graph have stopped, but the algorithm will stop after a
+specified $f(n)$ number of rounds only with some probability $p$. Thus, in some
+way, these types of randomised algorithms are complements of each other:
+one guarantees correctness of the output but has a chance of going over some
+specified execution time, while another has a guarantee on the execution time
+but has some probability of producing incorrect output. In the rest of the thesis,
+unless explicitely specified otherwise, we assume that the randomised algorithms
+are Monte Carlo algorithms.
+
+Finally, we now can define what it means to solve a problem in a randomised context.
+When saying that a certain randomised algorithm "solves" a cerrtain problem in
+$T(n)$ rounds, unless specified otherwise, we mean that the algorithm stops after
+$T(n)$ computational rounds and the nodes output (or to be more precise the nodes
+have transitioned to one of the output states) a correct solution "with high
+probability" (often denoted as "w.h.p."). Formally, if an algorithm succeeds with
+high probability, it means that the algorithm succeds with probability of at least
+$1 - 1 / n^c$, where $n$ is a number of nodes in a graph and $c$ is some constant
+such that $c > 0$. Moreover, $c$ is a constant that can be freely chosen when 
+running the algorithm. To give a simple example, algorithm's running time may
+linearly depend on such a constant $c$, then before an algorithm is executed,
+one may freely choose the constant so that the larger the constant the longer is
+the running time, but also the lower the chance that the produced output will
+be incorrect. Notice that $c$ does not need to affect running time, but it often
+does since the larger it is the lower is the probability of algorithm's failure,
+and decreasing such probability usually comes at the cost of something else - 
+often running time. Thus, when saying that something succeeds "with high probability"
+we not mean it vaguely but rather refer to a very precise mathematical definition 
+given above.
 
 \section{Iterated logarithm}
 
