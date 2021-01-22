@@ -339,10 +339,16 @@ and highlight some of the difference between randomised and deterministic
 models. In this section, the focus will be specifically on randomised LOCAL
 model as opposed to some other distributed algorithms models.
 
-
-
-* Intro to a randomised LOCAL model
-
+In a randomised LOCAL model, we have two major differences from the
+deterministic LOCAL model. First, the function $init_A(u(v), d)$ becomes
+randomised. This means that the initial state $x_0(v) = init_A(u(v), d)$ of a node $v$ is
+chosen from a discrete probability distribution of all possible initial states.
+Second, the function $receive_A(x(v), m(v), d)$ becomes randomised. This means that,
+after all messages have been sent and received for round $i$, a new local internal
+state $x_i(v) = receive_A(x(v), m(v), d)$ for a node $v$ is selected from a
+discrete probability distribution. Everything else in the model remains exactly
+as it is in the deterministic case, that is no changes are made to the $send_A(x(v), d)$
+function.
 
 * With high probability, and what it means to solve a problem in a probabilistic model
 
