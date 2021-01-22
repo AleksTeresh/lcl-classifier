@@ -352,6 +352,29 @@ function.
 
 * With high probability, and what it means to solve a problem in a probabilistic model
 
+\section{Iterated logarithm}
+
+This section will introduce the iterated logarithm function. The function is
+one of the most common complexity results of distributed algorithms and will
+appear often in the rest of the document.
+
+The interated logarithm function, denoted as $log^*(x)$ is defined as follows:
+
+\[
+    \log^*(x) = \begin{cases}
+        0 & \text{ if $x \le 1$}, \\
+        1 + \log^*(\log_2 x) & \text{ otherwise}.
+    \end{cases}
+\]
+The function is notable for the fact that it grows extremely slow. For example,
+
+$$log^*(1) = 0$$
+$$log^*(2) = 1$$
+$$log^*(4) = 2$$
+$$log^*(16) = 3$$
+$$log^*(65536) = 4$$
+$$log^*(2^{65536}) = 5$$
+
 \section{Locally Checkable Labelling problems}
 
 * Graph labelling problems
@@ -369,9 +392,6 @@ during the last 6-7 years, with numerous papers published in major
 distributed computing conferences
 ~\cite{Balliu2016, Chang2016, Brandt2017, Chang2017, Fischer2017a, Rozhon2019, Balliu2020-1, Balliu2020-2}.
 
-\section{Misc}
-
-* log-star function
 
 \section{Major LCL problems}
 
