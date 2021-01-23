@@ -418,30 +418,52 @@ $$log^*(2^{65536}) = 5$$
 
 \section{Locally Checkable Labelling problems}
 
-This section will introduce loaclly verifiable problems and in
-particular locally checkable labelling problems (later referred to as
+This section will introduce locally checkable labelling problems (from now on referred to as
 LCLs), which are the main focus of this thesis. The section will start with
 a short historical note and then provide a formal definition of
 LCL problems.
 
-But before introducing locally checkable labelling problems, we will
-explain what graph labelling problems are in general.
-
-* Graph labelling problems
-
-As the field developed, it became clear that some classes of problems
-are of a particular intereset to the theoretical resdearch community.
+As the field of distributed algorithms started to develop, it became clear
+that some classes of problems
+are of a particular interest to the theoretical research community.
 One class of such problems has been first introduced in 1993 by
 Moni Naor and Larry Stockmeyer under the name of Locally Checkable 
-Labelling (LCL) problems.~\cite{Naor1993}.
+Labelling (LCL) problems~\cite{Naor1993}.
 
-// Exaplain LCLs in short here.asdasdasdasds
+In short, an LCL problem is a distributed problem that satisfies the 
+following criteria~\cite{Naor1993, Suomela2020}.
+
+\begin{itemize}
+
+\item the maximum degree of a graph is a finite number that does not depend on $n$
+
+\item there is a finite number of input labels and the number is not dependent on $n$
+
+\item there is a finite number of output labels and the number does not depend on $n$
+
+\item the correctness of a solution can be checked locally by each individual node. That is
+after a solution is produced and all the nodes in the graph have stopped, each node can just
+check a radius-$O(1)$ neighbourhood around itself. The solution is valid if and only if each of
+the individual neighbourhoods for all the nodes are valid.
+
+\end{itemize}
+In the list above, $n$ is the number of nodes in the graph. Finnally, as is easy to see from the definition of LCL
+probles
+above, there is always a finite representation of any LCL problem. Indeed, one can simply list
+all valid local neighbourhoods, list all valid input labels, list all valid output
+labels and specify the maximum degree of a graph. Since all of the beforementioned are
+of size $O(1)$, it is always possible to have a finite representaion of an LCL.
+In practive however, it is in many cases more practical to come up with
+a moe concise representation. We will return to the topic of representing LCL
+problems later in this thesis.
 
 The study of LCL problems has been one of the major research directions
 during the last 6-7 years, with numerous papers published in major
 distributed computing conferences
 ~\cite{Balliu2016, Chang2016, Brandt2017, Chang2017, Fischer2017a, Rozhon2019, Balliu2020-1, Balliu2020-2}.
-
+Currently, the study of LCL problems has reached the stage of maturity with,
+for example, the complexity landscape of LCL problems understood
+almost entirely ~\cite{Suomela2020, Chang2020a}.
 
 \section{Major LCL problems}
 
