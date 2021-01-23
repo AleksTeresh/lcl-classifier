@@ -503,11 +503,28 @@ output of 2 nodes, such coloring has to be consistent for each edge i.e. the pro
 colors need to be the same on both ends of each edge.
 \end{enumerate}
 
-* MM, MIS
+An \textbf{independent set} is a problem in which some subset of vertices in a graph
+join a set $I$ and some do not. The restriction is that no pair of vertices in the set $I$
+can be adjacent nodes. A \textbf{maximal independent set} is a restriction of the
+problem in which in addition to what has been stated above, there is an additional
+maximality restriction. Maximality restriction forbids cases where a node $v$
+is not in the set $I$ but also does not have any adjacent nodes in the set $I$.
+In other words, in \textbf{maximal independent set} all nodes either belong
+to the set $I$ or they \emph{cannot} join becuase one of their neighbours has
+already joined. It is trivial to see that the problem is an LCL as checking local
+eighbourhood will suffice to determine if the solution is valid or not.
+
+Finally, a \textbf{maximal matching} is a problem in which nodes need to
+produce a matching such that each node is either matched with one of 
+its neighbours or it cannot be matched because all of its neighbours are
+matched. That is no node can be left unmatched while at least one of its
+neighbours is unmatched. It is trivial to see that the problem is an LCL
+since each node can check its radius-1 neighbourhood to check whether it
+is matched with a neighbour or all neighbours are matched with someone else.
+And if the condition of the previous sentence is not satisfied, the output
+is invalid.
 
 \section{Recent developments in automated classification of LCL probems}
-
-
 
 
 
