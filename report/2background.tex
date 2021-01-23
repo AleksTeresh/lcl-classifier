@@ -467,11 +467,43 @@ almost entirely ~\cite{Suomela2020, Chang2020a}.
 
 \section{Major LCL problems}
 
-MM, MIS, vertex-coloring, edge coloring, etc.
+This section will introduce some of the common LCL problems
+widely studied in distributed algorithms research community.
+Note that all of the problems also exist in the context of 
+centralised computing.
 
+\textbf{Vertex coloring} is perhaps one of the most well-known
+problems on graphs. Informally, the goal is to color a graph
+in such a way that no two adjacent nodes are colored with the
+same colors. It is also easy to see tshat the problem is an
+LCL problem because it is sufficient and necessary for each node to check
+its radius-1 neighbourhood. If each node's radius-1 neighbourhood is
+a valid one i.e. none of the neighbours of node $v$ have the same color as $v$
+itself, then and only then the output is a valid vertex colorings
 
+Another well-known and widely studied problem on graphs is
+\textbf{edge coloring}. Informally, each edge needs to be
+colored in such a way that no two adjacent edges are of the same
+color. Coloring edges in a graph can still be simulated
+with the setting in which only nodes output the labels.
+Each node will output a tuple of the size equal to the node's
+degree. Each element of a tuple represents a label
+that the node outputs on a coresponding edge. The problem
+is also an LCL problem, because after a final output is
+produced, each node $v$ will need to check its radius-1
+neighbourhood to make sure 2 things are in order:
+\begin{enumerate}
+  \item All edges incident to $v$ have to be of different color.
+That is no two elements of node $v$'s output tuple should be the same.
 
+  \item For each edge incident to $v$, a color that node $v$ colored some incident
+edge $e$, should be the same as the color that node $u$ colored the edge $e$ with.
+Here $e = \{v, u\}$. In other words, because each edge's coloring depends on
+output of 2 nodes, such coloring has to be consistent for each edge i.e. the produced
+colors need to be the same on both ends of each edge.
+\end{enumerate}
 
+* MM, MIS
 
 \section{Recent developments in automated classification of LCL probems}
 
