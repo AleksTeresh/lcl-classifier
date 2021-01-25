@@ -1,4 +1,4 @@
-from typing import NamedTuple, Set
+from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue
 from functools import reduce
 
@@ -36,10 +36,10 @@ class GenericProblem:
 
   def  __init__(
     self,
-    activeConstraints: Set[str],
-    passiveConstraints: Set[str],
-    leafConstraints: Set[str] = {},
-    rootConstraints: Set[str] = {},
+    activeConstraints: List[str],
+    passiveConstraints: List[str],
+    leafConstraints: List[str] = [],
+    rootConstraints: List[str] = [],
     activeAllowAll: bool = False,
     passiveAllowAll: bool = False,
     leafAllowAll: bool = True,

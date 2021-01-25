@@ -5,13 +5,13 @@ def splitConfig(config):
 
 def validLabelsFromEdge(edgeConfig):
   halfBracketSplit = edgeConfig.split('(')
+  halfBracketSplit = [halfBracketSplit[0]] + ['(' + x for x in halfBracketSplit[1:]]
   halfBracketSplit = [x for x in halfBracketSplit if len(x) > 0]
-  # halfBracketSplit = ['(' + x for x in halfBracketSplit]
-
+  
   fullBracketSplit = flatMap(lambda x: [y for y in x.split(')') if len(y) > 0], halfBracketSplit)
-  # fullBracketSplit = [x + ')' for x in fullBracketSplit]
+  fullBracketSplit = [(x + ')') if x[0] == '(' else x for x in fullBracketSplit]
 
-  return fullBracketSplit
+  return flatMap(lambda x: [x] if x[0] == '(' else list(x), fullBracketSplit)
 
 def parseConfig(config):
   perEdge = splitConfig(config)
