@@ -526,6 +526,55 @@ is invalid.
 
 \section{Recent developments in automated classification of LCL probems}
 
+At this point that the theoretical background has been given, it is
+useful to give a background to much more recent developments in the
+distributed algorithms research. As the branch of research
+studying LCL problems had been reaching maturity, many focused
+on the idea of autmated classification of LCL problems. That is
+the question of interest is whether we can create meta-algorithms
+that would take a description of an LCL problem as its input
+and produce the problems round complexity as an output.
+This being the core topic of the thesis, it is thus important
+to describe all the prior work done in this direction.
+In the rest of the
+section, we will introduce some of the negative as well as positive results
+related to automated classification of LCL problems.
+
+The questions of whether a certain class of LCL problems
+can be automatically classified are often referred to
+as decidability question. Roughly speaking, a problem is
+said to be decidable if there exists an algorithm that,
+given the problem, will output its complexity. Such decidability
+questions are often studied in relation to the whole
+family of graph problems and not to individual instances
+of a problem.
+
+First of all, it is important to notice that it has been
+proven that in general LCL problems are undecidable.
+In fact, already in the cases when the graph family is a grid,
+LCL problems cannot be automatically classified~\cite{Brandt2017, Naor1993}.
+
+Nevertheless, many interesting LCL problems are still decidable.
+For example, it was known for several years now that LCLs
+on paths and cycles are decidable~\cite{Balliu2018, Brandt2017, Naor1993}.
+Besides, certain types of LCL problems are also decidable on
+trees~\cite{Chang2017}.
+
+But the fact the a problem is decidable in theory does not
+always imply that it is possible in practice to
+construct an algorith for automatic classification of
+such problems. For instance, it is known that even in
+the case of paths and cycles, if a node labelling is
+given as part of the input, decidability becomes
+PSPACE hard~\cite{Balliu2018}.
+
+However, not everything looks that gloomy, and many
+interesting and sufficiently broad family of LCL
+problems are both decidable and possible to
+automatically classify in practice. 
+
+
+
 
 
 \section{Language and Structure}
