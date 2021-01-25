@@ -1,13 +1,19 @@
 import sys, getopt
 from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
-from cyclepath_classifier import classify, Problem as CyclePathProblem
+from parser import parseConfigs
 
-REtorProblem = GenericProblem(
+REtorProblem1 = GenericProblem(
   activeConstraints = {'M U U U', 'P P P P'},
   passiveConstraints = {'M UP UP UP', 'U U U U'}
 )
 
-print(REtorProblem.activeConstraints)
+REtorProblem2 = GenericProblem(
+  activeConstraints = {'M(W->B) (W->B)(B->W)MP (W->B)(B->W)'},
+  passiveConstraints = {'(B->W) (W->B)(B->W) (W->B)(B->W)'}
+)
+
+print(parseConfigs(REtorProblem1.activeConstraints))
+print(parseConfigs(REtorProblem2.activeConstraints))
  
 # AB CC BC
 # AAA AAB AAC BCC ACC
@@ -25,9 +31,8 @@ binaryRootedTreeProblem = GenericProblem(
   {'A a a', 'B a a', 'C a a', 'C a b'},
   {'A a', 'B b', 'C c'},
   isTree =True, isRooted = True,
-  isBipartite = True, isRegular = True
+  isRegular = True
 )
-
 
 # 3-coloring on a rooted trees (degree not known i.e. not just binary)
 # 12, 13, 23, 21, 31, 32 in automata-theoretic formalism
@@ -36,7 +41,7 @@ cyclePathTreeProblem = GenericProblem(
   {'A a a a a', 'B b b b b', 'C c c c c'},
   {'A b', 'A c', 'B c', 'B a', 'C a', 'C b'} ,
   isTree =True, isRooted = True,
-  isBipartite = True, isRegular = True
+  isRegular = False
 )
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
@@ -59,3 +64,5 @@ cyclePathProblem = GenericProblem(
   isCycle = True, isPath = False, isDirected = False,
   isTree = False
 )
+
+

@@ -1,4 +1,6 @@
 from typing import NamedTuple, Set
+from util import onlyOneIsTrue
+from functools import reduce
 
 class BinaryRootedTreeProblem:
   allowedConfigs: Set[str]
@@ -10,6 +12,28 @@ class TlpProblem:
   black_degree: int
 
 class GenericProblem:
+  def __checkDegrees(self, configs):
+    if len(configs) == 0:
+      return configs
+      
+    degree = len(list(configs)[0].split(' '))
+    isSameDegree = reduce(lambda acc, x: acc and len(x.split(' ')) == degree, configs, True)
+    return isSameDegree
+
+  def __checkParams(self):
+    if not self.__checkDegrees(self.activeConstraints):
+      raise Exception('degree', 'The configurations should be of the same degree', self.activeConstraints)
+
+    if not self.__checkDegrees(self.passiveConstraints):
+      raise Exception('degree', 'The configurations should be of the same degree', self.passiveConstraints)
+
+    if not onlyOneIsTrue(self.isTree, self.isCycle, self.isPath):
+      raise Exception('graph family', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
+
+    if self.isPath and not self.isDirected and (
+      self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
+      raise Exception('invalid parameters', 'Leaf and root constraints must be the same on undirected paths') 
+
   def  __init__(
     self,
     activeConstraints: Set[str],
@@ -25,7 +49,7 @@ class GenericProblem:
     isPath: bool = False,
     isDirected: bool = False,
     isRooted: bool = False,
-    isBipartite: bool = True,
+    # isBipartite: bool = True,
     isRegular: bool = True,
   ):
     self.activeConstraints = activeConstraints
@@ -47,6 +71,8 @@ class GenericProblem:
     self.isTree = isTree
     self.isRooted = isRooted
 
-    self.isBipartite = isBipartite
+    # self.isBipartite = isBipartite
     self.isRegular = isRegular
+
+    self.__checkParams()
   
