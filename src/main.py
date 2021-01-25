@@ -1,29 +1,19 @@
 import sys, getopt
-from .problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
+from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
 from cyclepath_classifier import classify, Problem as CyclePathProblem
 
 REtorProblem = GenericProblem(
-  {'M U U U', 'P P P P'}, False,
-  {'M UP UP UP', 'U U U U'}, False,
-  {}, True,
-  {}, True,
-  False, False, False,
-  True, False,
-  True,
-  True
+  activeConstraints = {'M U U U', 'P P P P'},
+  passiveConstraints = {'M UP UP UP', 'U U U U'}
 )
+
+print(REtorProblem.activeConstraints)
  
 # AB CC BC
 # AAA AAB AAC BCC ACC
 tlpProblem = GenericProblem(
-  {'A B', 'C C', 'B C'}, False,
-  {'A A A', 'A A B', 'A A C', 'B C C', 'A C C'}, False,
-  {}, True,
-  {}, True,
-  False, False, False,
-  True, False,
-  True,
-  True
+  {'A B', 'C C', 'B C'},
+  {'A A A', 'A A B', 'A A C', 'B C C', 'A C C'}
 )
 
 # "111",
@@ -32,14 +22,10 @@ tlpProblem = GenericProblem(
 # "132"
 # decider, tree-classification
 binaryRootedTreeProblem = GenericProblem(
-  {'A a a', 'B a a', 'C a a', 'C a b'}, False,
-  {'A a', 'B b', 'C c'}, False,
-  {}, True,
-  {}, True,
-  False, False, False,
-  True, True,
-  True,
-  True
+  {'A a a', 'B a a', 'C a a', 'C a b'},
+  {'A a', 'B b', 'C c'},
+  isTree =True, isRooted = True,
+  isBipartite = True, isRegular = True
 )
 
 
@@ -47,48 +33,29 @@ binaryRootedTreeProblem = GenericProblem(
 # 12, 13, 23, 21, 31, 32 in automata-theoretic formalism
 # cycle path classifier
 cyclePathTreeProblem = GenericProblem(
-  {'A a a a a', 'B b b b b', 'C c c c c'}, False,
-  {'A b', 'A c', 'B c', 'B a', 'C a', 'C b'} , False,
-  {}, True,
-  {}, True,
-  False, False, False,
-  True, True,
-  True,
-  True
+  {'A a a a a', 'B b b b b', 'C c c c c'},
+  {'A b', 'A c', 'B c', 'B a', 'C a', 'C b'} ,
+  isTree =True, isRooted = True,
+  isBipartite = True, isRegular = True
 )
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
 # --start-constr "{ 1 }" --end-constr "{ 0 }"
 # cycle path classifier
 cyclePathProblem = GenericProblem(
-  {'A A', 'B M'}, False,
-  {'A B', 'B A', 'B B', 'M M'} , False,
-  {'A'}, False, # leaf constraint = end-constr
-  {'B'}, False, # root constraint = start-constr
-  False, True, True,
-  False, False,
-  False,
-  True
+  {'A A', 'B M'},
+  {'A B', 'B A', 'B B', 'M M'},
+  leafConstraints = {'A'}, leafAllowAll = False, # leaf constraint = end-constr
+  rootConstraints = {'B'}, rootAllowAll = False, # root constraint = start-constr
+  isCycle = False, isPath = True, isDirected = True,
+  isTree = False,
 )
 
 # -undir -n "{ 11, 22, 33 }" -e "{ 12, 21, 13, 31, 23, 32 }"
 # cycle path classifier
 cyclePathProblem = GenericProblem(
-  {'A A', 'B B', 'C C'}, False,
-  {'A B', 'B A', 'A C', 'C A', 'B C', 'C B'} , False,
-  {}, True, # leaf constraint = end-constr
-  {}, True, # root constraint = start-constr
-  True, False, False,
-  False, False,
-  False,
-  True
+  {'A A', 'B B', 'C C'},
+  {'A B', 'B A', 'A C', 'C A', 'B C', 'C B'},
+  isCycle = True, isPath = False, isDirected = False,
+  isTree = False
 )
-
-
-mmProblem = GenericProblem()
-
-misProblem = GenericProblem()
-
-vertexColoring = GenericProblem()
-
-edgeColoring = GenericProblem()
