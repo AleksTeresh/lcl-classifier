@@ -571,11 +571,36 @@ PSPACE hard~\cite{Balliu2018}.
 However, not everything looks that gloomy, and many
 interesting and sufficiently broad family of LCL
 problems are both decidable and possible to
-automatically classify in practice. 
+automatically classify in practice. Indeed a lot of work
+has been done attempting to derive practival algorithms
+that determine complexity of a given LCL problem,
+especially in trees.
 
+Balliu at al. has shown that a complete classification
+of binary labelling problems (the problems where a node's
+output is allowed to be only one of the two possible labels)
+at least in a deterministic setting is possible and moreover
+can be done in $O(1)$ time, since computational
+complexity of such problems can be simply looked up in a
+table in a constant time ~\cite{Balliu2019c}. In addition
+to this, the paper also shows tha it is decidable to
+classify at least \emph{some} of the randomised binary labelling
+LCL problem~\cite{Balliu2019c}.
 
+Building on top of the work outlined in the paper, Rocher
+has developed a meta-algorithm that classifies \emph{almost}
+all ternary labelling problems on trees~\cite{Rocher2020clas}. Furthermore,
+he also implemented the meta-algorithm as a
+computer program written in Python programming language~\cite{Rocher2020doc}.
+Although the implementation focuses mainly on the case of trees with degree 3,
+the techniques described in the manuscript are applicable to ternary problems
+on trees of higher degrees as well.
 
-
+In addition to this, LCL problems on trees and cycles
+are fully decidable in polynomial time as was shown by Chang et al.~\cite{Chang2020}.
+The algorithm for classifying the problems can be used in practice and has
+been implemented in Python programming language by Aalto's
+Distributed Algorithms research group~\cite{Tereshchenko2020}.
 
 \section{Language and Structure}
 
