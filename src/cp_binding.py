@@ -1,7 +1,7 @@
 from problem import GenericProblem
 from cyclepath_classifier import classify as cpClassify, Problem as CyclePathProblem, Type, HARD
 from parser import parseConfigs
-from config_util import parseUnaryConstraints, parseBinaryConstraints, eachConstrIsHomogeneous
+from config_util import normalizeConstraints, eachConstrIsHomogeneous
 from util import flatten
 
 def classify(problem: GenericProblem):
@@ -30,10 +30,10 @@ def classify(problem: GenericProblem):
 
   problemType = Type.TREE if problem.isTree else (Type.DIRECTED if problem.isDirected else Type.UNDIRECTED)    
 
-  edgeConstraints = set(parseBinaryConstraints(parsedPassives))
-  nodeConstraints = {} if problemType == Type.TREE else set(parseBinaryConstraints(parsedActives))
-  startConstraints = {} if problem.rootAllowAll else set(parseUnaryConstraints(parsedRoots))
-  endConstraints = {} if problem.leafAllowAll else set(parseUnaryConstraints(parsedLeaves))
+  edgeConstraints = set(normalizeConstraints(parsedPassives))
+  nodeConstraints = {} if problemType == Type.TREE else set(normalizeConstraints(parsedActives))
+  startConstraints = {} if problem.rootAllowAll else set(normalizeConstraints(parsedRoots))
+  endConstraints = {} if problem.leafAllowAll else set(normalizeConstraints(parsedLeaves))
 
   cpProblem = CyclePathProblem(
     nodeConstraints,

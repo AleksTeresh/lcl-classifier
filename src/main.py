@@ -3,6 +3,7 @@ from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
 from parser import parseConfigs
 from cp_binding import classify as cpClassify
 from rt_binding import classify as rtClassify
+from tlp_binding import classify as tlpClassify
 
 REtorProblem1 = GenericProblem(
   activeConstraints = ['M U U U', 'P P P P'],
@@ -14,21 +15,35 @@ REtorProblem2 = GenericProblem(
   passiveConstraints = ['(B->W) (W->B)(B->W) (W->B)(B->W)']
 )
  
-# AB CC BC
-# AAA AAB AAC BCC ACC
+# AB, CC
+# BBC, AAA, BBB, AAC, BCC
 # output: log* n
-tlpProblem = GenericProblem(
-  ['A B', 'C C', 'B C'],
-  ['A A A', 'A A B', 'A A C', 'B C C', 'A C C']
+tlpProblem1 = GenericProblem(
+  ['A B', 'C C'],
+  ['B B C', 'A A A', 'B B B', 'A A C', 'B C C']
 )
+
+tlpClassify(tlpProblem1)
 
 # AA CC BC
 # AAA AAB AAC BCC ACC
-# output: O(1)
-tlpProblem = GenericProblem(
+# output: O(1) 0
+tlpProblem2 = GenericProblem(
   ['A A', 'C C', 'B C'],
   ['A A A', 'A A B', 'A A C', 'B C C', 'A C C']
 )
+
+tlpClassify(tlpProblem2)
+
+# AC AB CC BC
+# BB AC AB BC
+# output: O(1) 1
+tlpProblem3 = GenericProblem(
+  ['A C', 'A B', 'C C', 'B C'],
+  ['B B', 'A C', 'A B', 'B C']
+)
+
+tlpClassify(tlpProblem3)
 
 # "111",
 # "121",
@@ -97,6 +112,7 @@ cyclePathProblem1 = GenericProblem(
 try:
   cpClassify(cyclePathProblem1)
 except:
+  print('Exception')
   pass
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"

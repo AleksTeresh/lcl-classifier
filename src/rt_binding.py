@@ -1,7 +1,7 @@
 from rooted_tree_classifier import is_log_star_solvable, is_log_solvable
 from problem import GenericProblem
 from parser import parseConfigs
-from config_util import eachConstrIsHomogeneous, parseTernaryConstraints
+from config_util import eachConstrIsHomogeneous, normalizeConstraints
 
 def moveRootLabelToCenter(constr):
   return constr[1] + constr[0] + constr[2]
@@ -34,7 +34,7 @@ def classify(problem: GenericProblem):
   if not eachConstrIsHomogeneous(parsedPassives):
     raise Exception('rooted-tree', 'Passive constraints must be simple pairs of the same labels.')
 
-  constraints = list(parseTernaryConstraints(parsedActives))
+  constraints = list(normalizeConstraints(parsedActives))
   constraints = [moveRootLabelToCenter(x) for x in constraints]
 
   if is_log_solvable(constraints):  # is not empty
