@@ -1,5 +1,5 @@
 from problem import GenericProblem
-from cyclepath_classifier import classify as cpClassify, Problem as CyclePathProblem, Type
+from cyclepath_classifier import classify as cpClassify, Problem as CyclePathProblem, Type, HARD
 from parser import parseConfigs
 from config_util import parseUnaryConstraints, parseBinaryConstraints, eachConstrIsHomogeneous
 from util import flatten
@@ -35,13 +35,6 @@ def classify(problem: GenericProblem):
   startConstraints = {} if problem.rootAllowAll else set(parseUnaryConstraints(parsedRoots))
   endConstraints = {} if problem.leafAllowAll else set(parseUnaryConstraints(parsedLeaves))
 
-  # TODO: move this part to the classifier package itself
-  if problemType == Type.TREE:
-    alphabet = set(flatten(edgeConstraints))
-    nodeConstraints = set(map(lambda x: x + x, alphabet))
-    startConstraints = alphabet
-    endConstraints = alphabet
-
   # print(edgeConstraints)
   # print(nodeConstraints)
   # print(startConstraints)
@@ -54,5 +47,17 @@ def classify(problem: GenericProblem):
     endConstraints,
     problemType
   )
-  cpClassify(cpProblem)
-  
+
+  result = cpClassify(cpProblem)
+
+  print('Round complexity of the problem is %s' % result['complexity'])
+  print(
+    'Deciding the number of solvable instances is NP-complete' if
+    result['solvable'] == HARD else
+    'There are %s solvable instances' % result['solvable']
+  )
+  print(
+    'Deciding the number of unsolvable instances is NP-complete' if
+    result['unsolvable'] == HARD else
+    'There are %s unsolvable instances' % result['unsolvable']
+  )

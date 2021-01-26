@@ -101,7 +101,10 @@ cyclePathProblem1 = GenericProblem(
   isTree = False,
 )
 
-cpClassify(cyclePathProblem1)
+try:
+  cpClassify(cyclePathProblem1)
+except:
+  pass
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
 # --start-constr "{ 1 }" --end-constr "{ 0 }"
