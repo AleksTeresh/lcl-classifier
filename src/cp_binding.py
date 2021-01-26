@@ -35,11 +35,6 @@ def classify(problem: GenericProblem):
   startConstraints = {} if problem.rootAllowAll else set(parseUnaryConstraints(parsedRoots))
   endConstraints = {} if problem.leafAllowAll else set(parseUnaryConstraints(parsedLeaves))
 
-  # print(edgeConstraints)
-  # print(nodeConstraints)
-  # print(startConstraints)
-  # print(endConstraints)
-
   cpProblem = CyclePathProblem(
     nodeConstraints,
     edgeConstraints,

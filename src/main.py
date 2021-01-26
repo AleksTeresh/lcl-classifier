@@ -13,13 +13,7 @@ REtorProblem2 = GenericProblem(
   activeConstraints = ['M(W->B) S(W->B)(B->W)MP (W->B)(B->W) (W->B)(B->W)SUS'],
   passiveConstraints = ['(B->W) (W->B)(B->W) (W->B)(B->W)']
 )
-
-# print(parseConfigs(REtorProblem1.activeConstraints))
-# print(parseConfigs(REtorProblem1.passiveConstraints))
-# print(parseConfigs(REtorProblem2.activeConstraints))
-# print(parseConfigs(REtorProblem2.passiveConstraints))
  
-
 # AB CC BC
 # AAA AAB AAC BCC ACC
 # output: log* n
@@ -62,7 +56,6 @@ binaryRootedTreeProblem = GenericProblem(
 )
 
 rtClassify(binaryRootedTreeProblem)
-
 
 # "121",
 # "131"
