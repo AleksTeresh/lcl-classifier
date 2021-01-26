@@ -18,10 +18,20 @@ REtorProblem2 = GenericProblem(
 # print(parseConfigs(REtorProblem2.activeConstraints))
 # print(parseConfigs(REtorProblem2.passiveConstraints))
  
+
 # AB CC BC
 # AAA AAB AAC BCC ACC
+# output: log* n
 tlpProblem = GenericProblem(
   ['A B', 'C C', 'B C'],
+  ['A A A', 'A A B', 'A A C', 'B C C', 'A C C']
+)
+
+# AA CC BC
+# AAA AAB AAC BCC ACC
+# output: O(1)
+tlpProblem = GenericProblem(
+  ['A A', 'C C', 'B C'],
   ['A A A', 'A A B', 'A A C', 'B C C', 'A C C']
 )
 
@@ -61,6 +71,8 @@ cyclePathProblem1 = GenericProblem(
   isTree = False,
 )
 
+cpClassify(cyclePathProblem1)
+
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
 # --start-constr "{ 1 }" --end-constr "{ 0 }"
 # cycle path classifier
@@ -73,7 +85,6 @@ cyclePathProblem2 = GenericProblem(
   isTree = False,
 )
 
-cpClassify(cyclePathProblem1)
 cpClassify(cyclePathProblem2)
 
 # -undir -n "{ 11, 22, 33 }" -e "{ 12, 21, 13, 31, 23, 32 }"

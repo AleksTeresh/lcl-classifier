@@ -1,16 +1,20 @@
+from functools import reduce
 from problem import GenericProblem
 from cyclepath_classifier import classify as cpClassify, Problem as CyclePathProblem, Type
 from parser import parseConfigs
-from util import flatMap
+from util import flatMap, flatten, areAllTheSame
 
 def flattenBinaryConfigs(left, right):
   return [l + r for l in left for r in right]
 
 def parseUnaryConstraints(constr):
-  return flatMap(lambda x: x, flatMap(lambda x: x, constr))
+  return flatten(flatten(constr))
 
 def parseBinaryConstraints(constr):
   return flatMap(lambda x: flattenBinaryConfigs(x[0], x[1]), constr)
+
+def eachConstrIsHomogeneous(constrs):
+  return reduce(lambda acc, x: acc and areAllTheSame(flatten(x)), constrs, True)
 
 def classify(problem: GenericProblem):
   parsedActives = parseConfigs(problem.activeConstraints)
@@ -20,13 +24,21 @@ def classify(problem: GenericProblem):
 
   # TODO: handle allowAllActive, allowAllPassive
 
-  # TODO: check that leaf degree is 1 and (root degree is 1)
+  activeDegree = len(parsedActives[0]) if len(parsedActives) else 2
+  passiveDegree = len(parsedPassives[0]) if len(parsedPassives) else 2
+  leafDegree = len(parsedLeaves[0]) if len(parsedLeaves) else 1
 
-  activeDegree = len(parsedActives[0])
-  passiveDegree = len(parsedPassives[0])
+  if leafDegree != 1:
+    raise Exception('cyclepath', 'Leaf constraints must always be of degree 1')
 
   if passiveDegree != 2:
     raise Exception('cyclepath', 'Passive constraints must always be of degree 2')
+
+  if problem.isTree:
+    if not eachConstrIsHomogeneous(parsedActives):
+      raise Exception('cyclepath', 'On trees, node constraints must be the same for all incident edges.')
+  elif activeDegree != 2:
+    raise Exception('cyclepath', 'In a path or cycle, passive constraints must always be of degree 2')
 
   problemType = Type.TREE if problem.isTree else (Type.DIRECTED if problem.isDirected else Type.UNDIRECTED)    
 
