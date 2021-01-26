@@ -1,20 +1,8 @@
-from functools import reduce
 from problem import GenericProblem
 from cyclepath_classifier import classify as cpClassify, Problem as CyclePathProblem, Type
 from parser import parseConfigs
-from util import flatMap, flatten, areAllTheSame
-
-def flattenBinaryConfigs(left, right):
-  return [l + r for l in left for r in right]
-
-def parseUnaryConstraints(constr):
-  return flatten(flatten(constr))
-
-def parseBinaryConstraints(constr):
-  return flatMap(lambda x: flattenBinaryConfigs(x[0], x[1]), constr)
-
-def eachConstrIsHomogeneous(constrs):
-  return reduce(lambda acc, x: acc and areAllTheSame(flatten(x)), constrs, True)
+from config_util import parseUnaryConstraints, parseBinaryConstraints, eachConstrIsHomogeneous
+from util import flatten
 
 def classify(problem: GenericProblem):
   parsedActives = parseConfigs(problem.activeConstraints)
@@ -49,7 +37,7 @@ def classify(problem: GenericProblem):
 
   # TODO: move this part to the classifier package itself
   if problemType == Type.TREE:
-    alphabet = set(flatMap(lambda x: x, edgeConstraints))
+    alphabet = set(flatten(edgeConstraints))
     nodeConstraints = set(map(lambda x: x + x, alphabet))
     startConstraints = alphabet
     endConstraints = alphabet
