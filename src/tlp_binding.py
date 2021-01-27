@@ -4,11 +4,14 @@ from parser import parseConfigs
 from config_util import normalizeConstraints
 
 def classify(problem: GenericProblem):
-  if not problem.isTree:
-    raise Exception('tlp', 'Cannot classify if the problem is not a tree')
+  if problem.isCycle:
+    raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
   if problem.isRooted:
     raise Exception('tlp', 'Cannot classify if the tree is rooted')
+
+  if problem.isDirected:
+    raise Exception('tlp', 'Cannot classify if the path is directed')
 
   if not problem.isRegular:
     raise Exception('tlp', 'Cannot classify if the graph is not regular')
