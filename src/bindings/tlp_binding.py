@@ -1,7 +1,9 @@
 from problem import GenericProblem
-from tlp_classifier import get_problem
+from tlp_classifier import get_problem, complexity_name, Complexity as tlpComplexity
 from parser import parseConfigs
 from config_util import normalizeConstraints
+from response import GenericResponse
+from complexity import *
 
 def classify(problem: GenericProblem):
   if problem.isCycle:
@@ -35,4 +37,21 @@ def classify(problem: GenericProblem):
   passiveConstraints = list(normalizeConstraints(parsedPassives))
 
   result = get_problem(activeConstraints, passiveConstraints)
-  print(result)
+
+
+  complexityMapping = {
+    tlpComplexity.Constant: CONST,
+    tlpComplexity.Iterated_Logarithmic: ITERATED_LOG,
+    tlpComplexity.Logarithmic: LOG,
+    tlpComplexity.Global: GLOBAL,
+    tlpComplexity.Unsolvable: UNSOLVABLE,
+    tlpComplexity.Unclassified: UNKNOWN
+  }
+
+  return GenericResponse(
+    problem,
+    complexityMapping[result.upper_bound],  # because deterministic UB is also a randomised UB
+    UNKNOWN,
+    complexityMapping[result.upper_bound],
+    complexityMapping[result.upper_bound],
+  )

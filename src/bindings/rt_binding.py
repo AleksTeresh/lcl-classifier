@@ -2,11 +2,11 @@ from rooted_tree_classifier import is_log_star_solvable, is_log_solvable
 from problem import GenericProblem
 from parser import parseConfigs
 from config_util import eachConstrIsHomogeneous, normalizeConstraints
+from response import GenericResponse
+from complexity import *
+from .common import moveRootLabelToCenter
 
-def moveRootLabelToCenter(constr):
-  return constr[1] + constr[0] + constr[2]
-
-def classify(problem: GenericProblem):
+def classify(problem: GenericProblem) -> GenericResponse:
   if not problem.isTree:
     raise Exception('rooted-tree', 'Cannot classify if the problem is not a tree')
 
@@ -37,10 +37,27 @@ def classify(problem: GenericProblem):
   constraints = list(normalizeConstraints(parsedActives))
   constraints = [moveRootLabelToCenter(x) for x in constraints]
 
+  detUpperBound = UNKNOWN
+  detLowerBound = CONST
+  randUpperBound = UNKNOWN
+  randLowerBound = CONST
   if is_log_solvable(constraints):  # is not empty
     if is_log_star_solvable(constraints):
-      print("O(log*n)")
+      detUpperBound = ITERATED_LOG
+      randUpperBound = ITERATED_LOG
     else:
-      print("Θ(log n)")
+      detUpperBound = LOG
+      detLowerBound = LOG
+      randUpperBound = LOG
+      randLowerBound = LOGLOG
   else:
-    print("Ω(n)")
+    detLowerBound = GLOBAL
+    randLowerBound = GLOBAL
+
+  return GenericResponse(
+    problem,
+    randUpperBound,
+    randLowerBound,
+    detUpperBound,
+    detLowerBound
+  )

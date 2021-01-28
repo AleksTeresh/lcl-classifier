@@ -9,7 +9,6 @@ def flattenTernaryConfigs(one, two, three):
   return [o + tw + th for o in one for tw in two for th in three]
 
 def flattenConfigs(configs):
-  print(configs)
   if len(configs) == 1:
     return flatten(configs)
   elif len(configs) == 2:

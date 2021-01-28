@@ -1,9 +1,18 @@
 from brt_classifier import getProblem
+from brt_classifier import CONST as BRT_CONST
+from brt_classifier import ITERATED_LOG as BRT_ITERATED_LOG
+from brt_classifier import LOGLOG as BRT_LOGLOG
+from brt_classifier import LOG as BRT_LOG
+from brt_classifier import GLOBAL as BRT_GLOBAL
+from brt_classifier import UNSOLVABLE as BRT_UNSOLVABLE
+from brt_classifier import UNKNOWN as BRT_UNKNOWN
 from problem import GenericProblem
 from parser import parseConfigs
 from config_util import eachConstrIsHomogeneous, normalizeConstraints
-from rt_binding import moveRootLabelToCenter
+from .common import moveRootLabelToCenter
 from util import flatten
+from response import GenericResponse
+from complexity import *
 
 def classify(problem: GenericProblem):
   if not problem.isTree:
@@ -42,4 +51,24 @@ def classify(problem: GenericProblem):
     constraints = [x.replace(label, str(i+1)) for x in constraints]
   
   result = getProblem(constraints)
-  print(result)
+
+  complexityMapping = {
+    BRT_CONST: CONST,
+    BRT_ITERATED_LOG: ITERATED_LOG,
+    BRT_LOGLOG: LOGLOG,
+    BRT_LOG: LOG,
+    BRT_GLOBAL: GLOBAL,
+    BRT_UNSOLVABLE: UNSOLVABLE,
+    BRT_UNKNOWN: UNKNOWN,
+  }
+
+  return GenericResponse(
+    problem,
+    complexityMapping[result['upper-bound']],
+    complexityMapping[result['lower-bound']],
+    UNKNOWN,
+    complexityMapping[result['lower-bound']], # because randomised LB is also a deterministic LB
+    result['solvable-count'],
+    result['unsolvable-count']
+  )
+

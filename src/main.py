@@ -1,10 +1,7 @@
 import sys, getopt
 from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
 from parser import parseConfigs
-from cp_binding import classify as cpClassify
-from rt_binding import classify as rtClassify
-from tlp_binding import classify as tlpClassify
-from brt_binding import classify as brtClassify
+from classifier import classify
 
 REtorProblem1 = GenericProblem(
   activeConstraints = ['M U U U', 'P P P P'],
@@ -30,8 +27,6 @@ tlpProblem1 = GenericProblem(
   ['B B C', 'A A A', 'B B B', 'A A C', 'B C C']
 )
 
-tlpClassify(tlpProblem1)
-
 # AA CC BC
 # AAA AAB AAC BCC ACC
 # output: O(1) 0
@@ -39,8 +34,6 @@ tlpProblem2 = GenericProblem(
   ['A A', 'C C', 'B C'],
   ['A A A', 'A A B', 'A A C', 'B C C', 'A C C']
 )
-
-tlpClassify(tlpProblem2)
 
 # AC AB CC BC
 # BB AC AB BC
@@ -50,50 +43,50 @@ tlpProblem3 = GenericProblem(
   ['B B', 'A C', 'A B', 'B C']
 )
 
-tlpClassify(tlpProblem3)
+
 
 # "111",
 # "121",
 # "131"
 # "132"
 # decider, tree-classification
-binaryRootedTreeProblem = GenericProblem(
+# output: O(1)
+binaryRootedTreeProblem1 = GenericProblem(
   ['a a a', 'b a a', 'c a a', 'c a b'],
   ['a a', 'b b', 'c c'],
   isTree = True, isRooted = True,
   isRegular = True
 )
 
-rtClassify(binaryRootedTreeProblem)
-brtClassify(binaryRootedTreeProblem)
+
 
 # "121",
 # "132",
 # "213"
 # decider, tree-classification
-binaryRootedTreeProblem = GenericProblem(
+# output: O(log n)
+binaryRootedTreeProblem2 = GenericProblem(
   ['b a a', 'c a b', 'a b c'],
   ['a a', 'b b', 'c c'],
   isTree = True, isRooted = True,
   isRegular = True
 )
 
-rtClassify(binaryRootedTreeProblem)
-brtClassify(binaryRootedTreeProblem)
+
 
 # "121",
 # "131"
 # "132"
 # decider, tree-classification
-binaryRootedTreeProblem = GenericProblem(
+# output: unsolvable
+binaryRootedTreeProblem3 = GenericProblem(
   ['b a a', 'c a a', 'c a b'],
   ['a a', 'b b', 'c c'],
   isTree = True, isRooted = True,
   isRegular = True
 )
 
-rtClassify(binaryRootedTreeProblem)
-brtClassify(binaryRootedTreeProblem)
+
 
 # 3-coloring on a rooted trees (degree not known i.e. not just binary)
 # 12, 13, 23, 21, 31, 32 in automata-theoretic formalism
@@ -105,7 +98,7 @@ cyclePathTreeProblem = GenericProblem(
   isRegular = False
 )
 
-cpClassify(cyclePathTreeProblem)
+
 
 # -undir -n "{00, 1M}" -e "{01, 10, 11, MM}"
 # --start-constr "{ 1 }" --end-constr "{ 0 }"
@@ -119,11 +112,7 @@ cyclePathProblem1 = GenericProblem(
   isTree = False,
 )
 
-try:
-  cpClassify(cyclePathProblem1)
-except:
-  print('Exception')
-  pass
+
 
 # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
 # --start-constr "{ 1 }" --end-constr "{ 0 }"
@@ -137,7 +126,7 @@ cyclePathProblem2 = GenericProblem(
   isTree = False,
 )
 
-cpClassify(cyclePathProblem2)
+
 
 # -undir -n "{ 11, 22, 33 }" -e "{ 12, 21, 13, 31, 23, 32 }"
 # cycle path classifier
@@ -148,4 +137,14 @@ cyclePathProblem = GenericProblem(
   isTree = False
 )
 
-cpClassify(cyclePathProblem)
+
+print(classify(tlpProblem1))
+print(classify(tlpProblem2))
+print(classify(tlpProblem3))
+print(classify(binaryRootedTreeProblem1))
+print(classify(binaryRootedTreeProblem2))
+print(classify(binaryRootedTreeProblem3))
+print(classify(cyclePathTreeProblem))
+print(classify(cyclePathProblem1))
+print(classify(cyclePathProblem2))
+print(classify(cyclePathProblem))
