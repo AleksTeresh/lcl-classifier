@@ -3,7 +3,8 @@ from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
 from parser import parseConfigs
 from cp_binding import classify as cpClassify
 from rt_binding import classify as rtClassify
-from tlp_binding import classify as tlpClassify, classifyByRE
+from tlp_binding import classify as tlpClassify
+from brt_binding import classify as brtClassify
 
 REtorProblem1 = GenericProblem(
   activeConstraints = ['M U U U', 'P P P P'],
@@ -64,6 +65,7 @@ binaryRootedTreeProblem = GenericProblem(
 )
 
 rtClassify(binaryRootedTreeProblem)
+brtClassify(binaryRootedTreeProblem)
 
 # "121",
 # "132",
@@ -77,6 +79,7 @@ binaryRootedTreeProblem = GenericProblem(
 )
 
 rtClassify(binaryRootedTreeProblem)
+brtClassify(binaryRootedTreeProblem)
 
 # "121",
 # "131"
@@ -90,6 +93,7 @@ binaryRootedTreeProblem = GenericProblem(
 )
 
 rtClassify(binaryRootedTreeProblem)
+brtClassify(binaryRootedTreeProblem)
 
 # 3-coloring on a rooted trees (degree not known i.e. not just binary)
 # 12, 13, 23, 21, 31, 32 in automata-theoretic formalism
