@@ -589,7 +589,8 @@ LCL problem~\cite{Balliu2019c}.
 
 Building on top of the work outlined in the paper, Rocher
 has developed a meta-algorithm that classifies \emph{almost}
-all ternary labelling problems on trees~\cite{Rocher2020clas}. Furthermore,
+all ternary labelling problems on trees in deterministic
+setting~\cite{Rocher2020clas}. Furthermore,
 he also implemented the meta-algorithm as a
 computer program written in Python programming language~\cite{Rocher2020doc}.
 Although the implementation focuses mainly on the case of trees with degree 3,
@@ -601,6 +602,25 @@ are fully decidable in polynomial time as was shown by Chang et al.~\cite{Chang2
 The algorithm for classifying the problems can be used in practice and has
 been implemented in Python programming language by Aalto's
 Distributed Algorithms research group~\cite{Tereshchenko2020}.
+
+Finally, a technique called Round Elimination was introduced in the context
+of LCL problems by Brandt et al~\cite{Brandt2019}. It is as a series of mechanical
+steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumption and the fact that
+$\Pi_0$ is solvable in constant time e.g. in $T$ rounds, $\Pi_1$ is guaranteed to be
+solvable in exactly $T - 1$ rounds. This single property has numerous implications.
+For example, if we apply the technique $n$ times and in the end obtain an LCL problem $\Pi_n$
+such that it is zero-round solvable, we know that the original problem $\Pi_0$ is
+exactly $n$-round solvable. Furthermore, Round Elimination is not only possible
+in theory but is also very much feasible in practive. Indeed, Olivetti has
+implemented a computer program that, given an LCL $\Pi_0$ solvable in $T$ rounds,
+it produces another LCL $\Pi_1$ solvable in $T - 1$ rounds. There even exists
+a web interface for the program, and one can apply the technique and obtain
+its results within milliseconds. We will describe the technique and its implications
+in much more detail in the subsequent section.
+
+<Add section about yet-to-be-published manuscript by Jan, Alkoda, Sebastian, et al.
+which would give full rand and deterministic classification for problems on binary
+rooted trees.>
 
 \section{Language and Structure}
 
