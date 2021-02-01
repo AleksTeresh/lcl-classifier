@@ -131,6 +131,27 @@ On the other hand, an \emph{unrooted tree} has no single root, and therefore the
 or child is not defined. Instead, we talk about neighbours of some node $v$. However, we 
 still use the notion of leaves to denote nodes of degree 1.
 
+\subsection{Biregular trees}
+
+A \emph{bipartite} graph $G = (V, E)$ has its vertices partitioned into two
+subset $U \subseteq V$ and $W \subseteq V$ so that the partitioning forms
+a proper 2-coloring of the node $V$. In other words, in a bipartite graph $G = (V, E)$,
+if a node $v \in U$ then all its neighbours belong to $W$, and if a node $v \in W$
+then all its neighbours belong to $U$.
+
+A \emph{regular} graph is a graph where each vertex has the same degree.
+A \emph{biregular} graph is a graph where each vertex has one of the two
+allowed degrees and only them. In this thesis, when we talk about
+\emph{(\beta, \delta)-biregular} graph $G$, we always assume that 
+$G = (V, E)$ is bipartite such that $V$ is partitioned into two
+subsets $U$ and $W$, nodes in these subsets form a proper 2-coloring,
+all nodes in $U$ are of degree $\beta$ and all nodes in $W$ are of
+degree $\delta$. In particular, when we talk about \emph{(\beta, \delta)-biregular trees},
+we mean a bipartite biregular tree where all nodes except for leaves
+follow the rules of (\beta, \delta)-biregular graphs described above,
+but leaves themselves are allowed to have degree 1 (otherwise they wouldn't be
+called leaves).
+
 \section{Distributed computing}
 
 Now that we have introduced some of the key graph theoretic concepts, we will
@@ -604,7 +625,7 @@ been implemented in Python programming language by Aalto's
 Distributed Algorithms research group~\cite{Tereshchenko2020}.
 
 Finally, a technique called Round Elimination was introduced in the context
-of LCL problems by Brandt et al~\cite{Brandt2019}. It is as a series of mechanical
+of LCL problems by Brandt et al~\cite{Brandt2019}. It is a series of mechanical
 steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumption and the fact that
 $\Pi_0$ is solvable in constant time e.g. in $T$ rounds, $\Pi_1$ is guaranteed to be
 solvable in exactly $T - 1$ rounds. This single property has numerous implications.
