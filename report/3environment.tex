@@ -14,12 +14,60 @@ technique introduced in Chapter 2, as well as
 implementation of Round Elimination as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
 Besides, we will explain the relevance of the technique
-and the software implementation for our problem. In order
-to demonstrate the technique, we will have as our running
+and the software implementation for our problem.
+
+As already mentioned in the previous chapter, round elimination
+is a technique that, given an LCL problem $\Pi_0$ as an input, produces
+another LCL problem $\Pi_1$ which can be solved exactly one round
+faster. For round elimination to work, the input should comply
+to two constraints: $\Pi_0$ has to be a problem on a $(\delta, \beta)$-
+biregular graph, and the number of rounds in which $\Pi_0$ can be solved
+should not be "too large". Indeed, the last constraint is a rather curious one
+since we rarely know round-complexity of an input problem when using
+round elimination. However, we can nevertheless use this rather inconvinient constraint
+to our advantage, which will be demonstrated below.
+
+Furthermore, when applying round elimination we talk about "active" and
+"passive" nodes. Since $(\delta, \beta)$-bipartition of an input problem is
+already given (see our assumption above), nodes of degree $\delta$ are assumed
+to be "active" and nodes of degree $\beta$ are assumed to be passive. For a problem
+to be a valid input to round elimination, it has to be reformulated as a problem on
+a $(\delta, \beta)$-biregular graph where only one partition of nodes produces
+some output while the other partition does not produce any output but instead
+checks that their radius-1 neighbourhood's outputs comply to previously
+specified restrictions.
+
+In order to demonstrate the technique, we will have as our running
 examples two canonical problems: weak 3-labelling and sinkless orientation.
 
-\textbf{Weak 3-labeling} in this context is a problem on (3, 2)-biregular
-trees.
+\textbf{Weak 3-labeling} in this context is a problem on $delta$-regular trees where
+each node labels its incident edges in such a way that no node $v$ in the graph
+has all its incident edges labelled with the same label. Besides if two
+nodes $v$ and $u$ are incident to the same edge $e = \{v, u\}$, such
+edge $e$ has to be labelled with the same label from both "sides". In other words,
+two neighbouring nodes cannot output different labels on the same edge.
+It is easy to see although the initial problem is specified for a regular
+tree, we can obtain an equivalent problem for a $(\delta, 2)$-biregular tree
+by replacing edges with nodes as described in subsection ~\ref{subsection:biregular-trees}.
+Further, if we assume that all nodes of degree $\delta$ are active and all nodes of 
+degree 2 are passive and that nodes of degree $\delta$ cannot have their incident
+edges labelled all with the same label, and nodes of degree 2 must have both of their
+incident edges labelled with the same label, we obtain an LCL problem equivalent to
+weak 3-labelling but in a formalism suitable for round elimination. To formalise, we
+can define the problem as following:
+
+$$\Sigma = \{A, B, C\}$$
+
+$$A = \{ \{A, B, C\}, \{A, A, B~or~C\}, \{B, B, A~or~C\}, \{C, C, A~or~B\} \}$$
+
+$$P = \{ \{A, A\}, \{B, B\}, \{C, C\}\}$$
+where $\Sigma$ is an allowed alphabet, $A$ is a set of \emph{configuration}
+allowed for active nodes and $P$ is a set of configuration allowed for
+passive nodes. Here we assumed that $\delta = 3$. Notice also that each
+configuration is a set of labels that are allowed to be on edges 
+incident to any active/passive node $v$. Notice that the order of
+the labels in a single configuration does not matter. Next, we will
+describe another problem using the same formalism.
 
 \textbf{Sinkless orientation} is a problem on 
 
