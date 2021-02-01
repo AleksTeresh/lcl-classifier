@@ -152,6 +152,14 @@ follow the rules of ($\beta$, $\delta$)-biregular graphs described above,
 but leaves themselves are allowed to have degree 1 (otherwise they wouldn't be
 called leaves).
 
+It is important to notice the equivalence of ($\delta$, 2)-biregular trees
+and $delta$-regular trees. Indeed, given a $delta$-regular tree, we can
+"turn" each edge $e = \{v, u\}$ into a node $v_e$ such that the node is
+connected to node $v$ and $u$ and only those nodes. On the other hand,
+given a ($\delta$, 2)-biregular tree, we can remove every node $v$ of degree
+2 and, given that nodes $u$ and $w$ used to be neighbours of $v$ before its
+removal from the graph, connect nodes $v$ and $w$ with an edge.
+
 \section{Distributed computing}
 
 Now that we have introduced some of the key graph theoretic concepts, we will
