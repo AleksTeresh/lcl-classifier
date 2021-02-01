@@ -57,19 +57,29 @@ weak 3-labelling but in a formalism suitable for round elimination. To formalise
 can define the problem as following:
 
 $$\Sigma = \{A, B, C\}$$
-
 $$A = \{ \{A, B, C\}, \{A, A, B~or~C\}, \{B, B, A~or~C\}, \{C, C, A~or~B\} \}$$
-
 $$P = \{ \{A, A\}, \{B, B\}, \{C, C\}\}$$
 where $\Sigma$ is an allowed alphabet, $A$ is a set of \emph{configuration}
 allowed for active nodes and $P$ is a set of configuration allowed for
-passive nodes. Here we assumed that $\delta = 3$. Notice also that each
+passive nodes. Here we assumed that $\delta = 3$. Notice that each
 configuration is a set of labels that are allowed to be on edges 
-incident to any active/passive node $v$. Notice that the order of
-the labels in a single configuration does not matter. Next, we will
+incident to any active/passive node $v$. Notice also that the order of
+the labels in a single configuration does not matter. Finally, in this particular problem
+and in all problems in the context of round elimination, we usually do not care about
+leaf nodes. That is leaf nodes are unrestrained and are fine with any 
+configuration.  Next, we will
 describe another problem using the same formalism.
 
-\textbf{Sinkless orientation} is a problem on 
+\textbf{Sinkless orientation} is a problem on a $\delta$-regular tree
+where each non-leaf node has outdegree of atleast 1. Similar to the case of weak 3-labelling,
+we can replace each edge with a node of degree 2 to get to $(\delta, 2)-biregular$ tree with
+nodes of degree $\delta$ being active and nodes of degree 2 being passive.
+Then we can define the problem formally as follows:
+
+$$\Sigma = \{I, O\}$$
+$$A = \{ \{O, I~or~O, I~or~O\} \}$$
+$$P = \{ \{I, I~or~O, I~or~O\}\}$$
+
 
 \section{Automata-theoretic lens classifier}
 
