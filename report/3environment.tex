@@ -79,7 +79,14 @@ Then we can define the problem formally as follows:
 $$\Sigma = \{I, O\}$$
 $$A = \{ \{O, I~or~O, I~or~O\} \}$$
 $$P = \{ \{I, I~or~O, I~or~O\}\}$$
-Here we again assumed that $\delta = 3$.
+Here we again assumed that $\delta = 3$. Label $I$ here represents
+an incoming edge and label $O$ represents an outgoing edge.
+Note that because the labels are produced only by active nodes,
+outgoing edge $O$ for an active node is an incoming edge for a 
+passive node. And vise versa: an incoming edge $I$ for an active node
+is an outgoing edge for a passive node. Thus, the sets of configurations
+$A$ and $P$ can be interpreted so that each node - no matter active or passive -
+has to have at least one outgoing edge, and the rest of the edges can be anything.
 
 Now that we have defined our two example problems,
 we will apply round elimination
@@ -117,7 +124,10 @@ Now since we know that $\Pi_2$ is 0-round solvable, using the jutification alrea
 above, we can conclude that our original problem $\Pi_0$ is exactly 2-round solvable. Thus,
 weak 3-labelling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Observe that
 we have just used round eliminaton technique to \emph{prove} that an LCL problem can be
-solved in constant number of rounds. Next, we'll analyse SO in a similar manner.
+solved in constant number of rounds.
+
+Next, we'll analyse SO in a similar manner. Let's again denote SO as $\Pi_0$ and apply
+round elimination to it. We obtain the following output problem:
 
 
 
