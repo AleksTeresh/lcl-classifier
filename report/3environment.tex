@@ -70,7 +70,7 @@ leaf nodes. That is leaf nodes are unrestrained and are fine with any
 configuration.  Next, we will
 describe another problem using the same formalism.
 
-\textbf{Sinkless orientation} is a problem on a $\delta$-regular tree
+\textbf{Sinkless orientation} (SO) is a problem on a $\delta$-regular tree
 where each non-leaf node has outdegree of atleast 1. Similar to the case of weak 3-labelling,
 we can replace each edge with a node of degree 2 to get to $(\delta, 2)-biregular$ tree with
 nodes of degree $\delta$ being active and nodes of degree 2 being passive.
@@ -79,6 +79,46 @@ Then we can define the problem formally as follows:
 $$\Sigma = \{I, O\}$$
 $$A = \{ \{O, I~or~O, I~or~O\} \}$$
 $$P = \{ \{I, I~or~O, I~or~O\}\}$$
+Here we again assumed that $\delta = 3$.
+
+Now that we have defined our two example problems,
+we will apply round elimination
+technique on each one, describe intermediate steps, and analyse the results.
+Notice that the low-level technicalities of round elimination
+are omitted in the current thesis for brevity. For in-depth technical details, a reader is encouraged
+to refer to the original paper by Brandt or to the recently published textbook on distributed algorithms
+by Hirvonen et al~\cite{Brandt2019, Hirvonen2020}.
+
+Let's denote the initial weak 3-labelling problem as $\Pi_0$. After applying round elimination, we get as its
+output another LCL problem $\Pi_1$. The formal description of the problem is as follows:
+
+$$\Sigma = \{A, B, C\}$$
+$$A = \{ \{A, A\}, \{B, B\}, \{C, C\}\}$$
+$$P = \{ \{A, B ,C\}, \{A, A, B~or~C\}, \{B, B, A~or~C\}, \{C, C, A~or~B\} \}$$
+The problem $\Pi_1$ is not zero round solvable since after zero rounds each node only
+knows its own degree and unique identifier. Thus, no matter what is the mapping from
+unique identifiers to the output is, we can construct such a graph, where there exists
+a passive node whose all 3 neighbours will output the same label. But set $P$ does not
+contain any configurations consisting of the same three labels, therefore such
+output would be invalid. So we just have another problem that looks a lot like our
+previous problem $\Pi_0$ (essentially sets $A$ and $P$ have simply been swapped).
+Let us run round elimination once again, now using $\Pi_1$ as its input. We obtain
+$\Pi_2$ the following:
+
+$$\Sigma = \{A, B, C, D, E, F, G\}$$
+$$A = \{ \{C, E, F\}, \{C, D, G\}, \{B, E, G\}, \{A, F, G\}\}$$
+$$P = \{ \{ACEG, ACEG\}, \{BCFG, BCFG\}, \{DEFG, DEFG\} \}$$
+where we use $X_1X_2...X_k$ notation to mean the same as $X_1~or~X_2~or~...~or~X_k$.
+Now this problem is zero round solvable. Indeed, if all active nodes output $\{C, E, F\}$
+on their incident edges in an arbitrary order, passive nodes will be satisfied (that is to say
+that all passive nodes will find a configuration from the ste $P$) in all cases.
+
+Now since we know that $\Pi_2$ is 0-round solvable, using the jutification already described
+above, we can conclude that our original problem $\Pi_0$ is exactly 2-round solvable. Thus,
+weak 3-labelling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Observe that
+we have just used round eliminaton technique to \emph{prove} that an LCL problem can be
+solved in constant number of rounds. Next, we'll analyse SO in a similar manner.
+
 
 
 \section{Automata-theoretic lens classifier}
