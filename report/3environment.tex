@@ -9,7 +9,7 @@ described in this chapter.
 
 \section{Round Elimination}
 
-This section explains in detail Round Elimination
+This section explains in detail Round Elimination (RE)
 technique introduced in Chapter 2, as well as
 implementation of Round Elimination as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
@@ -129,7 +129,32 @@ solved in constant number of rounds.
 Next, we'll analyse SO in a similar manner. Let's again denote SO as $\Pi_0$ and apply
 round elimination to it. We obtain the following output problem:
 
+$$\Sigma = \{A, B\}$$
+$$A = \{ \{A, B, B\} \}$$
+$$P = \{ \{B, AB, AB\}\}$$
+Applying round elimination once again, we get
 
+$$\Sigma = \{A, B\}$$
+$$A = \{ \{A, B, B\} \}$$
+$$P = \{ \{B, AB, AB\}\}$$
+It turns out that $\Pi_2 = \Pi_1$. But we also know that round complexity of $\Pi_2$
+has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a contradiction,
+it turns out that the key here is to pay attention to the initial assumptions that we mentioned at the
+beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be "too large".
+Hence, in the case of SO, the number of rounds necessary to solve it is "too large". Moreover,
+it has been shown that is cases like this, when after applying round elimination repeatedly,
+we encounter a problem that we've already seen before, the initial problem $\Pi_0$ is most of the cases
+is solvable in $\Omega(log n)$ rounds in deterministic setting and in $\Omega(loglog n)$ rounds
+if randomness is allowed. Thus, we can use round elimination not only to prove upper bounds but
+also lower bounds for LCL problems on biregular graphs.
+
+Although we have only demonstrated the technique for two problems, the same idea following for most of the
+other LCLs on biregular graphs. In general RE can be used in an atomatic manner to prove constant upper or
+logarithmic and polylogarithmic lower bounds for a wide range of LCL problems. Furthermore, the open-source
+implementation
+of the technique written in programming language Rust and publicly available as a command-line tool and via
+a web interface will hugely assist in using RE as part of our software solution for automated classification
+of LCL on trees.
 
 \section{Automata-theoretic lens classifier}
 
