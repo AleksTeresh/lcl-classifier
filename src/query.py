@@ -11,7 +11,8 @@ class Query:
     includeIfConfigHasAllOf,
     includeIfConfigHasSomeOf,
     returnLargestProblemOnly,
-    returnSmallestProblemOnly
+    returnSmallestProblemOnly,
+    props
   ):
     self.randUpperBound = randUpperBound
     self.randLowerBound = randLowerBound
@@ -26,3 +27,6 @@ class Query:
 
     self.returnLargestProblemOnly = returnLargestProblemOnly
     self.returnSmallestProblemOnly = returnSmallestProblemOnly
+
+    # partial properties of a problem e.g. isRegular, isTree, etc.
+    self.props = props
