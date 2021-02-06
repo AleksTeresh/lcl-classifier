@@ -184,12 +184,42 @@ and $v$ outputs label $B$ on its port associated with the edge $e$, then the con
 would be invalid. For case of paths, where two nodes have only one incident edge, it is also
 necessary to specify start-constraints and end-constraints, each consisting of a set of labels
 that two of the endpoint nodes are allowed to output on their only ports. To make the
-representation of the input LCLs clearer, here is an example of vertex 3-coloring
+representation of the input LCLs clearer, here is an example of vertex 3-coloring in cycles
 (which can also be found in the original paper)~\cite{Chang2020}:
 
+$$C_{node} = \{ 11, 22, 33 \}$$
+$$C_{edge} = \{ 12, 21, 13, 31, 23, 32 \}$$
+where $C_{node}$ is a set of node-constraints and $C_{edge}$ is a set of edge-constraints.
 
+Set $\{ 11, 22, 33 \}$ here allows each node to be colored in one of the three colors
+(each node outputs its color to both ports) and each edge is allowed to connect
+two nodes of any color as long as these colors are not the same (note that there is no
+e.g. $11$ or $22$ in the set $C_{edge}$). To give another example, maximal matching (MM) in cycles
+would be encoded in the node-edge-checkable formalism as follows:
 
+$$C_{node} = \{ 00, 1M, M1 \}$$
+$$C_{edge} = \{ 01, 10, 11, MM \}$$
 
+It turns out that in the case of paths and cycles, all LCLs belong to one of the four
+complexity classes: $O(1)$, $\Theta(log* n)$, $\Theta(n)$ and unsolvable. Notice that
+the complexity class of $\Theta(log n)$ disappears in both deterministic and randomised settings.
+The technique described in the paper then takes the description of a problem as 4 sets: $C_{node}$,
+$C_{edge}$, $C_{start}$ and $C_{end}$ end following a polynomial time algorithm classifies the
+problem into one of the four compplexity classes. The cassification technique works for all LCL
+problems on trees and cycles.
+
+Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
+has to be describable in a so-called "edge-checkable" formalism. In other words, we're allowed to
+only specify constraints for the edges of the tree i.e. $C_{edge}$ set, nodes can output any label
+on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
+Also, we're not concert in the current formalism with the output of leaves and root - only nodes in the
+middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
+there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
+is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
+among children of some node $v$. For example, problems of type "a node with label X can have at most one child with label Y"
+are not possible, because if $(X, Y) \in C_{edge}$, then a node labelled with $X$ can have arbitrary number of children
+with labelled with $Y$. If, on the other hand, $(X, Y) \notin C_{edge}$ and a node $v$ is labelled with $X$, then
+none of its children can be labelled with $Y$.
 
 \section{Classification of binary labelling problems}
 
@@ -198,4 +228,8 @@ representation of the input LCLs clearer, here is an example of vertex 3-colorin
 \section{Classification of problems on rooted trees}
 
 <Section on yet-to-be published paper>
+
+\section{Summary of decidablity of LCL on trees}
+
+<Table showing what subfamilies are fully decidable and which are not>
 
