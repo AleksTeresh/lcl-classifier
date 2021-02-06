@@ -158,6 +158,39 @@ of LCL on trees.
 
 \section{Automata-theoretic lens classifier}
 
+In this section we will describe a technique that can be used to automatically
+classify LCL problems on paths, cycles, and in some case on rooted trees.
+Moreover, such classification can be done in polynomial time in the size
+of the description of the problem being classified~\cite{Chang2020}.
+
+On a high level, the classification algorithm first represents an input LCL problem as
+a directed graph and then by analysing the graph and its properties decides
+which complexity class the given LCL problem belongs to. First, however, similar to
+the case of round elimination, it is important to explain a representation which
+the technique requires the input LCL problem to be in. We will initially concentrate on the case
+of LCLs on paths and cycles, and only afterwards cover the extension to rooted trees.
+
+The representation is often referred to as "node-edge-checkable" formalism.
+In it, each node outputs one label on each of its \emph{ports} associated with
+its incident edges. Since only paths and cycles are allowed as graph families for
+input LCLs, most of the nodes have exactly 2 incident edges (except for endpoints nodes
+in paths, but these will be explained separately below). Therefore, a node constraint
+is a pair of labels, and node constraints is a set of such pairs. Each pair essentially
+means that a node can output these two labels on its incident edges. Edge constraints are,
+similarly, a set of pairs of allowed labels from the perspective of an edge. For example,
+consider an edge $e = \{u, v\}$. If $u$ outputs label $A$ on its port associated with edge $e$
+and $v$ outputs label $B$ on its port associated with the edge $e$, then the constraint $(AB)$
+(or alternatively $(BA)$) must be included in the set of edge constraints. Otherwise such output
+would be invalid. For case of paths, where two nodes have only one incident edge, it is also
+necessary to specify start-constraints and end-constraints, each consisting of a set of labels
+that two of the endpoint nodes are allowed to output on their only ports. To make the
+representation of the input LCLs clearer, here is an example of vertex 3-coloring
+(which can also be found in the original paper)~\cite{Chang2020}:
+
+
+
+
+
 \section{Classification of binary labelling problems}
 
 \section{Classification of ternary labelling problems}
