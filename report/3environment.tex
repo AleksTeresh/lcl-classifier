@@ -231,5 +231,76 @@ none of its children can be labelled with $Y$.
 
 \section{Summary of decidablity of LCL on trees}
 
-<Table showing what subfamilies are fully decidable and which are not>
+\begin{table}
+  \begin{tabular}{|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|} 
+  % Alignment of sells: l=left, c=center, r=right. 
+  % If you want wrapping lines, use p{width} exact cell widths.
+  % If you want vertical lines between columns, write | above between the letters
+  % Horizontal lines are generated with the \hline command:
+  \hline % The line on top of the table
+   & Paths and cycles & Labelled paths & Binary$\slash$Ternary labelling & Rooted regular trees & General trees \\
+  \hline 
+  % Place a & between the columns
+  % In the end of the line, use two backslashes \\ to break the line,
+  % then place a \hline to make a horizontal line below the row 
+    Degree & 2 & 2 & any & any & any \\
+  \hline
+
+    Input labelling & no & yes & no & no & yes \\
+  \hline
+
+    Regularity & any & any & regular & regular & any \\
+  \hline
+
+    Orientation & either & either & unrooted & rooted & either \\
+  \hline
+
+    \raggedright Output labelling & any & any & binary & any & any \\
+  \hline
+
+    Decidable & yes & yes & yes$\slash$almost$^*$ & yes & partially \\
+  \hline
+
+    Upper bound & $P$ & unknown & P$\slash$unknown & $\leq$ EXP & unknown \\
+  \hline
+
+    Hardness &  & $\geq$ PSPACE &  & unknown & $\geq$ PSPACE \\
+  \hline
+
+  Complexity classes &  & det &  & rand & no \\
+  \hline
+  $O(1)$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $\Theta(log log^* n)$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $\Theta(log^* n)$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $\Theta(log log n)$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $\Theta(log n)$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $Theta(n^{1/k})$ &  & det &  & rand & no \\
+  \hline
+  \dots &  & det &  & rand & no \\
+  \hline
+  $\Theta(n)$ &  & det &  & rand & no \\
+  \hline
+
+  \end{tabular} % for really simple tables, you can just use tabular
+  % You can place the caption either below (like here) or above the table
+  \caption{Overview of LCL problems on trees}
+  % Place the label just after the caption to make the link work
+  \label{table:courses}
+\end{table} % table makes a floating object with a title
+
 
