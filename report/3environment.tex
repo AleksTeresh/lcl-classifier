@@ -315,9 +315,6 @@ Similar to the previous sections, inputs are not allowed in the current setup.
   % Place a & between the columns
   % In the end of the line, use two backslashes \\ to break the line,
   % then place a \hline to make a horizontal line below the row 
-    Degree & 2 & 2 & any & any & any \\
-  \hline
-
     Input labelling & no & yes & no & no & yes \\
   \hline
 
@@ -330,42 +327,42 @@ Similar to the previous sections, inputs are not allowed in the current setup.
     \raggedright Output labelling & any & any & binary & any & any \\
   \hline
 
-    Decidable & yes & yes & yes$\slash$almost$^*$ & yes & partially \\
+    Decidable & yes & yes & partially (a)$\slash$partially (b) & yes & partially (c) \\
   \hline
 
-    Upper bound & $P$ & unknown & P$\slash$unknown & $\leq$ EXP & unknown \\
+    Upper bound & $P$ & unknown & P$\slash$unknown & $\leq EXP$ & unknown \\
   \hline
 
-    Hardness &  & $\geq$ PSPACE &  & unknown & $\geq$ PSPACE \\
+    Hardness &  & $\geq PSPACE$ &  & unknown & $\geq EXPTIME$ \\
   \hline
 
-    Complexity classes &  & det &  & rand & no \\
+    \textbf{Complexity classes} &  &  &  &  &  \\
   \hline
-    $O(1)$ &  & det &  & rand & no \\
+    $O(1)$ & det & det & det & det & det \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & no \\
   \hline
-    $\Theta(log log^* n)$ &  & det &  & rand & no \\
+    $\Theta(log log^* n)$ & no & no & no & no & unknown \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & unknown \\
   \hline
-    $\Theta(log^* n)$ &  & det &  & rand & no \\
+    $\Theta(log^* n)$ & det & det & no & det & det \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & no \\
   \hline
-    $\Theta(log log n)$ &  & det &  & rand & no \\
+    $\Theta(log log n)$ & no & no & rand & no & rand \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & no \\
   \hline
-    $\Theta(log n)$ &  & det &  & rand & no \\
+    $\Theta(log n)$ & no & no & det & det & det \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & no \\
   \hline
-    $\Theta(n^{1/k})$ &  & det &  & rand & no \\
+    $\Theta(n^{1/k})$ & no & no & no & no & det (d) \\
   \hline
-    \dots &  & det &  & rand & no \\
+    \dots & no & no & no & no & no \\
   \hline
-    $\Theta(n)$ &  & det &  & rand & no \\
+    $\Theta(n)$ & det & det & det & det & det \\
   \hline
 
   \end{tabular} % for really simple tables, you can just use tabular
