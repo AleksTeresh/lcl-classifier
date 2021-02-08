@@ -259,6 +259,21 @@ $s_W \in W$. Similarly, output of a "black" node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
 $s_B \ in B$.
 
+As an example, we will consider the already familiar \emph{sinkless orientation}
+problem. The problem can be represented as $\Pi = (\delta, 2, \{0, 1, 2, \dots, delta-1\}, \{ 1 \})$,
+where $\delta$ is any interger $> 2$. In this case, the degree of white nodes is
+$\delta$ and the degree of black nodes is $2$. Thus, white nodes here are the "actual"
+nodes of an underlying graph, while black nodes represent edges in the original graph.
+Furthermore, an output label $1$ represents an edge
+that is directed from a white node towards a black node, while label $0$ represents
+an edge directed from a black node towards a white node. That is why
+$W$ contains all integers from 1 to $\delta - 1$ but not $\delta$ - 
+this signifies that each white node must have an outdegree of at least 1,
+or in other words that edges of a white node cannot all be incoming.
+From the set $B$ we can see that each black node must have 
+exactly one incoming and one outgoing edge. This is because each edge (which is represented by a black node)
+in the original graph must be properly oriented, or in other words it must
+have exactly one head and one tail.
 
 \section{Classification of ternary labelling problems}
 
