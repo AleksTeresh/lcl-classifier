@@ -223,6 +223,43 @@ none of its children can be labelled with $Y$.
 
 \section{Classification of binary labelling problems}
 
+This section is based on the results obtained by Balliu et al. ~\cite{Balliu2019c}. The paper demonstrates
+that the case of binary labelling problems on (bi)regular unrooted regular trees is fully decidable in
+deterministic LOCAL model. The paper also shows that in many cases, randomised complexity of an LCL problem
+can also be decided following the described technique, although complete decidability in randomised setting
+still remains an open research question.
+
+As in the previous cases, we will start the section by explaining representation of an LCL that is compatible
+with the described methods. The representation assumes a $(\delta, \sigma)$-biregular unrooted tree.
+Such biregularity assumes proper 2-coloring of the graph is initially known.
+As was already shown previously, biregularity is not actually necessary. It is
+sufficient that an underlying graph of an input problem is simply a regular
+unrooted tree. Given that, it is then easy to transform the $\delta$-regular tree
+to a $(\delta, 2)$-biregular tree by replacing each edge $e = \{u, v\}$ with a new node that is
+connected to nodes $u$ and $v$ via new edges and not connected to any other nodes. Finally,
+in the given setting we do not care about nodes with smaller degrees e.g. leaves. This is
+because any the irregularities in a graph can only make it easier for nodes around to solve
+the problem, therefore, it was decided to leave any nodes with degrees other than $\delta$
+and $\sigma$ unconstrained~\cite{Balliu2019c}.
+
+Each problem is represented as a 4-tuple $\Pi = (\delta, \sigma, W, B)$, where
+$\delta$ and $\sigma$ are degrees of \emph{regular} nodes, $W$ is a set of so-called
+\emph{white constraints} and $B$ is a set of \emph{black constraints}. In order to
+explain what exactly the sets $W$ and $B$ represent, it is important to recall that
+this setting is concerned with \emph{binary} labeling only, which means that each node
+can only output two labels on its edges. We will refer to such two labels as "zero" and "one"
+labels (denoted 0 or 1). The problem is assumed to follow the edge-labeling
+formalism, in which each node outputs a label on each of its incident nodes so that
+any two adjacent nodes $v$ and $u$ can only output the same label on their common
+incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
+restrict the choice of outputs as well. A "white" node's output is valid
+if and only if the sum of labels on all its incident edges (that is summing
+output labels on its incident edges as zeros and ones) is such a number $s_W$ that
+$s_W \in W$. Similarly, output of a "black" node is valid if and only if
+the sum of all labels on its incident edges sums to some number $s_B$ such that
+$s_B \ in B$.
+
+
 \section{Classification of ternary labelling problems}
 
 \section{Classification of problems on rooted trees}
@@ -232,7 +269,7 @@ none of its children can be labelled with $Y$.
 \section{Summary of decidablity of LCL on trees}
 
 \begin{table}
-  \begin{tabular}{|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|} 
+  \begin{tabular}{|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|}
   % Alignment of sells: l=left, c=center, r=right. 
   % If you want wrapping lines, use p{width} exact cell widths.
   % If you want vertical lines between columns, write | above between the letters
