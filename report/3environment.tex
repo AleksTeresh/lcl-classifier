@@ -285,17 +285,39 @@ given a description of an binary labelling LCL on (bi)regular unrooted tree,
 it is trivial to determine its complexity class (albeit only in deterministic setting)
 for both computers and human beings.
 
-\section{Classification of ternary labelling problems}
+\section{Classification of ternary labeling problems}
 
 This section will describe an unpublished work by Rocher that builds on top
 of the results introduced in the previous section~\cite{Rocher2020doc, Rocher2020clas}.
-The write-up shows that decidability of a vast majority of ternary labeling LCL problems on unrooted
+The write-up shows that decidability of a majority of ternary labeling LCL problems on unrooted
 (bi)regular trees is possible in deterministic LOCAL model. Although not all such problems
 can be classified using the techniques, many interesting ternary labelling problems on trees
 are indeed covered by the presented methods.
 Similar to the previous sections, inputs are not allowed in the current setup.
 
+The representation of a problem resembles that of the previous section. A
+ternary labeling problem is represented as $\Pi = (\delta, \sigma, W, B)$
+where $\delta$ and $\sigma$ are degrees in the underlying $(\delta, \sigma)$-biregular
+tree, while $W$ and $B$ are constraint sets for white and black nodes respectively.
+Each constraint in the sets $W$ or $B$ is a 3-tuple of the form $(x_0, x_1, x_2)$
+where $x_0$ represents how many incident (to a given node) edges can be labelled with label "0",
+$x_1$ shows how many edges can be labeled with "1", and $x_2$ - with "2". Similar to the case
+of binary labeling in unrooted regular trees, we assume that only these 3 labels are allowed to
+be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
+in such a way that each edge is labeled with the same label by each of its incident nodes.
+Furthermore, we again are only concerned with nodes of degree $\delta$ or $\sigma$. Nodes of
+any lower degee only make the problem easier.
 
+We will consider vertex 3-coloring as an example problem to demonstrate the formalism.
+In this problem, each node picks one of the three labels such that none of its neighbours
+pick the same label. In the case of 3-regular tree (which is the same as $(3, 2)$-biregular tree,
+as we can always turn edges into nodes of degree 2), the problem looks as follows:
+
+$$\Pi = (3, 2, W = \{ (3, 0, 0), (0, 3, 0), (0, 0, 3) \}, B = \{ (1, 1, 0), (1, 0, 1), (0, 1, 1) \})$$
+Here, $W$ signifies that fact that each node has to be colored with exactly one label. The node then outputs
+the single picked color on all of its incident edges. Then, black nodes that represent edges in the
+original underlying graph, make sure (hence the constraint set $B$) that no two adjacent nodes
+pick the same color.
 
 \section{Classification of problems on rooted trees}
 
