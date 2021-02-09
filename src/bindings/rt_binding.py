@@ -1,4 +1,4 @@
-from rooted_tree_classifier import is_log_star_solvable, is_log_solvable
+from rooted_tree_classifier import is_log_star_solvable, is_log_solvable, is_constant_solvable
 from problem import GenericProblem
 from parser import parseConfigs
 from config_util import eachConstrIsHomogeneous, normalizeConstraints
@@ -43,13 +43,17 @@ def classify(problem: GenericProblem) -> GenericResponse:
   randLowerBound = CONST
   if is_log_solvable(constraints):  # is not empty
     if is_log_star_solvable(constraints):
-      detUpperBound = ITERATED_LOG
-      randUpperBound = ITERATED_LOG
+      if is_constant_solvable(constraints):
+        detUpperBound = CONST
+        randUpperBound = CONST
+      else:
+        detUpperBound = ITERATED_LOG
+        randUpperBound = ITERATED_LOG
     else:
       detUpperBound = LOG
       detLowerBound = LOG
       randUpperBound = LOG
-      randLowerBound = LOGLOG
+      randLowerBound = LOG # because LOGLOG does not exist in the setting
   else:
     detLowerBound = GLOBAL
     randLowerBound = GLOBAL

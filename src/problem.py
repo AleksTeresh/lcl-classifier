@@ -42,8 +42,11 @@ class GenericProblem:
     isRooted: bool = False,
     isRegular: bool = True,
   ):
-    # if activeAllowAll and passiveAllowAll:
-    #   throw Exception('problem')
+    if activeAllowAll and passiveAllowAll:
+      raise Exception('problem', 'Both activeAllowAll and passiveAllowAll always yield a trivial problem')
+
+    if (not activeConstraints and not activeAllowAll) or (not passiveConstraints and not passiveAllowAll):
+      raise Exception('problem', 'If passive or active configuration are empty, the problem is always unsolvable')
 
     self.activeConstraints = activeConstraints
     self.activeAllowAll = activeAllowAll
