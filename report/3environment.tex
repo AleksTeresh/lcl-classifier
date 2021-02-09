@@ -321,12 +321,20 @@ pick the same color.
 
 Nevertheless, it is important to discuss limitation of the manuscript as well. First of all,
 the work concentrates mainly on the case of $(3, 2)$-biregular trees. The author claims that
-the methods described can just as well be applied to cases of higher degrees, but it unclear
-how practical it would be both in terms of time it will require to classify a single problem
+the methods described can just as well be applied to cases of higher degrees, but it is unclear
+how practical it would be both in terms of time it would require to classify a single problem
 and in terms of how many problems of higher degrees will actaully be tightly classified. Secondly,
 even in the case when $\delta = 3$ and $\sigma = 2$, 106 non-isomorphic problems have not been
 classified tighly, or in other words there are 106 problems with non-matching lower and upper bounds.
-
+Finally, the developed methods are not well suited for situations when we would need to
+classify only one problem. Instead, the algorithms first classify all non-isomorphic
+problems on $(\delta, \sigma)$-biregular tree, and afterwards allow to a user to query
+one problem at a time from the list of already classified problems. Among other things,
+it means that to classify a single problem on $(4, 2)$-biregular trees, in the current
+implementation, it is necessary to first classify all non-isomorphic problems on $(4, 2)$-biregular trees,
+which might take considerable amount of time. Finally, the write-up presents classification
+techniques only for deterministic setting, which further limits the kinds of LCLs that
+can be classified using the techniques.
 
 \section{Classification of problems on rooted trees}
 
