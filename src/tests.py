@@ -17,7 +17,7 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.detLowerBound, ITERATED_LOG)
     self.assertEqual(res.detUpperBound, ITERATED_LOG)
     self.assertEqual(res.randUpperBound, ITERATED_LOG)
-    self.assertEqual(res.randLowerBound, UNKNOWN)
+    self.assertEqual(res.randLowerBound, ITERATED_LOG)
 
   def testTlp2(self):
     # AA CC BC
@@ -31,7 +31,7 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.detLowerBound, CONST)
     self.assertEqual(res.detUpperBound, CONST)
     self.assertEqual(res.randUpperBound, CONST)
-    self.assertEqual(res.randLowerBound, UNKNOWN) #TODO: change to const
+    self.assertEqual(res.randLowerBound, CONST)
 
   def testTlp3(self):
     # AC AB CC BC
@@ -45,7 +45,7 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.detLowerBound, CONST)
     self.assertEqual(res.detUpperBound, CONST)
     self.assertEqual(res.randUpperBound, CONST)
-    self.assertEqual(res.randLowerBound, UNKNOWN) #TODO: change to const
+    self.assertEqual(res.randLowerBound, CONST)
 
   def testBrt1(self):
     # "111",
@@ -62,7 +62,7 @@ class TestClassifier(unittest.TestCase):
     )
     res = classify(binaryRootedTreeProblem1)
     self.assertEqual(res.detLowerBound, CONST)
-    self.assertEqual(res.detUpperBound, ITERATED_LOG) #TODO: change to const
+    self.assertEqual(res.detUpperBound, CONST)
     self.assertEqual(res.randUpperBound, CONST)
     self.assertEqual(res.randLowerBound, CONST)
 
@@ -98,7 +98,7 @@ class TestClassifier(unittest.TestCase):
     )
     res = classify(binaryRootedTreeProblem3)
     self.assertEqual(res.detLowerBound, UNSOLVABLE)
-    self.assertEqual(res.detUpperBound, UNKNOWN) #TODO: change to UNSOLVABLE
+    self.assertEqual(res.detUpperBound, UNSOLVABLE)
     self.assertEqual(res.randUpperBound, UNSOLVABLE)
     self.assertEqual(res.randLowerBound, UNSOLVABLE)
 
@@ -132,8 +132,8 @@ class TestClassifier(unittest.TestCase):
     )
     res = classify(cyclePathProblem2)
     self.assertEqual(res.detLowerBound, CONST)
-    self.assertEqual(res.detUpperBound, UNKNOWN)
-    self.assertEqual(res.randUpperBound, UNKNOWN)
+    self.assertEqual(res.detUpperBound, UNSOLVABLE)
+    self.assertEqual(res.randUpperBound, UNSOLVABLE)
     self.assertEqual(res.randLowerBound, CONST)
 
   def testCyclePath3(self):

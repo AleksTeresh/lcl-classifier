@@ -51,7 +51,7 @@ def classify(problem: GenericProblem):
   return GenericResponse(
     problem,
     complexityMapping[result.upper_bound],  # because deterministic UB is also a randomised UB
-    UNKNOWN,
+    CONST,
     complexityMapping[result.upper_bound],
-    complexityMapping[result.upper_bound],
+    complexityMapping[result.lower_bound],
   )

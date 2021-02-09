@@ -11,9 +11,9 @@ class GenericResponse:
   def __init__(
     self,
     problem,
-    randUpperBound = UNKNOWN,
+    randUpperBound = UNSOLVABLE,
     randLowerBound = CONST,
-    detUpperBound = UNKNOWN,
+    detUpperBound = UNSOLVABLE,
     detLowerBound = CONST,
     solvableCount = "",
     unsolvableCount = "",

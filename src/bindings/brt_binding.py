@@ -66,7 +66,7 @@ def classify(problem: GenericProblem):
     problem,
     complexityMapping[result['upper-bound']],
     complexityMapping[result['lower-bound']],
-    UNKNOWN,
+    UNSOLVABLE,
     complexityMapping[result['lower-bound']], # because randomised LB is also a deterministic LB
     result['solvable-count'],
     result['unsolvable-count']

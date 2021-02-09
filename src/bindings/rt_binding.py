@@ -37,9 +37,9 @@ def classify(problem: GenericProblem) -> GenericResponse:
   constraints = list(normalizeConstraints(parsedActives))
   constraints = [moveRootLabelToCenter(x) for x in constraints]
 
-  detUpperBound = UNKNOWN
+  detUpperBound = UNSOLVABLE
   detLowerBound = CONST
-  randUpperBound = UNKNOWN
+  randUpperBound = UNSOLVABLE
   randLowerBound = CONST
   if is_log_solvable(constraints):  # is not empty
     if is_log_star_solvable(constraints):
