@@ -19,8 +19,6 @@ def classify(problem: GenericProblem) -> GenericResponse:
   parsedRoots = parseConfigs(problem.rootConstraints)
   parsedLeaves = parseConfigs(problem.leafConstraints)
 
-  # TODO: handle allowAllActive, allowAllPassive
-
   activeDegree = len(parsedActives[0]) if len(parsedActives) else 2
   passiveDegree = len(parsedPassives[0]) if len(parsedPassives) else 2
   leafDegree = len(parsedLeaves[0]) if len(parsedLeaves) else 1

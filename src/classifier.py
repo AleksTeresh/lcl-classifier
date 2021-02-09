@@ -70,24 +70,32 @@ def classify(problem: GenericProblem):
   except Exception as e:
     print(e.args)
     cpResult = GenericResponse(problem)
+  except e:
+    print(e)
 
   try:  
     rtResult = rtClassify(problem)
   except Exception as e:
     print(e.args)
     rtResult = GenericResponse(problem)
+  except e:
+    print(e)
 
   try:  
     tlpResult = tlpClassify(problem)
   except Exception as e:
     print(e.args)
     tlpResult = GenericResponse(problem)
+  except e:
+    print(e)
 
   try:  
     brtResult = brtClassify(problem)
   except Exception as e:
     print(e.args)
     brtResult = GenericResponse(problem)
+  except e:
+    print(e)
 
   responses = [cpResult, rtResult, tlpResult, brtResult]
 
@@ -100,4 +108,5 @@ def classify(problem: GenericProblem):
     cpResult.solvableCount,
     cpResult.unsolvableCount,
   )
+  print(response)
   return postprocess(response)
