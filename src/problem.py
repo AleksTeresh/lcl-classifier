@@ -2,15 +2,6 @@ from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue
 from functools import reduce
 
-class BinaryRootedTreeProblem:
-  allowedConfigs: Set[str]
-
-class TlpProblem:
-  white_constraint: Set[str]
-  black_constraint: Set[str]
-  white_degree: int
-  black_degree: int
-
 class GenericProblem:
   def __checkDegrees(self, configs):
     if len(configs) == 0:
@@ -49,9 +40,11 @@ class GenericProblem:
     isPath: bool = False,
     isDirected: bool = False,
     isRooted: bool = False,
-    # isBipartite: bool = True,
     isRegular: bool = True,
   ):
+    # if activeAllowAll and passiveAllowAll:
+    #   throw Exception('problem')
+
     self.activeConstraints = activeConstraints
     self.activeAllowAll = activeAllowAll
     
@@ -71,7 +64,6 @@ class GenericProblem:
     self.isTree = isTree
     self.isRooted = isRooted
 
-    # self.isBipartite = isBipartite
     self.isRegular = isRegular
 
     self.__checkParams()

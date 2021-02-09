@@ -67,26 +67,26 @@ def postprocess(response):
 def classify(problem: GenericProblem):
   try:
     cpResult = cpClassify(problem)
-  except:
-    print('cp-exception')
+  except Exception as e:
+    print(e.args)
     cpResult = GenericResponse(problem)
 
   try:  
     rtResult = rtClassify(problem)
-  except:
-    print('rt-exception')
+  except Exception as e:
+    print(e.args)
     rtResult = GenericResponse(problem)
 
   try:  
     tlpResult = tlpClassify(problem)
-  except:
-    print('tlp-exception')
+  except Exception as e:
+    print(e.args)
     tlpResult = GenericResponse(problem)
 
   try:  
     brtResult = brtClassify(problem)
-  except:
-    print('brt-exception')
+  except Exception as e:
+    print(e.args)
     brtResult = GenericResponse(problem)
 
   responses = [cpResult, rtResult, tlpResult, brtResult]

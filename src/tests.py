@@ -1,5 +1,5 @@
 import unittest
-from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
+from problem import GenericProblem
 from parser import parseConfigs
 from classifier import classify
 from complexity import *
