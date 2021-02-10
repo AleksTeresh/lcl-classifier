@@ -1,8 +1,8 @@
 from problem import GenericProblem
 
 tlpProblem1 = GenericProblem(
-  ['A B', 'C C'],
-  ['B B C', 'A A A', 'B B B', 'A A C', 'B C C']
+  ['A B', 'C C', 'D A'],
+  ['B B C', 'A A A', 'B B B', 'A A C', 'B C C', 'Y X B']
 )
 tlpProblem1.normalize()
 

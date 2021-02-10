@@ -137,6 +137,31 @@ class GenericProblem:
 
     return (newActive, newPassive, newLeaf, newRoot)
 
+  def __removeUnusedConfigs(self):
+    newActiveConstraints = self.activeConstraints
+    newPassiveConstraints = self.passiveConstraints
+
+    activeAlphabet = set(flatten(newActiveConstraints)) - {' '}
+    passiveAlphabet = set(flatten(newPassiveConstraints)) - {' '}
+
+    while (
+      (activeAlphabet - passiveAlphabet) or
+      (passiveAlphabet - activeAlphabet)
+    ):
+      diff = (activeAlphabet - passiveAlphabet)
+      if diff:
+        newActiveConstraints = [conf for conf in self.activeConstraints if not diff.intersection(set(conf))]
+
+      diff = (passiveAlphabet - activeAlphabet)
+      if diff:
+        newPassiveConstraints = [conf for conf in self.passiveConstraints if not diff.intersection(set(conf))]
+
+      activeAlphabet = set(flatten(newActiveConstraints)) - {' '}
+      passiveAlphabet = set(flatten(newPassiveConstraints)) - {' '}
+
+    self.activeConstraints = newActiveConstraints
+    self.passiveConstraints = newPassiveConstraints
+
   def getAlphabeth(self):
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
 
@@ -153,4 +178,5 @@ class GenericProblem:
     self.passiveConstraints = normalized[1]
     self.leafConstraints = normalized[2]
     self.rootConstraints = normalized[3]
-    # return normalized
+
+    self.__removeUnusedConfigs()
