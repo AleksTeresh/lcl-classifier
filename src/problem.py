@@ -1,6 +1,9 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten
 from functools import reduce
+from parser import parseConfigs
+from config_util import normalizeConstraints
+import itertools
 
 class GenericProblem:
   def __checkDegrees(self, configs):
@@ -64,12 +67,12 @@ class GenericProblem:
     self.activeConstraints = activeConstraints
     if activeAllowAll:
       self.activeConstraints = ["".join(alphabet) for _ in activeConstraints[0].split(' ')]
-    self.activeAllowAll = activeAllowAll
+    # self.activeAllowAll = activeAllowAll
     
     self.passiveConstraints = passiveConstraints
     if passiveAllowAll:
       self.passiveConstraints = ["".join(alphabet) for _ in passiveConstraints[0].split(' ')]
-    self.passiveAllowAll = passiveAllowAll
+    # self.passiveAllowAll = passiveAllowAll
     
     self.leafConstraints = leafConstraints
     if leafAllowAll:
@@ -97,3 +100,57 @@ class GenericProblem:
       return self.__dict__ == other.__dict__
     else:
       return False
+
+  def __getNewLine(self, renaming, line):
+    'returns a string of chars'
+    newline = [renaming[char] for char in line]
+    newline = sorted(newline)
+    return "".join(newline)
+
+  # TODO: adopted
+  # TODO: rename variables
+  def __permuteNormalize(self, renaming, constraints):
+    'returns a list of strings'
+    newbits = len(renaming)
+    
+    parsedConstraints = parseConfigs(constraints)
+    normalizedConstraints = list(normalizeConstraints(parsedConstraints))
+
+    newlines = [self.__getNewLine(renaming, x) for x in normalizedConstraints]
+
+    newlines = list(set(newlines)) # i.e. unique()
+    newlines = sorted(newlines)
+
+    return newlines
+
+  def __handleAlphabetPerm(self, perm):
+    'returns a tuple of lists'
+    renaming = {}
+        
+    for (x, y) in zip(self.getAlphabeth(), perm):
+      renaming[x] = y
+
+    newActive = self.__permuteNormalize(renaming, self.activeConstraints)
+    newPassive = self.__permuteNormalize(renaming, self.passiveConstraints)
+    newLeaf = self.__permuteNormalize(renaming, self.leafConstraints)
+    newRoot = self.__permuteNormalize(renaming, self.rootConstraints)
+
+    return (newActive, newPassive, newLeaf, newRoot)
+
+  def getAlphabeth(self):
+    return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
+
+  # TODO: adopted from
+  def normalize(self):
+    numLabels = len(self.getAlphabeth())
+    nums = list(range(numLabels))
+    letters = [chr(x + 97) for x in nums] # works only when numLabels < 27
+    allPerms = list(itertools.permutations(letters))
+    normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
+    # normalized is a list of tulpes of lists
+    normalized = sorted(normalized)[0]
+    self.activeConstraints = normalized[0]
+    self.passiveConstraints = normalized[1]
+    self.leafConstraints = normalized[2]
+    self.rootConstraints = normalized[3]
+    # return normalized

@@ -35,6 +35,7 @@ def classify(problem: GenericProblem):
 
   activeConstraints = list(normalizeConstraints(parsedActives))
   passiveConstraints = list(normalizeConstraints(parsedPassives))
+  print(activeConstraints)
 
   result = get_problem(activeConstraints, passiveConstraints)
 
