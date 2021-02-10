@@ -28,6 +28,39 @@ class GenericProblem:
       self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
       raise Exception('invalid parameters', 'Leaf and root constraints must be the same on undirected paths') 
 
+  def __checkBadConstrInputs(
+    self,
+    activeConstraints,
+    passiveConstraints,
+    activeAllowAll,
+    passiveAllowAll
+  ):
+    if activeAllowAll and passiveAllowAll:
+      raise Exception('problem', 'Both activeAllowAll and passiveAllowAll always yield a trivial problem')
+
+    if (not activeConstraints and not activeAllowAll) or (not passiveConstraints and not passiveAllowAll):
+      raise Exception('problem', 'If passive or active configuration are empty, the problem is always unsolvable')
+
+    if not activeConstraints:
+      raise Exception('problem', 'Specify at least one active config, s.t. the tool knows the degree of active nodes')
+
+    if not passiveConstraints:
+      raise Exception('problem', 'Specify at least one passive config, s.t. the tool knows the degree of passive nodes')
+
+  def __assumeRootConstr(
+    self,
+    rootAllowAll,
+    rootConstraints,
+    activeConstraints,
+    passiveConstraints
+  ):
+    # if root degree cannot be deduced because rootConstraints is an empty set,
+    # assume (rather arbitrarily) that root is an active node
+    if rootAllowAll and not rootConstraints:
+      rootConstraints = activeConstraints
+      alphabet = set(flatten(activeConstraints + passiveConstraints)) - {' '}
+      self.rootConstraints = ["".join(alphabet) for _ in rootConstraints[0].split(' ')]
+
   def  __init__(
     self,
     activeConstraints: List[str],
@@ -45,24 +78,29 @@ class GenericProblem:
     isRooted: bool = False,
     isRegular: bool = True,
   ):
-    if activeAllowAll and passiveAllowAll:
-      raise Exception('problem', 'Both activeAllowAll and passiveAllowAll always yield a trivial problem')
+    self.__checkBadConstrInputs(
+      activeConstraints,
+      passiveConstraints,
+      activeAllowAll,
+      passiveAllowAll
+    )
 
-    if (not activeConstraints and not activeAllowAll) or (not passiveConstraints and not passiveAllowAll):
-      raise Exception('problem', 'If passive or active configuration are empty, the problem is always unsolvable')
+    parsedActive = parseConfigs(activeConstraints)
+    parsedPassive = parseConfigs(passiveConstraints)
+    normalizedActive = list(normalizeConstraints(parsedActive))
+    normalizedPassive = list(normalizeConstraints(parsedPassive))
+    self.activeConstraints = normalizedActive
+    self.passiveConstraints = normalizedPassive
 
-    if not activeConstraints:
-      raise Exception('problem', 'Specify at least one active config, s.t. the tool knows the degree of active nodes')
-
-    if not passiveConstraints:
-      raise Exception('problem', 'Specify at least one passive config, s.t. the tool knows the degree of passive nodes')
-
-    # if root degree cannot be deduced because rootConstraints is an empty set,
-    # assume (rather arbitrarily) that root is an active node
-    if rootAllowAll and not rootConstraints:
-      rootConstraints = activeConstraints
+    self.__assumeRootConstr(
+      rootAllowAll,
+      rootConstraints,
+      activeConstraints,
+      passiveConstraints
+    )
 
     alphabet = set(flatten(activeConstraints + passiveConstraints)) - {' '}
+    self.__removeUnusedConfigs()
 
     self.activeConstraints = activeConstraints
     if activeAllowAll:
@@ -79,9 +117,7 @@ class GenericProblem:
       self.leafConstraints = ["".join(alphabet)]
     self.leafAllowAll = leafAllowAll
     
-    self.rootConstraints = rootConstraints
-    if rootAllowAll:
-      self.rootConstraints = ["".join(alphabet) for _ in rootConstraints[0].split(' ')]
+    self.rootConstraints = rootConstraints    
     self.rootAllowAll = rootAllowAll
     
     self.isCycle = isCycle
@@ -110,13 +146,11 @@ class GenericProblem:
   # TODO: adopted
   # TODO: rename variables
   def __permuteNormalize(self, renaming, constraints):
-    'returns a list of strings'
-    newbits = len(renaming)
-    
-    parsedConstraints = parseConfigs(constraints)
-    normalizedConstraints = list(normalizeConstraints(parsedConstraints))
+    'returns a list of strings'  
+    # parsedConstraints = parseConfigs(constraints)
+    # normalizedConstraints = list(normalizeConstraints(parsedConstraints))
 
-    newlines = [self.__getNewLine(renaming, x) for x in normalizedConstraints]
+    newlines = [self.__getNewLine(renaming, x) for x in constraints]
 
     newlines = list(set(newlines)) # i.e. unique()
     newlines = sorted(newlines)
@@ -178,5 +212,3 @@ class GenericProblem:
     self.passiveConstraints = normalized[1]
     self.leafConstraints = normalized[2]
     self.rootConstraints = normalized[3]
-
-    self.__removeUnusedConfigs()
