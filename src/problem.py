@@ -1,10 +1,91 @@
 from typing import NamedTuple, List, Set
-from util import onlyOneIsTrue, flatten
+from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
 from config_util import parseAndNormalize
-import itertools
+import itertools, copy
 
 class GenericProblem:
+  def  __init__(
+    self,
+    activeConstraints: List[str],
+    passiveConstraints: List[str],
+    leafConstraints: List[str] = [],
+    rootConstraints: List[str] = [],
+    activeAllowAll: bool = False,
+    passiveAllowAll: bool = False,
+    leafAllowAll: bool = True,
+    rootAllowAll: bool = True,
+    isTree: bool = True,
+    isCycle: bool = False,
+    isPath: bool = False,
+    isDirected: bool = False,
+    isRooted: bool = False,
+    isRegular: bool = True,
+  ):
+    # print(activeConstraints, passiveConstraints)
+    self.__checkBadConstrInputs(
+      activeConstraints,
+      passiveConstraints,
+      activeAllowAll,
+      passiveAllowAll
+    )
+
+    self.__assignActivesAndPassives(
+      activeConstraints,
+      passiveConstraints,
+      activeAllowAll,
+      passiveAllowAll
+    )
+
+    self.__assumeRootConstr(
+      rootAllowAll,
+      rootConstraints,
+      activeConstraints,
+      passiveConstraints
+    )
+
+    self.__removeUnusedConfigs()
+    
+    self.__assignLeafs(leafConstraints, leafAllowAll)
+    self.leafAllowAll = leafAllowAll
+    
+    self.__assignRoots(rootConstraints, rootAllowAll)
+    self.rootAllowAll = rootAllowAll
+    
+    self.isCycle = isCycle
+    self.isPath = isPath
+    self.isDirected = isDirected
+
+    self.isTree = isTree
+    self.isRooted = isRooted
+
+    self.isRegular = isRegular
+
+    self.__checkParams()
+
+  def __key(self):
+    return (
+      self.activeConstraints,
+      self.passiveConstraints,
+      self.leafConstraints,
+      self.rootConstraints,
+      self.isCycle,
+      self.isPath,
+      self.isDirected,
+      self.isTree,
+      self.isRooted,
+      self.isRegular
+    )
+  
+  def __eq__(self, other):
+    if isinstance(other, self.__class__):
+      return self.__key() == other.__key()
+    else:
+      return False
+
+  def __hash__(self):
+    return hash(self.__key())
+
   def __checkDegrees(self, configs):
     if len(configs) == 0:
       return configs
@@ -53,37 +134,37 @@ class GenericProblem:
     activeAllowAll,
     passiveAllowAll
   ):
-    self.activeConstraints = parseAndNormalize(activeConstraints)
-    self.passiveConstraints = parseAndNormalize(passiveConstraints)
+    self.activeConstraints = tuple(parseAndNormalize(activeConstraints))
+    self.passiveConstraints = tuple(parseAndNormalize(passiveConstraints))
     alphabet = self.getAlphabet()
 
     if activeAllowAll:
       allowAllNotnormnalized = ["".join(alphabet) for _ in activeConstraints[0].split(' ')]
-      self.activeConstraints = parseAndNormalize(allowAllNotnormnalized)
+      self.activeConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
     if passiveAllowAll:
       allowAllNotnormnalized = ["".join(alphabet) for _ in passiveConstraints[0].split(' ')]
-      self.passiveConstraints = parseAndNormalize(allowAllNotnormnalized)
+      self.passiveConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
   def __assignLeafs(
     self,
     leafConstraints,
     leafAllowAll
   ):
-    self.leafConstraints = leafConstraints
+    self.leafConstraints = tuple(leafConstraints)
     if leafAllowAll:
       allowAllNotnormnalized = ["".join(self.getAlphabet())]
-      self.leafConstraints = parseAndNormalize(allowAllNotnormnalized)
+      self.leafConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
   def __assignRoots(
     self,
     rootConstraints,
     rootAllowAll
   ):
-    self.rootConstraints = rootConstraints
+    self.rootConstraints = tuple(rootConstraints)
     if rootAllowAll:
       allowAllNotnormnalized= ["".join(self.getAlphabet())]
-      self.rootConstraints = parseAndNormalize(allowAllNotnormnalized)
+      self.rootConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
   def __assumeRootConstr(
     self,
@@ -97,70 +178,7 @@ class GenericProblem:
     if rootAllowAll and not rootConstraints:
       rootConstraints = activeConstraints
       alphabet = set(flatten(activeConstraints + passiveConstraints)) - {' '}
-      self.rootConstraints = ["".join(alphabet) for _ in rootConstraints[0].split(' ')]
-
-  def  __init__(
-    self,
-    activeConstraints: List[str],
-    passiveConstraints: List[str],
-    leafConstraints: List[str] = [],
-    rootConstraints: List[str] = [],
-    activeAllowAll: bool = False,
-    passiveAllowAll: bool = False,
-    leafAllowAll: bool = True,
-    rootAllowAll: bool = True,
-    isTree: bool = True,
-    isCycle: bool = False,
-    isPath: bool = False,
-    isDirected: bool = False,
-    isRooted: bool = False,
-    isRegular: bool = True,
-  ):
-    self.__checkBadConstrInputs(
-      activeConstraints,
-      passiveConstraints,
-      activeAllowAll,
-      passiveAllowAll
-    )
-
-    self.__assignActivesAndPassives(
-      activeConstraints,
-      passiveConstraints,
-      activeAllowAll,
-      passiveAllowAll
-    )
-
-    self.__assumeRootConstr(
-      rootAllowAll,
-      rootConstraints,
-      activeConstraints,
-      passiveConstraints
-    )
-
-    self.__removeUnusedConfigs()
-    
-    self.__assignLeafs(leafConstraints, leafAllowAll)
-    self.leafAllowAll = leafAllowAll
-    
-    self.__assignRoots(rootConstraints, rootAllowAll)
-    self.rootAllowAll = rootAllowAll
-    
-    self.isCycle = isCycle
-    self.isPath = isPath
-    self.isDirected = isDirected
-
-    self.isTree = isTree
-    self.isRooted = isRooted
-
-    self.isRegular = isRegular
-
-    self.__checkParams()
-  
-  def __eq__(self, other):
-    if isinstance(other, self.__class__):
-      return self.__dict__ == other.__dict__
-    else:
-      return False
+      self.rootConstraints = tuple(["".join(alphabet) for _ in rootConstraints[0].split(' ')])
 
   def __getNewLine(self, renaming, line):
     'returns a string of chars'
@@ -217,11 +235,14 @@ class GenericProblem:
       if diff:
         newPassiveConstraints = [conf for conf in self.passiveConstraints if not diff.intersection(set(conf))]
 
+      if not newActiveConstraints or not newPassiveConstraints:
+        raise Exception('problem', 'If passive or active configuration are empty, the problem is always unsolvable')
+
       activeAlphabet = set(flatten(newActiveConstraints)) - {' '}
       passiveAlphabet = set(flatten(newPassiveConstraints)) - {' '}
 
-    self.activeConstraints = newActiveConstraints
-    self.passiveConstraints = newPassiveConstraints
+    self.activeConstraints = tuple(newActiveConstraints)
+    self.passiveConstraints = tuple(newPassiveConstraints)
 
   def getAlphabet(self):
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
@@ -229,13 +250,12 @@ class GenericProblem:
   # TODO: adopted from
   def normalize(self):
     numLabels = len(self.getAlphabet())
-    nums = list(range(numLabels))
-    letters = [chr(x + 97) for x in nums] # works only when numLabels < 27
+    letters = letterRange(numLabels)
     allPerms = list(itertools.permutations(letters))
     normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
     # normalized is a list of tulpes of lists
     normalized = sorted(normalized)[0]
-    self.activeConstraints = normalized[0]
-    self.passiveConstraints = normalized[1]
-    self.leafConstraints = normalized[2]
-    self.rootConstraints = normalized[3]
+    self.activeConstraints = tuple(normalized[0])
+    self.passiveConstraints = tuple(normalized[1])
+    self.leafConstraints = tuple(normalized[2])
+    self.rootConstraints = tuple(normalized[3])

@@ -1,36 +1,42 @@
-from problem import GenericProblem
+from tqdm import tqdm
+from util import letterRange, powerset, flatten
+from problem import GenericProblem as P
+from itertools import combinations_with_replacement
 
-tlpProblem1 = GenericProblem(
-  ['A B', 'C C', 'D ADC'],
-  ['B B C', 'A A A', 'B B B', 'A A C', 'B C C', 'Y X B']
-)
-tlpProblem1.normalize()
+def problemFromConstraints(tulpes):
+  problems = set()
+  for (a, b) in tqdm(tulpes):
+    if a and b:
+      try:
+        p = P(a,b)
+      except Exception as e:
+        if e.args[0] == 'problem':
+          pass
+        else:
+          raise e
+      p.normalize()
+      problems.add(p)
 
-tlpProblem2 = GenericProblem(
-  ['A C', 'B B'],
-  ['C C B', 'A A A', 'C C C', 'A A B', 'C B B']
-)
-tlpProblem2.normalize()
+  for p in problems:
+    print(p.activeConstraints, p.passiveConstraints)
+  return problems
 
-tlpProblem3 = GenericProblem(
-  ['a a a', 'b a a', 'c a a'],
-  ['a a', 'b b', 'c c'],
-)
-tlpProblem3.normalize()
 
-tlpProblem4 = GenericProblem(
-  ['a a a', 'b a a', 'c a a'],
-  ['a a', 'b b', 'c c'],
-  isTree=True, isCycle=False, isPath=False,
-  isRooted=True
-)
-tlpProblem4.normalize()
+def generate(
+  activeDegree,
+  passiveDegree,
+  labelCount
+):
+  alphabet = letterRange(labelCount)
+  # take activeDegree labels
+  # from a pallete of activeLabelCount
+  actives = ["".join(x) for x in combinations_with_replacement(alphabet, activeDegree)]
+  passives = ["".join(x) for x in combinations_with_replacement(alphabet, passiveDegree)]
+  activeConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(actives)]
+  passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
+  problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
 
-print(tlpProblem3.activeConstraints)
-print(tlpProblem3.passiveConstraints)
-print(tlpProblem3.leafConstraints)
+  problems = problemFromConstraints(problemTuples)
+  print(len(problems))
 
-print(tlpProblem4.activeConstraints)
-print(tlpProblem4.passiveConstraints)
-print(tlpProblem4.leafConstraints)
-
+generate(2, 3, 3)
