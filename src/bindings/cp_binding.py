@@ -16,7 +16,7 @@ def classify(p: GenericProblem) -> GenericResponse:
   activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2
   passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
   leafDegree = len(p.leafConstraints[0]) if len(p.leafConstraints) else 1
-  # print(activeDegree, passiveDegree, leafDegree)
+
   if leafDegree != 1:
     raise Exception('cyclepath', 'Leaf constraints must always be of degree 1')
 
@@ -63,14 +63,3 @@ def classify(p: GenericProblem) -> GenericResponse:
     result['solvable'],
     result['unsolvable']
   )
-  # print('Round complexity of the problem is %s' % result['complexity'])
-  # print(
-  #   'Deciding the number of solvable instances is NP-complete' if
-  #   result['solvable'] == HARD else
-  #   'There are %s solvable instances' % result['solvable']
-  # )
-  # print(
-  #   'Deciding the number of unsolvable instances is NP-complete' if
-  #   result['unsolvable'] == HARD else
-  #   'There are %s unsolvable instances' % result['unsolvable']
-  # )
