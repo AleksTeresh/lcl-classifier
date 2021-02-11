@@ -13,34 +13,29 @@ from util import flatten
 from response import GenericResponse
 from complexity import *
 
-def classify(problem: GenericProblem) -> GenericResponse:
-  parsedActives = parseConfigs(problem.activeConstraints)
-  parsedPassives = parseConfigs(problem.passiveConstraints)
-  parsedRoots = parseConfigs(problem.rootConstraints)
-  parsedLeaves = parseConfigs(problem.leafConstraints)
-
-  activeDegree = len(parsedActives[0]) if len(parsedActives) else 2
-  passiveDegree = len(parsedPassives[0]) if len(parsedPassives) else 2
-  leafDegree = len(parsedLeaves[0]) if len(parsedLeaves) else 1
-
+def classify(p: GenericProblem) -> GenericResponse:
+  activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2
+  passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
+  leafDegree = len(p.leafConstraints[0]) if len(p.leafConstraints) else 1
+  # print(activeDegree, passiveDegree, leafDegree)
   if leafDegree != 1:
     raise Exception('cyclepath', 'Leaf constraints must always be of degree 1')
 
   if passiveDegree != 2:
     raise Exception('cyclepath', 'Passive constraints must always be of degree 2')
 
-  if problem.isTree:
-    if not eachConstrIsHomogeneous(parsedActives):
+  if p.isTree:
+    if not eachConstrIsHomogeneous(p.activeConstraints):
       raise Exception('cyclepath', 'On trees, node constraints must be the same for all incident edges.')
   elif activeDegree != 2:
     raise Exception('cyclepath', 'In a path or cycle, passive constraints must always be of degree 2')
 
-  problemType = Type.TREE if problem.isTree else (Type.DIRECTED if problem.isDirected else Type.UNDIRECTED)
+  problemType = Type.TREE if p.isTree else (Type.DIRECTED if p.isDirected else Type.UNDIRECTED)
 
-  edgeConstraints = set(normalizeConstraints(parsedPassives))
-  nodeConstraints = {} if problemType == Type.TREE else set(normalizeConstraints(parsedActives))
-  startConstraints = {} if problem.rootAllowAll else set(normalizeConstraints(parsedRoots))
-  endConstraints = {} if problem.leafAllowAll else set(normalizeConstraints(parsedLeaves))
+  edgeConstraints = set(p.passiveConstraints)
+  nodeConstraints = {} if problemType == Type.TREE else set(p.activeConstraints)
+  startConstraints = {} if p.rootAllowAll else set(p.rootConstraints)
+  endConstraints = {} if p.leafAllowAll else set(p.leafConstraints)
 
   cpProblem = CyclePathProblem(
     nodeConstraints,
@@ -61,7 +56,7 @@ def classify(problem: GenericProblem) -> GenericResponse:
   normalisedComplexity = complexityMapping[result['complexity']]
 
   return GenericResponse(
-    problem,
+    p,
     normalisedComplexity,
     normalisedComplexity,
     normalisedComplexity,

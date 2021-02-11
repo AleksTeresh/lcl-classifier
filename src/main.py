@@ -1,6 +1,5 @@
 import sys, getopt
 from problem import GenericProblem, TlpProblem, BinaryRootedTreeProblem
-from parser import parseConfigs
 from classifier import classify
 
 REtorProblem1 = GenericProblem(

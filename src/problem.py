@@ -1,8 +1,7 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten
 from functools import reduce
-from parser import parseConfigs
-from config_util import normalizeConstraints
+from config_util import parseAndNormalize
 import itertools
 
 class GenericProblem:
@@ -47,6 +46,45 @@ class GenericProblem:
     if not passiveConstraints:
       raise Exception('problem', 'Specify at least one passive config, s.t. the tool knows the degree of passive nodes')
 
+  def __assignActivesAndPassives(
+    self,
+    activeConstraints,
+    passiveConstraints,
+    activeAllowAll,
+    passiveAllowAll
+  ):
+    self.activeConstraints = parseAndNormalize(activeConstraints)
+    self.passiveConstraints = parseAndNormalize(passiveConstraints)
+    alphabet = self.getAlphabet()
+
+    if activeAllowAll:
+      allowAllNotnormnalized = ["".join(alphabet) for _ in activeConstraints[0].split(' ')]
+      self.activeConstraints = parseAndNormalize(allowAllNotnormnalized)
+
+    if passiveAllowAll:
+      allowAllNotnormnalized = ["".join(alphabet) for _ in passiveConstraints[0].split(' ')]
+      self.passiveConstraints = parseAndNormalize(allowAllNotnormnalized)
+
+  def __assignLeafs(
+    self,
+    leafConstraints,
+    leafAllowAll
+  ):
+    self.leafConstraints = leafConstraints
+    if leafAllowAll:
+      allowAllNotnormnalized = ["".join(self.getAlphabet())]
+      self.leafConstraints = parseAndNormalize(allowAllNotnormnalized)
+
+  def __assignRoots(
+    self,
+    rootConstraints,
+    rootAllowAll
+  ):
+    self.rootConstraints = rootConstraints
+    if rootAllowAll:
+      allowAllNotnormnalized= ["".join(self.getAlphabet())]
+      self.rootConstraints = parseAndNormalize(allowAllNotnormnalized)
+
   def __assumeRootConstr(
     self,
     rootAllowAll,
@@ -85,12 +123,12 @@ class GenericProblem:
       passiveAllowAll
     )
 
-    parsedActive = parseConfigs(activeConstraints)
-    parsedPassive = parseConfigs(passiveConstraints)
-    normalizedActive = list(normalizeConstraints(parsedActive))
-    normalizedPassive = list(normalizeConstraints(parsedPassive))
-    self.activeConstraints = normalizedActive
-    self.passiveConstraints = normalizedPassive
+    self.__assignActivesAndPassives(
+      activeConstraints,
+      passiveConstraints,
+      activeAllowAll,
+      passiveAllowAll
+    )
 
     self.__assumeRootConstr(
       rootAllowAll,
@@ -99,25 +137,12 @@ class GenericProblem:
       passiveConstraints
     )
 
-    alphabet = set(flatten(activeConstraints + passiveConstraints)) - {' '}
     self.__removeUnusedConfigs()
-
-    self.activeConstraints = activeConstraints
-    if activeAllowAll:
-      self.activeConstraints = ["".join(alphabet) for _ in activeConstraints[0].split(' ')]
-    # self.activeAllowAll = activeAllowAll
     
-    self.passiveConstraints = passiveConstraints
-    if passiveAllowAll:
-      self.passiveConstraints = ["".join(alphabet) for _ in passiveConstraints[0].split(' ')]
-    # self.passiveAllowAll = passiveAllowAll
-    
-    self.leafConstraints = leafConstraints
-    if leafAllowAll:
-      self.leafConstraints = ["".join(alphabet)]
+    self.__assignLeafs(leafConstraints, leafAllowAll)
     self.leafAllowAll = leafAllowAll
     
-    self.rootConstraints = rootConstraints    
+    self.__assignRoots(rootConstraints, rootAllowAll)
     self.rootAllowAll = rootAllowAll
     
     self.isCycle = isCycle
@@ -130,6 +155,10 @@ class GenericProblem:
     self.isRegular = isRegular
 
     self.__checkParams()
+    print(self.activeConstraints)
+    print(self.passiveConstraints)
+    print(self.leafConstraints)
+    print(self.rootConstraints)
   
   def __eq__(self, other):
     if isinstance(other, self.__class__):
@@ -147,9 +176,6 @@ class GenericProblem:
   # TODO: rename variables
   def __permuteNormalize(self, renaming, constraints):
     'returns a list of strings'  
-    # parsedConstraints = parseConfigs(constraints)
-    # normalizedConstraints = list(normalizeConstraints(parsedConstraints))
-
     newlines = [self.__getNewLine(renaming, x) for x in constraints]
 
     newlines = list(set(newlines)) # i.e. unique()
@@ -161,7 +187,7 @@ class GenericProblem:
     'returns a tuple of lists'
     renaming = {}
         
-    for (x, y) in zip(self.getAlphabeth(), perm):
+    for (x, y) in zip(self.getAlphabet(), perm):
       renaming[x] = y
 
     newActive = self.__permuteNormalize(renaming, self.activeConstraints)
@@ -196,12 +222,13 @@ class GenericProblem:
     self.activeConstraints = newActiveConstraints
     self.passiveConstraints = newPassiveConstraints
 
-  def getAlphabeth(self):
+  def getAlphabet(self):
+    # print(self.activeConstraints, self.passiveConstraints)
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
 
   # TODO: adopted from
   def normalize(self):
-    numLabels = len(self.getAlphabeth())
+    numLabels = len(self.getAlphabet())
     nums = list(range(numLabels))
     letters = [chr(x + 97) for x in nums] # works only when numLabels < 27
     allPerms = list(itertools.permutations(letters))

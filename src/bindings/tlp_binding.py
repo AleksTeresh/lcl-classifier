@@ -5,27 +5,24 @@ from config_util import normalizeConstraints
 from response import GenericResponse
 from complexity import *
 
-def classify(problem: GenericProblem):
-  if problem.isCycle:
+def classify(p: GenericProblem):
+  if p.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
-  if problem.isRooted:
+  if p.isRooted:
     raise Exception('tlp', 'Cannot classify if the tree is rooted')
 
-  if problem.isDirected:
+  if p.isDirected:
     raise Exception('tlp', 'Cannot classify if the path is directed')
 
-  if not problem.isRegular:
+  if not p.isRegular:
     raise Exception('tlp', 'Cannot classify if the graph is not regular')
 
-  if not problem.rootAllowAll or not problem.leafAllowAll:
+  if not p.rootAllowAll or not p.leafAllowAll:
     raise Exception('tlp', 'Leaves and roots must allow all configurations')
 
-  parsedActives = parseConfigs(problem.activeConstraints)
-  parsedPassives = parseConfigs(problem.passiveConstraints)
-
-  activeDegree = len(parsedActives[0]) if len(parsedActives) else 3
-  passiveDegree = len(parsedPassives[0]) if len(parsedPassives) else 2
+  activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
+  passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
 
   if not (
     (activeDegree == 2 and passiveDegree == 2) or
@@ -33,12 +30,7 @@ def classify(problem: GenericProblem):
     (activeDegree == 3 and passiveDegree == 2)):
     raise Exception('rooted-tree', 'Allowed degrees pairs are (2, 2), (2, 3), (3, 2)')
 
-  activeConstraints = list(normalizeConstraints(parsedActives))
-  passiveConstraints = list(normalizeConstraints(parsedPassives))
-  print(activeConstraints)
-
-  result = get_problem(activeConstraints, passiveConstraints)
-
+  result = get_problem(p.activeConstraints, p.passiveConstraints)
 
   complexityMapping = {
     tlpComplexity.Constant: CONST,
@@ -50,7 +42,7 @@ def classify(problem: GenericProblem):
   }
 
   return GenericResponse(
-    problem,
+    p,
     complexityMapping[result.upper_bound],  # because deterministic UB is also a randomised UB
     CONST,
     complexityMapping[result.upper_bound],
