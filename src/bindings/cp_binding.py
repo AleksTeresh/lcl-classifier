@@ -7,7 +7,6 @@ from cyclepath_classifier import CONST as CP_CONST
 from cyclepath_classifier import GLOBAL as CP_GLOBAL
 from cyclepath_classifier import ITERATED_LOG as CP_ITERATED_LOG
 from cyclepath_classifier import UNSOLVABLE as CP_UNSOLVABLE
-from parser import parseConfigs
 from config_util import normalizeConstraints, eachConstrIsHomogeneous
 from util import flatten
 from response import GenericResponse

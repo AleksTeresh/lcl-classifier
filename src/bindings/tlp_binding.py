@@ -1,6 +1,5 @@
 from problem import GenericProblem
 from tlp_classifier import get_problem, complexity_name, Complexity as tlpComplexity
-from parser import parseConfigs
 from config_util import normalizeConstraints
 from response import GenericResponse
 from complexity import *
