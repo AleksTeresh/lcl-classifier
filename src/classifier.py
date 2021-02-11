@@ -68,7 +68,6 @@ def classify(problem: GenericProblem):
   try:
     cpResult = cpClassify(problem)
   except Exception as e:
-    print(e.args)
     cpResult = GenericResponse(problem)
   except e:
     print(e)
@@ -76,7 +75,6 @@ def classify(problem: GenericProblem):
   try:  
     rtResult = rtClassify(problem)
   except Exception as e:
-    print(e.args)
     rtResult = GenericResponse(problem)
   except e:
     print(e)
@@ -84,7 +82,6 @@ def classify(problem: GenericProblem):
   try:  
     tlpResult = tlpClassify(problem)
   except Exception as e:
-    print(e.args)
     tlpResult = GenericResponse(problem)
   except e:
     print(e)
@@ -92,7 +89,6 @@ def classify(problem: GenericProblem):
   try:  
     brtResult = brtClassify(problem)
   except Exception as e:
-    print(e.args)
     brtResult = GenericResponse(problem)
   except e:
     print(e)
