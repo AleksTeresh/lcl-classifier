@@ -12,7 +12,25 @@ tlpProblem2 = GenericProblem(
 )
 tlpProblem2.normalize()
 
-print(tlpProblem1.activeConstraints)
-print(tlpProblem1.passiveConstraints)
-print(tlpProblem2.activeConstraints)
-print(tlpProblem2.passiveConstraints)
+tlpProblem3 = GenericProblem(
+  ['a a a', 'b a a', 'c a a'],
+  ['a a', 'b b', 'c c'],
+)
+tlpProblem3.normalize()
+
+tlpProblem4 = GenericProblem(
+  ['a a a', 'b a a', 'c a a'],
+  ['a a', 'b b', 'c c'],
+  isTree=True, isCycle=False, isPath=False,
+  isRooted=True
+)
+tlpProblem4.normalize()
+
+print(tlpProblem3.activeConstraints)
+print(tlpProblem3.passiveConstraints)
+print(tlpProblem3.leafConstraints)
+
+print(tlpProblem4.activeConstraints)
+print(tlpProblem4.passiveConstraints)
+print(tlpProblem4.leafConstraints)
+

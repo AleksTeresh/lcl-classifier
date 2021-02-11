@@ -165,7 +165,10 @@ class GenericProblem:
   def __getNewLine(self, renaming, line):
     'returns a string of chars'
     newline = [renaming[char] for char in line]
-    newline = sorted(newline)
+    if len(newline) != 0 and (self.isDirected or self.isRooted):
+      newline = [newline[0]] + sorted(newline[1:])
+    else:
+      newline = sorted(newline)
     return "".join(newline)
 
   # TODO: adopted
@@ -193,6 +196,8 @@ class GenericProblem:
 
     return (newActive, newPassive, newLeaf, newRoot)
 
+  # for now works only for active and passive constraints
+  # leaf and root constraints are yet to come
   def __removeUnusedConfigs(self):
     newActiveConstraints = self.activeConstraints
     newPassiveConstraints = self.passiveConstraints
