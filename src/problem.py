@@ -155,10 +155,6 @@ class GenericProblem:
     self.isRegular = isRegular
 
     self.__checkParams()
-    print(self.activeConstraints)
-    print(self.passiveConstraints)
-    print(self.leafConstraints)
-    print(self.rootConstraints)
   
   def __eq__(self, other):
     if isinstance(other, self.__class__):
@@ -223,7 +219,6 @@ class GenericProblem:
     self.passiveConstraints = newPassiveConstraints
 
   def getAlphabet(self):
-    # print(self.activeConstraints, self.passiveConstraints)
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
 
   # TODO: adopted from
