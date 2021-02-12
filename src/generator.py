@@ -4,14 +4,15 @@ from problem import GenericProblem as P
 from classifier import classify
 from complexity import *
 from itertools import combinations_with_replacement, product
-import os, json
+from storeJson import storeJson
+from batch_classify import classifyAndStore
 
 def problemFromConstraints(tulpes):
   problems = set()
-  for (a, b) in tqdm(tulpes):
+  for i, (a, b) in enumerate(tqdm(tulpes)):
     if a and b:
       try:
-        p = P(a,b, isTree=True, isCycle=False, isPath=False, isRooted=True, isRegular=True)
+        p = P(a,b, isTree=True, isCycle=False, isPath=False, isRooted=True, isRegular=True, id=i)
       except Exception as e:
         if e.args[0] == 'problem':
           continue
@@ -20,8 +21,6 @@ def problemFromConstraints(tulpes):
       p.normalize()
       problems.add(p)
 
-  for p in problems:
-    print(p.activeConstraints, p.passiveConstraints)
   return problems
 
 def generate(
@@ -53,7 +52,7 @@ def generate(
   passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
   problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
   problems = problemFromConstraints(problemTuples)
-  return problems
+  return list(problems)
 
 # p = P(
 #   ['2 1 1', '1 1 2'],
@@ -61,36 +60,21 @@ def generate(
 #   isTree=True, isCycle=False, isPath=False, isRooted=True, isRegular=True)
 # p.normalize()
 # print(p.activeConstraints, p.passiveConstraints)
-ps = generate(3, 2, 3, passivesAllSame=True, rooted=True)
+activeDegree = 3
+passiveDegree = 2
+labelCount = 2
+activesAllSame = False
+passivesAllSame = True
+rooted = True
+ps = generate(
+  activeDegree,
+  passiveDegree,
+  labelCount,
+  activesAllSame,
+  passivesAllSame,
+  rooted
+)
 
-with open(os.path.dirname(os.path.realpath(__file__)) + '/problems/problems-temp.json', 'w+', encoding='utf-8') as f:
-  json.dump(ps, f, ensure_ascii=False, indent=2)
+storeJson(f'problems_rooted_bin_{3}_{2}_{2}.json', ps)
+classifyAndStore(f'results_rooted_bin_{3}_{2}_{2}.json', ps)
 
-tightCtr = 0
-constCtr = 0
-logStartCtr = 0
-logCtr = 0
-globalCtr = 0
-unsolvableCtr = 0
-for p in ps:
-  res = classify(p)
-  if res.randUpperBound == res.randLowerBound:
-    tightCtr += 1
-    if res.randUpperBound == CONST:
-      constCtr += 1
-    if res.randUpperBound == ITERATED_LOG:
-      logStartCtr += 1
-    if res.randUpperBound == LOG:
-      logCtr += 1
-    if res.randUpperBound == GLOBAL:
-      globalCtr += 1
-    if res.randUpperBound == UNSOLVABLE:
-      unsolvableCtr += 1
-
-print("Total: ", len(ps))
-print("Tight: ", tightCtr)
-print("(1): ", constCtr)
-print("(log* n): ", logStartCtr)
-print("(log n): ", logCtr)
-print("(n): ", globalCtr)
-print(" - : ", unsolvableCtr)

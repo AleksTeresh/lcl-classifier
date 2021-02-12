@@ -29,7 +29,6 @@ def removeUnknowns(response):
   return response
 
 def propagateBounds(response):
-  # print(response.randUpperBound, response.detUpperBound)
   # propagate rand upper
   response.randUpperBound = complexities[min(
     complexities.index(response.randUpperBound),
@@ -104,5 +103,5 @@ def classify(problem: GenericProblem):
     cpResult.solvableCount,
     cpResult.unsolvableCount,
   )
-  # print(response)
+
   return postprocess(response)

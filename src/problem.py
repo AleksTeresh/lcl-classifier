@@ -21,8 +21,8 @@ class GenericProblem:
     isDirected: bool = False,
     isRooted: bool = False,
     isRegular: bool = True,
+    id=None
   ):
-    # print(activeConstraints, passiveConstraints)
     self.__checkBadConstrInputs(
       activeConstraints,
       passiveConstraints,
@@ -60,6 +60,8 @@ class GenericProblem:
     self.isRooted = isRooted
 
     self.isRegular = isRegular
+    if not id is None:
+      self.id = id
 
     self.__checkParams()
 
@@ -76,6 +78,21 @@ class GenericProblem:
       self.isRooted,
       self.isRegular
     )
+
+  def dict(self):
+    return self.__dict__
+    # return {
+    #   "activeConstraints": self.activeConstraints,
+    #   "passiveConstraints": self.passiveConstraints,
+    #   "leafConstraints": self.leafConstraints,
+    #   "rootConstraints": self.rootConstraints,
+    #   "isCycle": self.isCycle,
+    #   "isPath": self.isPath,
+    #   "isDirected": self.isDirected,
+    #   "isTree": self.isTree,
+    #   "isRooted": self.isRooted,
+    #   "isRegular": self.isRegular
+    # }
   
   def __eq__(self, other):
     if isinstance(other, self.__class__):
@@ -259,3 +276,4 @@ class GenericProblem:
     self.passiveConstraints = tuple(normalized[1])
     self.leafConstraints = tuple(normalized[2])
     self.rootConstraints = tuple(normalized[3])
+

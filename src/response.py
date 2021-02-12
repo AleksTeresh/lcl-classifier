@@ -28,6 +28,18 @@ class GenericResponse:
     self.unsolvableCount = unsolvableCount
     self.papers = papers
 
+  def dict(self):
+    return {
+      "problem": self.problem if self.problem.id is None else self.problem.id,
+      "randUpperBound": self.randUpperBound,
+      "randLowerBound": self.randLowerBound,
+      "detUpperBound": self.detUpperBound,
+      "detLowerBound": self.detLowerBound,
+      "solvableCount": self.solvableCount,
+      "unsolvableCount": self.unsolvableCount,
+      "papers": self.papers
+    }
+
   def __repr__(self):
     return "Rand. UB: %s\n\
 Rand. LB: %s\n\
@@ -37,4 +49,5 @@ Det. LB: %s\n"%(
   self.randLowerBound,
   self.detUpperBound,
   self.detLowerBound
-)
+)  
+    
