@@ -67,77 +67,124 @@ def compute(filePath):
     stats.totalSize = len(data)
     return stats
 
-def printStats(stats):
+def prettyPrint(stats):
   print("In total: %s problems" % stats.totalSize)
-  # TODO: pretty printing
+  print()
 
+  print('Stats for randomised setting:')
+  print('*****************************')
+  print()
+  print("Solvable in constant time: %s " % stats.const.randSolvable)
+  print("Solvable in log* time: %s " % stats.logStar.randSolvable)
+  print("Solvable in loglog time: %s " % stats.logLog.randSolvable)
+  print("Solvable in log time: %s " % stats.log.randSolvable)
+  print("Solvable in linear time: %s " % stats.linear.randSolvable)
+  print("Unsolvable: %s" % stats.unsolvable.randSolvable)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.randSolvable -
+    stats.logStar.randSolvable -
+    stats.logLog.randSolvable -
+    stats.log.randSolvable -
+    stats.linear.randSolvable -
+    stats.unsolvable.randSolvable
+  ))
+  print()
 
-  # print("Solvable in constant time: %s " % constSolvable)
-  # print("Solvable in log* time: %s " % logStarSolvable)
-  # print("Solvable in loglog time: %s " % loglogSolvable)
-  # print("Solvable in log time: %s " % logSolvable)
-  # print("Solvable in linear time: %s " % linearSolvable)
-  # print("Unsolvable: %s" % unsolvable)
-  # print("TBD: %s" % (totalSize - unsolvable - constSolvable - logStarSolvable - loglogSolvable - logSolvable - linearSolvable))
-  # print()
+  print('Lower bounds:')
+  print("Constant time: %s " % stats.const.randLowerBound)
+  print("Log* time: %s " % stats.logStar.randLowerBound)
+  print("Loglog time: %s " % stats.logLog.randLowerBound)
+  print("Log time: %s " % stats.log.randLowerBound)
+  print("Linear time: %s " % stats.linear.randLowerBound)
+  print("Unsolvable: %s" % stats.unsolvable.randLowerBound)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.randLowerBound -
+    stats.logStar.randLowerBound -
+    stats.logLog.randLowerBound -
+    stats.log.randLowerBound -
+    stats.linear.randLowerBound -
+    stats.unsolvable.randLowerBound
+  ))
+  print()
 
-  # print("Lower bounds")
-  # print("Constant time: %s " % lowerBoundConstant)
-  # print("Log* time: %s " % lowerBoundLogStar)
-  # print("Loglog time: %s " % lowerBoundLoglog)
-  # print("Log time: %s " % lowerBoundLog)
-  # print("Linear time: %s " % lowerBoundLinear)
-  # print("TBD: %s" % (totalSize - unsolvable - lowerBoundConstant - lowerBoundLogStar - lowerBoundLoglog - lowerBoundLog - lowerBoundLinear))
-  # print()
+  print('Upper bounds:')
+  print("Constant time: %s " % stats.const.randUpperBound)
+  print("Log* time: %s " % stats.logStar.randUpperBound)
+  print("Loglog time: %s " % stats.logLog.randUpperBound)
+  print("Log time: %s " % stats.log.randUpperBound)
+  print("Linear time: %s " % stats.linear.randUpperBound)
+  print("Unsolvable: %s" % stats.unsolvable.randUpperBound)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.randUpperBound -
+    stats.logStar.randUpperBound -
+    stats.logLog.randUpperBound -
+    stats.log.randUpperBound -
+    stats.linear.randUpperBound -
+    stats.unsolvable.randUpperBound
+  ))
+  print()
 
-  # print("Upper bounds")
-  # print("Constant time: %s " % upperBoundConstant)
-  # print("Log* time: %s " % upperBoundLogStar)
-  # print("Loglog time: %s " % upperBoundLoglog)
-  # print("Log time: %s " % upperBoundLog)
-  # print("Linear time: %s " % upperBoundLinear)
-  # print("TBD: %s" % (totalSize - unsolvable - upperBoundConstant - upperBoundLogStar - upperBoundLoglog - upperBoundLog - upperBoundLinear))
+  print('Stats for deterministic setting:')
+  print('*****************************')
+  print()
+  print("Solvable in constant time: %s " % stats.const.detSolvable)
+  print("Solvable in log* time: %s " % stats.logStar.detSolvable)
+  print("Solvable in loglog time: %s " % stats.logLog.detSolvable)
+  print("Solvable in log time: %s " % stats.log.detSolvable)
+  print("Solvable in linear time: %s " % stats.linear.detSolvable)
+  print("Unsolvable: %s" % stats.unsolvable.detSolvable)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.detSolvable -
+    stats.logStar.detSolvable -
+    stats.logLog.detSolvable -
+    stats.log.detSolvable -
+    stats.linear.detSolvable -
+    stats.unsolvable.detSolvable
+  ))
+  print()
+
+  print('Lower bounds:')
+  print("Constant time: %s " % stats.const.detLowerBound)
+  print("Log* time: %s " % stats.logStar.detLowerBound)
+  print("Loglog time: %s " % stats.logLog.detLowerBound)
+  print("Log time: %s " % stats.log.detLowerBound)
+  print("Linear time: %s " % stats.linear.detLowerBound)
+  print("Unsolvable: %s" % stats.unsolvable.detLowerBound)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.detLowerBound -
+    stats.logStar.detLowerBound -
+    stats.logLog.detLowerBound -
+    stats.log.detLowerBound -
+    stats.linear.detLowerBound -
+    stats.unsolvable.detLowerBound
+  ))
+  print()
+
+  print('Upper bounds:')
+  print("Constant time: %s " % stats.const.detUpperBound)
+  print("Log* time: %s " % stats.logStar.detUpperBound)
+  print("Loglog time: %s " % stats.logLog.detUpperBound)
+  print("Log time: %s " % stats.log.detUpperBound)
+  print("Linear time: %s " % stats.linear.detUpperBound)
+  print("Unsolvable: %s" % stats.unsolvable.detUpperBound)
+  print("TBD: %s" % (
+    stats.totalSize -
+    stats.const.detUpperBound -
+    stats.logStar.detUpperBound -
+    stats.logLog.detUpperBound -
+    stats.log.detUpperBound -
+    stats.linear.detUpperBound -
+    stats.unsolvable.detUpperBound
+  ))
+  print()
 
 def printStatistics(filePath):
     stats = compute(filePath)
-    printStats(stats)
+    prettyPrint(stats)
 
 printStatistics('./problems/results_rooted_bin_3_2_2.json')
-
-
-
-  
-
-# tightCtr = 0
-# constCtr = 0
-# logStartCtr = 0
-# logCtr = 0
-# globalCtr = 0
-# unsolvableCtr = 0
-# classified = []
-# for p in tqdm(ps):
-#   res = classify(p)
-#   classified.append(res)
-#   if res.randUpperBound == res.randLowerBound:
-#     tightCtr += 1
-#     if res.randUpperBound == CONST:
-#       constCtr += 1
-#     if res.randUpperBound == ITERATED_LOG:
-#       logStartCtr += 1
-#     if res.randUpperBound == LOG:
-#       logCtr += 1
-#     if res.randUpperBound == GLOBAL:
-#       globalCtr += 1
-#     if res.randUpperBound == UNSOLVABLE:
-#       unsolvableCtr += 1
-
-# with open(os.path.dirname(os.path.realpath(__file__)) + '/problems/classified.json', 'w+', encoding='utf-8') as f:
-#   json.dump([x.__dict__ for x in classified], f, ensure_ascii=False, indent=2)
-
-# print("Total: ", len(ps))
-# print("Tight: ", tightCtr)
-# print("(1): ", constCtr)
-# print("(log* n): ", logStartCtr)
-# print("(log n): ", logCtr)
-# print("(n): ", globalCtr)
-# print(" - : ", unsolvableCtr)
