@@ -62,7 +62,7 @@ def generate(
 # print(p.activeConstraints, p.passiveConstraints)
 activeDegree = 3
 passiveDegree = 2
-labelCount = 2
+labelCount = 3
 activesAllSame = False
 passivesAllSame = True
 rooted = True
@@ -75,6 +75,11 @@ ps = generate(
   rooted
 )
 
-storeJson(f'problems_rooted_bin_{3}_{2}_{2}.json', ps)
-classifyAndStore(f'results_rooted_bin_{3}_{2}_{2}.json', ps)
+fileNameSuffix = (f'_rooted_bin_{activeDegree}_{passiveDegree}_{labelCount}_' +
+  ('t_' if activesAllSame else 'f_') +
+  ('t_' if passivesAllSame else 'f_') +
+  ('t' if rooted else 'f') +
+  '.json')
+storeJson('problems' + fileNameSuffix, ps)
+classifyAndStore('results' + fileNameSuffix, ps)
 
