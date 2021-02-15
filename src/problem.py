@@ -82,6 +82,7 @@ class GenericProblem:
     self.id = id
 
     self.__checkParams()
+    self.normalize()
 
   def __key(self):
     variableDict = copy.deepcopy(self.__dict__)
