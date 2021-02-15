@@ -46,6 +46,20 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.randUpperBound, CONST)
     self.assertEqual(res.randLowerBound, CONST)
 
+  def testTlp4(self):
+    # AB, CC
+    # BBC, AAA, BBB, AAC, BCC
+    # output: log* n
+    tlpProblem1 = GenericProblem(
+      ['1 2', '3 3'],
+      ['2 2 3', '1 1 1', '2 2 2', '1 1 3', '2 3 3']
+    )
+    res = classify(tlpProblem1)
+    self.assertEqual(res.detLowerBound, ITERATED_LOG)
+    self.assertEqual(res.detUpperBound, ITERATED_LOG)
+    self.assertEqual(res.randUpperBound, ITERATED_LOG)
+    self.assertEqual(res.randLowerBound, ITERATED_LOG)
+
   def testBrt1(self):
     # "111",
     # "121",
