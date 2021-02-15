@@ -5,12 +5,42 @@
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
     "detLowerBound": "(1)",
+    "solvableCount": "infinitely many",
+    "unsolvableCount": "finitely many",
+    "papers": []
+  },
+  {
+    "problem": 2,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
-    "problem": 2,
+    "problem": 3,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 4,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 6,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -20,7 +50,7 @@
     "papers": []
   },
   {
-    "problem": 4,
+    "problem": 8,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -30,7 +60,27 @@
     "papers": []
   },
   {
-    "problem": 9,
+    "problem": 10,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 12,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(n)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(n)",
+    "solvableCount": "finitely many",
+    "unsolvableCount": "infinitely many",
+    "papers": []
+  },
+  {
+    "problem": 14,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -40,17 +90,7 @@
     "papers": []
   },
   {
-    "problem": 13,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 15,
+    "problem": 16,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -62,25 +102,15 @@
   {
     "problem": 18,
     "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
+    "randLowerBound": "(1)",
     "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
+    "detLowerBound": "(1)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
-    "problem": 22,
-    "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 26,
+    "problem": 21,
     "randUpperBound": "(n)",
     "randLowerBound": "(n)",
     "detUpperBound": "(n)",
@@ -90,7 +120,7 @@
     "papers": []
   },
   {
-    "problem": 36,
+    "problem": 22,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -100,39 +130,49 @@
     "papers": []
   },
   {
-    "problem": 38,
+    "problem": 26,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 31,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
     "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 35,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 37,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
     "problem": 42,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 49,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 51,
     "randUpperBound": "(log n)",
-    "randLowerBound": "(log n)",
+    "randLowerBound": "(loglog n)",
     "detUpperBound": "(log n)",
     "detLowerBound": "(log n)",
     "solvableCount": "",
@@ -140,19 +180,9 @@
     "papers": []
   },
   {
-    "problem": 61,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 67,
+    "problem": 46,
     "randUpperBound": "(log n)",
-    "randLowerBound": "(log n)",
+    "randLowerBound": "(loglog n)",
     "detUpperBound": "(log n)",
     "detLowerBound": "(log n)",
     "solvableCount": "",
@@ -160,7 +190,17 @@
     "papers": []
   },
   {
-    "problem": 68,
+    "problem": 47,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 48,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -170,7 +210,17 @@
     "papers": []
   },
   {
-    "problem": 69,
+    "problem": 53,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "infinitely many",
+    "unsolvableCount": "finitely many",
+    "papers": []
+  },
+  {
+    "problem": 57,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -180,7 +230,17 @@
     "papers": []
   },
   {
-    "problem": 75,
+    "problem": 60,
+    "randUpperBound": "(n)",
+    "randLowerBound": "(n)",
+    "detUpperBound": "(n)",
+    "detLowerBound": "(n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 62,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -190,7 +250,87 @@
     "papers": []
   },
   {
-    "problem": 101,
+    "problem": 70,
+    "randUpperBound": "(n)",
+    "randLowerBound": "(n)",
+    "detUpperBound": "(n)",
+    "detLowerBound": "(n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 71,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 80,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 84,
+    "randUpperBound": "(n)",
+    "randLowerBound": "(n)",
+    "detUpperBound": "(n)",
+    "detLowerBound": "(n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 86,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "infinitely many",
+    "unsolvableCount": "finitely many",
+    "papers": []
+  },
+  {
+    "problem": 87,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 88,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 96,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 100,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -210,7 +350,17 @@
     "papers": []
   },
   {
-    "problem": 110,
+    "problem": 106,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(loglog n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 114,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -220,131 +370,11 @@
     "papers": []
   },
   {
-    "problem": 116,
+    "problem": 119,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
     "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 120,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "infinitely many",
-    "unsolvableCount": "finitely many",
-    "papers": []
-  },
-  {
-    "problem": 123,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 125,
-    "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 126,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 136,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 143,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 145,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 157,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 177,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 208,
-    "randUpperBound": "unsolvable",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "unsolvable",
-    "detLowerBound": "unsolvable",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 231,
-    "randUpperBound": "unsolvable",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "unsolvable",
-    "detLowerBound": "unsolvable",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 234,
-    "randUpperBound": "unsolvable",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "unsolvable",
-    "detLowerBound": "unsolvable",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []

@@ -26,7 +26,7 @@ def problemFromConstraints(
           continue
         else:
           raise e
-      p.normalize()
+      # p.normalize()
       problems.add(p)
 
   return problems
@@ -66,13 +66,13 @@ activeDegree = 3
 passiveDegree = 2
 labelCount = 2
 activesAllSame = False
-passivesAllSame = True
+passivesAllSame = False
 flags = ProblemFlags(
   isTree=True,
   isCycle=False,
   isPath=False,
   isDirected=False,
-  isRooted=True,
+  isRooted=False,
   isRegular=True
 )
 
