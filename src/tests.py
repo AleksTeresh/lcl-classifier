@@ -154,10 +154,10 @@ class TestClassifier(unittest.TestCase):
       )
     )
     res = classify(cyclePathProblem2)
-    self.assertEqual(res.detLowerBound, CONST)
-    self.assertEqual(res.detUpperBound, UNSOLVABLE)
-    self.assertEqual(res.randUpperBound, UNSOLVABLE)
-    self.assertEqual(res.randLowerBound, CONST)
+    self.assertEqual(res.detLowerBound, ITERATED_LOG)
+    self.assertEqual(res.detUpperBound, ITERATED_LOG)
+    self.assertEqual(res.randUpperBound, ITERATED_LOG)
+    self.assertEqual(res.randLowerBound, ITERATED_LOG)
 
   def testCyclePath3(self):
     # -dir -n "{00, 1M}" -e "{01, 10, 11, MM}"
