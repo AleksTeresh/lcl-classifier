@@ -21,6 +21,11 @@ class ProblemFlags:
     self.isRooted = isRooted
     self.isRegular = isRegular
 
+  def __key(self):
+    return self.__dict__.values()
+
+  def dict(self):
+    return self.__dict__
 class GenericProblem:
   def  __init__(
     self,
@@ -72,18 +77,7 @@ class GenericProblem:
     self.__checkParams()
 
   def __key(self):
-    return (
-      self.activeConstraints,
-      self.passiveConstraints,
-      self.leafConstraints,
-      self.rootConstraints,
-      self.flags.isCycle,
-      self.flags.isPath,
-      self.flags.isDirected,
-      self.flags.isTree,
-      self.flags.isRooted,
-      self.flags.isRegular
-    )
+    return self.__dict__.values()
 
   def dict(self):
     return self.__dict__
