@@ -22,7 +22,16 @@ class ProblemFlags:
     self.isRegular = isRegular
 
   def __key(self):
-    return self.__dict__.values()
+    return tuple(self.__dict__.values())
+
+  def __eq__(self, other):
+    if isinstance(other, self.__class__):
+      return self.__key() == other.__key()
+    else:
+      return False
+
+  def __hash__(self):
+    return hash(self.__key())
 
   def dict(self):
     return self.__dict__
@@ -70,17 +79,21 @@ class GenericProblem:
     self.rootAllowAll = rootAllowAll
     
     self.flags = flags
-
-    if not id is None:
-      self.id = id
+    self.id = id
 
     self.__checkParams()
 
   def __key(self):
-    return self.__dict__.values()
+    variableDict = copy.deepcopy(self.__dict__)
+    if self.id is not None:
+      del variableDict['id']
+    return tuple(variableDict.values())
 
   def dict(self):
     return self.__dict__
+
+  def __repr__(self):
+    return self.__dict__.__repr__()
   
   def __eq__(self, other):
     if isinstance(other, self.__class__):

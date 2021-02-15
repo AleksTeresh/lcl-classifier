@@ -42,7 +42,7 @@ def generate(
   alphabet = letterRange(labelCount)
   # take activeDegree labels
   # from a pallete of activeLabelCount
-  if rooted:
+  if flags.isRooted:
     actives = ["".join(x) for x in combinations_with_replacement(alphabet, activeDegree-1)]
     passives = ["".join(x) for x in combinations_with_replacement(alphabet, passiveDegree-1)]
     actives = ["".join(x) for x in product(alphabet, actives)]
@@ -60,7 +60,7 @@ def generate(
   passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
   problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
   problems = problemFromConstraints(problemTuples, flags)
-  return list(problems)
+  return sorted(list(problems), key=lambda p: p.id)
 
 activeDegree = 3
 passiveDegree = 2
@@ -71,10 +71,11 @@ flags = ProblemFlags(
   isTree=True,
   isCycle=False,
   isPath=False,
-  isDirected=True,
+  isDirected=False,
   isRooted=True,
   isRegular=True
 )
+
 ps = generate(
   activeDegree,
   passiveDegree,
@@ -92,3 +93,29 @@ fileNameSuffix = (f'_rooted_bin_{activeDegree}_{passiveDegree}_{labelCount}_' +
 storeJson('problems' + fileNameSuffix, ps)
 classifyAndStore('results' + fileNameSuffix, ps)
 
+# tlpProblem1 = P(
+#   ['A B', 'C C', 'D ADC'],
+#   ['B B C', 'A A A', 'B B B', 'A A C', 'B C C', 'Y X B'],
+#   id=1
+# )
+# tlpProblem1.normalize()
+
+# tlpProblem2 = P(
+#   ['A C', 'B B'],
+#   ['C C B', 'A A A', 'C C C', 'A A B', 'C B B'],
+#   id=2
+# )
+# tlpProblem2.normalize()
+
+# tlpProblem3 = P(
+#   ['A C', 'B B'],
+#   ['C C B', 'A A A', 'C C C', 'A A B', 'C B B'],
+#   id=3
+# )
+# tlpProblem3.normalize()
+
+# ps = set()
+
+# ps.add(tlpProblem1)
+# ps.add(tlpProblem2)
+# ps.add(tlpProblem3)

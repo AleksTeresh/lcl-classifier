@@ -1,122 +1,8 @@
 [
   {
     "activeConstraints": [
-      "aaa",
-      "abb",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 33
-  },
-  {
-    "activeConstraints": [
-      "abb",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 132
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 152
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "abb",
-      "baa",
-      "bbb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 111
-  },
-  {
-    "activeConstraints": [
-      "aaa",
       "aab",
-      "abb",
-      "baa",
-      "bbb"
+      "bab"
     ],
     "passiveConstraints": [
       "aa",
@@ -132,13 +18,15 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 18
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 0
   },
   {
     "activeConstraints": [
@@ -155,13 +43,314 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 4
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 3
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 7
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 8
+  },
+  {
+    "activeConstraints": [
+      "aab",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 9
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "baa",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 25
+  },
+  {
+    "activeConstraints": [
+      "aab",
+      "abb",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 32
+  },
+  {
+    "activeConstraints": [
+      "abb",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 35
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 38
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "bbb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 40
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "baa",
+      "bbb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 43
+  },
+  {
+    "activeConstraints": [
+      "aab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 46
   },
   {
     "activeConstraints": [
@@ -183,18 +372,233 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 55
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "abb",
+      "baa",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 57
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 62
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 70
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "abb",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 75
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 89
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "abb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 93
+  },
+  {
+    "activeConstraints": [
+      "aab",
+      "abb",
+      "baa"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
     "id": 96
   },
   {
     "activeConstraints": [
       "aaa",
-      "aab"
+      "aab",
+      "baa",
+      "bab"
     ],
     "passiveConstraints": [
       "aa",
@@ -210,18 +614,137 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 103
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "abb",
+      "bbb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
     "id": 107
   },
   {
     "activeConstraints": [
+      "abb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 123
+  },
+  {
+    "activeConstraints": [
       "aaa",
-      "aab",
+      "baa",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 137
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "abb",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 140
+  },
+  {
+    "activeConstraints": [
+      "aaa",
       "bbb"
     ],
     "passiveConstraints": [
@@ -238,13 +761,44 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 116
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 141
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "bab"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 147
   },
   {
     "activeConstraints": [
@@ -267,13 +821,76 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 230
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 149
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "bab",
+      "bbb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 160
+  },
+  {
+    "activeConstraints": [
+      "aab",
+      "abb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 169
   },
   {
     "activeConstraints": [
@@ -298,13 +915,47 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 241
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 183
+  },
+  {
+    "activeConstraints": [
+      "aaa",
+      "aab",
+      "abb",
+      "baa",
+      "bbb"
+    ],
+    "passiveConstraints": [
+      "aa",
+      "bb"
+    ],
+    "rootConstraints": [
+      "a",
+      "b"
+    ],
+    "leafConstraints": [
+      "a",
+      "b"
+    ],
+    "leafAllowAll": true,
+    "rootAllowAll": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 186
   },
   {
     "activeConstraints": [
@@ -327,128 +978,20 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 193
-  },
-  {
-    "activeConstraints": [
-      "aab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 22
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 202
   },
   {
     "activeConstraints": [
       "aaa",
-      "abb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 31
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
       "abb",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 52
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "abb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 56
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
       "baa",
       "bbb"
     ],
@@ -466,186 +1009,20 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 110
-  },
-  {
-    "activeConstraints": [
-      "aab",
-      "abb",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 90
-  },
-  {
-    "activeConstraints": [
-      "aab",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 58
-  },
-  {
-    "activeConstraints": [
-      "aab",
-      "abb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 102
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
+    "id": 222
   },
   {
     "activeConstraints": [
       "aaa",
       "aab",
-      "abb",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 49
-  },
-  {
-    "activeConstraints": [
-      "aab",
-      "abb",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 0
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "baa",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 83
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "abb",
       "bbb"
     ],
     "passiveConstraints": [
@@ -662,321 +1039,14 @@
     ],
     "leafAllowAll": true,
     "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 26
-  },
-  {
-    "activeConstraints": [
-      "abb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 61
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "bbb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 142
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 178
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "abb",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
+    "flags": {
+      "isTree": true,
+      "isCycle": false,
+      "isPath": false,
+      "isDirected": false,
+      "isRooted": true,
+      "isRegular": true
+    },
     "id": 228
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "abb",
-      "bbb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 124
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "abb",
-      "baa",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 211
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "baa"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 67
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "abb",
-      "bab",
-      "bbb"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 81
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "abb",
-      "baa",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 148
-  },
-  {
-    "activeConstraints": [
-      "aaa",
-      "aab",
-      "baa",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 91
-  },
-  {
-    "activeConstraints": [
-      "aab",
-      "bab"
-    ],
-    "passiveConstraints": [
-      "aa",
-      "bb"
-    ],
-    "rootConstraints": [
-      "a",
-      "b"
-    ],
-    "leafConstraints": [
-      "a",
-      "b"
-    ],
-    "leafAllowAll": true,
-    "rootAllowAll": true,
-    "isCycle": false,
-    "isPath": false,
-    "isDirected": false,
-    "isTree": true,
-    "isRooted": true,
-    "isRegular": true,
-    "id": 252
   }
 ]
