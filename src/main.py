@@ -17,4 +17,3 @@ REtorProblem3 = GenericProblem(
   ['M U U U', 'PM PM PM PM'],
   ['M UP UP UP', 'U U U U']
 )
- 

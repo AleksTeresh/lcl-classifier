@@ -1,18 +1,26 @@
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from problem import GenericProblem as P
+from problem import GenericProblem as P, ProblemFlags
 from classifier import classify
 from complexity import *
 from itertools import combinations_with_replacement, product
 from storeJson import storeJson
 from batch_classify import classifyAndStore
 
-def problemFromConstraints(tulpes):
+def problemFromConstraints(
+  tulpes,
+  flags
+):
   problems = set()
   for i, (a, b) in enumerate(tqdm(tulpes)):
     if a and b:
       try:
-        p = P(a,b, isTree=True, isCycle=False, isPath=False, isRooted=True, isRegular=True, id=i)
+        p = P(
+          a,
+          b,
+          flags=flags,
+          id=i
+        )
       except Exception as e:
         if e.args[0] == 'problem':
           continue
@@ -27,9 +35,9 @@ def generate(
   activeDegree,
   passiveDegree,
   labelCount,
-  activesAllSame = False,
-  passivesAllSame = False,
-  rooted = False
+  activesAllSame,
+  passivesAllSame,
+  flags
 ):
   alphabet = letterRange(labelCount)
   # take activeDegree labels
@@ -51,34 +59,35 @@ def generate(
   activeConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(actives)]
   passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
   problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
-  problems = problemFromConstraints(problemTuples)
+  problems = problemFromConstraints(problemTuples, flags)
   return list(problems)
 
-# p = P(
-#   ['2 1 1', '1 1 2'],
-#   ['1 1', '2 2'],
-#   isTree=True, isCycle=False, isPath=False, isRooted=True, isRegular=True)
-# p.normalize()
-# print(p.activeConstraints, p.passiveConstraints)
 activeDegree = 3
 passiveDegree = 2
-labelCount = 3
+labelCount = 2
 activesAllSame = False
 passivesAllSame = True
-rooted = True
+flags = ProblemFlags(
+  isTree=True,
+  isCycle=False,
+  isPath=False,
+  isDirected=True,
+  isRooted=True,
+  isRegular=True
+)
 ps = generate(
   activeDegree,
   passiveDegree,
   labelCount,
   activesAllSame,
   passivesAllSame,
-  rooted
+  flags
 )
 
 fileNameSuffix = (f'_rooted_bin_{activeDegree}_{passiveDegree}_{labelCount}_' +
   ('t_' if activesAllSame else 'f_') +
   ('t_' if passivesAllSame else 'f_') +
-  ('t' if rooted else 'f') +
+  ('t' if flags.isRooted else 'f') +
   '.json')
 storeJson('problems' + fileNameSuffix, ps)
 classifyAndStore('results' + fileNameSuffix, ps)

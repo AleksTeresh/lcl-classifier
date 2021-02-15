@@ -4,6 +4,23 @@ from functools import reduce
 from config_util import parseAndNormalize
 import itertools, copy
 
+class ProblemFlags:
+  def __init__(
+    self,
+    isTree: bool = True,
+    isCycle: bool = False,
+    isPath: bool = False,
+    isDirected: bool = False,
+    isRooted: bool = False,
+    isRegular: bool = True,
+  ):
+    self.isTree = isTree
+    self.isCycle = isCycle
+    self.isPath = isPath
+    self.isDirected = isDirected
+    self.isRooted = isRooted
+    self.isRegular = isRegular
+
 class GenericProblem:
   def  __init__(
     self,
@@ -15,12 +32,7 @@ class GenericProblem:
     passiveAllowAll: bool = False,
     leafAllowAll: bool = True,
     rootAllowAll: bool = True,
-    isTree: bool = True,
-    isCycle: bool = False,
-    isPath: bool = False,
-    isDirected: bool = False,
-    isRooted: bool = False,
-    isRegular: bool = True,
+    flags: ProblemFlags = ProblemFlags(),
     id=None
   ):
     self.__checkBadConstrInputs(
@@ -52,14 +64,8 @@ class GenericProblem:
     self.__assignRoots(rootConstraints, rootAllowAll)
     self.rootAllowAll = rootAllowAll
     
-    self.isCycle = isCycle
-    self.isPath = isPath
-    self.isDirected = isDirected
+    self.flags = flags
 
-    self.isTree = isTree
-    self.isRooted = isRooted
-
-    self.isRegular = isRegular
     if not id is None:
       self.id = id
 
@@ -71,28 +77,16 @@ class GenericProblem:
       self.passiveConstraints,
       self.leafConstraints,
       self.rootConstraints,
-      self.isCycle,
-      self.isPath,
-      self.isDirected,
-      self.isTree,
-      self.isRooted,
-      self.isRegular
+      self.flags.isCycle,
+      self.flags.isPath,
+      self.flags.isDirected,
+      self.flags.isTree,
+      self.flags.isRooted,
+      self.flags.isRegular
     )
 
   def dict(self):
     return self.__dict__
-    # return {
-    #   "activeConstraints": self.activeConstraints,
-    #   "passiveConstraints": self.passiveConstraints,
-    #   "leafConstraints": self.leafConstraints,
-    #   "rootConstraints": self.rootConstraints,
-    #   "isCycle": self.isCycle,
-    #   "isPath": self.isPath,
-    #   "isDirected": self.isDirected,
-    #   "isTree": self.isTree,
-    #   "isRooted": self.isRooted,
-    #   "isRegular": self.isRegular
-    # }
   
   def __eq__(self, other):
     if isinstance(other, self.__class__):
@@ -118,10 +112,10 @@ class GenericProblem:
     if not self.__checkDegrees(self.passiveConstraints):
       raise Exception('degree', 'The configurations should be of the same degree', self.passiveConstraints)
 
-    if not onlyOneIsTrue(self.isTree, self.isCycle, self.isPath):
+    if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
       raise Exception('graph family', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
 
-    if self.isPath and not self.isDirected and (
+    if self.flags.isPath and not self.flags.isDirected and (
       self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
       raise Exception('invalid parameters', 'Leaf and root constraints must be the same on undirected paths') 
 
@@ -200,7 +194,7 @@ class GenericProblem:
   def __getNewLine(self, renaming, line):
     'returns a string of chars'
     newline = [renaming[char] for char in line]
-    if len(newline) != 0 and (self.isDirected or self.isRooted):
+    if len(newline) != 0 and (self.flags.isDirected or self.flags.isRooted):
       newline = [newline[0]] + sorted(newline[1:])
     else:
       newline = sorted(newline)

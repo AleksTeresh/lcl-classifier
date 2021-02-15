@@ -23,13 +23,13 @@ def classify(p: GenericProblem) -> GenericResponse:
   if passiveDegree != 2:
     raise Exception('cyclepath', 'Passive constraints must always be of degree 2')
 
-  if p.isTree:
+  if p.flags.isTree:
     if not eachConstrIsHomogeneous(p.activeConstraints):
       raise Exception('cyclepath', 'On trees, node constraints must be the same for all incident edges.')
   elif activeDegree != 2:
     raise Exception('cyclepath', 'In a path or cycle, passive constraints must always be of degree 2')
 
-  problemType = Type.TREE if p.isTree else (Type.DIRECTED if p.isDirected else Type.UNDIRECTED)
+  problemType = Type.TREE if p.flags.isTree else (Type.DIRECTED if p.flags.isDirected else Type.UNDIRECTED)
 
   edgeConstraints = set(p.passiveConstraints)
   nodeConstraints = {} if problemType == Type.TREE else set(p.activeConstraints)

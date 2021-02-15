@@ -14,13 +14,13 @@ from response import GenericResponse
 from complexity import *
 
 def classify(p: GenericProblem):
-  if not p.isTree:
+  if not p.flags.isTree:
     raise Exception('brt', 'Cannot classify if the problem is not a tree')
 
-  if not p.isRooted:
+  if not p.flags.isRooted:
     raise Exception('brt', 'Cannot classify if the tree is not rooted')
 
-  if not p.isRegular:
+  if not p.flags.isRegular:
     raise Exception('brt', 'Cannot classify if the graph is not regular')
 
   if not p.rootAllowAll or not p.leafAllowAll:

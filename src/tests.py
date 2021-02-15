@@ -1,5 +1,5 @@
 import unittest
-from problem import GenericProblem
+from problem import GenericProblem, ProblemFlags
 from classifier import classify
 from complexity import *
 
@@ -56,8 +56,10 @@ class TestClassifier(unittest.TestCase):
     binaryRootedTreeProblem1 = GenericProblem(
       ['a a a', 'b a a', 'c a a', 'c a b'],
       ['a a', 'b b', 'c c'],
-      isTree = True, isRooted = True,
-      isRegular = True
+      flags = ProblemFlags(
+        isTree = True, isRooted = True,
+        isRegular = True
+      )
     )
     res = classify(binaryRootedTreeProblem1)
     self.assertEqual(res.detLowerBound, CONST)
@@ -74,8 +76,10 @@ class TestClassifier(unittest.TestCase):
     binaryRootedTreeProblem2 = GenericProblem(
       ['b a a', 'c a b', 'a b c'],
       ['a a', 'b b', 'c c'],
-      isTree = True, isRooted = True,
-      isRegular = True
+      flags = ProblemFlags(
+        isTree = True, isRooted = True,
+        isRegular = True
+      )
     )
     res = classify(binaryRootedTreeProblem2)
     self.assertEqual(res.detLowerBound, LOG)
@@ -92,8 +96,10 @@ class TestClassifier(unittest.TestCase):
     binaryRootedTreeProblem3 = GenericProblem(
       ['b a a', 'c a a', 'c a b'],
       ['a a', 'b b', 'c c'],
-      isTree = True, isRooted = True,
-      isRegular = True
+      flags = ProblemFlags(
+        isTree = True, isRooted = True,
+        isRegular = True
+      )
     )
     res = classify(binaryRootedTreeProblem3)
     self.assertEqual(res.detLowerBound, UNSOLVABLE)
@@ -107,9 +113,11 @@ class TestClassifier(unittest.TestCase):
     # cycle path classifier
     cyclePathTreeProblem1 = GenericProblem(
       ['a a a a a', 'b b b b b', 'c c c c c'],
-      ['a b', 'a c', 'b c', 'b a', 'c a', 'c b'] ,
-      isTree =True, isRooted = True,
-      isRegular = False
+      ['a b', 'a c', 'b c', 'b a', 'c a', 'c b'],
+      flags = ProblemFlags(
+        isTree =True, isRooted = True,
+        isRegular = False
+      )
     )
     res = classify(cyclePathTreeProblem1)
     self.assertEqual(res.detLowerBound, ITERATED_LOG)
@@ -126,8 +134,10 @@ class TestClassifier(unittest.TestCase):
       ['A B', 'B A', 'B B', 'M M'], # edge constraints
       leafConstraints = ['B'], leafAllowAll = False, # leaf constraint = end-constr
       rootConstraints = ['B'], rootAllowAll = False, # root constraint = start-constr
-      isCycle = False, isPath = True, isDirected = False,
-      isTree = False,
+      flags = ProblemFlags(
+        isCycle = False, isPath = True, isDirected = False,
+        isTree = False,
+      )
     )
     res = classify(cyclePathProblem2)
     self.assertEqual(res.detLowerBound, CONST)
@@ -144,8 +154,10 @@ class TestClassifier(unittest.TestCase):
       ['A B', 'B A', 'B B', 'M M'], # edge constraints
       leafConstraints = ['B'], leafAllowAll = False, # leaf constraint = end-constr
       rootConstraints = ['B'], rootAllowAll = False, # root constraint = start-constr
-      isCycle = False, isPath = True, isDirected = True,
-      isTree = False,
+      flags = ProblemFlags(
+        isCycle = False, isPath = True, isDirected = True,
+        isTree = False,
+      )
     )
     res = classify(cyclePathProblem3)
     self.assertEqual(res.detLowerBound, CONST)
@@ -159,8 +171,10 @@ class TestClassifier(unittest.TestCase):
     cyclePathProblem4 = GenericProblem(
       ['A A', 'B B', 'C C'],
       ['A B', 'B A', 'A C', 'C A', 'B C', 'C B'],
-      isCycle = True, isPath = False, isDirected = False,
-      isTree = False
+      flags = ProblemFlags(
+        isCycle = True, isPath = False, isDirected = False,
+        isTree = False
+      )
     )
     res = classify(cyclePathProblem4)
     self.assertEqual(res.detLowerBound, ITERATED_LOG)

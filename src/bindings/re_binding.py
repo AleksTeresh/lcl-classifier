@@ -23,16 +23,16 @@ def tryConstantComplexity(problem):
   tryUpperBound(problem)
 
 def classifyByRE(problem: GenericProblem):
-  if problem.isCycle:
+  if problem.flags.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
-  if problem.isRooted:
+  if problem.flags.isRooted:
     raise Exception('tlp', 'Cannot classify if the tree is rooted')
 
-  if problem.isDirected:
+  if problem.flags.isDirected:
     raise Exception('tlp', 'Cannot classify if the path is directed')
 
-  if not problem.isRegular:
+  if not problem.flags.isRegular:
     raise Exception('tlp', 'Cannot classify if the graph is not regular')
 
   if not problem.rootAllowAll or not problem.leafAllowAll:
