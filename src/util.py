@@ -18,5 +18,5 @@ def powerset(iterable):
 
 def letterRange(count):
   nums = list(range(count))
-  letters = [chr(x + 65) for x in nums] # works only when numLabels < 27
+  letters = [chr(x + 65) for x in nums] # TODO: works only when numLabels < 27
   return letters
