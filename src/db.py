@@ -58,7 +58,6 @@ def getProblems(
   ))
   res = cur.fetchall()  
   res = humps.camelize(res)
-  # print(res[21])
   
   cur.close()
   conn.close()
@@ -156,10 +155,10 @@ def storeProblemsAndGetWithIds(
         problemProps.activesAllSame,
         problemProps.passivesAllSame,
         
-        " ".join(p.activeConstraints),
-        " ".join(p.passiveConstraints),
-        " ".join(p.leafConstraints),
-        " ".join(p.rootConstraints),
+        list(p.activeConstraints),
+        list(p.passiveConstraints),
+        list(p.leafConstraints),
+        list(p.rootConstraints),
         p.flags.isTree,
         p.flags.isCycle,
         p.flags.isPath,
