@@ -69,15 +69,15 @@ class GenericProblem:
       activeConstraints,
       passiveConstraints
     )
-
-    self.__removeUnusedConfigs()
     
     self.__assignLeafs(leafConstraints, leafAllowAll)
     self.leafAllowAll = leafAllowAll
     
     self.__assignRoots(rootConstraints, rootAllowAll)
     self.rootAllowAll = rootAllowAll
-    
+
+    self.__removeUnusedConfigs()
+
     self.flags = flags
     self.id = id
 
@@ -237,6 +237,7 @@ class GenericProblem:
   # TODO: for now works only for active and passive constraints
   # leaf and root constraints are yet to come
   def __removeUnusedConfigs(self):
+    # print('enter')
     newActiveConstraints = self.activeConstraints
     newPassiveConstraints = self.passiveConstraints
 
@@ -247,13 +248,14 @@ class GenericProblem:
       (activeAlphabet - passiveAlphabet) or
       (passiveAlphabet - activeAlphabet)
     ):
+      # print(activeAlphabet, passiveAlphabet)
       diff = (activeAlphabet - passiveAlphabet)
       if diff:
-        newActiveConstraints = [conf for conf in self.activeConstraints if not diff.intersection(set(conf))]
+        newActiveConstraints = [conf for conf in newActiveConstraints if not diff.intersection(set(conf))]
 
       diff = (passiveAlphabet - activeAlphabet)
       if diff:
-        newPassiveConstraints = [conf for conf in self.passiveConstraints if not diff.intersection(set(conf))]
+        newPassiveConstraints = [conf for conf in newPassiveConstraints if not diff.intersection(set(conf))]
 
       if not newActiveConstraints or not newPassiveConstraints:
         raise Exception('problem', 'If passive or active configuration are empty, the problem is always unsolvable')
@@ -263,6 +265,18 @@ class GenericProblem:
 
     self.activeConstraints = tuple(newActiveConstraints)
     self.passiveConstraints = tuple(newPassiveConstraints)
+
+    leafAlphabet = set(flatten(self.leafConstraints)) - {' '}
+    rootAlphabet = set(flatten(self.rootConstraints)) - {' '}
+    allowedAlphabet = activeAlphabet
+    
+    leafDiff = leafAlphabet - allowedAlphabet
+    if leafDiff:
+      self.leafConstraints = [conf for conf in self.leafConstraints if not leafDiff.intersection(set(conf))]
+
+    rootDiff = rootAlphabet - allowedAlphabet
+    if rootDiff:
+      self.rootConstraints = [conf for conf in self.rootConstraints if not rootDiff.intersection(set(conf))]
 
   def getAlphabet(self):
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
