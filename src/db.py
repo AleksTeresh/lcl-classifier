@@ -30,6 +30,29 @@ def getProblems(
     rand_lower_bound >= %s AND
     det_upper_bound <= %s AND
     det_lower_bound >= %s AND
+
+    (
+      %s <@ active_constraints OR
+      %s <@ passive_constraints
+    ) AND
+
+    (
+      %s = '{}' OR
+      (
+        %s && active_constraints OR
+        %s && passive_constraints
+      )
+    ) AND
+
+    NOT (
+      %s <@ active_constraints OR
+      %s <@ passive_constraints
+    ) AND
+
+    NOT (
+      %s && active_constraints OR
+      %s && passive_constraints
+    ) AND
     
     is_tree = %s AND
     is_cycle = %s AND
@@ -49,6 +72,16 @@ def getProblems(
     query.bounds.detUpperBound,
     query.bounds.detLowerBound,
 
+    query.excludeInclude.includeIfConfigHasAllOf,
+    query.excludeInclude.includeIfConfigHasAllOf,
+    query.excludeInclude.includeIfConfigHasSomeOf,
+    query.excludeInclude.includeIfConfigHasSomeOf,
+    query.excludeInclude.includeIfConfigHasSomeOf,
+    query.excludeInclude.excludeIfConfigHasAllOf,
+    query.excludeInclude.excludeIfConfigHasAllOf,
+    query.excludeInclude.excludeIfConfigHasSomeOf,
+    query.excludeInclude.excludeIfConfigHasSomeOf,
+
     query.props.flags.isTree,
     query.props.flags.isCycle,
     query.props.flags.isPath,
@@ -56,7 +89,7 @@ def getProblems(
     query.props.flags.isRooted,
     query.props.flags.isRegular
   ))
-  res = cur.fetchall()  
+  res = cur.fetchall()
   res = humps.camelize(res)
   
   cur.close()

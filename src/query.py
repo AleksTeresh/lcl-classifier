@@ -5,7 +5,7 @@ from complexity import *
 class QueryExcludeInclude:
   def __init__(
     self,
-    excludeIfConfigHasAllOf = [],
+    excludeIfConfigHasAllOf = ['NOT_EXISTENT'],
     excludeIfConfigHasSomeOf = [],
     includeIfConfigHasAllOf = [],
     includeIfConfigHasSomeOf = [],
