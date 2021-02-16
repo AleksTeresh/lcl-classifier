@@ -3,3 +3,4 @@ tlp-classifier
 rooted-tree-classifier
 cyclepath-classifier
 brt-classifier
+psycopg2-binary

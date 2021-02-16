@@ -35,6 +35,24 @@ class ProblemFlags:
 
   def dict(self):
     return self.__dict__
+
+class ProblemProps:
+  def __init__(
+    self,
+    activeDegree: int,
+    passiveDegree: int,
+    labelCount: int,
+    activesAllSame: bool,
+    passivesAllSame: bool,
+    flags: ProblemFlags
+  ):
+    self.activeDegree = activeDegree
+    self.passiveDegree = passiveDegree
+    self.labelCount = labelCount
+    self.activesAllSame = activesAllSame
+    self.passivesAllSame = passivesAllSame
+    self.flags = flags
+
 class GenericProblem:
   def  __init__(
     self,

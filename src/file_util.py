@@ -1,17 +1,6 @@
 import os
 from problem import ProblemFlags
 
-class ProblemFileProps:
-  def __init__(
-    self,
-    activesAllSame: bool,
-    passivesAllSame: bool,
-    flags: ProblemFlags
-  ):
-    self.activesAllSame = activesAllSame
-    self.passivesAllSame = passivesAllSame
-    self.flags = flags
-
 def getProblemDir():
   return os.path.dirname(os.path.realpath(__file__)) + '/problems/'
 

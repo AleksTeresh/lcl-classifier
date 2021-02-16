@@ -1,12 +1,13 @@
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from problem import GenericProblem as P, ProblemFlags
+from problem import GenericProblem as P, ProblemFlags, ProblemProps
 from classifier import classify
 from complexity import *
 from itertools import combinations_with_replacement, product
 from storeJson import storeJson
 from batch_classify import classifyAndStore
-from file_util import ProblemFileProps, getProblemFilepath, getResultFilepath
+from file_util import getProblemFilepath, getResultFilepath
+from db import storeProblems
 
 def problemFromConstraints(
   tulpes,
@@ -87,19 +88,16 @@ ps = generate(
   flags
 )
 
-fileNameSuffix = (f'_{activeDegree}_{passiveDegree}_{labelCount}' +
-  ('t' if activesAllSame else 'f') +
-  ('t' if passivesAllSame else 'f') +
-  ('t' if flags.isTree else 'f') +
-  ('t' if flags.isCycle else 'f') +
-  ('t' if flags.isPath else 'f') +
-  ('t' if flags.isDirected else 'f') +
-  ('t' if flags.isRooted else 'f') +
-  ('t' if flags.isRegular else 'f') +
-  '.json')
-
-props = ProblemFileProps(activesAllSame, passivesAllSame, flags)
+props = ProblemProps(
+  activeDegree,
+  passiveDegree,
+  labelCount,
+  activesAllSame,
+  passivesAllSame,
+  flags
+)
 problemFilepath = getProblemFilepath(activeDegree, passiveDegree, labelCount, props)
 resultsFilepath = getResultFilepath(activeDegree, passiveDegree, labelCount, props)
-storeJson(problemFilepath, ps)
+# storeJson(problemFilepath, ps)
+storeProblems(ps, props)
 classifyAndStore(resultsFilepath, ps)
