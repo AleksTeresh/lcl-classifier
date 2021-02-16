@@ -6,6 +6,7 @@ from complexity import *
 from itertools import combinations_with_replacement, product
 from storeJson import storeJson
 from batch_classify import classifyAndStore
+from file_util import ProblemFileProps, getProblemFilepath, getResultFilepath
 
 def problemFromConstraints(
   tulpes,
@@ -96,5 +97,9 @@ fileNameSuffix = (f'_{activeDegree}_{passiveDegree}_{labelCount}' +
   ('t' if flags.isRooted else 'f') +
   ('t' if flags.isRegular else 'f') +
   '.json')
-storeJson('problems' + fileNameSuffix, ps)
-classifyAndStore('results' + fileNameSuffix, ps)
+
+props = ProblemFileProps(activesAllSame, passivesAllSame, flags)
+problemFilepath = getProblemFilepath(activeDegree, passiveDegree, labelCount, props)
+resultsFilepath = getResultFilepath(activeDegree, passiveDegree, labelCount, props)
+storeJson(problemFilepath, ps)
+classifyAndStore(resultsFilepath, ps)
