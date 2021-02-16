@@ -1,3 +1,5 @@
+from file_util import getResultFilepath
+from problem import ProblemFlags
 
 class QueryExcludeInclude:
   def __init__(
@@ -36,14 +38,14 @@ class Query:
     self,
     bounds: Bounds,
     excludeInclude: QueryExcludeInclude,
-    props,
+    flags: ProblemFlags,
     activeDegree=None,
     passiveDegree=None
   ):
     self.bounds = bounds
     self.excludeInclude = excludeInclude
     # partial properties of a problem e.g. isRegular, isTree, etc.
-    self.props = props
+    self.flags = flags
     self.activeDegree = activeDegree
     self.passiveDegree = passiveDegree
 
