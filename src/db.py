@@ -25,6 +25,11 @@ def getProblems(
     label_count = %s AND
     actives_all_same = %s AND
     passives_all_same = %s AND
+
+    rand_upper_bound <= %s AND
+    rand_lower_bound >= %s AND
+    det_upper_bound <= %s AND
+    det_lower_bound >= %s AND
     
     is_tree = %s AND
     is_cycle = %s AND
@@ -39,6 +44,11 @@ def getProblems(
     query.props.activesAllSame,
     query.props.passivesAllSame,
 
+    query.bounds.randUpperBound,
+    query.bounds.randLowerBound,
+    query.bounds.detUpperBound,
+    query.bounds.detLowerBound,
+
     query.props.flags.isTree,
     query.props.flags.isCycle,
     query.props.flags.isPath,
@@ -48,6 +58,7 @@ def getProblems(
   ))
   res = cur.fetchall()  
   res = humps.camelize(res)
+  # print(res[21])
   
   cur.close()
   conn.close()
