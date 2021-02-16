@@ -63,15 +63,15 @@ def generate(
   problems = problemFromConstraints(problemTuples, flags)
   return sorted(list(problems), key=lambda p: p.id)
 
-activeDegree = 3
+activeDegree = 2
 passiveDegree = 2
-labelCount = 2
+labelCount = 3
 activesAllSame = False
 passivesAllSame = False
 flags = ProblemFlags(
-  isTree=True,
+  isTree=False,
   isCycle=False,
-  isPath=False,
+  isPath=True,
   isDirected=False,
   isRooted=False,
   isRegular=True
