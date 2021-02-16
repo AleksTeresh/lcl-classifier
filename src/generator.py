@@ -7,7 +7,7 @@ from itertools import combinations_with_replacement, product
 from storeJson import storeJson
 from batch_classify import classifyAndStore
 from file_util import getProblemFilepath, getResultFilepath
-from db import storeProblems
+from db import storeProblemsAndGetWithIds, updateClassifications
 
 def problemFromConstraints(
   tulpes,
@@ -65,17 +65,17 @@ def generate(
   problems = problemFromConstraints(problemTuples, flags)
   return sorted(list(problems), key=lambda p: p.id)
 
-activeDegree = 2
+activeDegree = 3
 passiveDegree = 2
-labelCount = 3
+labelCount = 2
 activesAllSame = False
-passivesAllSame = False
+passivesAllSame = True
 flags = ProblemFlags(
-  isTree=False,
+  isTree=True,
   isCycle=False,
-  isPath=True,
+  isPath=False,
   isDirected=False,
-  isRooted=False,
+  isRooted=True,
   isRegular=True
 )
 
@@ -98,6 +98,6 @@ props = ProblemProps(
 )
 problemFilepath = getProblemFilepath(activeDegree, passiveDegree, labelCount, props)
 resultsFilepath = getResultFilepath(activeDegree, passiveDegree, labelCount, props)
-# storeJson(problemFilepath, ps)
-storeProblems(ps, props)
-classifyAndStore(resultsFilepath, ps)
+
+psWithIds = storeProblemsAndGetWithIds(ps, props)
+classifyAndStore(resultsFilepath, psWithIds)

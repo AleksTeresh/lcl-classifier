@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from storeJson import storeJson
+from db import updateClassifications
 from classifier import classify
 
 def batchClassify(problems):
@@ -7,6 +7,6 @@ def batchClassify(problems):
 
 def classifyAndStore(filename, problems):
   results = batchClassify(problems)
-  storeJson(filename, results)
+  updateClassifications(results)
 
 

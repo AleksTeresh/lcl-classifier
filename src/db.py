@@ -1,21 +1,56 @@
 import psycopg2
 from psycopg2.extras import execute_values
 from problem import ProblemProps
+from complexity import complexityToInt
 
-# def updateClassifications(
-#   results
-# )
-
-def storeProblems(
-  problems,
-  problemProps: ProblemProps
-):
+def getConnection():
   conn = psycopg2.connect(
     host="localhost",
     database="postgres",
     user="postgres",
     password="mysecretpassword"
   )
+  return conn
+
+def updateClassifications(results):
+  conn = getConnection()
+  cur = conn.cursor()
+  execute_values(cur, """
+    UPDATE problems SET 
+      rand_upper_bound = data.rand_upper_bound,
+      rand_lower_bound = data.rand_lower_bound,
+      det_upper_bound = data.det_upper_bound,
+      det_lower_bound = data.det_lower_bound,
+      solvable_count = data.solvable_count,
+      unsolvable_count = data.unsolvable_count
+    FROM (VALUES %s) AS data (
+      id,
+      rand_upper_bound,
+      rand_lower_bound,
+      det_upper_bound,
+      det_lower_bound,
+      solvable_count,
+      unsolvable_count
+    ) WHERE problems.id = data.id;""",
+    [(
+      p.problem.id,
+      complexityToInt[p.randUpperBound],
+      complexityToInt[p.randLowerBound],
+      complexityToInt[p.detUpperBound],
+      complexityToInt[p.detLowerBound],
+      p.solvableCount,
+      p.unsolvableCount
+    ) for p in results]
+  )
+  conn.commit()
+  cur.close()
+  conn.close()
+
+def storeProblemsAndGetWithIds(
+  problems,
+  problemProps: ProblemProps
+):
+  conn = getConnection()
   cur = conn.cursor()
   cur.execute("""
   DELETE FROM problems WHERE
@@ -43,7 +78,7 @@ def storeProblems(
     problemProps.flags.isRooted,
     problemProps.flags.isRegular
   ))
-  execute_values(cur, """
+  ids = execute_values(cur, """
     INSERT INTO problems (
       active_degree,
       passive_degree,
@@ -61,7 +96,7 @@ def storeProblems(
       is_directed,
       is_rooted,
       is_regular
-    ) VALUES %s;""",
+    ) VALUES %s RETURNING id;""",
     [(
         problemProps.activeDegree,
         problemProps.passiveDegree,
@@ -79,8 +114,13 @@ def storeProblems(
         p.flags.isDirected,
         p.flags.isRooted,
         p.flags.isRegular
-      ) for p in problems]
+      ) for p in problems],
+      fetch=True
   )
   conn.commit()
   cur.close()
   conn.close()
+
+  for i, p in enumerate(problems):
+    p.id = ids[i]
+  return problems
