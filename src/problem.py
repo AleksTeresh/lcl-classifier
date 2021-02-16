@@ -199,25 +199,26 @@ class GenericProblem:
       alphabet = set(flatten(activeConstraints + passiveConstraints)) - {' '}
       self.rootConstraints = tuple(["".join(alphabet) for _ in rootConstraints[0].split(' ')])
 
-  def __getNewLine(self, renaming, line):
+  def __getNewConfig(self, renaming, configuration: str):
     'returns a string of chars'
-    newline = [renaming[char] for char in line]
-    if len(newline) != 0 and (self.flags.isDirected or self.flags.isRooted):
-      newline = [newline[0]] + sorted(newline[1:])
+    newConfig = [renaming[char] for char in configuration]
+    # if a graph directed/rooted, the first letter in the config
+    # has a special meaning (it is config towards parent/predecessor node)
+    # Thus, leave the first letter in the first position. Sort other letters
+    if len(newConfig) != 0 and (self.flags.isDirected or self.flags.isRooted):
+      newConfig = [newConfig[0]] + sorted(newConfig[1:])
     else:
-      newline = sorted(newline)
-    return "".join(newline)
+      newConfig = sorted(newConfig)
+    return "".join(newConfig)
 
   # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/constraint.rs#L469-L489
-  # TODO: rename variables
-  def __permuteNormalize(self, renaming, constraints):
+  def __permuteNormalize(self, renaming, constraints: tuple):
     'returns a list of strings'  
-    newlines = [self.__getNewLine(renaming, x) for x in constraints]
+    newConfigs = [self.__getNewConfig(renaming, x) for x in constraints]
 
-    newlines = list(set(newlines)) # i.e. unique()
-    newlines = sorted(newlines)
-
-    return newlines
+    newConfigs = list(set(newConfigs)) # i.e. unique()
+    newConfigs = sorted(newConfigs)
+    return newConfigs
 
   def __handleAlphabetPerm(self, perm):
     'returns a tuple of lists'
@@ -268,8 +269,8 @@ class GenericProblem:
 
   # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
   def normalize(self):
-    numLabels = len(self.getAlphabet())
-    letters = letterRange(numLabels)
+    labelCount = len(self.getAlphabet())
+    letters = letterRange(labelCount)
     allPerms = list(itertools.permutations(letters))
     normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
     # normalized is a list of tulpes of lists
