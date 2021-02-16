@@ -208,7 +208,7 @@ class GenericProblem:
       newline = sorted(newline)
     return "".join(newline)
 
-  # TODO: adopted
+  # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/constraint.rs#L469-L489
   # TODO: rename variables
   def __permuteNormalize(self, renaming, constraints):
     'returns a list of strings'  
@@ -266,7 +266,7 @@ class GenericProblem:
   def getAlphabet(self):
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
 
-  # TODO: adopted from
+  # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
   def normalize(self):
     numLabels = len(self.getAlphabet())
     letters = letterRange(numLabels)
