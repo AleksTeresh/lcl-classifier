@@ -187,4 +187,4 @@ def printStatistics(filePath):
     stats = compute(filePath)
     prettyPrint(stats)
 
-printStatistics('./problems/results_rooted_bin_3_2_2_f_f_f.json')
+printStatistics('./problems/results_rooted_bin_3_2_2_f_t_t.json')

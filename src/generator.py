@@ -67,13 +67,13 @@ activeDegree = 3
 passiveDegree = 2
 labelCount = 2
 activesAllSame = False
-passivesAllSame = True
+passivesAllSame = False
 flags = ProblemFlags(
   isTree=True,
   isCycle=False,
   isPath=False,
   isDirected=False,
-  isRooted=True,
+  isRooted=False,
   isRegular=True
 )
 
@@ -86,37 +86,15 @@ ps = generate(
   flags
 )
 
-fileNameSuffix = (f'_rooted_bin_{activeDegree}_{passiveDegree}_{labelCount}_' +
-  ('t_' if activesAllSame else 'f_') +
-  ('t_' if passivesAllSame else 'f_') +
+fileNameSuffix = (f'_{activeDegree}_{passiveDegree}_{labelCount}' +
+  ('t' if activesAllSame else 'f') +
+  ('t' if passivesAllSame else 'f') +
+  ('t' if flags.isTree else 'f') +
+  ('t' if flags.isCycle else 'f') +
+  ('t' if flags.isPath else 'f') +
+  ('t' if flags.isDirected else 'f') +
   ('t' if flags.isRooted else 'f') +
+  ('t' if flags.isRegular else 'f') +
   '.json')
 storeJson('problems' + fileNameSuffix, ps)
 classifyAndStore('results' + fileNameSuffix, ps)
-
-# tlpProblem1 = P(
-#   ['A B', 'C C', 'D ADC'],
-#   ['B B C', 'A A A', 'B B B', 'A A C', 'B C C', 'Y X B'],
-#   id=1
-# )
-# tlpProblem1.normalize()
-
-# tlpProblem2 = P(
-#   ['A C', 'B B'],
-#   ['C C B', 'A A A', 'C C C', 'A A B', 'C B B'],
-#   id=2
-# )
-# tlpProblem2.normalize()
-
-# tlpProblem3 = P(
-#   ['A C', 'B B'],
-#   ['C C B', 'A A A', 'C C C', 'A A B', 'C B B'],
-#   id=3
-# )
-# tlpProblem3.normalize()
-
-# ps = set()
-
-# ps.add(tlpProblem1)
-# ps.add(tlpProblem2)
-# ps.add(tlpProblem3)
