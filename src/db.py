@@ -1,7 +1,8 @@
 import psycopg2
 from psycopg2.extras import execute_values
+import humps
 from problem import ProblemProps
-from complexity import complexityToInt
+from query import Query
 
 def getConnection():
   conn = psycopg2.connect(
@@ -12,15 +13,55 @@ def getConnection():
   )
   return conn
 
+def getProblems(
+  query: Query
+):
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("""
+  SELECT * FROM problems WHERE
+    active_degree = %s AND
+    passive_degree = %s AND
+    label_count = %s AND
+    actives_all_same = %s AND
+    passives_all_same = %s AND
+    
+    is_tree = %s AND
+    is_cycle = %s AND
+    is_path = %s AND
+    is_directed = %s AND
+    is_rooted = %s AND
+    is_regular = %s;
+  """, (
+    query.props.activeDegree,
+    query.props.passiveDegree,
+    query.props.labelCount,
+    query.props.activesAllSame,
+    query.props.passivesAllSame,
+
+    query.props.flags.isTree,
+    query.props.flags.isCycle,
+    query.props.flags.isPath,
+    query.props.flags.isDirected,
+    query.props.flags.isRooted,
+    query.props.flags.isRegular
+  ))
+  res = cur.fetchall()  
+  res = humps.camelize(res)
+  
+  cur.close()
+  conn.close()
+  return res
+
 def updateClassifications(results):
   conn = getConnection()
   cur = conn.cursor()
   execute_values(cur, """
     UPDATE problems SET 
-      rand_upper_bound = data.rand_upper_bound,
-      rand_lower_bound = data.rand_lower_bound,
-      det_upper_bound = data.det_upper_bound,
-      det_lower_bound = data.det_lower_bound,
+      rand_upper_bound = CAST (data.rand_upper_bound AS complexity),
+      rand_lower_bound = CAST (data.rand_lower_bound AS complexity),
+      det_upper_bound = CAST (data.det_upper_bound AS complexity),
+      det_lower_bound = CAST (data.det_lower_bound AS complexity),
       solvable_count = data.solvable_count,
       unsolvable_count = data.unsolvable_count
     FROM (VALUES %s) AS data (
@@ -34,10 +75,10 @@ def updateClassifications(results):
     ) WHERE problems.id = data.id;""",
     [(
       p.problem.id,
-      complexityToInt[p.randUpperBound],
-      complexityToInt[p.randLowerBound],
-      complexityToInt[p.detUpperBound],
-      complexityToInt[p.detLowerBound],
+      p.randUpperBound,
+      p.randLowerBound,
+      p.detUpperBound,
+      p.detLowerBound,
       p.solvableCount,
       p.unsolvableCount
     ) for p in results]

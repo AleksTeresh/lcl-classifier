@@ -1,15 +1,16 @@
 from file_util import getResultFilepath
-from problem import ProblemFlags
+from problem import ProblemProps
+from complexity import *
 
 class QueryExcludeInclude:
   def __init__(
     self,
-    excludeIfConfigHasAllOf,
-    excludeIfConfigHasSomeOf,
-    includeIfConfigHasAllOf,
-    includeIfConfigHasSomeOf,
-    returnLargestProblemOnly,
-    returnSmallestProblemOnly,
+    excludeIfConfigHasAllOf = [],
+    excludeIfConfigHasSomeOf = [],
+    includeIfConfigHasAllOf = [],
+    includeIfConfigHasSomeOf = [],
+    returnLargestProblemOnly = False,
+    returnSmallestProblemOnly = False,
   ):
     self.excludeIfConfigHasAllOf = excludeIfConfigHasAllOf
     self.excludeIfConfigHasSomeOf = excludeIfConfigHasSomeOf
@@ -23,10 +24,10 @@ class QueryExcludeInclude:
 class Bounds:
   def __init__(
     self,
-    randUpperBound,
-    randLowerBound,
-    detUpperBound,
-    detLowerBound
+    randUpperBound = UNSOLVABLE,
+    randLowerBound = CONST,
+    detUpperBound = UNSOLVABLE,
+    detLowerBound = CONST
   ):
     self.randUpperBound = randUpperBound
     self.randLowerBound = randLowerBound
@@ -36,18 +37,13 @@ class Bounds:
 class Query:
   def __init__(
     self,
-    bounds: Bounds,
-    excludeInclude: QueryExcludeInclude,
-    flags: ProblemFlags,
-    activeDegree=None,
-    passiveDegree=None
+    props: ProblemProps,
+    excludeInclude: QueryExcludeInclude = QueryExcludeInclude(),
+    bounds: Bounds = Bounds(),
   ):
     self.bounds = bounds
     self.excludeInclude = excludeInclude
-    # partial properties of a problem e.g. isRegular, isTree, etc.
-    self.flags = flags
-    self.activeDegree = activeDegree
-    self.passiveDegree = passiveDegree
+    self.props = props
 
 def fineResultsFile(query: Query):
   fileName = ''

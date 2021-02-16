@@ -1,4 +1,5 @@
 tqdm
+pyhumps
 tlp-classifier
 rooted-tree-classifier
 cyclepath-classifier

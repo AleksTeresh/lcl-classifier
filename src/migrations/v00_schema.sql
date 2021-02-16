@@ -1,3 +1,13 @@
+CREATE TYPE complexity AS ENUM (
+  '(1)',
+  '(log* n)',
+  '(loglog n)',
+  '(log n)',
+  '(n)',
+  'unsolvable',
+  ''
+);
+
 CREATE TABLE problems (
   id SERIAL PRIMARY KEY,
   active_degree SMALLINT NOT NULL CHECK (active_degree >= 1),
@@ -16,10 +26,10 @@ CREATE TABLE problems (
   is_directed BOOLEAN NOT NULL DEFAULT FALSE,
   is_rooted BOOLEAN NOT NULL DEFAULT FALSE,
   is_regular BOOLEAN NOT NULL DEFAULT FALSE,
-  rand_upper_bound SMALLINT NOT NULL DEFAULT 700 CHECK (rand_upper_bound >= 0),
-  rand_lower_bound SMALLINT NOT NULL DEFAULT 100 CHECK (rand_lower_bound >= 0),
-  det_upper_bound SMALLINT NOT NULL DEFAULT 700 CHECK (det_upper_bound >= 0),
-  det_lower_bound SMALLINT NOT NULL DEFAULT 100 CHECK (det_lower_bound >= 0),
+  rand_upper_bound complexity NOT NULL DEFAULT '',
+  rand_lower_bound complexity NOT NULL DEFAULT '(1)',
+  det_upper_bound complexity NOT NULL DEFAULT '',
+  det_lower_bound complexity NOT NULL DEFAULT '(1)',
   solvable_count TEXT,
   unsolvable_count TEXT
 );
