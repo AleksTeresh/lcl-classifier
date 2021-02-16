@@ -234,8 +234,6 @@ class GenericProblem:
 
     return (newActive, newPassive, newLeaf, newRoot)
 
-  # TODO: for now works only for active and passive constraints
-  # leaf and root constraints are yet to come
   def __removeUnusedConfigs(self):
     # print('enter')
     newActiveConstraints = self.activeConstraints
