@@ -1,16 +1,6 @@
 [
   {
-    "problem": 0,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 2,
+    "problem": 5,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -20,41 +10,21 @@
     "papers": []
   },
   {
-    "problem": 4,
+    "problem": 10,
     "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
+    "randLowerBound": "unsolvable",
     "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
+    "detLowerBound": "unsolvable",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
-    "problem": 9,
+    "problem": 14,
     "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
+    "randLowerBound": "unsolvable",
     "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 13,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 15,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
+    "detLowerBound": "unsolvable",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
@@ -62,9 +32,9 @@
   {
     "problem": 18,
     "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
+    "randLowerBound": "(1)",
     "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
+    "detLowerBound": "(1)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
@@ -72,25 +42,35 @@
   {
     "problem": 22,
     "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
+    "randLowerBound": "(1)",
     "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
+    "detLowerBound": "(1)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
     "problem": 26,
-    "randUpperBound": "(n)",
-    "randLowerBound": "(n)",
-    "detUpperBound": "(n)",
-    "detLowerBound": "(n)",
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []
   },
   {
-    "problem": 36,
+    "problem": 30,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 34,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -120,7 +100,7 @@
     "papers": []
   },
   {
-    "problem": 49,
+    "problem": 46,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -130,17 +110,7 @@
     "papers": []
   },
   {
-    "problem": 51,
-    "randUpperBound": "(log n)",
-    "randLowerBound": "(log n)",
-    "detUpperBound": "(log n)",
-    "detLowerBound": "(log n)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 61,
+    "problem": 50,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -150,17 +120,7 @@
     "papers": []
   },
   {
-    "problem": 67,
-    "randUpperBound": "(log n)",
-    "randLowerBound": "(log n)",
-    "detUpperBound": "(log n)",
-    "detLowerBound": "(log n)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 68,
+    "problem": 58,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -170,7 +130,7 @@
     "papers": []
   },
   {
-    "problem": 69,
+    "problem": 62,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -180,7 +140,7 @@
     "papers": []
   },
   {
-    "problem": 75,
+    "problem": 66,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -190,7 +150,7 @@
     "papers": []
   },
   {
-    "problem": 101,
+    "problem": 70,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -200,7 +160,67 @@
     "papers": []
   },
   {
-    "problem": 104,
+    "problem": 74,
+    "randUpperBound": "(1)",
+    "randLowerBound": "unsolvable",
+    "detUpperBound": "(1)",
+    "detLowerBound": "unsolvable",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 78,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 82,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 90,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 94,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 102,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 106,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -220,7 +240,7 @@
     "papers": []
   },
   {
-    "problem": 116,
+    "problem": 122,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -230,7 +250,7 @@
     "papers": []
   },
   {
-    "problem": 120,
+    "problem": 130,
     "randUpperBound": "(1)",
     "randLowerBound": "(1)",
     "detUpperBound": "(1)",
@@ -240,87 +260,7 @@
     "papers": []
   },
   {
-    "problem": 123,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 125,
-    "randUpperBound": "(1)",
-    "randLowerBound": "unsolvable",
-    "detUpperBound": "(1)",
-    "detLowerBound": "unsolvable",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 126,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 136,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 143,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 145,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 157,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 177,
-    "randUpperBound": "(1)",
-    "randLowerBound": "(1)",
-    "detUpperBound": "(1)",
-    "detLowerBound": "(1)",
-    "solvableCount": "",
-    "unsolvableCount": "",
-    "papers": []
-  },
-  {
-    "problem": 208,
+    "problem": 134,
     "randUpperBound": "unsolvable",
     "randLowerBound": "unsolvable",
     "detUpperBound": "unsolvable",
@@ -330,7 +270,7 @@
     "papers": []
   },
   {
-    "problem": 231,
+    "problem": 138,
     "randUpperBound": "unsolvable",
     "randLowerBound": "unsolvable",
     "detUpperBound": "unsolvable",
@@ -340,11 +280,71 @@
     "papers": []
   },
   {
-    "problem": 234,
+    "problem": 142,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(log n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 146,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 158,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 170,
+    "randUpperBound": "(log n)",
+    "randLowerBound": "(log n)",
+    "detUpperBound": "(log n)",
+    "detLowerBound": "(log n)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 186,
+    "randUpperBound": "(1)",
+    "randLowerBound": "(1)",
+    "detUpperBound": "(1)",
+    "detLowerBound": "(1)",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 198,
     "randUpperBound": "unsolvable",
     "randLowerBound": "unsolvable",
     "detUpperBound": "unsolvable",
     "detLowerBound": "unsolvable",
+    "solvableCount": "",
+    "unsolvableCount": "",
+    "papers": []
+  },
+  {
+    "problem": 202,
+    "randUpperBound": "(n)",
+    "randLowerBound": "(n)",
+    "detUpperBound": "(n)",
+    "detLowerBound": "(n)",
     "solvableCount": "",
     "unsolvableCount": "",
     "papers": []

@@ -59,6 +59,7 @@ def generate(
   activeConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(actives)]
   passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
   problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
+  problemTuples = sorted(list(problemTuples))
   problems = problemFromConstraints(problemTuples, flags)
   return sorted(list(problems), key=lambda p: p.id)
 
@@ -66,13 +67,13 @@ activeDegree = 3
 passiveDegree = 2
 labelCount = 2
 activesAllSame = False
-passivesAllSame = False
+passivesAllSame = True
 flags = ProblemFlags(
   isTree=True,
   isCycle=False,
   isPath=False,
   isDirected=False,
-  isRooted=False,
+  isRooted=True,
   isRegular=True
 )
 
