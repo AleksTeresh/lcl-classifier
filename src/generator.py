@@ -63,38 +63,3 @@ def generate(
   problemTuples = sorted(list(problemTuples))
   problems = problemFromConstraints(problemTuples, flags)
   return sorted(list(problems), key=lambda p: p.id)
-
-# activeDegree = 2
-# passiveDegree = 2
-# labelCount = 3
-# activesAllSame = False
-# passivesAllSame = False
-# flags = ProblemFlags(
-#   isTree=False,
-#   isCycle=True,
-#   isPath=False,
-#   isDirected=True,
-#   isRooted=False,
-#   isRegular=True
-# )
-
-# ps = generate(
-#   activeDegree,
-#   passiveDegree,
-#   labelCount,
-#   activesAllSame,
-#   passivesAllSame,
-#   flags
-# )
-
-# props = ProblemProps(
-#   activeDegree,
-#   passiveDegree,
-#   labelCount,
-#   activesAllSame,
-#   passivesAllSame,
-#   flags
-# )
-
-# psWithIds = storeProblemsAndGetWithIds(ps, props)
-# classifyAndStore(ps)

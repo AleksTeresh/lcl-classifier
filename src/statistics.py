@@ -34,8 +34,7 @@ class StatisticsData():
     self.unsolvable: ComplexityClassData = ComplexityClassData()
     self.totalSize: int = 0
 
-def compute(query):
-    data = getProblems(query)
+def compute(data):
     stats = StatisticsData()
     complexityMap = {
       CONST: 'const',
@@ -186,29 +185,30 @@ def prettyPrint(stats):
   print()
 
 def printStatistics(query):
-    stats = compute(query)
-    prettyPrint(stats)
+  data = getProblems(query)
+  stats = compute(data)
+  prettyPrint(stats)
 
-activeDegree = 3
-passiveDegree = 2
-labelCount = 2
-activesAllSame = False
-passivesAllSame = True
-flags = ProblemFlags(
-  isTree=True,
-  isCycle=False,
-  isPath=False,
-  isDirected=False,
-  isRooted=True,
-  isRegular=True
-)
-props = ProblemProps(
-  activeDegree,
-  passiveDegree,
-  labelCount,
-  activesAllSame,
-  passivesAllSame,
-  flags
-)
-query = Query(props)
-printStatistics(query)
+# activeDegree = 3
+# passiveDegree = 2
+# labelCount = 2
+# activesAllSame = False
+# passivesAllSame = True
+# flags = ProblemFlags(
+#   isTree=True,
+#   isCycle=False,
+#   isPath=False,
+#   isDirected=False,
+#   isRooted=True,
+#   isRegular=True
+# )
+# props = ProblemProps(
+#   activeDegree,
+#   passiveDegree,
+#   labelCount,
+#   activesAllSame,
+#   passivesAllSame,
+#   flags
+# )
+# query = Query(props)
+# printStatistics(query)
