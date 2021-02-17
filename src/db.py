@@ -44,9 +44,12 @@ def getProblems(
       )
     ) AND
 
-    NOT (
-      %s <@ active_constraints OR
-      %s <@ passive_constraints
+    (
+      %s = '{}' OR
+      NOT (
+        %s <@ active_constraints OR
+        %s <@ passive_constraints
+      )
     ) AND
 
     NOT (
@@ -74,11 +77,15 @@ def getProblems(
 
     query.excludeInclude.includeIfConfigHasAllOf,
     query.excludeInclude.includeIfConfigHasAllOf,
+
     query.excludeInclude.includeIfConfigHasSomeOf,
     query.excludeInclude.includeIfConfigHasSomeOf,
     query.excludeInclude.includeIfConfigHasSomeOf,
+
     query.excludeInclude.excludeIfConfigHasAllOf,
     query.excludeInclude.excludeIfConfigHasAllOf,
+    query.excludeInclude.excludeIfConfigHasAllOf,
+    
     query.excludeInclude.excludeIfConfigHasSomeOf,
     query.excludeInclude.excludeIfConfigHasSomeOf,
 
