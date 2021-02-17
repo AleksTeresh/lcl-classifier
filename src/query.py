@@ -1,4 +1,3 @@
-from file_util import getResultFilepath
 from problem import ProblemProps
 from complexity import *
 

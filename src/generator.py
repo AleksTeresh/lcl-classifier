@@ -6,7 +6,6 @@ from complexity import *
 from itertools import combinations_with_replacement, product
 from storeJson import storeJson
 from batch_classify import classifyAndStore
-from file_util import getProblemFilepath, getResultFilepath
 from db import storeProblemsAndGetWithIds, updateClassifications
 
 def problemFromConstraints(
@@ -96,8 +95,6 @@ props = ProblemProps(
   passivesAllSame,
   flags
 )
-problemFilepath = getProblemFilepath(activeDegree, passiveDegree, labelCount, props)
-resultsFilepath = getResultFilepath(activeDegree, passiveDegree, labelCount, props)
 
 psWithIds = storeProblemsAndGetWithIds(ps, props)
 classifyAndStore(resultsFilepath, psWithIds)
