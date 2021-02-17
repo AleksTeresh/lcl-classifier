@@ -97,4 +97,3 @@ props = ProblemProps(
 )
 
 psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(resultsFilepath, psWithIds)
