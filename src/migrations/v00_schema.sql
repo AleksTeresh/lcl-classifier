@@ -5,7 +5,6 @@ CREATE TYPE complexity AS ENUM (
   '(log n)',
   '(n)',
   'unsolvable',
-  ''
 );
 
 CREATE TABLE problems (
@@ -26,9 +25,9 @@ CREATE TABLE problems (
   is_directed BOOLEAN NOT NULL DEFAULT FALSE,
   is_rooted BOOLEAN NOT NULL DEFAULT FALSE,
   is_regular BOOLEAN NOT NULL DEFAULT FALSE,
-  rand_upper_bound complexity NOT NULL DEFAULT '',
+  rand_upper_bound complexity NOT NULL DEFAULT 'unsolvable',
   rand_lower_bound complexity NOT NULL DEFAULT '(1)',
-  det_upper_bound complexity NOT NULL DEFAULT '',
+  det_upper_bound complexity NOT NULL DEFAULT 'unsolvable',
   det_lower_bound complexity NOT NULL DEFAULT '(1)',
   solvable_count TEXT,
   unsolvable_count TEXT
