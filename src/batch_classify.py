@@ -5,7 +5,7 @@ from classifier import classify
 def batchClassify(problems):
   return [classify(x) for x in tqdm(problems)]
 
-def classifyAndStore(filename, problems):
+def classifyAndStore(problems):
   results = batchClassify(problems)
   updateClassifications(results)
 
