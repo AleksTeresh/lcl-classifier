@@ -101,6 +101,19 @@ def getProblems(
   
   cur.close()
   conn.close()
+
+  if query.excludeInclude.returnSmallestProblemOnly:
+    res = [min(
+      res,
+      key = lambda p: len(p['activeConstraints']) +
+        len(p['passiveConstraints'])
+    )]
+  elif query.excludeInclude.returnLargestProblemOnly:
+    res = [max(
+      res,
+      key = lambda p: len(p['activeConstraints']) +
+        len(p['passiveConstraints'])
+    )]
   return res
 
 def updateClassifications(results):

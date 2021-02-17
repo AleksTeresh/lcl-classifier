@@ -24,28 +24,28 @@ from db import storeProblemsAndGetWithIds, getProblems
 #   ['M UP UP UP', 'U U U U']
 # )
 
-activeDegree = 3
+activeDegree = 2
 passiveDegree = 2
-labelCount = 2
+labelCount = 3
 activesAllSame = False
-passivesAllSame = True
+passivesAllSame = False
 flags = ProblemFlags(
-  isTree=True,
+  isTree=False,
   isCycle=False,
-  isPath=False,
+  isPath=True,
   isDirected=False,
-  isRooted=True,
+  isRooted=False,
   isRegular=True
 )
 
-ps = generate(
-  activeDegree,
-  passiveDegree,
-  labelCount,
-  activesAllSame,
-  passivesAllSame,
-  flags
-)
+# ps = generate(
+#   activeDegree,
+#   passiveDegree,
+#   labelCount,
+#   activesAllSame,
+#   passivesAllSame,
+#   flags
+# )
 
 props = ProblemProps(
   activeDegree,
@@ -56,17 +56,24 @@ props = ProblemProps(
   flags
 )
 
-psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(ps)
+# psWithIds = storeProblemsAndGetWithIds(ps, props)
+# classifyAndStore(ps)
 
 query = Query(
   props,
   bounds = Bounds(
-    randUpperBound=LOG,
-    randLowerBound=ITERATED_LOG
-  )
+    randUpperBound=ITERATED_LOG,
+    randLowerBound=CONST
+  ),
+ excludeInclude = QueryExcludeInclude(
+  #  includeIfConfigHasAllOf = ['AA', 'BB'],
+  #  excludeIfConfigHasAllOf = ['AA', 'BC'],
+   # returnSmallestProblemOnly = True,
+   returnLargestProblemOnly = True
+ )
 )
 
 res = getProblems(query)
+print(res)
 stats = computeStats(res)
 prettyPrint(stats)
