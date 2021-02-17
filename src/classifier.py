@@ -93,7 +93,7 @@ def classify(problem: GenericProblem):
     print(e)
 
   responses = [cpResult, rtResult, tlpResult, brtResult]
-
+  # TODO: throw Exception when results contradict each other
   response = GenericResponse(
     problem,
     getUpperBound(responses, 'randUpperBound'),
