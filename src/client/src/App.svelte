@@ -4,8 +4,8 @@ import type { Problem } from './types';
 
 	let activeConstraints = ""
 	let passiveConstraints = ""
-	let leafConstraints = ""
-	let rootConstraints = ""
+	let leafConstraints = undefined
+	let rootConstraints = undefined
 
 	let graphType: 'tree' | 'cycle' | 'path' = 'tree'
 	let isDirected: boolean = false
@@ -55,15 +55,15 @@ import type { Problem } from './types';
 		</label>
 
 		<label>
-			<input type=checkbox bind:value={isDirected}>
+			<input type=checkbox bind:checked={isDirected}>
 			Directed
 		</label>
 		<label>
-			<input type=checkbox bind:value={isRooted}>
+			<input type=checkbox bind:checked={isRooted}>
 			Rooted
 		</label>
 		<label>
-			<input type=checkbox bind:value={isRegular}>
+			<input type=checkbox bind:checked={isRegular}>
 			Regular
 		</label>
 
