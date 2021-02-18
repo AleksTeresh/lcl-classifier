@@ -1,20 +1,45 @@
 <script lang="ts">
+	import { getProblem } from './api'
+import type { Problem } from './types';
+
 	let activeConstraints = ""
 	let passiveConstraints = ""
+	let leafConstraints = ""
+	let rootConstraints = ""
 
 	let graphType: 'tree' | 'cycle' | 'path' = 'tree'
 	let isDirected: boolean = false
 	let isRooted: boolean = false
 	let isRegular: boolean = false
+
+	async function handleProblemSubmit(e: any) {
+		e.preventDefault();
+
+		const problem: Problem = {
+			activeConstraints: activeConstraints.split('\n'),
+			passiveConstraints: passiveConstraints.split('\n'),
+			leafConstraints: leafConstraints?.split('\n'),
+			rootConstraints: rootConstraints?.split('\n'),
+			isTree: graphType === 'tree',
+			isCycle: graphType === 'cycle',
+			isPath: graphType === 'path',
+			isDirected,
+			isRooted,
+			isRegular
+		}
+
+		const response = await getProblem(problem)
+		console.log(response)
+	}
 </script>
 
 <main>
 	<form>
-		<label>Active configurations:</label>
-		<textarea bind:value={activeConstraints}></textarea>
+		<label for="activeConfigs">Active configurations:</label>
+		<textarea id="activeConfigs" bind:value={activeConstraints}></textarea>
 
-		<label>Passive configurations:</label>
-		<textarea bind:value={passiveConstraints}></textarea>
+		<label for="activeConfigs">Passive configurations:</label>
+		<textarea id="passiveConfigs" bind:value={passiveConstraints}></textarea>
 
 		<label>
 			<input type=radio bind:group={graphType} value="tree">
@@ -43,11 +68,16 @@
 		</label>
 
 		{#if graphType === 'path'}
-			<label>Leaf configurations (optional):</label>
-			<textarea bind:value={activeConstraints}></textarea>
+			<label for="leafConfig">Leaf configurations (optional):</label>
+			<textarea id="leafConfig" bind:value={leafConstraints}></textarea>
 
-			<label>Root configurations (optional):</label>
-			<textarea bind:value={passiveConstraints}></textarea>
+			<label for="rootConfig">Root configurations (optional):</label>
+			<textarea id="rootConfig" bind:value={rootConstraints}></textarea>
 		{/if}
+
+		<button
+			on:click={handleProblemSubmit}>
+			Find
+		</button>
 	</form>
 </main>
