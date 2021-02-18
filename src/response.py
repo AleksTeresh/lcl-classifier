@@ -30,7 +30,6 @@ class GenericResponse:
 
   def dict(self):
     return {
-      "problem": self.problem if self.problem.id is None else self.problem.id,
       "randUpperBound": self.randUpperBound,
       "randLowerBound": self.randLowerBound,
       "detUpperBound": self.detUpperBound,

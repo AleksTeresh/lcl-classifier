@@ -6,3 +6,4 @@ cyclepath-classifier
 brt-classifier
 psycopg2-binary
 flask
+flask-restful

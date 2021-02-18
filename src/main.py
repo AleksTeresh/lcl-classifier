@@ -79,12 +79,12 @@ stats = computeStats(res)
 prettyPrint(stats)
 
 problem = GenericProblem(
-  activeConstraints = ['A A', 'A B', 'A C', 'B B', 'B C', 'C C'],
-  passiveConstraints = ['A A', 'A B', 'A C', 'B B', 'B C', 'C C'],
+  activeConstraints = ['A A', 'A B'],
+  passiveConstraints = ['A A', 'A B'],
   flags = ProblemFlags(
     isTree = False,
-    isCycle = False,
-    isPath = True,
+    isCycle = True,
+    isPath = False,
     isDirected = False,
     isRooted = False,
     isRegular = True

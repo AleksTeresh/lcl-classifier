@@ -43,7 +43,8 @@ def getProblem(problem: GenericProblem):
     problem.flags.isRegular
   ))
   res = cur.fetchone()
-  res = humps.camelize(res)
+  if res is not None:
+    res = humps.camelize(res)
   
   cur.close()
   conn.close()
