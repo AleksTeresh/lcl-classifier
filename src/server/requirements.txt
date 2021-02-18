@@ -7,3 +7,4 @@ brt-classifier
 psycopg2-binary
 flask
 webargs
+flask-cors

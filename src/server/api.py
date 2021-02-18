@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from flask_cors import CORS
 from webargs import fields, validate
 from webargs.flaskparser import use_args
 from problem import GenericProblem, ProblemFlags, ProblemProps
@@ -10,6 +11,7 @@ from complexity import *
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+CORS(app)
 
 problem_args = {
   "is_tree": fields.Bool(required=True),
