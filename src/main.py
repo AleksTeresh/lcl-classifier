@@ -6,7 +6,7 @@ from complexity import *
 from statistics import compute as computeStats, prettyPrint
 from query import Query, Bounds, QueryExcludeInclude
 from batch_classify import classifyAndStore
-from db import storeProblemsAndGetWithIds, getProblems
+from db import storeProblemsAndGetWithIds, getProblems, getProblem
 
 # REtorProblem1 = GenericProblem(
 #   activeConstraints = ['M U U U', 'P P P P'],
@@ -77,3 +77,19 @@ res = getProblems(query)
 print(res)
 stats = computeStats(res)
 prettyPrint(stats)
+
+problem = GenericProblem(
+  activeConstraints = ['A A', 'A B', 'A C', 'B B', 'B C', 'C C'],
+  passiveConstraints = ['A A', 'A B', 'A C', 'B B', 'B C', 'C C'],
+  flags = ProblemFlags(
+    isTree = False,
+    isCycle = False,
+    isPath = True,
+    isDirected = False,
+    isRooted = False,
+    isRegular = True
+  )
+)
+
+r = getProblem(problem)
+print(r)

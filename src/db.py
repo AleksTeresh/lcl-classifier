@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extras import execute_values
 import humps
-from problem import ProblemProps
+from problem import GenericProblem, ProblemProps
 from query import Query
 
 def getConnection():
@@ -12,6 +12,43 @@ def getConnection():
     password="mysecretpassword"
   )
   return conn
+
+def getProblem(problem: GenericProblem):
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("""
+  SELECT * FROM problems WHERE
+    active_constraints = %s AND
+    passive_constraints = %s AND
+    leaf_constraints = %s AND
+    root_constraints = %s AND
+    
+    is_tree = %s AND
+    is_cycle = %s AND
+    is_path = %s AND
+    is_directed = %s AND
+    is_rooted = %s AND
+    is_regular = %s;
+  """, (
+    list(problem.activeConstraints),
+    list(problem.passiveConstraints),
+    list(problem.leafConstraints),
+    list(problem.rootConstraints),
+
+    problem.flags.isTree,
+    problem.flags.isCycle,
+    problem.flags.isPath,
+    problem.flags.isDirected,
+    problem.flags.isRooted,
+    problem.flags.isRegular
+  ))
+  res = cur.fetchone()
+  res = humps.camelize(res)
+  
+  cur.close()
+  conn.close()
+
+  return res
 
 def getProblems(
   query: Query
