@@ -4,7 +4,7 @@ CREATE TYPE complexity AS ENUM (
   '(loglog n)',
   '(log n)',
   '(n)',
-  'unsolvable',
+  'unsolvable'
 );
 
 CREATE TABLE problems (
