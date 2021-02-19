@@ -92,8 +92,6 @@ query_args = {
 @app.route('/api/classifier/query', methods=['GET'])
 @use_args(query_args, location='query')
 def query(args):
-  print(args['rand_upper_bound'])
-  print(args['rand_lower_bound'])
   query = Query(
     props = ProblemProps(
       activeDegree=args['active_degree'],
