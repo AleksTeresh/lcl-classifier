@@ -1,4 +1,4 @@
-import type { Problem } from "./types"
+import type { Problem, Query } from "./types"
 
 async function handleResponse(response: Response) {
   if (!response.ok) {
@@ -14,12 +14,32 @@ function isNil(x: any) {
   return x === undefined || x === null
 }
 
+// adapted from https://stackoverflow.com/questions/30970286/convert-javascript-object-camelcase-keys-to-underscore-case
+function toSnake(key: string) {
+  return key.replace( /([A-Z])/g, "_$1").toLowerCase()
+}
+// adapted from https://matthiashager.com/converting-snake-case-to-camel-case-object-keys-with-javascript
+const keysToSnake = function (o: any) {
+  const n = {}
+  Object.keys(o)
+    .forEach((k) => {
+      n[toSnake(k)] = o[k]
+    })
+
+  return n
+}
+
 type UrlParam = [string, string[] | string | number | boolean | undefined | null]
 function urlWithParams(url: string, params: readonly UrlParam[]): string {
   const paramString = new URLSearchParams(
     params
       .filter(([, value]) => !isNil(value))
-      .filter(([, value]) => value !== '')
+      .filter(([, value]) => value !== '' &&
+        (
+          !Array.isArray(value) ||
+          value.length !== 1 ||
+          value[0] !== ''
+        ))
       .flatMap(([key, value]) => Array.isArray(value)
         ? value.map(v => [key, `${v}`])
         : [[key, `${value}`]])
@@ -32,18 +52,16 @@ function urlWithParams(url: string, params: readonly UrlParam[]): string {
 export async function getProblem(problem: Problem) {
   const url = urlWithParams(
     'http://localhost:5000/api/classifier/problem',
-    [
-      ['is_tree', problem.isTree],
-      ['is_cycle', problem.isCycle],
-      ['is_path', problem.isPath],
-      ['is_directed', problem.isDirected],
-      ['is_rooted', problem.isRooted],
-      ['is_regular', problem.isRegular],
-      ['active_constraints', problem.activeConstraints],
-      ['passive_constraints', problem.passiveConstraints],
-      ['leaf_constraints', problem.leafConstraints],
-      ['root_constraints', problem.rootConstraints],
-    ]
+    Object.entries(keysToSnake(problem))
+  )
+  const response = await fetch(url)
+  return handleResponse(response)
+}
+
+export async function getQueryResult(query: Query) {
+  const url = urlWithParams(
+    'http://localhost:5000/api/classifier/query',
+    Object.entries(keysToSnake(query))
   )
   const response = await fetch(url)
   return handleResponse(response)
