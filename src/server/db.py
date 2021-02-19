@@ -6,7 +6,7 @@ from query import Query
 
 def getConnection():
   conn = psycopg2.connect(
-    host="postgres",
+    host="db",
     database="postgres",
     user="postgres",
     password="postgres"

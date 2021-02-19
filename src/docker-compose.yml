@@ -1,6 +1,16 @@
 version: "3"
 services:
-  postgres:
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://db:5432/postgres?user=postgres&password=postgres -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - ${PWD}/server/migrations:/flyway/sql
+    depends_on:
+      - db
+    networks:
+      - back
+
+  db:
     container_name: postgres_container
     image: postgres:13.2
     environment:
@@ -12,7 +22,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - shared
+      - back
     restart: unless-stopped
 
   backend:
@@ -24,9 +34,10 @@ services:
     volumes:
       - ./server:/usr/src/app
     networks:
-      - shared
+      - back
+      - front
     depends_on:
-      - postgres
+      - db
     environment:
       - FLASK_ENV=development
       - FLASK_APP=api.py
@@ -41,12 +52,13 @@ services:
     ports:
       - 80:80
     networks:
-      - shared
+      - front
     depends_on:
       - backend
 
 networks:
-  shared:
+  back:
+  front:
 
 volumes:
   postgres:
