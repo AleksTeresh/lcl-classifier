@@ -162,16 +162,16 @@ import { getQueryResult } from './api'
       Return smallest problem only
     </label>
   
-    <label>Exclude if configs have <strong>all</strong> of</label>
+    <label for="exclude-if-all">Exclude if configs have <strong>all</strong> of</label>
     <textarea id="exclude-if-all" bind:value={excludeIfConfigHasAllOf}></textarea>
   
-    <label>Exclude if configs have <strong>some</strong> of</label>
+    <label for="exclude-if-some">Exclude if configs have <strong>some</strong> of</label>
     <textarea id="exclude-if-some" bind:value={excludeIfConfigHasSomeOf}></textarea>
   
-    <label>Include if configs have <strong>all</strong> of</label>
+    <label for="include-if-all">Include if configs have <strong>all</strong> of</label>
     <textarea id="include-if-all" bind:value={includeIfConfigHasAllOf}></textarea>
   
-    <label>Include if configs have <strong>some</strong> of</label>
+    <label for="include-if-some">Include if configs have <strong>some</strong> of</label>
     <textarea id="include-if-some" bind:value={includeIfConfigHasSomeOf}></textarea>
   </div>
 
