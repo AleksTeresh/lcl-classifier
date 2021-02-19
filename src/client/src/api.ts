@@ -51,7 +51,7 @@ function urlWithParams(url: string, params: readonly UrlParam[]): string {
 
 export async function getProblem(problem: Problem) {
   const url = urlWithParams(
-    'http://localhost:5000/api/classifier/problem',
+    '/api/classifier/problem',
     Object.entries(keysToSnake(problem))
   )
   const response = await fetch(url)
@@ -60,7 +60,7 @@ export async function getProblem(problem: Problem) {
 
 export async function getQueryResult(query: Query) {
   const url = urlWithParams(
-    'http://localhost:5000/api/classifier/query',
+    '/api/classifier/query',
     Object.entries(keysToSnake(query))
   )
   const response = await fetch(url)
