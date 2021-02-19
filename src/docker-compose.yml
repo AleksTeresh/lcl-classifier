@@ -1,0 +1,52 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - shared
+    restart: unless-stopped
+
+  backend:
+    restart: always
+    container_name: backend
+    build: ./server
+    expose:
+      - 5000
+    volumes:
+      - ./server:/usr/src/app
+    networks:
+      - shared
+    depends_on:
+      - postgres
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=api.py
+      - FLASK_DEBUG=1
+    restart: unless-stopped
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - shared
+    depends_on:
+      - backend
+
+networks:
+  shared:
+
+volumes:
+  postgres:

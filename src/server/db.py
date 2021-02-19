@@ -6,10 +6,10 @@ from query import Query
 
 def getConnection():
   conn = psycopg2.connect(
-    host="localhost",
+    host="postgres",
     database="postgres",
     user="postgres",
-    password="mysecretpassword"
+    password="postgres"
   )
   return conn
 
