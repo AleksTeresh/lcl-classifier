@@ -1,3 +1,4 @@
+import os
 import psycopg2
 from psycopg2.extras import execute_values
 import humps
@@ -8,8 +9,12 @@ def getConnection():
   conn = psycopg2.connect(
     host="db",
     database="postgres",
-    user="postgres",
-    password="postgres"
+    user=(os.environ['POSTGRES_USER']
+      if 'POSTGRES_USER' in os.environ
+      else 'postgres'),
+    password=(os.environ['POSTGRES_PASSWORD']
+      if 'POSTGRES_PASSWORD' in os.environ
+      else 'postgres')
   )
   return conn
 

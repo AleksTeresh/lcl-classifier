@@ -2,7 +2,7 @@ version: "3"
 services:
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:postgresql://db:5432/postgres?user=postgres&password=postgres -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    command: -url=jdbc:postgresql://db:5432/postgres?user=${POSTGRES_USER:-postgres}&password=${POSTGRES_PASSWORD:-postgres} -locations=filesystem:/flyway/sql -connectRetries=60 migrate
     volumes:
       - ${PWD}/server/migrations:/flyway/sql
     depends_on:
@@ -39,9 +39,11 @@ services:
     depends_on:
       - db
     environment:
-      - FLASK_ENV=development
-      - FLASK_APP=api.py
-      - FLASK_DEBUG=1
+      FLASK_ENV: development
+      FLASK_APP: api.py
+      FLASK_DEBUG: 1
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     restart: unless-stopped
 
   frontend:
