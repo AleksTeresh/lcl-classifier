@@ -192,7 +192,7 @@ prominent papers exploring potentialities of computation performed
 by multiple interconnected processing units~\cite{Cole1986, Linial1987, Naor1991}.
 The first major step in the field happened in 1987, when Linial formalised
 some of the principles of one variant of a distributed system.
-This model of computation is currently known as Linial's or \emph{LOCAL model}~\cite{Linial1987}.
+This model of computation is currently known as Linial's or the \emph{LOCAL model}~\cite{Linial1987}.
 
 \subsection{Model of computation}
 
@@ -272,15 +272,15 @@ or undelivered. Therefore, we can always assume that messages sent and received 
 are all in accordence to the actual algorithm that is being executed by the nodes 
 and not a result of an accidental fault or an intentional adversary effort
 
-\subsection{Distinctive qualities of LOCAL model}
+\subsection{Distinctive qualities of the LOCAL model}
 
 As was already mentioned previously, our model of computation is known
-as Linial's or LOCAL model~\cite{Linial1987}. Therefore, to complete the
-description, we will describe in more detail two distinctive qualities of LOCAL model
+as Linial's or the LOCAL model~\cite{Linial1987}. Therefore, to complete the
+description, we will describe in more detail two distinctive qualities of the LOCAL model
 from other models of distributed computing, namely unique identifiers and arbitrarily large
 bandwidth.
 
-Each node in LOCAL model is provided with a unique identifier as part of initial input.
+Each node in the LOCAL model is provided with a unique identifier as part of initial input.
 The identifiers are usually assumed to be integer numbers between 1 and $|V|^c$, where
 $|V|$ is the number of nodes in the graph and $c$ is some constant. Unless specified, we
 assume that such a constant $c$ is not known by the nodes at the beginning of
@@ -293,7 +293,7 @@ that an integer $x+1$ is not used as an identifier in the graph. This implies th
 the beginning, nodes do not known what integers have been used for unique identifiers
 and what have not been, with the exception of only one integer -- their own identifier.
 
-Another characteristic of LOCAL model, which also was already mentioned before, is the fact
+Another characteristic of the LOCAL model, which also was already mentioned before, is the fact
 that nodes can send (and receive) an arbitrarily large (but nevertheless finite)
 amount of bytes of information over a single edge during one round. This fact,
 combined with the existence of unique identifiers, renders the model as a rather strong one.
@@ -310,12 +310,12 @@ Notice that each of $v$'s neighbours now have all the information of their neigh
 if we combine all the data in posession of $v$ and $v$'s neighbours after the first round, it
 is easy to observe that they together have all the information of $v$'s radius-2 neighbourhood.
 But this means that after the second round, when all $v$'s neighbours have sent all their
-information to $v$, $v$ alone posessses all the data that its radius-2 neighbourhood had at the
+information to $v$, the node $v$ alone posessses all the data that its radius-2 neighbourhood had at the
 beginning of the algorithm execution. Similarly, after the 3rd round, $v$ will have all the
 radius-3 neighbourhood's data, and so on.
 In general, after round $x$, node $v$ will have
 all information that was initailly available in its radius-$x$ neighbourhood.
-Therefore, when considering LOCAl model,
+Therefore, when considering the LOCAL model,
 time and space are in certain sense equivalent. In other words, the number of rounds
 needed to solve a certain problem is always equal to the distance (or radius) to which a node needs to
 see to solve a certain problem. One technicality to note here is that because all nodes have
@@ -325,16 +325,16 @@ reconstruct the structure of the neighbourhood in the graph.
 
 As a consequence of the above,
 we can observe that after $\diam(G)$ rounds, node $v$ will have all the information there is in the 
-graph $G$. This implies that after $\diam(G)$ rounds, in LOCAL model, we can solve anything that can
+graph $G$. This implies that after $\diam(G)$ rounds, in the LOCAL model, we can solve anything that can
 be solved in a centralised setting. That is because at the end of $\diam(G)$'th round, each node in the
 graph have collected all the information there is in the graph and thus can just run the
-computation locally. And because local computation in LOCAL model is virtually free,
+computation locally. And because local computation in the LOCAL model is virtually free,
 anytihng that could be computed in a centralised setting will be computed locally by each
 node individually. On the next round, each node can output their part of the solution.
 
-\subsection{Formalising LOCAL model}
+\subsection{Formalising the LOCAL model}
 
-In this subsection we will formalise LOCAl model that we informally described above.
+In this subsection we will formalise LOCAL model that we informally described above.
 This will, first of all, help to clarify the aspects of the model that are still left ambiguous
 after reading the previous subsections. Besides, it will allow us to introduce
 a randomised model below once the basic deterministic one is unambiguously defined.
@@ -343,7 +343,7 @@ An algorithm being executed by each node consists of
 three functions. One for local state initialization that is executed only once, after
 a node $v$ has received its initial local inputs $u(v)$ but before the first round
 
-$$init_A(u(v), d)$$
+$$\init_A(u(v), d)$$
 where $A$ is a given distributed algorithm and $d$ is the degree of the node $v$.
 The function return an initial local state of the node $v$.
 
@@ -352,13 +352,13 @@ and returns a tuple of size $d$, where $d$ is a degree of node $v$. The
 tuple contains messages that are to be sent to $d$ neighbours of the node $v$
 during the current round.
 
-$$send_A(x(v), d)$$
+$$\send_A(x(v), d)$$
 
 The third function takes as an input a local internal state $x(v)$ of a node
 $v$, and a tuple $m(v)$ of size $d$ that contains messages received from $d$ neighbours
 of the node $v$.
 
-$$receive_A(x(v), m(v), d)$$
+$$\receive_A(x(v), m(v), d)$$
 The function returns a new local internal state of the node $v$, which becomes a
 starting internal state $x(v)$ in the next round.
 
@@ -366,10 +366,10 @@ starting internal state $x(v)$ in the next round.
 
 This subsection will introduce a randomised distributed model of computation
 and highlight some of the difference between randomised and deterministic
-models. In this section, the focus will be specifically on randomised LOCAL
+models. In this section, the focus will be specifically on the randomised LOCAL
 model as opposed to some other distributed algorithms models.
 
-In a randomised LOCAL model, we have two major differences from the
+In the randomised LOCAL model, we have two major differences from the
 deterministic LOCAL model. First, the function $init_A(u(v), d)$ becomes
 randomised. This means that the initial state $x_0(v) = init_A(u(v), d)$ of a node $v$ is
 chosen from a discrete probability distribution of all possible initial states.
@@ -412,7 +412,7 @@ probability'' (often denoted as ``w.h.p.''). Formally, if an algorithm succeeds 
 high probability, it means that the algorithm succeds with probability of at least
 $1 - 1 / n^c$, where $n$ is a number of nodes in a graph and $c$ is some constant
 such that $c > 0$. Moreover, $c$ is a constant that can be freely chosen when 
-running the algorithm. To give a simple example, algorithm's running time may
+running the algorithm. To give a simple example, an algorithm's running time may
 linearly depend on such a constant $c$, then before an algorithm is executed,
 one may freely choose the constant so that the larger the constant the longer is
 the running time, but also the lower the chance that the produced output will
@@ -420,7 +420,7 @@ be incorrect. Notice that $c$ does not need to affect running time, but it often
 does since the larger it is the lower is the probability of algorithm's failure,
 and decreasing such probability usually comes at the cost of something else -- 
 often running time. Thus, when saying that something succeeds ``with high probability''
-we not mean it vaguely but rather refer to a very precise mathematical definition 
+we do not mean it vaguely but rather refer to a very precise mathematical definition
 given above.
 
 \section{Iterated logarithm}
@@ -439,12 +439,12 @@ The interated logarithm function, denoted as $log^*(x)$ is defined as follows:
 \]
 The function is notable for the fact that it grows extremely slow. For example,
 
-$$log^*(1) = 0$$
-$$log^*(2) = 1$$
-$$log^*(4) = 2$$
-$$log^*(16) = 3$$
-$$log^*(65536) = 4$$
-$$log^*(2^{65536}) = 5$$
+$$\log^*(1) = 0$$
+$$\log^*(2) = 1$$
+$$\log^*(4) = 2$$
+$$\log^*(16) = 3$$
+$$\log^*(65536) = 4$$
+$$\log^*(2^{65536}) = 5$$
 
 \section{Locally Checkable Labelling problems}
 
@@ -465,11 +465,11 @@ following criteria~\cite{Naor1993, Suomela2020}.
 
 \begin{itemize}
 
-\item the maximum degree of a graph is a finite number that does not depend on $n$
+\item the maximum degree of a graph is a finite number that does not depend on $n$,
 
-\item there is a finite number of input labels and the number is not dependent on $n$
+\item there is a finite number of input labels and the number is not dependent on $n$,
 
-\item there is a finite number of output labels and the number does not depend on $n$
+\item there is a finite number of output labels and the number does not depend on $n$,
 
 \item the correctness of a solution can be checked locally by each individual node. That is
 after a solution is produced and all the nodes in the graph have stopped, each node can just
@@ -488,7 +488,7 @@ a moe concise representation. We will return to the topic of representing LCL
 problems later in this thesis.
 
 The study of LCL problems has been one of the major research directions
-during the last 6-7 years, with numerous papers published in major
+during the last 6--7 years, with numerous papers published in major
 distributed computing conferences
 ~\cite{Balliu2016, Chang2016, Brandt2017, Chang2017, Fischer2017a, Rozhon2019, Balliu2020-1, Balliu2020-2}.
 Currently, the study of LCL problems has reached the stage of maturity with,
