@@ -31,8 +31,8 @@ can be visualised as an error that starts in a ``source'' node and ends in a
 ``destination'' node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
 where all edges are undirected, and \emph{directed graphs} - such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
-set of 2 nodes $e = \{v, u\}$, a directed edge $e$ is defined as a set tuple
-of 2 nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
+set of two nodes $e = \{v, u\}$, a directed edge $e$ is defined as a pair
+of two nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
 elements does matter, hence, the tuple allows us to encode the direction of
 the edge. Unless mentioned otherwise, we assume that an edge is directed
 from the first element of the tuple to the second. Also note that in this
@@ -91,12 +91,12 @@ all such nodes $u \in V$ that there exists a walk between $v$ and $u$ and
 the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
-A diameter of a graph (denoted as $diam(G)$) is the length of the longest walk
+A diameter of a graph (denoted as $\diam(G)$) is the length of the longest walk
 in a list $W$, where $W$ is a list of the shortest walks - one between each pair of nodes
 $v$ and $u$ in a graph $G = (V, E)$ such that $v \in V$ and $u \in V$. If a graph
 $G$ is nont connected and therefore there is a pair of nodes $v$ and $u$ that do not
 have a walk between them, we say that a diameter of such a graph $G$ is infinity. That
-is $diam(G) = \inf$.
+is $\diam(G) = \inf$.
 
 \subsection{Several important graph families}
 
@@ -324,9 +324,9 @@ receiving nodes can differentiate what nodes the received data belongs to, and c
 reconstruct the structure of the neighbourhood in the graph.
 
 As a consequence of the above,
-we can observe that after $diam(G)$ rounds, node $v$ will have all the information there is in the 
-graph $G$. This implies that after $diam(G)$ rounds, in LOCAL model, we can solve anything that can
-be solved in a centralised setting. That is because at the end of $diam(G)$'th round, each node in the
+we can observe that after $\diam(G)$ rounds, node $v$ will have all the information there is in the 
+graph $G$. This implies that after $\diam(G)$ rounds, in LOCAL model, we can solve anything that can
+be solved in a centralised setting. That is because at the end of $\diam(G)$'th round, each node in the
 graph have collected all the information there is in the graph and thus can just run the
 computation locally. And because local computation in LOCAL model is virtually free,
 anytihng that could be computed in a centralised setting will be computed locally by each
