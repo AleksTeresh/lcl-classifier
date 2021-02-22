@@ -7,14 +7,16 @@ from query import Query
 
 def getConnection():
   conn = psycopg2.connect(
-    host="db",
+    host=(os.environ['POSTGRES_HOST']
+      if 'POSTGRES_HOST' in os.environ
+      else 'localhost'),
     database="postgres",
     user=(os.environ['POSTGRES_USER']
       if 'POSTGRES_USER' in os.environ
       else 'postgres'),
     password=(os.environ['POSTGRES_PASSWORD']
       if 'POSTGRES_PASSWORD' in os.environ
-      else 'postgres')
+      else 'v^oOB1uiZ7ylo$XbuYKDe$cnUKX9U0c0N9$r')
   )
   return conn
 
