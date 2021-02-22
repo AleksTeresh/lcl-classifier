@@ -85,7 +85,7 @@ Note that because the labels are produced only by active nodes,
 outgoing edge $O$ for an active node is an incoming edge for a 
 passive node. And vise versa: an incoming edge $I$ for an active node
 is an outgoing edge for a passive node. Thus, the sets of configurations
-$A$ and $P$ can be interpreted so that each node - no matter active or passive -
+$A$ and $P$ can be interpreted so that each node -- no matter active or passive --
 has to have at least one outgoing edge, and the rest of the edges can be anything.
 
 Now that we have defined our two example problems,
@@ -212,7 +212,7 @@ Moreover, some problems on rooted trees can be classified as well. For the techn
 has to be describable in a so-called ``edge-checkable'' formalism. In other words, we're allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{edge}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
-Also, we're not concert in the current formalism with the output of leaves and root - only nodes in the
+Also, we're not concert in the current formalism with the output of leaves and root -- only nodes in the
 middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
 there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
 is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
@@ -267,7 +267,7 @@ nodes of an underlying graph, while black nodes represent edges in the original 
 Furthermore, an output label $1$ represents an edge
 that is directed from a white node towards a black node, while label $0$ represents
 an edge directed from a black node towards a white node. That is why
-$W$ contains all integers from 1 to $\delta - 1$ but not $\delta$ - 
+$W$ contains all integers from 1 to $\delta - 1$ but not $\delta$,
 this signifies that each white node must have an outdegree of at least 1,
 or in other words that edges of a white node cannot all be incoming.
 From the set $B$ we can see that each black node must have 
@@ -301,7 +301,7 @@ where $\delta$ and $\sigma$ are degrees in the underlying $(\delta, \sigma)$-bir
 tree, while $W$ and $B$ are constraint sets for white and black nodes respectively.
 Each constraint in the sets $W$ or $B$ is a 3-tuple of the form $(x_0, x_1, x_2)$
 where $x_0$ represents how many incident (to a given node) edges can be labelled with label ``0'',
-$x_1$ shows how many edges can be labeled with ``1'', and $x_2$ - with ``2''. Similar to the case
+$x_1$ shows how many edges can be labeled with ``1'', and $x_2$ -- with ``2''. Similar to the case
 of binary labeling in unrooted regular trees, we assume that only these 3 labels are allowed to
 be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
 in such a way that each edge is labeled with the same label by each of its incident nodes.

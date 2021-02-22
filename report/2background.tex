@@ -28,8 +28,8 @@ The latter ones simply connect a pair of nodes in a graph, while the latter
 ones also contain extra information about which of the 2 connected nodes is
 a ``source'' and which one is a ``destination''. Informally, such a directed edge
 can be visualised as an error that starts in a ``source'' node and ends in a 
-``destination'' node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
-where all edges are undirected, and \emph{directed graphs} - such graphs where all
+``destination'' node.  Similarly, we talk about \emph{undirected graphs} -- that is graphs
+where all edges are undirected, and \emph{directed graphs} -- such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
 set of two nodes $e = \{v, u\}$, a directed edge $e$ is defined as a pair
 of two nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
@@ -275,7 +275,7 @@ and not a result of an accidental fault or an intentional adversary effort
 \subsection{Distinctive qualities of LOCAL model}
 
 As was already mentioned previously, our model of computation is known
-as Linial's or \emph{LOCAL model}~\cite{Linial1987}. Therefore, to complete the
+as Linial's or LOCAL model~\cite{Linial1987}. Therefore, to complete the
 description, we will describe in more detail two distinctive qualities of LOCAL model
 from other models of distributed computing, namely unique identifiers and arbitrarily large
 bandwidth.
@@ -285,20 +285,20 @@ The identifiers are usually assumed to be integer numbers between 1 and $|V|^c$,
 $|V|$ is the number of nodes in the graph and $c$ is some constant. Unless specified, we
 assume that such a constant $c$ is not known by the nodes at the beginning of
 algorithm execution. Thus, unique identifiers are guaranteed to be positive integer
-numbers bounded by a polynomial in the number of nodes, but it is not known - by the nodes
-at the start of algorith execution - what is the largest unique identifier in the graph. Moreover,
+numbers bounded by a polynomial in the number of nodes, but it is not known -- by the nodes
+at the start of algorith execution -- what is the largest unique identifier in the graph. Moreover,
 the identifiers of the node do not necessarily form a continuous range of integers. That is
 if an integer $x$ is used as a unique identifier for some node $v$, it is possible
 that an integer $x+1$ is not used as an identifier in the graph. This implies that at
 the beginning, nodes do not known what integers have been used for unique identifiers
-and what have not been, with the exception of only one integer - their own identifier.
+and what have not been, with the exception of only one integer -- their own identifier.
 
 Another characteristic of LOCAL model, which also was already mentioned before, is the fact
 that nodes can send (and receive) an arbitrarily large (but nevertheless finite)
 amount of bytes of information over a single edge during one round. This fact,
 combined with the existence of unique identifiers, renders the model as a rather strong one.
-In particular, this implies that a node can send all of its information - no matter how
-large it is - to all its neighbours in just one round.
+In particular, this implies that a node can send all of its information -- no matter how
+large it is -- to all its neighbours in just one round.
 
 This, in turn, implies a rather
 curious property. Imagine that every node sends all of its information during the first round,
@@ -418,7 +418,7 @@ one may freely choose the constant so that the larger the constant the longer is
 the running time, but also the lower the chance that the produced output will
 be incorrect. Notice that $c$ does not need to affect running time, but it often
 does since the larger it is the lower is the probability of algorithm's failure,
-and decreasing such probability usually comes at the cost of something else - 
+and decreasing such probability usually comes at the cost of something else -- 
 often running time. Thus, when saying that something succeeds ``with high probability''
 we not mean it vaguely but rather refer to a very precise mathematical definition 
 given above.
