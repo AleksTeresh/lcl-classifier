@@ -22,15 +22,15 @@ another LCL problem $\Pi_1$ which can be solved exactly one round
 faster. For round elimination to work, the input should comply
 to two constraints: $\Pi_0$ has to be a problem on a $(\delta, \beta)$-
 biregular graph, and the number of rounds in which $\Pi_0$ can be solved
-should not be "too large". Indeed, the last constraint is a rather curious one
+should not be ``too large''. Indeed, the last constraint is a rather curious one
 since we rarely know round-complexity of an input problem when using
 round elimination. However, we can nevertheless use this rather inconvinient constraint
 to our advantage, which will be demonstrated below.
 
-Furthermore, when applying round elimination we talk about "active" and
-"passive" nodes. Since $(\delta, \beta)$-bipartition of an input problem is
+Furthermore, when applying round elimination we talk about ``active'' and
+``passive'' nodes. Since $(\delta, \beta)$-bipartition of an input problem is
 already given (see our assumption above), nodes of degree $\delta$ are assumed
-to be "active" and nodes of degree $\beta$ are assumed to be passive. For a problem
+to be ``active'' and nodes of degree $\beta$ are assumed to be passive. For a problem
 to be a valid input to round elimination, it has to be reformulated as a problem on
 a $(\delta, \beta)$-biregular graph where only one partition of nodes produces
 some output while the other partition does not produce any output but instead
@@ -44,7 +44,7 @@ examples two canonical problems: weak 3-labelling and sinkless orientation.
 each node labels its incident edges in such a way that no node $v$ in the graph
 has all its incident edges labelled with the same label. Besides if two
 nodes $v$ and $u$ are incident to the same edge $e = \{v, u\}$, such
-edge $e$ has to be labelled with the same label from both "sides". In other words,
+edge $e$ has to be labelled with the same label from both ``sides''. In other words,
 two neighbouring nodes cannot output different labels on the same edge.
 It is easy to see although the initial problem is specified for a regular
 tree, we can obtain an equivalent problem for a $(\delta, 2)$-biregular tree
@@ -140,8 +140,8 @@ $$P = \{ \{B, AB, AB\}\}$$
 It turns out that $\Pi_2 = \Pi_1$. But we also know that round complexity of $\Pi_2$
 has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a contradiction,
 it turns out that the key here is to pay attention to the initial assumptions that we mentioned at the
-beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be "too large".
-Hence, in the case of SO, the number of rounds necessary to solve it is "too large". Moreover,
+beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be ``too large''.
+Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
 it has been shown that is cases like this, when after applying round elimination repeatedly,
 we encounter a problem that we've already seen before, the initial problem $\Pi_0$ is most of the cases
 is solvable in $\Omega(log n)$ rounds in deterministic setting and in $\Omega(loglog n)$ rounds
@@ -170,7 +170,7 @@ the case of round elimination, it is important to explain a representation which
 the technique requires the input LCL problem to be in. We will initially concentrate on the case
 of LCLs on paths and cycles, and only afterwards cover the extension to rooted trees.
 
-The representation is often referred to as "node-edge-checkable" formalism.
+The representation is often referred to as ``node-edge-checkable'' formalism.
 In it, each node outputs one label on each of its \emph{ports} associated with
 its incident edges. Since only paths and cycles are allowed as graph families for
 input LCLs, most of the nodes have exactly 2 incident edges (except for endpoints nodes
@@ -209,14 +209,14 @@ problem into one of the four compplexity classes. The cassification technique wo
 problems on trees and cycles.
 
 Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
-has to be describable in a so-called "edge-checkable" formalism. In other words, we're allowed to
+has to be describable in a so-called ``edge-checkable'' formalism. In other words, we're allowed to
 only specify constraints for the edges of the tree i.e. $C_{edge}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
 Also, we're not concert in the current formalism with the output of leaves and root - only nodes in the
 middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
 there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
 is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
-among children of some node $v$. For example, problems of type "a node with label X can have at most one child with label Y"
+among children of some node $v$. For example, problems of type ``a node with label X can have at most one child with label Y''
 are not possible, because if $(X, Y) \in C_{edge}$, then a node labelled with $X$ can have arbitrary number of children
 with labelled with $Y$. If, on the other hand, $(X, Y) \notin C_{edge}$ and a node $v$ is labelled with $X$, then
 none of its children can be labelled with $Y$.
@@ -247,22 +247,22 @@ $\delta$ and $\sigma$ are degrees of \emph{regular} nodes, $W$ is a set of so-ca
 \emph{white constraints} and $B$ is a set of \emph{black constraints}. In order to
 explain what exactly the sets $W$ and $B$ represent, it is important to recall that
 this setting is concerned with \emph{binary} labeling only, which means that each node
-can only output two labels on its edges. We will refer to such two labels as "zero" and "one"
+can only output two labels on its edges. We will refer to such two labels as ``zero'' and ``one''
 labels (denoted 0 or 1). The problem is assumed to follow the edge-labeling
 formalism, in which each node outputs a label on each of its incident nodes so that
 any two adjacent nodes $v$ and $u$ can only output the same label on their common
 incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
-restrict the choice of outputs as well. A "white" node's output is valid
+restrict the choice of outputs as well. A ``white'' node's output is valid
 if and only if the sum of labels on all its incident edges (that is summing
 output labels on its incident edges as zeros and ones) is such a number $s_W$ that
-$s_W \in W$. Similarly, output of a "black" node is valid if and only if
+$s_W \in W$. Similarly, output of a ``black'' node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
 $s_B \ in B$.
 
 As an example, we will consider the already familiar \emph{sinkless orientation}
 problem. The problem can be represented as $\Pi = (\delta, 2, \{0, 1, 2, \dots, delta-1\}, \{ 1 \})$,
 where $\delta$ is any interger $> 2$. In this case, the degree of white nodes is
-$\delta$ and the degree of black nodes is $2$. Thus, white nodes here are the "actual"
+$\delta$ and the degree of black nodes is $2$. Thus, white nodes here are the ``actual''
 nodes of an underlying graph, while black nodes represent edges in the original graph.
 Furthermore, an output label $1$ represents an edge
 that is directed from a white node towards a black node, while label $0$ represents
@@ -300,8 +300,8 @@ ternary labeling problem is represented as $\Pi = (\delta, \sigma, W, B)$
 where $\delta$ and $\sigma$ are degrees in the underlying $(\delta, \sigma)$-biregular
 tree, while $W$ and $B$ are constraint sets for white and black nodes respectively.
 Each constraint in the sets $W$ or $B$ is a 3-tuple of the form $(x_0, x_1, x_2)$
-where $x_0$ represents how many incident (to a given node) edges can be labelled with label "0",
-$x_1$ shows how many edges can be labeled with "1", and $x_2$ - with "2". Similar to the case
+where $x_0$ represents how many incident (to a given node) edges can be labelled with label ``0'',
+$x_1$ shows how many edges can be labeled with ``1'', and $x_2$ - with ``2''. Similar to the case
 of binary labeling in unrooted regular trees, we assume that only these 3 labels are allowed to
 be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
 in such a way that each edge is labeled with the same label by each of its incident nodes.

@@ -2,9 +2,9 @@
 \label{chapter:background}
 
 In this chapter, we introduce the necessary theoretical background as well as
-explain the reasons why the current work is important given the latest
+explain the reasons why the current work is relevant given the latest
 developments in the theory of distributed computing. Unless specified otherwise,
-the material presented in this chapter is based on Hirvonen 2020~\cite{Hirvonen2020}.
+the material presented in this chapter is based on the textbook on distributed algorithms by Hirvonen et al.~\cite{Hirvonen2020}.
 
 \section{Graphs}
 
@@ -26,9 +26,9 @@ is always $|V|$.
 Among other things, edges can be categorised into \emph{directed} and \emph{undirected}.
 The latter ones simply connect a pair of nodes in a graph, while the latter
 ones also contain extra information about which of the 2 connected nodes is
-a "source" and which one is a "destination". Informally, such a directed edge
-can be visualised as an error that starts in a "source" node and ends in a 
-"destination" node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
+a ``source'' and which one is a ``destination''. Informally, such a directed edge
+can be visualised as an error that starts in a ``source'' node and ends in a 
+``destination'' node.  Similarly, we talk about \emph{undirected graphs} - that is graphs
 where all edges are undirected, and \emph{directed graphs} - such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
 set of 2 nodes $e = \{v, u\}$, a directed edge $e$ is defined as a set tuple
@@ -155,7 +155,7 @@ called leaves).
 
 It is important to notice the equivalence of ($\delta$, 2)-biregular trees
 and $delta$-regular trees. Indeed, given a $delta$-regular tree, we can
-"turn" each edge $e = \{v, u\}$ into a node $v_e$ such that the node is
+``turn'' each edge $e = \{v, u\}$ into a node $v_e$ such that the node is
 connected to node $v$ and $u$ and only those nodes. On the other hand,
 given a ($\delta$, 2)-biregular tree, we can remove every node $v$ of degree
 2 and, given that nodes $u$ and $w$ used to be neighbours of $v$ before its
@@ -250,7 +250,7 @@ completely synchronously by all nodes in a graph, meaning that e.g. no node star
 any of its data, before all other nodes have received data from their neighbours. The computation
 of a graph is said to be finished when all of the nodes have outputted their final states
 and halted. More formally, this means that there are a set of node states that are
-considered as "halting states". Whenever a node switches its internal state to one of the 
+considered as ``halting states''. Whenever a node switches its internal state to one of the 
 halting state, it does not perform any of the actions from that point in time, or - to
 be even more formal - it does not send any messages to its neighbours, ignores all of the 
 messages sent to it and does not update its internal state in all of the subsequent rounds.
@@ -381,15 +381,15 @@ as it is in the deterministic case, that is no changes are made to the $send_A(x
 function.
 
 Since probabilities are involved when in randomised setting, it might not be
-drectly obvious what it means to "solve" a problem. The major problem is that
+drectly obvious what it means to ``solve'' a problem. The major problem is that
 since states of the nodes are chosen from a discrete probability distribution,
 there is always a probability that the output of the nodes will not be valid.
 Therefore, there is often a probability that the problem has not been solved
 after a certain number of rounds.
 
 But before we define what it means to solve a problem in a randomised setting, it's
-worth noting that there exist two kinds of randomised algorithms: "Monte Carlo" and
-"Las Vegas". \emph{Monte Carlo} algorithms always stop after a specified $f(n)$
+worth noting that there exist two kinds of randomised algorithms: ``Monte Carlo'' and
+``Las Vegas''. \emph{Monte Carlo} algorithms always stop after a specified $f(n)$
 number of rounds, where $n$ is the number of nodes in the graph, but
 it is not guaranteed that the output will a valid one. Monte Carlo algorithm
 only guarantee their execution time, and succeed only with probability $p$.
@@ -404,11 +404,11 @@ unless explicitely specified otherwise, we assume that the randomised algorithms
 are Monte Carlo algorithms.
 
 Finally, we now can define what it means to solve a problem in a randomised context.
-When saying that a certain randomised algorithm "solves" a cerrtain problem in
+When saying that a certain randomised algorithm ``solves'' a cerrtain problem in
 $T(n)$ rounds, unless specified otherwise, we mean that the algorithm stops after
 $T(n)$ computational rounds and the nodes output (or to be more precise the nodes
-have transitioned to one of the output states) a correct solution "with high
-probability" (often denoted as "w.h.p."). Formally, if an algorithm succeeds with
+have transitioned to one of the output states) a correct solution ``with high
+probability'' (often denoted as ``w.h.p.''). Formally, if an algorithm succeeds with
 high probability, it means that the algorithm succeds with probability of at least
 $1 - 1 / n^c$, where $n$ is a number of nodes in a graph and $c$ is some constant
 such that $c > 0$. Moreover, $c$ is a constant that can be freely chosen when 
@@ -419,7 +419,7 @@ the running time, but also the lower the chance that the produced output will
 be incorrect. Notice that $c$ does not need to affect running time, but it often
 does since the larger it is the lower is the probability of algorithm's failure,
 and decreasing such probability usually comes at the cost of something else - 
-often running time. Thus, when saying that something succeeds "with high probability"
+often running time. Thus, when saying that something succeeds ``with high probability''
 we not mean it vaguely but rather refer to a very precise mathematical definition 
 given above.
 
