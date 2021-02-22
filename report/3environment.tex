@@ -194,7 +194,7 @@ where $C_{node}$ is a set of node-constraints and $C_{edge}$ is a set of edge-co
 Set $\{ 11, 22, 33 \}$ here allows each node to be colored in one of the three colors
 (each node outputs its color to both ports) and each edge is allowed to connect
 two nodes of any color as long as these colors are not the same (note that there is no
-e.g. $11$ or $22$ in the set $C_{edge}$). To give another example, maximal matching (MM) in cycles
+e.g.\ $11$ or $22$ in the set $C_{edge}$). To give another example, maximal matching (MM) in cycles
 would be encoded in the node-edge-checkable formalism as follows:
 
 $$C_{node} = \{ 00, 1M, M1 \}$$
@@ -237,7 +237,7 @@ sufficient that an underlying graph of an input problem is simply a regular
 unrooted tree. Given that, it is then easy to transform the $\delta$-regular tree
 to a $(\delta, 2)$-biregular tree by replacing each edge $e = \{u, v\}$ with a new node that is
 connected to nodes $u$ and $v$ via new edges and not connected to any other nodes. Finally,
-in the given setting we do not care about nodes with smaller degrees e.g. leaves. This is
+in the given setting we do not care about nodes with smaller degrees e.g.\ leaves. This is
 because any the irregularities in a graph can only make it easier for nodes around to solve
 the problem, therefore, it was decided to leave any nodes with degrees other than $\delta$
 and $\sigma$ unconstrained~\cite{Balliu2019c}.
