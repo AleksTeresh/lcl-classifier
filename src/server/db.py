@@ -120,19 +120,19 @@ def getProblems(
     query.bounds.detUpperBound,
     query.bounds.detLowerBound,
 
-    query.excludeInclude.includeIfConfigHasAllOf,
-    query.excludeInclude.includeIfConfigHasAllOf,
+    list(query.excludeInclude.includeIfConfigHasAllOf),
+    list(query.excludeInclude.includeIfConfigHasAllOf),
 
-    query.excludeInclude.includeIfConfigHasSomeOf,
-    query.excludeInclude.includeIfConfigHasSomeOf,
-    query.excludeInclude.includeIfConfigHasSomeOf,
+    list(query.excludeInclude.includeIfConfigHasSomeOf),
+    list(query.excludeInclude.includeIfConfigHasSomeOf),
+    list(query.excludeInclude.includeIfConfigHasSomeOf),
 
-    query.excludeInclude.excludeIfConfigHasAllOf,
-    query.excludeInclude.excludeIfConfigHasAllOf,
-    query.excludeInclude.excludeIfConfigHasAllOf,
+    list(query.excludeInclude.excludeIfConfigHasAllOf),
+    list(query.excludeInclude.excludeIfConfigHasAllOf),
+    list(query.excludeInclude.excludeIfConfigHasAllOf),
     
-    query.excludeInclude.excludeIfConfigHasSomeOf,
-    query.excludeInclude.excludeIfConfigHasSomeOf,
+    list(query.excludeInclude.excludeIfConfigHasSomeOf),
+    list(query.excludeInclude.excludeIfConfigHasSomeOf),
 
     query.props.flags.isTree,
     query.props.flags.isCycle,

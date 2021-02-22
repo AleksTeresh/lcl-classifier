@@ -1,5 +1,6 @@
 from problem import ProblemProps
 from complexity import *
+from config_util import parseAndNormalize
 
 class QueryExcludeInclude:
   def __init__(
@@ -11,11 +12,10 @@ class QueryExcludeInclude:
     returnLargestProblemOnly = False,
     returnSmallestProblemOnly = False,
   ):
-    self.excludeIfConfigHasAllOf = excludeIfConfigHasAllOf
-    self.excludeIfConfigHasSomeOf = excludeIfConfigHasSomeOf
-
-    self.includeIfConfigHasAllOf = includeIfConfigHasAllOf
-    self.includeIfConfigHasSomeOf = includeIfConfigHasSomeOf
+    self.excludeIfConfigHasAllOf = tuple(parseAndNormalize(excludeIfConfigHasAllOf))
+    self.excludeIfConfigHasSomeOf = tuple(parseAndNormalize(excludeIfConfigHasSomeOf))
+    self.includeIfConfigHasAllOf = tuple(parseAndNormalize(includeIfConfigHasAllOf))
+    self.includeIfConfigHasSomeOf = tuple(parseAndNormalize(includeIfConfigHasSomeOf))
 
     self.returnLargestProblemOnly = returnLargestProblemOnly
     self.returnSmallestProblemOnly = returnSmallestProblemOnly
@@ -44,11 +44,3 @@ class Query:
     self.excludeInclude = excludeInclude
     self.props = props
 
-def fineResultsFile(query: Query):
-  fileName = ''
-
-def processQuery(query: Query):
-  file = fineResultsFile(query)
-  problems = getAllProblem(file)
-  filtered = filterProblem(problems, query)
-  return filtered

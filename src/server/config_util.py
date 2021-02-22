@@ -24,7 +24,7 @@ def normalizeConstraints(constr):
 
 def parseAndNormalize(constr):
   constr = parseConfigs(constr)
-  constr = list(normalizeConstraints(constr))
+  constr = [] if not constr else list(normalizeConstraints(constr))
   return constr
 
 def eachConstrIsHomogeneous(constrs):

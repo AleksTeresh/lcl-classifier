@@ -65,10 +65,10 @@ query = Query(
     randLowerBound=CONST
   ),
  excludeInclude = QueryExcludeInclude(
-  #  includeIfConfigHasAllOf = ['AA', 'BB'],
-  #  excludeIfConfigHasAllOf = ['AA', 'BC'],
+   includeIfConfigHasAllOf = ['A A', 'A B'],
+   excludeIfConfigHasSomeOf = ['B C', 'B B'],
    # returnSmallestProblemOnly = True,
-   returnLargestProblemOnly = True
+   # returnLargestProblemOnly = True
  )
 )
 
@@ -83,9 +83,7 @@ problem = GenericProblem(
   flags = ProblemFlags(
     isTree = False,
     isCycle = True,
-    isPath = False,
-    isDirected = False,
-    isRooted = False
+    isPath = False
   )
 )
 
