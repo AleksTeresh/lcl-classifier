@@ -11,6 +11,9 @@ def onlyOneIsTrue(a, b, c):
 def areAllTheSame(list):
   return len(list) == 0 or list.count(list[0]) == len(list)
 
+def allSameSizes(list):
+  return areAllTheSame([len(x) for x in list])
+
 def powerset(iterable):
   "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
   s = list(iterable)

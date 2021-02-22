@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from problem import GenericProblem as P, ProblemFlags, ProblemProps
+from problem import GenericProblem as P, BasicProblemFlags, ProblemProps
 from classifier import classify
 from complexity import *
 from itertools import combinations_with_replacement, product
@@ -17,9 +17,21 @@ def problemFromConstraints(
     if a and b:
       try:
         p = P(
-          a,
-          b,
-          flags=flags,
+          (
+            a if
+            (not flags.isDirected and not flags.isRooted) else
+            [c.replace(' ', ' : ', 1) for c in a]
+          ),
+          (
+            b if
+            (not flags.isDirected and not flags.isRooted) else
+            [c.replace(' ', ' : ', 1) for c in b]
+          ),
+          flags=BasicProblemFlags(
+            isTree = flags.isTree,
+            isCycle = flags.isCycle,
+            isPath = flags.isPath
+          ),
           id=i
         )
       except Exception as e:

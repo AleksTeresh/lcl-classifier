@@ -199,8 +199,7 @@ def printStatistics(query):
 #   isCycle=False,
 #   isPath=False,
 #   isDirected=False,
-#   isRooted=True,
-#   isRegular=True
+#   isRooted=True
 # )
 # props = ProblemProps(
 #   activeDegree,

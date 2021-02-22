@@ -72,11 +72,10 @@ class TestClassifier(unittest.TestCase):
     # decider, tree-classification
     # output: O(1)
     binaryRootedTreeProblem1 = GenericProblem(
-      ['a a a', 'b a a', 'c a a', 'c a b'],
-      ['a a', 'b b', 'c c'],
+      ['a : a a', 'b : a a', 'c : a a', 'c : a b'],
+      ['a : a', 'b : b', 'c : c'],
       flags = ProblemFlags(
-        isTree = True, isRooted = True,
-        isRegular = True
+        isTree = True
       )
     )
     res = classify(binaryRootedTreeProblem1)
@@ -92,11 +91,10 @@ class TestClassifier(unittest.TestCase):
     # decider, tree-classification
     # output: O(log n)
     binaryRootedTreeProblem2 = GenericProblem(
-      ['b a a', 'c a b', 'a b c'],
-      ['a a', 'b b', 'c c'],
+      ['b : a a', 'c : a b', 'a : b c'],
+      ['a : a', 'b : b', 'c : c'],
       flags = ProblemFlags(
-        isTree = True, isRooted = True,
-        isRegular = True
+        isTree = True
       )
     )
     res = classify(binaryRootedTreeProblem2)
@@ -112,11 +110,10 @@ class TestClassifier(unittest.TestCase):
     # decider, tree-classification
     # output: unsolvable
     binaryRootedTreeProblem3 = GenericProblem(
-      ['b a a', 'c a a', 'c a b'],
-      ['a a', 'b b', 'c c'],
+      ['b : a a', 'c : a a', 'c : a b'],
+      ['a : a', 'b : b', 'c : c'],
       flags = ProblemFlags(
-        isTree = True, isRooted = True,
-        isRegular = True
+        isTree = True
       )
     )
     res = classify(binaryRootedTreeProblem3)
@@ -130,11 +127,10 @@ class TestClassifier(unittest.TestCase):
     # 12, 13, 23, 21, 31, 32 in automata-theoretic formalism
     # cycle path classifier
     cyclePathTreeProblem1 = GenericProblem(
-      ['a a a a a', 'b b b b b', 'c c c c c'],
-      ['a b', 'a c', 'b c', 'b a', 'c a', 'c b'],
+      ['a : a a a a', 'b : b b b b', 'c : c c c c'],
+      ['a : b', 'a : c', 'b : c', 'b : a', 'c : a', 'c : b'],
       flags = ProblemFlags(
-        isTree =True, isRooted = True,
-        isRegular = False
+        isTree =True,
       )
     )
     res = classify(cyclePathTreeProblem1)
@@ -153,7 +149,7 @@ class TestClassifier(unittest.TestCase):
       leafConstraints = ['B'], leafAllowAll = False, # leaf constraint = end-constr
       rootConstraints = ['B'], rootAllowAll = False, # root constraint = start-constr
       flags = ProblemFlags(
-        isCycle = False, isPath = True, isDirected = False,
+        isCycle = False, isPath = True,
         isTree = False,
       )
     )
@@ -168,12 +164,12 @@ class TestClassifier(unittest.TestCase):
     # --start-constr "{ 1 }" --end-constr "{ 0 }"
     # cycle path classifier
     cyclePathProblem3 = GenericProblem(
-      ['A A', 'B M'], # node constraints
-      ['A B', 'B A', 'B B', 'M M'], # edge constraints
+      ['A : A', 'B : M'], # node constraints
+      ['A : B', 'B : A', 'B : B', 'M : M'], # edge constraints
       leafConstraints = ['B'], leafAllowAll = False, # leaf constraint = end-constr
       rootConstraints = ['B'], rootAllowAll = False, # root constraint = start-constr
       flags = ProblemFlags(
-        isCycle = False, isPath = True, isDirected = True,
+        isCycle = False, isPath = True,
         isTree = False,
       )
     )
@@ -190,7 +186,7 @@ class TestClassifier(unittest.TestCase):
       ['A A', 'B B', 'C C'],
       ['A B', 'B A', 'A C', 'C A', 'B C', 'C B'],
       flags = ProblemFlags(
-        isCycle = True, isPath = False, isDirected = False,
+        isCycle = True, isPath = False,
         isTree = False
       )
     )
@@ -212,8 +208,7 @@ class TestGenerator(unittest.TestCase):
       isCycle=False,
       isPath=False,
       isDirected=False,
-      isRooted=True,
-      isRegular=True
+      isRooted=True
     )
 
     ps = generate(
@@ -240,8 +235,7 @@ class TestGenerator(unittest.TestCase):
       isCycle=False,
       isPath=False,
       isDirected=False,
-      isRooted=False,
-      isRegular=True
+      isRooted=False
     )
 
     ps = generate(
@@ -269,7 +263,6 @@ class TestGenerator(unittest.TestCase):
       isPath=True,
       isDirected=False,
       isRooted=False,
-      isRegular=True
     )
 
     ps = generate(
@@ -296,8 +289,7 @@ class TestGenerator(unittest.TestCase):
       isCycle=True,
       isPath=False,
       isDirected=True,
-      isRooted=False,
-      isRegular=True
+      isRooted=False
     )
 
     ps = generate(

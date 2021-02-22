@@ -17,9 +17,6 @@ problem_args = {
   "is_tree": fields.Bool(required=True),
   "is_cycle": fields.Bool(required=True),
   "is_path": fields.Bool(required=True),
-  "is_directed": fields.Bool(missing=False),
-  "is_rooted": fields.Bool(missing=False),
-  "is_regular": fields.Bool(missing=False),
   "active_constraints": fields.List(fields.Str(), missing=[]),
   "passive_constraints": fields.List(fields.Str(), missing=[]),
   "leaf_constraints": fields.List(fields.Str(), missing=[]),
@@ -39,10 +36,7 @@ def problem(args):
     flags=ProblemFlags(
       isTree=args["is_tree"],
       isCycle=args["is_cycle"],
-      isPath=args["is_path"],
-      isDirected=args["is_directed"],
-      isRooted=args["is_rooted"],
-      isRegular=args["is_regular"],
+      isPath=args["is_path"]
     )
   )
 

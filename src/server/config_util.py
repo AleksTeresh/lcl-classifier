@@ -1,6 +1,6 @@
 from functools import reduce
 from itertools import product
-from util import flatMap, flatten, areAllTheSame
+from util import flatMap, flatten, areAllTheSame, allSameSizes
 from parser import parseConfigs
 
 def flattenBinaryConfigs(left, right):
@@ -29,3 +29,16 @@ def parseAndNormalize(constr):
 
 def eachConstrIsHomogeneous(constrs):
   return reduce(lambda acc, x: acc and areAllTheSame(flatten(x)), constrs, True)
+
+def areRegular(activeConfig, passiveConfig):
+  return (
+    allSameSizes(activeConfig) and
+    allSameSizes(passiveConfig)
+  )
+
+def isDirectedByUnparsedConfigs(unparsedConfigs):
+  return reduce(
+    lambda acc, x: acc or (':' in x),
+    unparsedConfigs,
+    False
+  )

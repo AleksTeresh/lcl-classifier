@@ -34,8 +34,7 @@ flags = ProblemFlags(
   isCycle=False,
   isPath=True,
   isDirected=False,
-  isRooted=False,
-  isRegular=True
+  isRooted=False
 )
 
 # ps = generate(
@@ -86,8 +85,7 @@ problem = GenericProblem(
     isCycle = True,
     isPath = False,
     isDirected = False,
-    isRooted = False,
-    isRegular = True
+    isRooted = False
   )
 )
 

@@ -1,7 +1,7 @@
-from util import flatMap
+from util import flatMap, flatten
 
 def splitConfig(config):
-  return config.split(' ')
+  return flatten([x.split(' ') for x in config.split(' : ')])
 
 def validLabelsFromEdge(edgeConfig):
   halfBracketSplit = edgeConfig.split('(')

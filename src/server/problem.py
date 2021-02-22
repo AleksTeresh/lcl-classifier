@@ -1,10 +1,21 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
-from config_util import parseAndNormalize
+from config_util import parseAndNormalize, areRegular, isDirectedByUnparsedConfigs
 import itertools, copy
 
-class ProblemFlags:
+class BasicProblemFlags:
+  def __init__(
+    self,
+    isTree: bool = True,
+    isCycle: bool = False,
+    isPath: bool = False,
+  ):
+    self.isTree = isTree
+    self.isCycle = isCycle
+    self.isPath = isPath
+
+class ProblemFlags(BasicProblemFlags):
   def __init__(
     self,
     isTree: bool = True,
@@ -14,9 +25,12 @@ class ProblemFlags:
     isRooted: bool = False,
     isRegular: bool = True,
   ):
-    self.isTree = isTree
-    self.isCycle = isCycle
-    self.isPath = isPath
+    BasicProblemFlags.__init__(
+      self,
+      isTree=isTree,
+      isCycle=isCycle,
+      isPath=isPath
+    )
     self.isDirected = isDirected
     self.isRooted = isRooted
     self.isRegular = isRegular
@@ -64,7 +78,7 @@ class GenericProblem:
     passiveAllowAll: bool = False,
     leafAllowAll: bool = True,
     rootAllowAll: bool = True,
-    flags: ProblemFlags = ProblemFlags(),
+    flags: BasicProblemFlags = BasicProblemFlags(),
     id=None
   ):
     self.__checkBadConstrInputs(
@@ -96,7 +110,10 @@ class GenericProblem:
 
     self.__removeUnusedConfigs()
 
-    self.flags = flags
+    self.flags = self.__getFlags(
+      flags,
+      activeConstraints
+    )
     self.id = id
 
     self.__checkParams()
@@ -131,6 +148,26 @@ class GenericProblem:
     isSameDegree = reduce(lambda acc, x: acc and len(x.split(' ')) == degree, configs, True)
     return isSameDegree
 
+  def __getFlags(
+    self,
+    basicFlags: BasicProblemFlags,
+    unparsedConstraints: List[str]
+  ):
+    return ProblemFlags(
+      isTree = basicFlags.isTree,
+      isCycle = basicFlags.isCycle,
+      isPath = basicFlags.isPath,
+      isDirected = (
+        (basicFlags.isCycle or basicFlags.isPath) and
+        isDirectedByUnparsedConfigs(unparsedConstraints)
+      ),
+      isRooted = basicFlags.isTree and isDirectedByUnparsedConfigs(unparsedConstraints),
+      isRegular = areRegular(
+        self.activeConstraints,
+        self.passiveConstraints
+      )
+    )
+
   def __checkParams(self):
     if not self.__checkDegrees(self.activeConstraints):
       raise Exception('degree', 'The configurations should be of the same degree', self.activeConstraints)
@@ -163,6 +200,14 @@ class GenericProblem:
 
     if not passiveConstraints:
       raise Exception('problem', 'Specify at least one passive config, s.t. the tool knows the degree of passive nodes')
+
+    directedConfig = isDirectedByUnparsedConfigs(
+      activeConstraints + passiveConstraints
+    )
+    # if a single constraint is directed, all has to be directed
+    for c in (activeConstraints + passiveConstraints):
+      if (':' in c) != directedConfig:
+        raise Exception('problem', 'If a single config is directed, all configs has to be directed')
 
   def __assignActivesAndPassives(
     self,
