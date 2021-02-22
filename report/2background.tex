@@ -16,7 +16,7 @@ unless specified otherwise.
 
 A \emph{graph} is a pair $G = (V, E)$, where $V$ denotes the set of all \emph{vertices}
 and $E$ denotes a set of all \emph{edges}. Each edge in $E$ is represented as a set of
-2 nodes i.e. the nodes the given edge is connecting e.g.\ $e = \{v, u\}$ such that 
+2 nodes i.e.\ the nodes the given edge is connecting e.g.\ $e = \{v, u\}$ such that 
 $v \in V$ and $u \in V$.
 
 When talking about the \emph{size of a graph}, or \emph{cardinality} of the graph, we refer
@@ -71,8 +71,8 @@ $\Delta$
 A \emph{walk} in an undirected graph $G = (V, E)$ is a sequence $w$ of a form
 $w = (v_0, e_1, v_1, e_2, ..., e_l, v_l)$,
 where $v_i \in V$ and $e_i \in E$, and $e_i = {v_{i-1}, v_i}$ for all $i$. A walk from some
-node $v$ to some other node $u$ is then a walk $w$ such that its first element i.e. $v_0 = v$
-and its last element i.e. $v_l = u$. Having defined a walk, we can talk about a \emph{
+node $v$ to some other node $u$ is then a walk $w$ such that its first element i.e.\ $v_0 = v$
+and its last element i.e.\ $v_l = u$. Having defined a walk, we can talk about a \emph{
 connected graph}. A connected graph, when talking about undirected
 graphs, is a graph $G = (V, E)$ in which for any pair of nodes $v$ and $u$ such that
 $v \neq u$ there is a walk from $v$ to $u$.
@@ -92,7 +92,7 @@ the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
 A diameter of a graph (denoted as $\diam(G)$) is the length of the longest walk
-in a list $W$, where $W$ is a list of the shortest walks, i.e. the one between each pair of nodes
+in a list $W$, where $W$ is a list of the shortest walks, i.e.\ the one between each pair of nodes
 $v$ and $u$ in a graph $G = (V, E)$ such that $v \in V$ and $u \in V$. If a graph
 $G$ is nont connected and therefore there is a pair of nodes $v$ and $u$ that do not
 have a walk between them, we say that a diameter of such a graph $G$ is infinity. That
@@ -225,7 +225,7 @@ Besides, behaviour might also differ if two nodes have somewhat different neighb
 around themselves and therefore will receive potentially different
 information during their communication rounds. Finally, at the beginning of
 execution, each node knows only its own input (including its own unique identifier
-if such has been provided as part of the input) and its own degree i.e. the number of
+if such has been provided as part of the input) and its own degree i.e.\ the number of
 its neighbour nodes in the graph.
 
 Furthermore, computation in a graph happens in synchronous rounds. That implies,
@@ -242,7 +242,7 @@ from some (or all) of its neighbours
 on the information that has been stored by a node locally before and the information
 received during the current round from its neighbours
 
-\item Updating its local state i.e. replacing and adding data in its own local storage
+\item Updating its local state i.e.\ replacing and adding data in its own local storage
 \end{enumerate}
 
 Each of these stages is also executed
@@ -251,15 +251,15 @@ any of its data, before all other nodes have received data from their neighbours
 of a graph is said to be finished when all of the nodes have outputted their final states
 and halted. More formally, this means that there are a set of node states that are
 considered as ``halting states''. Whenever a node switches its internal state to one of the 
-halting state, it does not perform any of the actions from that point in time, or - to
-be even more formal - it does not send any messages to its neighbours, ignores all of the 
+halting state, it does not perform any of the actions from that point in time, or -- to
+be even more formal -- it does not send any messages to its neighbours, ignores all of the 
 messages sent to it and does not update its internal state in all of the subsequent rounds.
 Similar to the requirement that local computation of each node on each round has to be finite
 and needs to stop after a finite amount of time passed, all nodes are required to eventually
-transition into one of the halting states. That is a valid distributed algorithm - in our model of
-computing - cannot continue for an infinite number of rounds. Finally,
+transition into one of the halting states. That is a valid distributed algorithm -- in our model of
+computing -- cannot continue for an infinite number of rounds. Finally,
 the complexity of a distributed algorithm is measured as number of such synchronous rounds
-of computation before the algorithm ends i.e. before all nodes transition into one of 
+of computation before the algorithm ends i.e.\ before all nodes transition into one of 
 the halting states. Notice that different from a centralised model of computation,
 algorithms complexity (or in other words its running time) is not affected by the
 amount of local computation on a single node.
@@ -508,7 +508,7 @@ in such a way that no two adjacent nodes are colored with the
 same colors. It is also easy to see tshat the problem is an
 LCL problem because it is sufficient and necessary for each node to check
 its radius-1 neighbourhood. If each node's radius-1 neighbourhood is
-a valid one i.e. none of the neighbours of node $v$ have the same color as $v$
+a valid one i.e.\ none of the neighbours of node $v$ have the same color as $v$
 itself, then and only then the output is a valid vertex colorings
 
 Another well-known and widely studied problem on graphs is
@@ -529,7 +529,7 @@ That is no two elements of node $v$'s output tuple should be the same.
   \item For each edge incident to $v$, a color that node $v$ colored some incident
 edge $e$, should be the same as the color that node $u$ colored the edge $e$ with.
 Here $e = \{v, u\}$. In other words, because each edge's coloring depends on
-output of 2 nodes, such coloring has to be consistent for each edge i.e. the produced
+output of 2 nodes, such coloring has to be consistent for each edge i.e.\ the produced
 colors need to be the same on both ends of each edge.
 \end{enumerate}
 
