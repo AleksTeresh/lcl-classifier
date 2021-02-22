@@ -28,7 +28,7 @@ The latter ones simply connect a pair of nodes in a graph, while the latter
 ones also contain extra information about which of the 2 connected nodes is
 a ``source'' and which one is a ``destination''. Informally, such a directed edge
 can be visualised as an error that starts in a ``source'' node and ends in a 
-``destination'' node.  Similarly, we talk about \emph{undirected graphs} -- that is graphs
+``destination'' node.  Similarly, we talk about \emph{undirected graphs} -- that is, graphs
 where all edges are undirected, and \emph{directed graphs} -- such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
 set of two nodes $e = \{v, u\}$, a directed edge $e$ is defined as a pair
@@ -58,13 +58,13 @@ than one edge and no edge starts and ends at the same node. In other words, ther
 no multiple edges or self-loops in a simple graph.
 
 A \emph{degree} of a node $v \in V$ in a graph $G = (V, E)$ is the number of all
-edges incident to $v$. That is it is the number of edges such that for an edge
+edges incident to $v$. That is, it is the number of edges such that for an edge
 $e$, $v \in e$ if $e$ is an undirect edge, or $v$ is the first or second element of
 tuple $e$ if $e$ is a directed edge. Moreover, for directed graphs, we often talk
 about \emph{indegrees} and \emph{outdegrees}. Indegree of a node $v$ is the number
 of edges incident to $v$ directed towards the node, while outdegree of a node $v$ is the 
 number of edges incident to $v$ directed outwards from the node. Finally, we are 
-often interested in a maximum degree of a graph $G$, that is the maximum value of
+often interested in a maximum degree of a graph $G$, that is, the maximum value of
 degrees of all nodes belonging to the graph $G$. We denote such maximum degree as
 $\Delta$
 
@@ -109,7 +109,7 @@ A \emph{path} graph is a sequence of nodes that are joined together by edges and
 that have the following properties:
 
 \begin{enumerate}
-  \item The whole graph is connected. That is there is a walk from any node of
+  \item The whole graph is connected. That is, there is a walk from any node of
   the path to any other node of the path.
 
   \item The graph consists of at least 2 nodes.
@@ -256,7 +256,7 @@ be even more formal -- it does not send any messages to its neighbours, ignores 
 messages sent to it and does not update its internal state in all of the subsequent rounds.
 Similar to the requirement that local computation of each node on each round has to be finite
 and needs to stop after a finite amount of time passed, all nodes are required to eventually
-transition into one of the halting states. That is a valid distributed algorithm -- in our model of
+transition into one of the halting states. That is, a valid distributed algorithm -- in our model of
 computing -- cannot continue for an infinite number of rounds. Finally,
 the complexity of a distributed algorithm is measured as number of such synchronous rounds
 of computation before the algorithm ends i.e.\ before all nodes transition into one of 
@@ -287,7 +287,7 @@ assume that such a constant $c$ is not known by the nodes at the beginning of
 algorithm execution. Thus, unique identifiers are guaranteed to be positive integer
 numbers bounded by a polynomial in the number of nodes, but it is not known -- by the nodes
 at the start of algorith execution -- what is the largest unique identifier in the graph. Moreover,
-the identifiers of the node do not necessarily form a continuous range of integers. That is
+the identifiers of the node do not necessarily form a continuous range of integers. That is,
 if an integer $x$ is used as a unique identifier for some node $v$, it is possible
 that an integer $x+1$ is not used as an identifier in the graph. This implies that at
 the beginning, nodes do not known what integers have been used for unique identifiers
@@ -326,7 +326,7 @@ reconstruct the structure of the neighbourhood in the graph.
 As a consequence of the above,
 we can observe that after $\diam(G)$ rounds, node $v$ will have all the information there is in the 
 graph $G$. This implies that after $\diam(G)$ rounds, in the LOCAL model, we can solve anything that can
-be solved in a centralised setting. That is because at the end of $\diam(G)$'th round, each node in the
+be solved in a centralised setting. That is, because at the end of $\diam(G)$'th round, each node in the
 graph have collected all the information there is in the graph and thus can just run the
 computation locally. And because local computation in the LOCAL model is virtually free,
 anytihng that could be computed in a centralised setting will be computed locally by each
@@ -377,7 +377,7 @@ Second, the function $receive_A(x(v), m(v), d)$ becomes randomised. This means t
 after all messages have been sent and received for round $i$, a new local internal
 state $x_i(v) = receive_A(x(v), m(v), d)$ for a node $v$ is selected from a
 discrete probability distribution. Everything else in the model remains exactly
-as it is in the deterministic case, that is no changes are made to the $send_A(x(v), d)$
+as it is in the deterministic case, that is, no changes are made to the $send_A(x(v), d)$
 function.
 
 Since probabilities are involved when in randomised setting, it might not be
@@ -471,7 +471,7 @@ following criteria~\cite{Naor1993, Suomela2020}.
 
 \item there is a finite number of output labels and the number does not depend on $n$,
 
-\item the correctness of a solution can be checked locally by each individual node. That is
+\item the correctness of a solution can be checked locally by each individual node. That is,
 after a solution is produced and all the nodes in the graph have stopped, each node can just
 check a radius-$O(1)$ neighbourhood around itself. The solution is valid if and only if each of
 the individual neighbourhoods for all the nodes are valid.
@@ -524,7 +524,7 @@ produced, each node $v$ will need to check its radius-1
 neighbourhood to make sure 2 things are in order:
 \begin{enumerate}
   \item All edges incident to $v$ have to be of different color.
-That is no two elements of node $v$'s output tuple should be the same.
+That is, no two elements of node $v$'s output tuple should be the same.
 
   \item For each edge incident to $v$, a color that node $v$ colored some incident
 edge $e$, should be the same as the color that node $u$ colored the edge $e$ with.
@@ -533,21 +533,21 @@ output of 2 nodes, such coloring has to be consistent for each edge i.e.\ the pr
 colors need to be the same on both ends of each edge.
 \end{enumerate}
 
-An \textbf{independent set} is a problem in which some subset of vertices in a graph
-join a set $I$ and some do not. The restriction is that no pair of vertices in the set $I$
-can be adjacent nodes. A \textbf{maximal independent set} is a restriction of the
-problem in which in addition to what has been stated above, there is an additional
-maximality restriction. Maximality restriction forbids cases where a node $v$
+An \textbf{independent set} is a set $I$ of vertices in a graph $G = (V, E)$ such that
+$I \subseteq V$. The only condition, however, is that no pair of vertices in the set $I$
+can be adjacent to each other. A \textbf{maximal independent set problem} is then a
+problem in which in addition to finding such independent set $I$, there is an additional
+maximality restriction. The maximality restriction forbids cases where a node $v$
 is not in the set $I$ but also does not have any adjacent nodes in the set $I$.
-In other words, in \textbf{maximal independent set} all nodes either belong
-to the set $I$ or they \emph{cannot} join becuase one of their neighbours has
+In other words, in a \textbf{maximal independent set} all nodes either belong
+to the set $I$ or they \emph{cannot} join it because one of their neighbours has
 already joined. It is trivial to see that the problem is an LCL as checking local
 eighbourhood will suffice to determine if the solution is valid or not.
 
-Finally, a \textbf{maximal matching} is a problem in which nodes need to
+Finally, a \textbf{maximal matching problem} is a problem in which nodes need to
 produce a matching such that each node is either matched with one of 
 its neighbours or it cannot be matched because all of its neighbours are
-matched. That is no node can be left unmatched while at least one of its
+matched. That is, no node can be left unmatched while at least one of its
 neighbours is unmatched. It is trivial to see that the problem is an LCL
 since each node can check its radius-1 neighbourhood to check whether it
 is matched with a neighbour or all neighbours are matched with someone else.
@@ -558,12 +558,12 @@ is invalid.
 
 At this point that the theoretical background has been given, it is
 useful to give a background to much more recent developments in the
-distributed algorithms research. As the branch of research
+distributed algorithms research. As the branch of research of
 studying LCL problems had been reaching maturity, many focused
-on the idea of autmated classification of LCL problems. That is
+on the idea of autmated classification of LCL problems. That is,
 the question of interest is whether we can create meta-algorithms
-that would take a description of an LCL problem as its input
-and produce the problems round complexity as an output.
+that would take the description of an LCL problem as its input
+and produce the problem's round complexity as an output.
 This being the core topic of the thesis, it is thus important
 to describe all the prior work done in this direction.
 In the rest of the
@@ -572,7 +572,7 @@ related to automated classification of LCL problems.
 
 The questions of whether a certain class of LCL problems
 can be automatically classified are often referred to
-as decidability question. Roughly speaking, a problem is
+as decidability questions. Roughly speaking, a problem is
 said to be decidable if there exists an algorithm that,
 given the problem, will output its complexity. Such decidability
 questions are often studied in relation to the whole
@@ -606,21 +606,21 @@ has been done attempting to derive practival algorithms
 that determine complexity of a given LCL problem,
 especially in trees.
 
-Balliu at al. has shown that a complete classification
+Balliu at al.~\cite{Balliu2019c} has shown that a complete classification
 of binary labelling problems (problems where a node's
 output is allowed to be only one of the two possible labels)
 at least in a deterministic setting is possible and moreover
 can be done in $O(1)$ time, since computational
 complexity of such problems can be simply looked up in a
-table in a constant time ~\cite{Balliu2019c}. In addition
-to this, the paper also shows tha it is decidable to
+table in a constant time. In addition
+to this, the paper also shows that it is decidable to
 classify at least \emph{some} of the randomised binary labelling
 LCL problem~\cite{Balliu2019c}.
 
-Building on top of the work outlined in the paper, Rocher
+Building on top of the work outlined in the paper, Rocher~\cite{Rocher2020clas}
 has developed a meta-algorithm that classifies \emph{almost}
 all ternary labelling problems on trees in deterministic
-setting~\cite{Rocher2020clas}. Furthermore,
+setting. Furthermore,
 he also implemented the meta-algorithm as a
 computer program written in Python programming language~\cite{Rocher2020doc}.
 Although the implementation focuses mainly on the case of trees with degree 3,
@@ -633,14 +633,14 @@ The algorithm for classifying the problems can be used in practice and has
 been implemented in Python programming language by Aalto's
 Distributed Algorithms research group~\cite{Tereshchenko2020}.
 
-Finally, a technique called Round Elimination was introduced in the context
+Finally, a technique called round elimination was introduced in the context
 of LCL problems by Brandt et al~\cite{Brandt2019}. It is a series of mechanical
 steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumption and the fact that
 $\Pi_0$ is solvable in constant time e.g.\ in $T$ rounds, $\Pi_1$ is guaranteed to be
 solvable in exactly $T - 1$ rounds. This single property has numerous implications.
-For example, if we apply the technique $n$ times and in the end obtain an LCL problem $\Pi_n$
+For example, if we apply the technique $k$ times and in the end obtain an LCL problem $\Pi_k$
 such that it is zero-round solvable, we know that the original problem $\Pi_0$ is
-exactly $n$-round solvable. Furthermore, Round Elimination is not only possible
+exactly $k$-round solvable. Furthermore, round elimination is not only possible
 in theory but is also very much feasible in practive. Indeed, Olivetti has
 implemented a computer program that, given an LCL $\Pi_0$ solvable in $T$ rounds,
 it produces another LCL $\Pi_1$ solvable in $T - 1$ rounds. There even exists

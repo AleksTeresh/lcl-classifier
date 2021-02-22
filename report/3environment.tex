@@ -66,7 +66,7 @@ configuration is a set of labels that are allowed to be on edges
 incident to any active/passive node $v$. Notice also that the order of
 the labels in a single configuration does not matter. Finally, in this particular problem
 and in all problems in the context of round elimination, we usually do not care about
-leaf nodes. That is leaf nodes are unrestrained and are fine with any 
+leaf nodes. That is, leaf nodes are unrestrained and are fine with any 
 configuration.  Next, we will
 describe another problem using the same formalism.
 
@@ -142,7 +142,7 @@ has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a c
 it turns out that the key here is to pay attention to the initial assumptions that we mentioned at the
 beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be ``too large''.
 Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
-it has been shown that is cases like this, when after applying round elimination repeatedly,
+it has been shown that in cases like this, when after applying round elimination repeatedly,
 we encounter a problem that we've already seen before, the initial problem $\Pi_0$ is most of the cases
 is solvable in $\Omega(log n)$ rounds in deterministic setting and in $\Omega(loglog n)$ rounds
 if randomness is allowed. Thus, we can use round elimination not only to prove upper bounds but
@@ -253,7 +253,7 @@ formalism, in which each node outputs a label on each of its incident nodes so t
 any two adjacent nodes $v$ and $u$ can only output the same label on their common
 incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
 restrict the choice of outputs as well. A ``white'' node's output is valid
-if and only if the sum of labels on all its incident edges (that is summing
+if and only if the sum of labels on all its incident edges (that is, summing
 output labels on its incident edges as zeros and ones) is such a number $s_W$ that
 $s_W \in W$. Similarly, output of a ``black'' node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
