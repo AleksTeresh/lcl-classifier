@@ -92,17 +92,17 @@ the shortest walk from $v$ to $u$ is at most $x$. Note that it is possible that
 $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 
 A diameter of a graph (denoted as $\diam(G)$) is the length of the longest walk
-in a list $W$, where $W$ is a list of the shortest walks - one between each pair of nodes
+in a list $W$, where $W$ is a list of the shortest walks, i.e. the one between each pair of nodes
 $v$ and $u$ in a graph $G = (V, E)$ such that $v \in V$ and $u \in V$. If a graph
 $G$ is nont connected and therefore there is a pair of nodes $v$ and $u$ that do not
 have a walk between them, we say that a diameter of such a graph $G$ is infinity. That
-is $\diam(G) = \inf$.
+is $\diam(G) = \infty$.
 
 \subsection{Several important graph families}
 
 This subsection will introduce some of the graph families that will be necessary
 for understanding the content of the thesis. First, we'll define paths and cycles.
-Then, we'll briefly introduce trees and explain the difference between rooted
+Then, we will briefly introduce trees and explain the difference between rooted
 and unrooted trees.
 
 A \emph{path} graph is a sequence of nodes that are joined together by edges and
@@ -114,7 +114,7 @@ that have the following properties:
 
   \item The graph consists of at least 2 nodes.
 
-  \item Exactly 2 nodes have a degree 1 and all the other nodes have a degree 2.
+  \item Exactly 2 nodes have a degree 1 and all the other nodes have a degree~2.
 \end{enumerate}
 
 A \emph{cycle} is a connected graph where each node has a degree 2.
@@ -150,11 +150,11 @@ all nodes in $U$ are of degree $\beta$ and all nodes in $W$ are of
 degree $\delta$. In particular, when we talk about \emph{($\beta$, $\delta$)-biregular trees},
 we mean a bipartite biregular tree where all nodes except for leaves
 follow the rules of ($\beta$, $\delta$)-biregular graphs described above,
-but leaves themselves are allowed to have degree 1 (otherwise they wouldn't be
+but leaves themselves are allowed to have degree 1 (otherwise they would not be
 called leaves).
 
 It is important to notice the equivalence of ($\delta$, 2)-biregular trees
-and $delta$-regular trees. Indeed, given a $delta$-regular tree, we can
+and $\delta$-regular trees. Indeed, given a $\delta$-regular tree, we can
 ``turn'' each edge $e = \{v, u\}$ into a node $v_e$ such that the node is
 connected to node $v$ and $u$ and only those nodes. On the other hand,
 given a ($\delta$, 2)-biregular tree, we can remove every node $v$ of degree
@@ -164,10 +164,10 @@ removal from the graph, connect nodes $v$ and $w$ with an edge.
 \section{Distributed computing}
 
 Now that we have introduced some of the key graph theoretic concepts, we will
-next outline some of the foundations of distributed computing. We'll start with
-a short historical node about the field of distributed computing. Then, we'll
+next outline some of the foundations of distributed computing. We will start with
+a short historical node about the field of distributed computing. Then, we will
 explain some of the aspects of the model of computation we're concerned with. Finally, 
-we'll give some formal definitions to the model of computation that will be our
+we will give some formal definitions to the model of computation that will be our
 major concern throughout the rest of the thesis.
 
 \subsection{General background}
@@ -246,7 +246,7 @@ received during the current round from its neighbours
 \end{enumerate}
 
 Each of these stages is also executed
-completely synchronously by all nodes in a graph, meaning that e.g. no node starts processing
+completely synchronously by all nodes in a graph, meaning that e.g.\ no node starts processing
 any of its data, before all other nodes have received data from their neighbours. The computation
 of a graph is said to be finished when all of the nodes have outputted their final states
 and halted. More formally, this means that there are a set of node states that are
