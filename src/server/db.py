@@ -16,7 +16,7 @@ def getConnection():
       else 'postgres'),
     password=(os.environ['POSTGRES_PASSWORD']
       if 'POSTGRES_PASSWORD' in os.environ
-      else 'v^oOB1uiZ7ylo$XbuYKDe$cnUKX9U0c0N9$r')
+      else 'mysecretpassword')
   )
   return conn
 
