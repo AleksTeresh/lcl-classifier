@@ -1,7 +1,8 @@
 from util import flatMap, flatten
 
 def splitConfig(config):
-  return flatten([x.split(' ') for x in config.split(' : ')])
+  res = flatten([x.split(' ') for x in config.split(' : ')])
+  return [x for x in res if x.strip() != '']
 
 def validLabelsFromEdge(edgeConfig):
   halfBracketSplit = edgeConfig.split('(')
@@ -14,6 +15,7 @@ def validLabelsFromEdge(edgeConfig):
   return flatMap(lambda x: [x] if x[0] == '(' else list(x), fullBracketSplit)
 
 def parseConfig(config):
+  config = config.strip()
   perEdge = splitConfig(config)
   degree = len(perEdge)
   labelsPerEdge = [validLabelsFromEdge(x) for x in perEdge]
@@ -21,4 +23,5 @@ def parseConfig(config):
   return labelsPerEdge
   
 def parseConfigs(configs):
+  configs = [x for x in configs if x.strip() != '']
   return [parseConfig(config) for config in configs]
