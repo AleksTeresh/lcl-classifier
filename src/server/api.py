@@ -90,7 +90,7 @@ def query(args):
   query = Query(
     props = ProblemProps(
       activeDegree=args['active_degree'],
-      passiveDegree=args['active_degree'],
+      passiveDegree=args['passive_degree'],
       labelCount=args['label_count'],
       activesAllSame=args['actives_all_same'],
       passivesAllSame=args['passives_all_same'],
