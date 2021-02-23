@@ -1,3 +1,4 @@
+import os
 import flask
 from flask import request, jsonify
 from flask_cors import CORS
@@ -10,7 +11,7 @@ from db import getProblem, getProblems
 from complexity import *
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = ('FLASK_ENV' not in os.environ or os.environ['FLASK_ENV'] != 'production')
 CORS(app)
 
 problem_args = {
@@ -126,4 +127,5 @@ def page_not_found(e):
     return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 
-app.run()
+if __name__ == "__main__":
+  app.run(host='0.0.0.0')

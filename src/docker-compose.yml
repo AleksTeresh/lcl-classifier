@@ -39,9 +39,9 @@ services:
     depends_on:
       - db
     environment:
-      FLASK_ENV: development
+      FLASK_ENV: production
       FLASK_APP: api.py
-      FLASK_DEBUG: 1
+      FLASK_DEBUG: 0
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_HOST: ${POSTGRES_HOST:-localhost}

@@ -8,3 +8,4 @@ psycopg2-binary==2.8.6
 flask==1.1.2
 webargs==7.0.1
 flask-cors==3.0.10
+uwsgi==2.0.19.1
