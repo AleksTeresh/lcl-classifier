@@ -4,10 +4,15 @@
 </script>
 
 <main>
-	<div style="display: flex;">
+	<div class="container">
 		<ProblemForm />
 		<QueryForm />
 	</div>
 </main>
 
-
+<style>
+	.container {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>

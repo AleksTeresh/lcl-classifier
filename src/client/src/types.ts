@@ -14,9 +14,6 @@ export interface Problem {
   isTree: boolean,
   isCycle: boolean,
   isPath: boolean,
-  isDirected: boolean,
-  isRooted: boolean,
-  isRegular: boolean,
 }
 
 export interface Query {
