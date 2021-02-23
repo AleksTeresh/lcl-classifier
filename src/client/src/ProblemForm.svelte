@@ -102,4 +102,9 @@
   button {
     display: block;
   }
+
+  textarea {
+    width: 250px;
+    height: 100px;
+  }
 </style>
