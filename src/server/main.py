@@ -37,14 +37,14 @@ flags = ProblemFlags(
   isRooted=False
 )
 
-# ps = generate(
-#   activeDegree,
-#   passiveDegree,
-#   labelCount,
-#   activesAllSame,
-#   passivesAllSame,
-#   flags
-# )
+ps = generate(
+  activeDegree,
+  passiveDegree,
+  labelCount,
+  activesAllSame,
+  passivesAllSame,
+  flags
+)
 
 props = ProblemProps(
   activeDegree,
@@ -55,8 +55,8 @@ props = ProblemProps(
   flags
 )
 
-# psWithIds = storeProblemsAndGetWithIds(ps, props)
-# classifyAndStore(ps)
+psWithIds = storeProblemsAndGetWithIds(ps, props)
+classifyAndStore(ps)
 
 query = Query(
   props,
@@ -68,7 +68,7 @@ query = Query(
    includeIfConfigHasAllOf = ['A A', 'A B'],
    excludeIfConfigHasSomeOf = ['B C', 'B B'],
    # returnSmallestProblemOnly = True,
-   # returnLargestProblemOnly = True
+   returnLargestProblemOnly = True
  )
 )
 

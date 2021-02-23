@@ -12,6 +12,7 @@ or if the container already exists
 docker start some-postgres
 ```
 
+
 2.
 
 ```
@@ -24,4 +25,10 @@ python ./api.py
 ```
 cd client/
 npm run dev
+```
+
+# Generating problems on the remote server
+
+```
+POSTGRES_HOST=195.148.21.214 POSTGRES_PASSWORD='<DB password>' python ./main.py
 ```

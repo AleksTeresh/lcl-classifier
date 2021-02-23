@@ -8,5 +8,3 @@ def batchClassify(problems):
 def classifyAndStore(problems):
   results = batchClassify(problems)
   updateClassifications(results)
-
-
