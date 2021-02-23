@@ -68,8 +68,14 @@ def getProblems(
     active_degree = %s AND
     passive_degree = %s AND
     label_count = %s AND
-    actives_all_same = %s AND
-    passives_all_same = %s AND
+    (
+      actives_all_same = %s OR
+      actives_all_same = true
+    ) AND
+    (
+      passives_all_same = %s OR
+      passives_all_same = true
+    ) AND
 
     rand_upper_bound <= %s AND
     rand_lower_bound >= %s AND
