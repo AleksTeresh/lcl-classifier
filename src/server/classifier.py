@@ -63,6 +63,22 @@ def postprocess(response):
   response = propagateBounds(response)
   return response
 
+def checkForContradictions(responses):
+  randUpperBound = getUpperBound(responses, 'randUpperBound')
+  detUpperBound = getUpperBound(responses, 'detUpperBound')
+  randLowerBound = getUpperBound(responses, 'randLowerBound')
+  detLowerBound = getUpperBound(responses, 'detLowerBound')
+  for r in responses:
+    if complexities.index(r.randLowerBound) > complexities.index(randUpperBound):
+      raise Exception('classification-contradiction', 'randLowerBound in one of the respones is > randUpperBound in another response')
+    if complexities.index(r.detLowerBound) > complexities.index(detUpperBound):
+      raise Exception('classification-contradiction' 'detLowerBound in one of the respones is > detUpperBound in another response')
+    if complexities.index(r.randUpperBound) < complexities.index(randLowerBound):
+      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response')
+    if complexities.index(r.detUpperBound) < complexities.index(detLowerBound):
+      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response')
+
+
 def classify(problem: GenericProblem):
   try:
     cpResult = cpClassify(problem)
@@ -93,7 +109,9 @@ def classify(problem: GenericProblem):
     print(e)
 
   responses = [cpResult, rtResult, tlpResult, brtResult]
-  # TODO: throw Exception when results contradict each other
+
+  checkForContradictions(responses)
+
   response = GenericResponse(
     problem,
     getUpperBound(responses, 'randUpperBound'),
