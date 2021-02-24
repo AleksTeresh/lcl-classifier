@@ -30,6 +30,8 @@ def batchClassify(problems: List[GenericProblem]):
   except e:
     print(e)
   
+  # print(problems)
+  # print(brtResponses)
   return [
     classify(
       x,

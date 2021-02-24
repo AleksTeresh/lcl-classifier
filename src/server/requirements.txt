@@ -3,7 +3,7 @@ pyhumps==1.6.1
 tlp-classifier==0.1.10
 rooted-tree-classifier==0.1.5
 cyclepath-classifier==0.2.1
-brt-classifier==0.1.10
+brt-classifier==0.1.14
 psycopg2-binary==2.8.6
 flask==1.1.2
 webargs==7.0.1
