@@ -24,17 +24,17 @@ from db import storeProblemsAndGetWithIds, getProblems, getProblem
 #   ['M UP UP UP', 'U U U U']
 # )
 
-activeDegree = 2
+activeDegree = 3
 passiveDegree = 2
-labelCount = 3
+labelCount = 2
 activesAllSame = False
-passivesAllSame = False
+passivesAllSame = True
 flags = ProblemFlags(
   isTree=True,
   isCycle=False,
   isPath=False,
   isDirected=False,
-  isRooted=False
+  isRooted=True
 )
 
 props = ProblemProps(
@@ -60,21 +60,21 @@ query = Query(
   )
 )
 
-# ps = generate(
-#   activeDegree,
-#   passiveDegree,
-#   labelCount,
-#   activesAllSame,
-#   passivesAllSame,
-#   flags
-# )
+ps = generate(
+  activeDegree,
+  passiveDegree,
+  labelCount,
+  activesAllSame,
+  passivesAllSame,
+  flags
+)
 
-# psWithIds = storeProblemsAndGetWithIds(ps, props)
-# classifyAndStore(psWithIds)
-classifiedProblems = getProblems(query)
-reclassifyAndStore(classifiedProblems)
+psWithIds = storeProblemsAndGetWithIds(ps, props)
+classifyAndStore(psWithIds)
+
+# classifiedProblems = getProblems(query)
+# reclassifyAndStore(classifiedProblems)
 
 res = getProblems(query)
-print(res)
 stats = computeStats(res)
 prettyPrint(stats)

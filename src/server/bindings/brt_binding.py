@@ -1,4 +1,5 @@
-from brt_classifier import getProblem
+from typing import List
+from brt_classifier import getProblem, getProblems
 from brt_classifier import CONST as BRT_CONST
 from brt_classifier import ITERATED_LOG as BRT_ITERATED_LOG
 from brt_classifier import LOGLOG as BRT_LOGLOG
@@ -10,10 +11,56 @@ from problem import GenericProblem
 from config_util import eachConstrIsHomogeneous, normalizeConstraints
 from .common import moveRootLabelToCenter
 from util import flatten
+from classifier import ClassifyContext
 from response import GenericResponse
 from complexity import *
 
-def classify(p: GenericProblem):
+complexityMapping = {
+    BRT_CONST: CONST,
+    BRT_ITERATED_LOG: ITERATED_LOG,
+    BRT_LOGLOG: LOGLOG,
+    BRT_LOG: LOG,
+    BRT_GLOBAL: GLOBAL,
+    BRT_UNSOLVABLE: UNSOLVABLE,
+    BRT_UNKNOWN: UNKNOWN,
+  }
+
+def preprocessProblem(p):
+  alphabet = p.getAlphabet()
+  constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
+
+  for i, label in enumerate(alphabet):
+    constraints = [x.replace(label, str(i+1)) for x in constraints]
+  return constraints
+
+def batchClassify(ps: List[GenericProblem]):
+  representativeP = ps[0]
+  try:
+    print(representativeP)
+    classify(representativeP)
+  except Exception as e:
+    print(e)
+    raise Exception('Cannot batch classify')
+
+  results = getProblems(
+    [preprocessProblem(p) for p in ps]
+  )
+  return [
+    GenericResponse(
+      ps[i],
+      complexityMapping[r['upper-bound']],
+      complexityMapping[r['lower-bound']],
+      UNSOLVABLE,
+      complexityMapping[r['lower-bound']], # because randomised LB is also a deterministic LB
+      r['solvable-count'],
+      r['unsolvable-count']
+    ) for i, r in enumerate(results)
+  ]
+
+def classify(
+  p: GenericProblem,
+  context: ClassifyContext = ClassifyContext()
+) -> GenericResponse:
   if not p.flags.isTree:
     raise Exception('brt', 'Cannot classify if the problem is not a tree')
 
@@ -45,16 +92,6 @@ def classify(p: GenericProblem):
     constraints = [x.replace(label, str(i+1)) for x in constraints]
   
   result = getProblem(constraints)
-
-  complexityMapping = {
-    BRT_CONST: CONST,
-    BRT_ITERATED_LOG: ITERATED_LOG,
-    BRT_LOGLOG: LOGLOG,
-    BRT_LOG: LOG,
-    BRT_GLOBAL: GLOBAL,
-    BRT_UNSOLVABLE: UNSOLVABLE,
-    BRT_UNKNOWN: UNKNOWN,
-  }
 
   return GenericResponse(
     p,

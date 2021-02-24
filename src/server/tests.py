@@ -64,6 +64,20 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.randUpperBound, ITERATED_LOG)
     self.assertEqual(res.randLowerBound, ITERATED_LOG)
 
+  def testBrt0(self):
+    binaryRootedTreeProblem0 = GenericProblem(
+      ['a : a a'],
+      ['a : a'],
+      flags = ProblemFlags(
+        isTree = True
+      )
+    )
+    res = classify(binaryRootedTreeProblem0)
+    self.assertEqual(res.detLowerBound, CONST)
+    self.assertEqual(res.detUpperBound, CONST)
+    self.assertEqual(res.randUpperBound, CONST)
+    self.assertEqual(res.randLowerBound, CONST)
+
   def testBrt1(self):
     # "111",
     # "121",

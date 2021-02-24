@@ -1,9 +1,9 @@
 tqdm==4.48.2
 pyhumps==1.6.1
-tlp-classifier==0.1.6
+tlp-classifier==0.1.10
 rooted-tree-classifier==0.1.5
 cyclepath-classifier==0.2.1
-brt-classifier==0.1.8
+brt-classifier==0.1.10
 psycopg2-binary==2.8.6
 flask==1.1.2
 webargs==7.0.1

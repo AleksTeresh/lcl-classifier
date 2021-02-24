@@ -2,10 +2,14 @@ from rooted_tree_classifier import is_log_star_solvable, is_log_solvable, is_con
 from problem import GenericProblem
 from config_util import eachConstrIsHomogeneous, normalizeConstraints
 from response import GenericResponse
+from classifier import ClassifyContext
 from complexity import *
 from .common import moveRootLabelToCenter
 
-def classify(p: GenericProblem) -> GenericResponse:
+def classify(
+  p: GenericProblem,
+  context: ClassifyContext
+) -> GenericResponse:
   if not p.flags.isTree:
     raise Exception('rooted-tree', 'Cannot classify if the problem is not a tree')
 

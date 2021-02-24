@@ -1,10 +1,50 @@
+from typing import List
 from problem import GenericProblem
-from tlp_classifier import get_problem, complexity_name, Complexity as tlpComplexity
+from classify_context import ClassifyContext
+from tlp_classifier import get_problem, get_problems, complexity_name, Complexity as tlpComplexity
 from config_util import normalizeConstraints
 from response import GenericResponse
 from complexity import *
 
-def classify(p: GenericProblem):
+complexityMapping = {
+  tlpComplexity.Constant: CONST,
+  tlpComplexity.Iterated_Logarithmic: ITERATED_LOG,
+  tlpComplexity.Logarithmic: LOG,
+  tlpComplexity.Global: GLOBAL,
+  tlpComplexity.Unsolvable: UNSOLVABLE,
+  tlpComplexity.Unclassified: UNKNOWN
+}
+
+def batchClassify(ps: List[GenericProblem]):
+  representativeP = ps[0]
+  try:
+    classify(representativeP)
+  except:
+    raise Exception('Cannot batch classify')
+
+  results = get_problems(
+    [(
+      p.activeConstraints,
+      p.passiveConstraints
+    ) for p in ps]
+  )
+  return [
+    GenericResponse(
+      ps[i],
+      complexityMapping[r.upper_bound],  # because deterministic UB is also a randomised UB
+      CONST,
+      complexityMapping[r.upper_bound],
+      complexityMapping[r.lower_bound],
+    ) for i, r in enumerate(results)
+  ]
+
+def classify(
+  p: GenericProblem,
+  context: ClassifyContext = ClassifyContext()
+):
+  if context.tlpPreclassified:
+    return GenericResponse(p)
+
   if p.flags.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
@@ -30,15 +70,6 @@ def classify(p: GenericProblem):
     raise Exception('rooted-tree', 'Allowed degrees pairs are (2, 2), (2, 3), (3, 2)')
 
   result = get_problem(p.activeConstraints, p.passiveConstraints)
-
-  complexityMapping = {
-    tlpComplexity.Constant: CONST,
-    tlpComplexity.Iterated_Logarithmic: ITERATED_LOG,
-    tlpComplexity.Logarithmic: LOG,
-    tlpComplexity.Global: GLOBAL,
-    tlpComplexity.Unsolvable: UNSOLVABLE,
-    tlpComplexity.Unclassified: UNKNOWN
-  }
 
   return GenericResponse(
     p,

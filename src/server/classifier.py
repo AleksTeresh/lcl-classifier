@@ -2,6 +2,8 @@ from problem import GenericProblem
 from response import GenericResponse
 from complexity import complexities
 from complexity import *
+from classify_context import ClassifyContext
+from typing import List
 from bindings.cp_binding import classify as cpClassify
 from bindings.rt_binding import classify as rtClassify
 from bindings.tlp_binding import classify as tlpClassify
@@ -81,39 +83,44 @@ def checkForContradictions(responses):
 
 def classify(
   problem: GenericProblem,
-  existingClassification: GenericResponse = None
+  existingClassifications: List[GenericResponse] = [],
+  context: ClassifyContext = ClassifyContext()
 ):
   try:
-    cpResult = cpClassify(problem)
+    cpResult = cpClassify(problem, context)
   except Exception as e:
     cpResult = GenericResponse(problem)
   except e:
     print(e)
 
   try:  
-    rtResult = rtClassify(problem)
+    rtResult = rtClassify(problem, context)
   except Exception as e:
     rtResult = GenericResponse(problem)
   except e:
     print(e)
 
   try:  
-    tlpResult = tlpClassify(problem)
+    tlpResult = tlpClassify(problem, context)
   except Exception as e:
     tlpResult = GenericResponse(problem)
   except e:
     print(e)
 
   try:  
-    brtResult = brtClassify(problem)
+    brtResult = brtClassify(problem, context)
   except Exception as e:
     brtResult = GenericResponse(problem)
   except e:
     print(e)
 
-  responses = [cpResult, rtResult, tlpResult, brtResult]
-  if existingClassification is not None:
-    responses.append(existingClassification)
+  responses = [
+    cpResult,
+    rtResult,
+    tlpResult,
+    brtResult,
+    *existingClassifications
+  ]
 
   checkForContradictions(responses)
 
