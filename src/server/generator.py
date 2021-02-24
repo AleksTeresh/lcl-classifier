@@ -5,8 +5,6 @@ from classifier import classify
 from complexity import *
 from itertools import combinations_with_replacement, product
 from storeJson import storeJson
-from batch_classify import classifyAndStore
-from db import storeProblemsAndGetWithIds, updateClassifications
 
 def problemFromConstraints(
   tulpes,

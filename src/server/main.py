@@ -37,15 +37,6 @@ flags = ProblemFlags(
   isRooted=False
 )
 
-ps = generate(
-  activeDegree,
-  passiveDegree,
-  labelCount,
-  activesAllSame,
-  passivesAllSame,
-  flags
-)
-
 props = ProblemProps(
   activeDegree,
   passiveDegree,
@@ -67,6 +58,15 @@ query = Query(
   #  returnSmallestProblemOnly = True,
   #  returnLargestProblemOnly = True
   )
+)
+
+ps = generate(
+  activeDegree,
+  passiveDegree,
+  labelCount,
+  activesAllSame,
+  passivesAllSame,
+  flags
 )
 
 psWithIds = storeProblemsAndGetWithIds(ps, props)
