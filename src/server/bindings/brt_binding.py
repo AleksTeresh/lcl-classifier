@@ -61,6 +61,9 @@ def classify(
   p: GenericProblem,
   context: ClassifyContext = ClassifyContext()
 ) -> GenericResponse:
+  if context.brtPreclassified:
+    return GenericResponse(p)
+
   if not p.flags.isTree:
     raise Exception('brt', 'Cannot classify if the problem is not a tree')
 

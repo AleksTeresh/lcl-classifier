@@ -17,9 +17,6 @@ def classify(
   p: GenericProblem,
   context: ClassifyContext
 ) -> GenericResponse:
-  if context.cpPreclassified:
-    return GenericResponse(p)
-
   activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2
   passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
   leafDegree = len(p.leafConstraints[0]) if len(p.leafConstraints) else 1
