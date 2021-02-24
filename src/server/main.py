@@ -5,7 +5,7 @@ from generator import generate
 from complexity import *
 from statistics import compute as computeStats, prettyPrint
 from query import Query, Bounds, QueryExcludeInclude
-from batch_classify import classifyAndStore
+from batch_classify import classifyAndStore, reclassifyAndStore
 from db import storeProblemsAndGetWithIds, getProblems, getProblem
 
 # REtorProblem1 = GenericProblem(
@@ -30,9 +30,9 @@ labelCount = 3
 activesAllSame = False
 passivesAllSame = False
 flags = ProblemFlags(
-  isTree=False,
+  isTree=True,
   isCycle=False,
-  isPath=True,
+  isPath=False,
   isDirected=False,
   isRooted=False
 )
@@ -52,40 +52,29 @@ props = ProblemProps(
   labelCount,
   activesAllSame,
   passivesAllSame,
-  flags
+  flags = flags
 )
-
-psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(ps)
 
 query = Query(
   props,
   bounds = Bounds(
-    randUpperBound=ITERATED_LOG,
-    randLowerBound=CONST
+    # randUpperBound=UNSOLVABLE,
+    # randLowerBound=CONST
   ),
- excludeInclude = QueryExcludeInclude(
-   includeIfConfigHasAllOf = ['A A', 'A B'],
-   excludeIfConfigHasSomeOf = ['B C', 'B B'],
-   # returnSmallestProblemOnly = True,
-   returnLargestProblemOnly = True
- )
+  excludeInclude = QueryExcludeInclude(
+  #  includeIfConfigHasAllOf = ['A A', 'A B'],
+  #  excludeIfConfigHasSomeOf = ['B C', 'B B'],
+  #  returnSmallestProblemOnly = True,
+  #  returnLargestProblemOnly = True
+  )
 )
+
+psWithIds = storeProblemsAndGetWithIds(ps, props)
+classifyAndStore(psWithIds)
+# classifiedProblems = getProblems(query)
+# reclassifyAndStore(classifiedProblems)
 
 res = getProblems(query)
 print(res)
 stats = computeStats(res)
 prettyPrint(stats)
-
-problem = GenericProblem(
-  activeConstraints = ['A A', 'A B'],
-  passiveConstraints = ['A A', 'A B'],
-  flags = ProblemFlags(
-    isTree = False,
-    isCycle = True,
-    isPath = False
-  )
-)
-
-r = getProblem(problem)
-print(r)

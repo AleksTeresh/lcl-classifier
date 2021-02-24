@@ -79,7 +79,10 @@ def checkForContradictions(responses):
       raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response')
 
 
-def classify(problem: GenericProblem):
+def classify(
+  problem: GenericProblem,
+  existingClassification: GenericResponse = None
+):
   try:
     cpResult = cpClassify(problem)
   except Exception as e:
@@ -109,6 +112,8 @@ def classify(problem: GenericProblem):
     print(e)
 
   responses = [cpResult, rtResult, tlpResult, brtResult]
+  if existingClassification is not None:
+    responses.append(existingClassification)
 
   checkForContradictions(responses)
 
