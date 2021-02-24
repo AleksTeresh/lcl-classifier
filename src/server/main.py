@@ -60,19 +60,19 @@ query = Query(
   )
 )
 
-ps = generate(
-  activeDegree,
-  passiveDegree,
-  labelCount,
-  activesAllSame,
-  passivesAllSame,
-  flags
-)
+# ps = generate(
+#   activeDegree,
+#   passiveDegree,
+#   labelCount,
+#   activesAllSame,
+#   passivesAllSame,
+#   flags
+# )
 
-psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(psWithIds)
-# classifiedProblems = getProblems(query)
-# reclassifyAndStore(classifiedProblems)
+# psWithIds = storeProblemsAndGetWithIds(ps, props)
+# classifyAndStore(psWithIds)
+classifiedProblems = getProblems(query)
+reclassifyAndStore(classifiedProblems)
 
 res = getProblems(query)
 print(res)
