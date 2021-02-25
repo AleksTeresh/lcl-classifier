@@ -292,14 +292,14 @@ class TestGenerator(unittest.TestCase):
   def testGenerate4(self):
     activeDegree = 2
     passiveDegree = 2
-    labelCount = 3
+    labelCount = 2
     activesAllSame = False
     passivesAllSame = False
     flags = ProblemFlags(
       isTree=False,
-      isCycle=True,
-      isPath=False,
-      isDirectedOrRooted=True
+      isCycle=False,
+      isPath=True,
+      isDirectedOrRooted=True,
     )
 
     ps = generate(
