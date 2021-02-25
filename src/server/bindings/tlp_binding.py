@@ -16,9 +16,6 @@ complexityMapping = {
 }
 
 def validate(p: GenericProblem):
-  if context.tlpPreclassified:
-    return GenericResponse(p)
-
   if p.flags.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
@@ -68,6 +65,9 @@ def classify(
   p: GenericProblem,
   context: ClassifyContext = ClassifyContext()
 ):
+  if context.tlpPreclassified:
+    return GenericResponse(p)
+    
   validate(p)
   result = get_problem(p.activeConstraints, p.passiveConstraints)
 

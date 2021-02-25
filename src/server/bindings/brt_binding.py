@@ -93,7 +93,6 @@ def classify(
     return GenericResponse(p)
 
   validate(p)
-
   alphabet = p.getAlphabet()
   constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
 
