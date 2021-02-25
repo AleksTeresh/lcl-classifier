@@ -42,3 +42,11 @@ def isDirectedByUnparsedConfigs(unparsedConfigs):
     unparsedConfigs,
     False
   )
+
+def getDegreeByUnparsedConfig(unparsedConfig):
+  perEdgeConfigs = [
+    x.strip().split(' ') for x in unparsedConfig.strip().split(':')
+  ]
+  perEdgeConfigs = flatten(perEdgeConfigs)
+  perEdgeConfigs = [x for x in perEdgeConfigs if x != '']
+  return len(perEdgeConfigs)

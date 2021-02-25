@@ -1,7 +1,7 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
-from config_util import parseAndNormalize, areRegular, isDirectedByUnparsedConfigs
+from config_util import parseAndNormalize, areRegular, isDirectedByUnparsedConfigs, getDegreeByUnparsedConfig
 import itertools, copy
 
 class BasicProblemFlags:
@@ -112,7 +112,8 @@ class GenericProblem:
 
     self.flags = self.__getFlags(
       flags,
-      activeConstraints
+      activeConstraints,
+      passiveConstraints
     )
     self.id = id
 
@@ -151,21 +152,32 @@ class GenericProblem:
   def __getFlags(
     self,
     basicFlags: BasicProblemFlags,
-    unparsedConstraints: List[str]
+    unparsedActiveConstraints: List[str],
+    unparsedPassiveConstraints: List[str]
   ):
+    isRegular = areRegular(
+      self.activeConstraints,
+      self.passiveConstraints
+    )
+    isPath = (
+      basicFlags.isPath or
+      (
+        basicFlags.isTree and
+        isRegular and
+        getDegreeByUnparsedConfig(unparsedActiveConstraints[0]) == 2 and
+        getDegreeByUnparsedConfig(unparsedPassiveConstraints[0]) == 2
+      )
+    )
     return ProblemFlags(
-      isTree = basicFlags.isTree,
+      isTree = basicFlags.isTree and not isPath,
       isCycle = basicFlags.isCycle,
-      isPath = basicFlags.isPath,
+      isPath = isPath,
       isDirected = (
         (basicFlags.isCycle or basicFlags.isPath) and
-        isDirectedByUnparsedConfigs(unparsedConstraints)
+        isDirectedByUnparsedConfigs(unparsedActiveConstraints)
       ),
-      isRooted = basicFlags.isTree and isDirectedByUnparsedConfigs(unparsedConstraints),
-      isRegular = areRegular(
-        self.activeConstraints,
-        self.passiveConstraints
-      )
+      isRooted = basicFlags.isTree and isDirectedByUnparsedConfigs(unparsedActiveConstraints),
+      isRegular = isRegular
     )
 
   def __checkParams(self):

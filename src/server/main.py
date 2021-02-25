@@ -24,17 +24,17 @@ from db import storeProblemsAndGetWithIds, getProblems, getProblem
 #   ['M UP UP UP', 'U U U U']
 # )
 
-activeDegree = 3
+activeDegree = 2
 passiveDegree = 2
-labelCount = 3
+labelCount = 2
 activesAllSame = False
-passivesAllSame = True
+passivesAllSame = False
 flags = ProblemFlags(
-  isTree=True,
+  isTree=False,
   isCycle=False,
-  isPath=False,
+  isPath=True,
   isDirected=False,
-  isRooted=True
+  isRooted=False
 )
 
 props = ProblemProps(

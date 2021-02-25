@@ -36,21 +36,18 @@ def preprocessProblem(p):
 def batchClassify(ps: List[GenericProblem]):
   representativeP = ps[0]
   try:
-    print(representativeP)
     classify(representativeP)
   except Exception as e:
     print(e)
     raise Exception('Cannot batch classify')
 
-  # print([preprocessProblem(p) for p in ps])
   constrs = [preprocessProblem(p) for p in ps]
-  print(len(set(flatten(flatten(constrs)))))
+
   results = getProblems(
     constrs,
     len(set(flatten(flatten(constrs))))
   )
-  # print(results)
-  print([(x['lower-bound'], x['upper-bound']) for x in results])
+
   return [
     GenericResponse(
       ps[i],

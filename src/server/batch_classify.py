@@ -30,8 +30,6 @@ def batchClassify(problems: List[GenericProblem]):
   except e:
     print(e)
   
-  # print(problems)
-  # print(brtResponses)
   return [
     classify(
       x,
@@ -54,7 +52,6 @@ def reclassifyAndStore(classifiedProblemsDicts):
   objs = [
     ClassifiedProblem(**x) for x in classifiedProblemsDicts
   ]
-  print(objs[0])
   
   results = batchReclassify(objs)
   updateClassifications(results)
