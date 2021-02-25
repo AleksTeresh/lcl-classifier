@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2.extras import execute_values
 import humps
 from problem import GenericProblem, ProblemProps
+from config_util import eachConstrIsHomogeneous
 from query import Query
 
 def getConnection():
@@ -249,9 +250,14 @@ def storeProblemsAndGetWithIds(
         problemProps.activeDegree,
         problemProps.passiveDegree,
         problemProps.labelCount,
-        problemProps.activesAllSame,
-        problemProps.passivesAllSame,
-        
+        (
+          problemProps.activesAllSame or
+          eachConstrIsHomogeneous(p.activeConstraints)
+        ),
+        (
+          problemProps.passivesAllSame or
+          eachConstrIsHomogeneous(p.passiveConstraints)
+        ),
         list(p.activeConstraints),
         list(p.passiveConstraints),
         list(p.leafConstraints),
