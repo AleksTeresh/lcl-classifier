@@ -25,15 +25,15 @@ from db import storeProblemsAndGetWithIds, getProblems, getProblem
 #   ['M UP UP UP', 'U U U U']
 # )
 
-activeDegree = 2
+activeDegree = 3
 passiveDegree = 2
 labelCount = 2
 activesAllSame = False
 passivesAllSame = False
 flags = ProblemFlags(
-  isTree=False,
+  isTree=True,
   isCycle=False,
-  isPath=True,
+  isPath=False,
   isDirectedOrRooted=True
 )
 
@@ -69,17 +69,12 @@ ps = generate(
   flags
 )
 
-results = batchClassify(ps)
-with open('test_data/classifications2.pickle', 'wb+') as handle:
-  pickle.dump(results, handle)
-  # self.assertEqual(ps, b)
-
-# psWithIds = storeProblemsAndGetWithIds(ps, props)
-# classifyAndStore(psWithIds)
+psWithIds = storeProblemsAndGetWithIds(ps, props)
+classifyAndStore(psWithIds)
 
 # # classifiedProblems = getProblems(query)
 # # reclassifyAndStore(classifiedProblems)
 
-# res = getProblems(query)
-# stats = computeStats(res)
-# prettyPrint(stats)
+res = getProblems(query)
+stats = computeStats(res)
+prettyPrint(stats)

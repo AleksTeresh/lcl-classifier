@@ -424,17 +424,29 @@ class TestBatchClassifier(unittest.TestCase):
       saved = pickle.load(handle)
       self.__checkEquality(results, saved)
 
-# TODO: this causes classification contradiction
-# activeDegree = 3
-# passiveDegree = 2
-# labelCount = 2
-# activesAllSame = False
-# passivesAllSame = False
-# flags = ProblemFlags(
-#   isTree=True,
-#   isCycle=False,
-#   isPath=False,
-#   isDirectedOrRooted=True
-# )
+  def testClassifier5(self):
+    activeDegree = 3
+    passiveDegree = 2
+    labelCount = 2
+    activesAllSame = False
+    passivesAllSame = False
+    flags = ProblemFlags(
+      isTree=True,
+      isCycle=False,
+      isPath=False,
+      isDirectedOrRooted=True
+    )
+    ps = generate(
+      activeDegree,
+      passiveDegree,
+      labelCount,
+      activesAllSame,
+      passivesAllSame,
+      flags
+    )
+    results = batchClassify(ps)
+    with open('test_data/classifications5.pickle', 'rb') as handle:
+      saved = pickle.load(handle)
+      self.__checkEquality(results, saved)
 
 unittest.main()
