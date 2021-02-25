@@ -7,6 +7,7 @@ from webargs.flaskparser import use_args
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
 from classifier import classify
+from statistics import compute as computeStats
 from db import getProblem, getProblems
 from complexity import *
 
@@ -117,8 +118,13 @@ def query(args):
     )
   )
 
-  res = getProblems(query)
-  return jsonify(res)
+  problems = getProblems(query)
+  stats = computeStats(problems)
+  response = {
+    'problems': problems,
+    'stats': stats.dict()
+  }
+  return jsonify(response)
 
 @app.errorhandler(404)
 def page_not_found(e):

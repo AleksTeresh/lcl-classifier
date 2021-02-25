@@ -1,8 +1,14 @@
 <script lang="ts">
   import { Stretch } from 'svelte-loading-spinners'
+  import Statistics from './Statistics.svelte'
   import { getQueryResult } from './api'
-	import type { Query } from './types'
+  import type { Query, ClassifiedProblem, QueryStatistics } from './types'
   import { Complexity } from './types'
+
+  interface QueryResponse {
+    problems: ClassifiedProblem[],
+    stats: QueryStatistics
+  }
 
   function getGraphType(problem: any) {
     if (problem.isTree) {
@@ -39,7 +45,7 @@
   let includeIfConfigHasSomeOf = ""
 
   let loading = false
-  let response = undefined
+  let response: QueryResponse = undefined
 
 	async function handleProblemSubmit(e: any) {
 		e.preventDefault();
@@ -202,8 +208,10 @@
       <Stretch size="60" unit="px" color="#0d0d0d"></Stretch>
     {/if}
     {#if !loading && response !== undefined}
-      <p>Total # of problems: {response.length}</p>
-      {#each response as prob}
+      <h4>Statistics: </h4>
+      <Statistics stats={response.stats} />
+      <h4>Problems: </h4>
+      {#each response.problems as prob}
         <div class="problem-wrapper">
           <h5>Problem:</h5>
           <p>Active config: {prob.activeConstraints}</p>

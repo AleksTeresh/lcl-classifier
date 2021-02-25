@@ -24,6 +24,9 @@ class ComplexityClassData():
     self.randSolvable = randSolvable
     self.detSolvable = detSolvable
 
+  def dict(self):
+    return self.__dict__
+
 class StatisticsData():
   def __init__(self):
     self.const: ComplexityClassData = ComplexityClassData()
@@ -33,6 +36,13 @@ class StatisticsData():
     self.linear: ComplexityClassData = ComplexityClassData()
     self.unsolvable: ComplexityClassData = ComplexityClassData()
     self.totalSize: int = 0
+
+  def dict(self):
+    d = self.__dict__
+    for key in d:
+      if key != 'totalSize':
+        d[key] = d[key].dict()
+    return d
 
 def compute(data):
     stats = StatisticsData()

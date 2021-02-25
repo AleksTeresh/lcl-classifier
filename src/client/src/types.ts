@@ -16,6 +16,32 @@ export interface Problem {
   isPath: boolean,
 }
 
+export interface ClassifiedProblem extends Problem {
+  detLowerBound: Complexity,
+  detUpperBound: Complexity,
+  randLowerBound: Complexity,
+  randUpperBound: Complexity
+}
+
+interface StatisticsComplexityData {
+  randLowerBound: number,
+  detLowerBound: number,
+  randUpperBound: number,
+  detUpperBound: number,  
+  randSolvable: number,
+  detSolvable: number
+}
+
+export interface QueryStatistics {
+  const: StatisticsComplexityData
+  logStar: StatisticsComplexityData
+  logLog: StatisticsComplexityData
+  log: StatisticsComplexityData
+  linear: StatisticsComplexityData
+  unsolvable: StatisticsComplexityData
+  totalSize: number
+}
+
 export interface Query {
   isTree: boolean,
   isCycle: boolean,
