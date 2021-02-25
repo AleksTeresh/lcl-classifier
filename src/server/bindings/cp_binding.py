@@ -30,6 +30,8 @@ def classify(
   if p.flags.isTree:
     if not eachConstrIsHomogeneous(p.activeConstraints):
       raise Exception('cyclepath', 'On trees, node constraints must be the same for all incident edges.')
+    if not p.flags.isRooted:
+      raise Exception('cyclepath', 'In the context of trees, only rooted ones can be classified.')
   elif activeDegree != 2:
     raise Exception('cyclepath', 'In a path or cycle, active constraints must always be of degree 2')
 

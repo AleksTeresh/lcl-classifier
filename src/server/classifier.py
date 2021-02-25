@@ -72,13 +72,13 @@ def checkForContradictions(responses):
   detLowerBound = getUpperBound(responses, 'detLowerBound')
   for r in responses:
     if complexities.index(r.randLowerBound) > complexities.index(randUpperBound):
-      raise Exception('classification-contradiction', 'randLowerBound in one of the respones is > randUpperBound in another response')
+      raise Exception('classification-contradiction', 'randLowerBound in one of the respones is > randUpperBound in another response', responses)
     if complexities.index(r.detLowerBound) > complexities.index(detUpperBound):
-      raise Exception('classification-contradiction' 'detLowerBound in one of the respones is > detUpperBound in another response')
+      raise Exception('classification-contradiction' 'detLowerBound in one of the respones is > detUpperBound in another response', responses)
     if complexities.index(r.randUpperBound) < complexities.index(randLowerBound):
-      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response')
+      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response', responses)
     if complexities.index(r.detUpperBound) < complexities.index(detLowerBound):
-      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response')
+      raise Exception('classification-contradiction' 'randUpperBound in one of the respones is < randLowerBound in another response', responses)
 
 
 def classify(
