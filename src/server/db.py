@@ -33,8 +33,7 @@ def getProblem(problem: GenericProblem):
     is_tree = %s AND
     is_cycle = %s AND
     is_path = %s AND
-    is_directed = %s AND
-    is_rooted = %s AND
+    is_directed_or_rooted = %s AND
     is_regular = %s;
   """, (
     list(problem.activeConstraints),
@@ -45,8 +44,7 @@ def getProblem(problem: GenericProblem):
     problem.flags.isTree,
     problem.flags.isCycle,
     problem.flags.isPath,
-    problem.flags.isDirected,
-    problem.flags.isRooted,
+    problem.flags.isDirectedOrRooted,
     problem.flags.isRegular
   ))
   res = cur.fetchone()
@@ -111,8 +109,7 @@ def getProblems(
     is_tree = %s AND
     is_cycle = %s AND
     is_path = %s AND
-    is_directed = %s AND
-    is_rooted = %s AND
+    is_directed_or_rooted = %s AND
     is_regular = %s;
   """, (
     query.props.activeDegree,
@@ -143,8 +140,7 @@ def getProblems(
     query.props.flags.isTree,
     query.props.flags.isCycle,
     query.props.flags.isPath,
-    query.props.flags.isDirected,
-    query.props.flags.isRooted,
+    query.props.flags.isDirectedOrRooted,
     query.props.flags.isRegular
   ))
   res = cur.fetchall()
@@ -217,8 +213,7 @@ def storeProblemsAndGetWithIds(
     is_tree = %s AND
     is_cycle = %s AND
     is_path = %s AND
-    is_directed = %s AND
-    is_rooted = %s AND
+    is_directed_or_rooted = %s AND
     is_regular = %s;
   """, (
     problemProps.activeDegree,
@@ -229,8 +224,7 @@ def storeProblemsAndGetWithIds(
     problemProps.flags.isTree,
     problemProps.flags.isCycle,
     problemProps.flags.isPath,
-    problemProps.flags.isDirected,
-    problemProps.flags.isRooted,
+    problemProps.flags.isDirectedOrRooted,
     problemProps.flags.isRegular
   ))
   ids = execute_values(cur, """
@@ -248,8 +242,7 @@ def storeProblemsAndGetWithIds(
       is_tree,
       is_cycle,
       is_path,
-      is_directed,
-      is_rooted,
+      is_directed_or_rooted,
       is_regular
     ) VALUES %s RETURNING id;""",
     [(
@@ -266,8 +259,7 @@ def storeProblemsAndGetWithIds(
         p.flags.isTree,
         p.flags.isCycle,
         p.flags.isPath,
-        p.flags.isDirected,
-        p.flags.isRooted,
+        p.flags.isDirectedOrRooted,
         p.flags.isRegular
       ) for p in problems],
       fetch=True

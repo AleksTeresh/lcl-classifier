@@ -26,11 +26,8 @@ def classifyByRE(problem: GenericProblem):
   if problem.flags.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
-  if problem.flags.isRooted:
+  if problem.flags.isDirectedOrRooted:
     raise Exception('tlp', 'Cannot classify if the tree is rooted')
-
-  if problem.flags.isDirected:
-    raise Exception('tlp', 'Cannot classify if the path is directed')
 
   if not problem.flags.isRegular:
     raise Exception('tlp', 'Cannot classify if the graph is not regular')

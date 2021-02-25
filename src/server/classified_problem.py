@@ -14,8 +14,7 @@ class ClassifiedProblem:
     isTree: bool,
     isCycle: bool,
     isPath: bool,
-    isDirected: bool,
-    isRooted: bool,
+    isDirectedOrRooted: bool,
     isRegular: bool,
     randUpperBound,
     randLowerBound,
@@ -33,8 +32,7 @@ class ClassifiedProblem:
     self.isTree = isTree
     self.isCycle = isCycle
     self.isPath = isPath
-    self.isDirected = isDirected
-    self.isRooted = isRooted
+    self.isDirectedOrRooted = isDirectedOrRooted
     self.isRegular = isRegular
     self.randUpperBound = randUpperBound
     self.randLowerBound = randLowerBound
@@ -58,8 +56,7 @@ class ClassifiedProblem:
         isTree=self.isTree,
         isCycle=self.isCycle,
         isPath=self.isPath,
-        isDirected=self.isDirected,
-        isRooted=self.isRooted,
+        isDirectedOrRooted=self.isDirectedOrRooted,
         isRegular=self.isRegular,
       )
       return p

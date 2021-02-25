@@ -17,12 +17,12 @@ def problemFromConstraints(
         p = P(
           (
             a if
-            (not flags.isDirected and not flags.isRooted) else
+            (not flags.isDirectedOrRooted) else
             [c.replace(' ', ' : ', 1) for c in a]
           ),
           (
             b if
-            (not flags.isDirected and not flags.isRooted) else
+            (not flags.isDirectedOrRooted) else
             [c.replace(' ', ' : ', 1) for c in b]
           ),
           flags=BasicProblemFlags(
@@ -53,12 +53,20 @@ def generate(
   alphabet = letterRange(labelCount)
   # take activeDegree labels
   # from a pallete of activeLabelCount
-  if flags.isRooted:
+  if flags.isDirectedOrRooted:
+    # rooted/directed: order of configs does not matter,
+    # except for the frist label in each config. Thus,
+    # we have additional product() call below.
+    # e.g. degree = 3, labels = 2, gives us:
+    # ['AAA', 'AAB', 'ABB', 'BAA', 'BAB', 'BBB']
     actives = ["".join(x) for x in combinations_with_replacement(alphabet, activeDegree-1)]
     passives = ["".join(x) for x in combinations_with_replacement(alphabet, passiveDegree-1)]
     actives = ["".join(x) for x in product(alphabet, actives)]
     passives = ["".join(x) for x in product(alphabet, passives)]
   else:
+    # unrooted/undirected: order of configs does not matter
+    # e.g. degree 3, labels = 2, gives us
+    # ['AAA', 'AAB', 'ABB', 'BBB']
     actives = ["".join(x) for x in combinations_with_replacement(alphabet, activeDegree)]
     passives = ["".join(x) for x in combinations_with_replacement(alphabet, passiveDegree)]
 

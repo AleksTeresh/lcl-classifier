@@ -20,8 +20,7 @@ export interface Query {
   isTree: boolean,
   isCycle: boolean,
   isPath: boolean,
-  isDirected: boolean,
-  isRooted: boolean,
+  isDirectedOrRooted: boolean,
   isRegular: boolean,
   
   randLowerBound: Complexity,

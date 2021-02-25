@@ -30,14 +30,14 @@ def classify(
   if p.flags.isTree:
     if not eachConstrIsHomogeneous(p.activeConstraints):
       raise Exception('cyclepath', 'On trees, node constraints must be the same for all incident edges.')
-    if not p.flags.isRooted:
+    if not p.flags.isDirectedOrRooted:
       raise Exception('cyclepath', 'In the context of trees, only rooted ones can be classified.')
   elif activeDegree != 2:
     raise Exception('cyclepath', 'In a path or cycle, active constraints must always be of degree 2')
 
-  problemType = Type.TREE if p.flags.isTree else (Type.DIRECTED if p.flags.isDirected else Type.UNDIRECTED)
+  problemType = Type.TREE if p.flags.isTree else (Type.DIRECTED if p.flags.isDirectedOrRooted else Type.UNDIRECTED)
   
-  if not p.flags.isDirected and not p.flags.isRooted:
+  if not p.flags.isDirectedOrRooted:
     p.passiveConstraints = p.passiveConstraints + tuple([cs[::-1] for cs in p.passiveConstraints])
     p.activeConstraints = p.activeConstraints + tuple([cs[::-1] for cs in p.activeConstraints])
 

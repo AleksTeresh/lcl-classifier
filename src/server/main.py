@@ -1,6 +1,7 @@
-import sys, getopt
+import sys, getopt, pickle
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from classifier import classify
+from batch_classify import batchClassify
 from generator import generate
 from complexity import *
 from statistics import compute as computeStats, prettyPrint
@@ -33,8 +34,7 @@ flags = ProblemFlags(
   isTree=False,
   isCycle=False,
   isPath=True,
-  isDirected=False,
-  isRooted=False
+  isDirectedOrRooted=True
 )
 
 props = ProblemProps(
@@ -69,12 +69,17 @@ ps = generate(
   flags
 )
 
-psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(psWithIds)
+results = batchClassify(ps)
+with open('test_data/classifications2.pickle', 'wb+') as handle:
+  pickle.dump(results, handle)
+  # self.assertEqual(ps, b)
 
-# classifiedProblems = getProblems(query)
-# reclassifyAndStore(classifiedProblems)
+# psWithIds = storeProblemsAndGetWithIds(ps, props)
+# classifyAndStore(psWithIds)
 
-res = getProblems(query)
-stats = computeStats(res)
-prettyPrint(stats)
+# # classifiedProblems = getProblems(query)
+# # reclassifyAndStore(classifiedProblems)
+
+# res = getProblems(query)
+# stats = computeStats(res)
+# prettyPrint(stats)

@@ -48,11 +48,8 @@ def classify(
   if p.flags.isCycle:
     raise Exception('tlp', 'Cannot classify if the graph is a cycle')
 
-  if p.flags.isRooted:
-    raise Exception('tlp', 'Cannot classify if the tree is rooted')
-
-  if p.flags.isDirected:
-    raise Exception('tlp', 'Cannot classify if the path is directed')
+  if p.flags.isDirectedOrRooted:
+    raise Exception('tlp', 'Cannot classify if the tree/path is rooted/directed')
 
   if not p.flags.isRegular:
     raise Exception('tlp', 'Cannot classify if the graph is not regular')

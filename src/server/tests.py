@@ -221,8 +221,7 @@ class TestGenerator(unittest.TestCase):
       isTree=True,
       isCycle=False,
       isPath=False,
-      isDirected=False,
-      isRooted=True
+      isDirectedOrRooted=True
     )
 
     ps = generate(
@@ -248,8 +247,7 @@ class TestGenerator(unittest.TestCase):
       isTree=True,
       isCycle=False,
       isPath=False,
-      isDirected=False,
-      isRooted=False
+      isDirectedOrRooted=False
     )
 
     ps = generate(
@@ -275,8 +273,7 @@ class TestGenerator(unittest.TestCase):
       isTree=False,
       isCycle=False,
       isPath=True,
-      isDirected=False,
-      isRooted=False,
+      isDirectedOrRooted=False,
     )
 
     ps = generate(
@@ -302,8 +299,7 @@ class TestGenerator(unittest.TestCase):
       isTree=False,
       isCycle=True,
       isPath=False,
-      isDirected=True,
-      isRooted=False
+      isDirectedOrRooted=True
     )
 
     ps = generate(
@@ -318,5 +314,31 @@ class TestGenerator(unittest.TestCase):
     with open('test_data/problems4.pickle', 'rb') as handle:
       b = pickle.load(handle)
       self.assertEqual(ps, b)
+
+
+# activeDegree = 2
+# passiveDegree = 2
+# labelCount = 2
+# activesAllSame = False
+# passivesAllSame = False
+# flags = ProblemFlags(
+#   isTree=False,
+#   isCycle=False,
+#   isPath=True,
+#   isDirectedOrRooted=False
+# )
+
+
+# activeDegree = 2
+# passiveDegree = 2
+# labelCount = 2
+# activesAllSame = False
+# passivesAllSame = False
+# flags = ProblemFlags(
+#   isTree=False,
+#   isCycle=False,
+#   isPath=True,
+#   isDirectedOrRooted=True
+# )
 
 unittest.main()

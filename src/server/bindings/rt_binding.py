@@ -13,7 +13,7 @@ def classify(
   if not p.flags.isTree:
     raise Exception('rooted-tree', 'Cannot classify if the problem is not a tree')
 
-  if not p.flags.isRooted:
+  if not p.flags.isDirectedOrRooted:
     raise Exception('rooted-tree', 'Cannot classify if the tree is not rooted')
 
   if not p.flags.isRegular:

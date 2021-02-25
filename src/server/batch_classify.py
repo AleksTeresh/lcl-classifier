@@ -13,6 +13,7 @@ def batchClassify(problems: List[GenericProblem]):
   context = ClassifyContext()
 
   try:
+    #raise Exception('asasa')
     tlpResponses = tlpBatchClassify(problems)
     context.tlpPreclassified = True
   except Exception as e:

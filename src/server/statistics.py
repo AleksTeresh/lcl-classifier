@@ -188,26 +188,3 @@ def printStatistics(query):
   data = getProblems(query)
   stats = compute(data)
   prettyPrint(stats)
-
-# activeDegree = 3
-# passiveDegree = 2
-# labelCount = 2
-# activesAllSame = False
-# passivesAllSame = True
-# flags = ProblemFlags(
-#   isTree=True,
-#   isCycle=False,
-#   isPath=False,
-#   isDirected=False,
-#   isRooted=True
-# )
-# props = ProblemProps(
-#   activeDegree,
-#   passiveDegree,
-#   labelCount,
-#   activesAllSame,
-#   passivesAllSame,
-#   flags
-# )
-# query = Query(props)
-# printStatistics(query)

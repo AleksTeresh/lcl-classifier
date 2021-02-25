@@ -21,8 +21,7 @@ class ProblemFlags(BasicProblemFlags):
     isTree: bool = True,
     isCycle: bool = False,
     isPath: bool = False,
-    isDirected: bool = False,
-    isRooted: bool = False,
+    isDirectedOrRooted: bool = False,
     isRegular: bool = True,
   ):
     BasicProblemFlags.__init__(
@@ -31,8 +30,7 @@ class ProblemFlags(BasicProblemFlags):
       isCycle=isCycle,
       isPath=isPath
     )
-    self.isDirected = isDirected
-    self.isRooted = isRooted
+    self.isDirectedOrRooted = isDirectedOrRooted
     self.isRegular = isRegular
 
   def __key(self):
@@ -172,11 +170,7 @@ class GenericProblem:
       isTree = basicFlags.isTree and not isPath,
       isCycle = basicFlags.isCycle,
       isPath = isPath,
-      isDirected = (
-        (basicFlags.isCycle or basicFlags.isPath) and
-        isDirectedByUnparsedConfigs(unparsedActiveConstraints)
-      ),
-      isRooted = basicFlags.isTree and isDirectedByUnparsedConfigs(unparsedActiveConstraints),
+      isDirectedOrRooted = isDirectedByUnparsedConfigs(unparsedActiveConstraints),
       isRegular = isRegular
     )
 
@@ -190,7 +184,7 @@ class GenericProblem:
     if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
       raise Exception('graph family', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
 
-    if self.flags.isPath and not self.flags.isDirected and (
+    if self.flags.isPath and not self.flags.isDirectedOrRooted and (
       self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
       raise Exception('invalid parameters', 'Leaf and root constraints must be the same on undirected paths') 
 
@@ -280,7 +274,7 @@ class GenericProblem:
     # if a graph directed/rooted, the first letter in the config
     # has a special meaning (it is config towards parent/predecessor node)
     # Thus, leave the first letter in the first position. Sort other letters
-    if len(newConfig) != 0 and (self.flags.isDirected or self.flags.isRooted):
+    if len(newConfig) != 0 and (self.flags.isDirectedOrRooted):
       newConfig = [newConfig[0]] + sorted(newConfig[1:])
     else:
       newConfig = sorted(newConfig)

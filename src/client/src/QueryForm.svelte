@@ -17,8 +17,7 @@
   }
 
 	let graphType: 'tree' | 'cycle' | 'path' = 'path'
-	let isDirected: boolean = false
-	let isRooted: boolean = false
+	let isDirectedOrRooted: boolean = false
 	let isRegular: boolean = true
 
   let randLowerBound = Complexity.IteratedLog
@@ -49,8 +48,7 @@
 			isTree: graphType === 'tree',
 			isCycle: graphType === 'cycle',
 			isPath: graphType === 'path',
-			isDirected,
-			isRooted,
+			isDirectedOrRooted,
 			isRegular,
 
       randLowerBound,
@@ -121,12 +119,8 @@
     </label>
   
     <label>
-      <input type=checkbox bind:checked={isDirected}>
-      Directed
-    </label>
-    <label>
-      <input type=checkbox bind:checked={isRooted}>
-      Rooted
+      <input type=checkbox bind:checked={isDirectedOrRooted}>
+      Directed or rooted
     </label>
     <label>
       <input type=checkbox bind:checked={isRegular}>

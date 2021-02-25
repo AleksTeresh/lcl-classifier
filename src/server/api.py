@@ -52,8 +52,7 @@ query_args = {
   "is_tree": fields.Bool(required=True),
   "is_cycle": fields.Bool(required=True),
   "is_path": fields.Bool(required=True),
-  "is_directed": fields.Bool(missing=False),
-  "is_rooted": fields.Bool(missing=False),
+  "is_directed_or_rooted": fields.Bool(missing=False),
   "is_regular": fields.Bool(missing=False),
 
   "rand_upper_bound": fields.Str(
@@ -98,8 +97,7 @@ def query(args):
         isTree=args['is_tree'],
         isCycle=args['is_cycle'],
         isPath=args['is_path'],
-        isDirected=args['is_directed'],
-        isRooted=args['is_rooted'],
+        isDirectedOrRooted=args['is_directed_or_rooted'],
         isRegular=args['is_regular'],
       )
     ),
