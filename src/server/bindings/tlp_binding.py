@@ -15,33 +15,7 @@ complexityMapping = {
   tlpComplexity.Unclassified: UNKNOWN
 }
 
-def batchClassify(ps: List[GenericProblem]):
-  representativeP = ps[0]
-  try:
-    classify(representativeP)
-  except:
-    raise Exception('Cannot batch classify')
-
-  results = get_problems(
-    [(
-      p.activeConstraints,
-      p.passiveConstraints
-    ) for p in ps]
-  )
-  return [
-    GenericResponse(
-      ps[i],
-      complexityMapping[r.upper_bound],  # because deterministic UB is also a randomised UB
-      CONST,
-      complexityMapping[r.upper_bound],
-      complexityMapping[r.lower_bound],
-    ) for i, r in enumerate(results)
-  ]
-
-def classify(
-  p: GenericProblem,
-  context: ClassifyContext = ClassifyContext()
-):
+def validate(p: GenericProblem):
   if context.tlpPreclassified:
     return GenericResponse(p)
 
@@ -66,6 +40,35 @@ def classify(
     (activeDegree == 3 and passiveDegree == 2)):
     raise Exception('rooted-tree', 'Allowed degrees pairs are (2, 2), (2, 3), (3, 2)')
 
+def batchClassify(ps: List[GenericProblem]):
+  try:
+    for p in ps:
+      validate(p)
+  except Exception as e:
+    print(e)
+    raise Exception('Cannot batch classify')
+
+  results = get_problems(
+    [(
+      p.activeConstraints,
+      p.passiveConstraints
+    ) for p in ps]
+  )
+  return [
+    GenericResponse(
+      ps[i],
+      complexityMapping[r.upper_bound],  # because deterministic UB is also a randomised UB
+      CONST,
+      complexityMapping[r.upper_bound],
+      complexityMapping[r.lower_bound],
+    ) for i, r in enumerate(results)
+  ]
+
+def classify(
+  p: GenericProblem,
+  context: ClassifyContext = ClassifyContext()
+):
+  validate(p)
   result = get_problem(p.activeConstraints, p.passiveConstraints)
 
   return GenericResponse(

@@ -33,10 +33,35 @@ def preprocessProblem(p):
     constraints = [x.replace(label, str(i+1)) for x in constraints]
   return constraints
 
+def validate(p: GenericProblem):
+  if not p.flags.isTree:
+    raise Exception('brt', 'Cannot classify if the problem is not a tree')
+
+  if not p.flags.isDirectedOrRooted:
+    raise Exception('brt', 'Cannot classify if the tree is not rooted')
+
+  if not p.flags.isRegular:
+    raise Exception('brt', 'Cannot classify if the graph is not regular')
+
+  if not p.rootAllowAll or not p.leafAllowAll:
+    raise Exception('brt', 'Leaves and roots must allow all configurations')
+
+  activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
+  passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
+
+  if activeDegree != 3:
+    raise Exception('brt', 'Active configurations must be of size 3')
+
+  if passiveDegree != 2:
+    raise Exception('brt', 'Passive configurations must be of size 2')
+
+  if not eachConstrIsHomogeneous(p.passiveConstraints):
+    raise Exception('brt', 'Passive constraints must be simple pairs of the same labels.')
+
 def batchClassify(ps: List[GenericProblem]):
-  representativeP = ps[0]
   try:
-    classify(representativeP)
+    for p in ps:
+      validate(p)
   except Exception as e:
     print(e)
     raise Exception('Cannot batch classify')
@@ -67,29 +92,7 @@ def classify(
   if context.brtPreclassified:
     return GenericResponse(p)
 
-  if not p.flags.isTree:
-    raise Exception('brt', 'Cannot classify if the problem is not a tree')
-
-  if not p.flags.isDirectedOrRooted:
-    raise Exception('brt', 'Cannot classify if the tree is not rooted')
-
-  if not p.flags.isRegular:
-    raise Exception('brt', 'Cannot classify if the graph is not regular')
-
-  if not p.rootAllowAll or not p.leafAllowAll:
-    raise Exception('brt', 'Leaves and roots must allow all configurations')
-
-  activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
-  passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
-
-  if activeDegree != 3:
-    raise Exception('brt', 'Active configurations must be of size 3')
-
-  if passiveDegree != 2:
-    raise Exception('brt', 'Passive configurations must be of size 2')
-
-  if not eachConstrIsHomogeneous(p.passiveConstraints):
-    raise Exception('brt', 'Passive constraints must be simple pairs of the same labels.')
+  validate(p)
 
   alphabet = p.getAlphabet()
   constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
