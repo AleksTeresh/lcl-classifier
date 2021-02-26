@@ -50,6 +50,7 @@
 
   let showExcludeInclude = false
   let showComplexity = false
+  let showProblems = false
 
 	async function handleProblemSubmit(e: any) {
 		e.preventDefault();
@@ -128,7 +129,7 @@
     </label>
   
     <Collapsible
-      bind:open={showComplexity}
+      open={showComplexity}
       label={'Complexity:'}>
       <div class="inline-radio-wrapper">
         <p class="boldenned">Random lower bound</p>
@@ -169,7 +170,7 @@
     </Collapsible>
   
     <Collapsible
-      bind:open={showExcludeInclude}
+      open={showExcludeInclude}
       label={'Configs restrictions:'}>
       <label>
         <input type=checkbox bind:checked={activesAllSame}>

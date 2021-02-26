@@ -66,7 +66,7 @@
     </label>
   
     <Collapsible
-      bind:open={showLeafRootConfig}
+      open={showLeafRootConfig}
       label={"Leaf/Root constraints"}>
       <label for="leafConfig">Leaf constraints (optional):</label>
       <textarea id="leafConfig" bind:value={leafConstraints}></textarea>
