@@ -57,6 +57,57 @@
     stats.linear.randUpperBound -
     stats.unsolvable.randUpperBound
   )}</p>
+
+<p class="response-boldenned">Stats for deterministic setting:</p>
+<p>Solvable in constant time: {stats.const.detSolvable}</p>
+<p>Solvable in log* time: {stats.logStar.detSolvable}</p>
+<p>Solvable in loglog time: {stats.logLog.detSolvable}</p>
+<p>Solvable in log time: {stats.log.detSolvable}</p>
+<p>Solvable in linear time: {stats.linear.detSolvable}</p>
+<p>Unsolvable: {stats.unsolvable.detSolvable}</p>
+<p>TBD: {(
+  stats.totalSize -
+  stats.const.detSolvable -
+  stats.logStar.detSolvable -
+  stats.logLog.detSolvable -
+  stats.log.detSolvable -
+  stats.linear.detSolvable -
+  stats.unsolvable.detSolvable
+)}</p>
+
+<p class="response-boldenned">Lower bounds:</p>
+<p>Constant time: {stats.const.detLowerBound}</p>
+<p>Log* time: {stats.logStar.detLowerBound}</p>
+<p>Loglog time: {stats.logLog.detLowerBound}</p>
+<p>Log time: {stats.log.detLowerBound}</p>
+<p>Linear time: {stats.linear.detLowerBound}</p>
+<p>Unsolvable: {stats.unsolvable.detLowerBound}</p>
+<p>TBD: {(
+  stats.totalSize -
+  stats.const.detLowerBound -
+  stats.logStar.detLowerBound -
+  stats.logLog.detLowerBound -
+  stats.log.detLowerBound -
+  stats.linear.detLowerBound -
+  stats.unsolvable.detLowerBound
+)}</p>
+
+<p class="response-boldenned">Upper bounds:</p>
+<p>Constant time: {stats.const.detUpperBound}</p>
+<p>Log* time: {stats.logStar.detUpperBound}</p>
+<p>Loglog time: {stats.logLog.detUpperBound}</p>
+<p>Log time: {stats.log.detUpperBound}</p>
+<p>Linear time: {stats.linear.detUpperBound}</p>
+<p>Unsolvable: {stats.unsolvable.detUpperBound}</p>
+<p>TBD: {(
+  stats.totalSize -
+  stats.const.detUpperBound -
+  stats.logStar.detUpperBound -
+  stats.logLog.detUpperBound -
+  stats.log.detUpperBound -
+  stats.linear.detUpperBound -
+  stats.unsolvable.detUpperBound
+)}</p>
 </div>
 
 <style>
