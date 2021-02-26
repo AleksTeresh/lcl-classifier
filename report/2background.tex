@@ -342,7 +342,6 @@ a randomised model below once the basic deterministic one is unambiguously defin
 An algorithm being executed by each node consists of 
 three functions. One for local state initialization that is executed only once, after
 a node $v$ has received its initial local inputs $u(v)$ but before the first round
-
 $$\init_A(u(v), d)$$
 where $A$ is a given distributed algorithm and $d$ is the degree of the node $v$.
 The function return an initial local state of the node $v$.
@@ -351,13 +350,10 @@ The second function takes as an input an internal state $x(v)$ of a node $v$
 and returns a tuple of size $d$, where $d$ is a degree of node $v$. The
 tuple contains messages that are to be sent to $d$ neighbours of the node $v$
 during the current round.
-
 $$\send_A(x(v), d)$$
-
 The third function takes as an input a local internal state $x(v)$ of a node
 $v$, and a tuple $m(v)$ of size $d$ that contains messages received from $d$ neighbours
 of the node $v$.
-
 $$\receive_A(x(v), m(v), d)$$
 The function returns a new local internal state of the node $v$, which becomes a
 starting internal state $x(v)$ in the next round.
@@ -430,7 +426,6 @@ one of the most common complexity results of distributed algorithms and will
 appear often in the rest of the document.
 
 The interated logarithm function, denoted as $log^*(x)$ is defined as follows:
-
 \[
     \log^*(x) = \begin{cases}
         0 & \text{ if $x \le 1$}, \\
@@ -438,13 +433,14 @@ The interated logarithm function, denoted as $log^*(x)$ is defined as follows:
     \end{cases}
 \]
 The function is notable for the fact that it grows extremely slow. For example,
-
-$$\log^*(1) = 0$$
-$$\log^*(2) = 1$$
-$$\log^*(4) = 2$$
-$$\log^*(16) = 3$$
-$$\log^*(65536) = 4$$
-$$\log^*(2^{65536}) = 5$$
+\begin{align*}
+  &\log^*(1) = 0, \\
+  &\log^*(2) = 1, \\
+  &\log^*(4) = 2, \\
+  &\log^*(16) = 3, \\
+  &\log^*(65536) = 4, \\
+  &\log^*(2^{65536}) = 5.
+\end{align*}
 
 \section{Locally Checkable Labelling problems}
 
