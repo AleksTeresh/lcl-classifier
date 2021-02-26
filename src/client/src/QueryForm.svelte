@@ -1,4 +1,5 @@
 <script lang="ts">
+  import './response.css'
   import { Stretch } from 'svelte-loading-spinners'
   import Statistics from './Statistics.svelte'
   import Collapsible from './Collapsible.svelte'
@@ -50,6 +51,7 @@
 
   let showExcludeInclude = false
   let showComplexity = false
+  let showStatistics = false
   let showProblems = false
 
 	async function handleProblemSubmit(e: any) {
@@ -215,28 +217,34 @@
     <Stretch size="60" unit="px" color="#0d0d0d"></Stretch>
   {/if}
   {#if !loading && response !== undefined}
-    <h4>Statistics: </h4>
-    <Statistics stats={response.stats} />
-    <h4>Problems: </h4>
-    {#each response.problems as prob}
-      <div class="problem-wrapper">
-        <h5>Problem:</h5>
-        <p>Active config: {prob.activeConstraints}</p>
-        <p>Passive config: {prob.passiveConstraints}</p>
-        <p>Graph: {getGraphType(prob)}</p>
-        {#if prob.rootConstraints.length !== 0}
-          <p>Root config: {prob.rootConstraints}</p>
-        {/if}
-        {#if prob.leafConstraints.length !== 0}
-          <p>Leaf config: {prob.leafConstraints}</p>
-        {/if}
-        <h5>Classification:</h5>
-        <p>Det. lower bound: {prob.detLowerBound}</p>
-        <p>Det. upper bound: {prob.detUpperBound}</p>
-        <p>Rand. lower bound: {prob.randLowerBound}</p>
-        <p>Rand. upper bound: {prob.randUpperBound}</p>
-      </div>
-    {/each}
+    <Collapsible
+      open={showStatistics}
+      label={'Statistics:'}>
+      <Statistics stats={response.stats} />
+    </Collapsible>
+    <Collapsible
+      open={showProblems}
+      label={'Problems:'}>
+      {#each response.problems as prob}
+        <div class="problem-wrapper response">
+          <p class="response-boldenned">Problem:</p>
+          <p>Active config: {prob.activeConstraints}</p>
+          <p>Passive config: {prob.passiveConstraints}</p>
+          <p>Graph: {getGraphType(prob)}</p>
+          {#if prob.rootConstraints.length !== 0}
+            <p>Root config: {prob.rootConstraints}</p>
+          {/if}
+          {#if prob.leafConstraints.length !== 0}
+            <p>Leaf config: {prob.leafConstraints}</p>
+          {/if}
+          <p class="response-boldenned">Classification:</p>
+          <p>Det. lower bound: {prob.detLowerBound}</p>
+          <p>Det. upper bound: {prob.detUpperBound}</p>
+          <p>Rand. lower bound: {prob.randLowerBound}</p>
+          <p>Rand. upper bound: {prob.randUpperBound}</p>
+        </div>
+      {/each}
+    </Collapsible>
   {/if}
 </div>
 

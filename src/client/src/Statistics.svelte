@@ -1,12 +1,13 @@
 <script lang="ts">
+  import './response.css'
   import type { QueryStatistics } from './types'
 
   export let stats: QueryStatistics;
 </script>
 
-<div>
-  <h5 class="boldenned">Total # of problems: {stats.totalSize}</h5>
-  <h5 class="boldenned">Stats for randomised setting:</h5>
+<div class="response">
+  <p class="response-boldenned">Total # of problems: {stats.totalSize}</p>
+  <p class="response-boldenned">Stats for randomised setting:</p>
   <p>Solvable in constant time: {stats.const.randSolvable}</p>
   <p>Solvable in log* time: {stats.logStar.randSolvable}</p>
   <p>Solvable in loglog time: {stats.logLog.randSolvable}</p>
@@ -23,7 +24,7 @@
     stats.unsolvable.randSolvable
   )}</p>
 
-  <h5 class="boldenned">Lower bounds:</h5>
+  <p class="response-boldenned">Lower bounds:</p>
   <p>Constant time: {stats.const.randLowerBound}</p>
   <p>Log* time: {stats.logStar.randLowerBound}</p>
   <p>Loglog time: {stats.logLog.randLowerBound}</p>
@@ -40,7 +41,7 @@
     stats.unsolvable.randLowerBound
   )}</p>
 
-  <h5 class="boldenned">Upper bounds:</h5>
+  <p class="response-boldenned">Upper bounds:</p>
   <p>Constant time: {stats.const.randUpperBound}</p>
   <p>Log* time: {stats.logStar.randUpperBound}</p>
   <p>Loglog time: {stats.logLog.randUpperBound}</p>

@@ -34,10 +34,9 @@
   .content {
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.4s ease-out; 
   }
 
   .showContent {
-    max-height: 700px;
+    max-height: 100%;
   }
 </style>
