@@ -1,13 +1,12 @@
 <script lang="ts">
   import { Stretch } from 'svelte-loading-spinners'
+  import Collapsible from './Collapsible.svelte'
 	import { getProblem } from './api'
-	import type { Problem } from './types';
+	import type { Problem } from './types'
 
-	let activeConstraints = `
-    A B
+	let activeConstraints = `A B
     C C`
-	let passiveConstraints = `
-    B B C
+	let passiveConstraints = `B B C
     A A A
     B B B
     A A C
@@ -18,6 +17,8 @@
 	let graphType: 'tree' | 'cycle' | 'path' = 'path'
   let response = undefined
   let loading = false
+
+  let showLeafRootConfig = false
 
 	async function handleProblemSubmit(e: any) {
 		e.preventDefault()
@@ -64,14 +65,15 @@
       Path
     </label>
   
-    {#if graphType === 'path'}
+    <Collapsible
+      bind:open={showLeafRootConfig}
+      label={"Leaf/Root constraints"}>
       <label for="leafConfig">Leaf constraints (optional):</label>
       <textarea id="leafConfig" bind:value={leafConstraints}></textarea>
   
       <label for="rootConfig">Root constraints (optional):</label>
       <textarea id="rootConfig" bind:value={rootConstraints}></textarea>
-    {/if}
-  
+    </Collapsible>
     <button
       on:click={handleProblemSubmit}>
       Find

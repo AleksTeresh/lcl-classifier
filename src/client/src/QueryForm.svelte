@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Stretch } from 'svelte-loading-spinners'
   import Statistics from './Statistics.svelte'
+  import Collapsible from './Collapsible.svelte'
   import { getQueryResult } from './api'
   import type { Query, ClassifiedProblem, QueryStatistics } from './types'
   import { Complexity } from './types'
@@ -26,8 +27,8 @@
 	let isDirectedOrRooted: boolean = false
 	let isRegular: boolean = true
 
-  let randLowerBound = Complexity.IteratedLog
-  let randUpperBound = Complexity.LogLog
+  let randLowerBound = Complexity.Const
+  let randUpperBound = Complexity.Unsolvable
   let detLowerBound = Complexity.Const
   let detUpperBound = Complexity.Unsolvable
 
@@ -46,6 +47,9 @@
 
   let loading = false
   let response: QueryResponse = undefined
+
+  let showExcludeInclude = false
+  let showComplexity = false
 
 	async function handleProblemSubmit(e: any) {
 		e.preventDefault();
@@ -100,16 +104,6 @@
     <label for="label-count">Label count:</label>
     <input id="label-count" type="number" min=1 max=100 bind:value={labelCount} />
   
-    <label>
-      <input type=checkbox bind:checked={activesAllSame}>
-      Active configs are all the same
-    </label>
-  
-    <label>
-      <input type=checkbox bind:checked={passivesAllSame}>
-      Passive configs are all the same
-    </label>
-  
     <h4>Graph properties</h4>
     <label>
       <input type=radio bind:group={graphType} value="tree">
@@ -133,9 +127,11 @@
       Regular
     </label>
   
-    <div>
+    <Collapsible
+      bind:open={showComplexity}
+      label={'Complexity:'}>
       <div class="inline-radio-wrapper">
-        <h4>Random lower bound</h4>
+        <p class="boldenned">Random lower bound</p>
         {#each Object.entries(Complexity) as [_, value]}
           <label class="inline-radio">
             <input type=radio bind:group={randLowerBound} value={value}>
@@ -144,7 +140,7 @@
         {/each}
       </div>
       <div class="inline-radio-wrapper">
-        <h4>Random upper bound</h4>
+        <p class="boldenned">Random upper bound</p>
         {#each Object.entries(Complexity) as [_, value]}
           <label class="inline-radio">
             <input type=radio bind:group={randUpperBound} value={value}>
@@ -153,7 +149,7 @@
         {/each}
       </div>
       <div class="inline-radio-wrapper">
-        <h4>Deterministic lower bound</h4>
+        <p class="boldenned">Deterministic lower bound</p>
         {#each Object.entries(Complexity) as [_, value]}
           <label class="inline-radio">
             <input type=radio bind:group={detLowerBound} value={value}>
@@ -162,7 +158,7 @@
         {/each}
       </div>
       <div class="inline-radio-wrapper">
-        <h4>Deterministic upper bound</h4>
+        <p class="boldenned">Deterministic upper bound</p>
         {#each Object.entries(Complexity) as [_, value]}
           <label class="inline-radio">
             <input type=radio bind:group={detUpperBound} value={value}>
@@ -170,10 +166,21 @@
           </label>
         {/each}
       </div>
-    </div>
+    </Collapsible>
   
-    <h4>Filter the problems:</h4>
-    <div>
+    <Collapsible
+      bind:open={showExcludeInclude}
+      label={'Configs restrictions:'}>
+      <label>
+        <input type=checkbox bind:checked={activesAllSame}>
+        Active configs are all the same
+      </label>
+    
+      <label>
+        <input type=checkbox bind:checked={passivesAllSame}>
+        Passive configs are all the same
+      </label>
+
       <label>
         <input type=checkbox bind:checked={largestProblemOnly}>
         Return largest problem only
@@ -195,7 +202,7 @@
     
       <label for="include-if-some">Include if configs have <strong>some</strong> of</label>
       <textarea id="include-if-some" bind:value={includeIfConfigHasSomeOf}></textarea>
-    </div>
+    </Collapsible>
   
     <button
       on:click={handleProblemSubmit}>
@@ -203,38 +210,39 @@
     </button>
   </form>
 
-  <div>
-    {#if loading}
-      <Stretch size="60" unit="px" color="#0d0d0d"></Stretch>
-    {/if}
-    {#if !loading && response !== undefined}
-      <h4>Statistics: </h4>
-      <Statistics stats={response.stats} />
-      <h4>Problems: </h4>
-      {#each response.problems as prob}
-        <div class="problem-wrapper">
-          <h5>Problem:</h5>
-          <p>Active config: {prob.activeConstraints}</p>
-          <p>Passive config: {prob.passiveConstraints}</p>
-          <p>Graph: {getGraphType(prob)}</p>
-          {#if prob.rootConstraints.length !== 0}
-            <p>Root config: {prob.rootConstraints}</p>
-          {/if}
-          {#if prob.leafConstraints.length !== 0}
-            <p>Leaf config: {prob.leafConstraints}</p>
-          {/if}
-          <h5>Classification:</h5>
-          <p>Det. lower bound: {prob.detLowerBound}</p>
-          <p>Det. upper bound: {prob.detUpperBound}</p>
-          <p>Rand. lower bound: {prob.randLowerBound}</p>
-          <p>Rand. upper bound: {prob.randUpperBound}</p>
-        </div>
-      {/each}
-    {/if}
-  </div>
+  {#if loading}
+    <Stretch size="60" unit="px" color="#0d0d0d"></Stretch>
+  {/if}
+  {#if !loading && response !== undefined}
+    <h4>Statistics: </h4>
+    <Statistics stats={response.stats} />
+    <h4>Problems: </h4>
+    {#each response.problems as prob}
+      <div class="problem-wrapper">
+        <h5>Problem:</h5>
+        <p>Active config: {prob.activeConstraints}</p>
+        <p>Passive config: {prob.passiveConstraints}</p>
+        <p>Graph: {getGraphType(prob)}</p>
+        {#if prob.rootConstraints.length !== 0}
+          <p>Root config: {prob.rootConstraints}</p>
+        {/if}
+        {#if prob.leafConstraints.length !== 0}
+          <p>Leaf config: {prob.leafConstraints}</p>
+        {/if}
+        <h5>Classification:</h5>
+        <p>Det. lower bound: {prob.detLowerBound}</p>
+        <p>Det. upper bound: {prob.detUpperBound}</p>
+        <p>Rand. lower bound: {prob.randLowerBound}</p>
+        <p>Rand. upper bound: {prob.randUpperBound}</p>
+      </div>
+    {/each}
+  {/if}
 </div>
 
 <style>
+  .boldenned {
+    font-weight: bold;
+  }
 	.form-wrapper {
 		margin: 20px;
 	}
