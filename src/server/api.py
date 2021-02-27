@@ -82,6 +82,8 @@ query_args = {
   "label_count": fields.Int(required=True),
   "actives_all_same": fields.Bool(missing=False),
   "passives_all_same": fields.Bool(missing=False),
+
+  "fetch_stats_only": fields.Bool(missing=True),
 }
 
 @app.route('/api/classifier/query', methods=['GET'])
@@ -121,7 +123,9 @@ def query(args):
   problems = getProblems(query)
   stats = computeStats(problems)
   response = {
-    'problems': problems,
+    'problems': (None
+      if args['fetch_stats_only']
+      else problems),
     'stats': stats.dict()
   }
   return jsonify(response)

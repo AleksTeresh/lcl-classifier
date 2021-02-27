@@ -54,10 +54,10 @@
   let showStatistics = false
   let showProblems = false
 
-	async function handleProblemSubmit(e: any) {
-		e.preventDefault();
-
-		const query: Query = {
+  async function handleQuerySubmission(
+    fetchStatsOnly: boolean
+  ) {
+    const query: Query = {
 			isTree: graphType === 'tree',
 			isCycle: graphType === 'cycle',
 			isPath: graphType === 'path',
@@ -80,7 +80,9 @@
       excludeIfConfigHasAllOf: excludeIfConfigHasAllOf.split('\n'),
       excludeIfConfigHasSomeOf: excludeIfConfigHasSomeOf.split('\n'),
       includeIfConfigHasAllOf: includeIfConfigHasAllOf.split('\n'),
-      includeIfConfigHasSomeOf: includeIfConfigHasSomeOf.split('\n')
+      includeIfConfigHasSomeOf: includeIfConfigHasSomeOf.split('\n'),
+
+      fetchStatsOnly
 		}
 
     loading = true
@@ -91,6 +93,16 @@
     } finally {
       loading = false
     }
+  }
+
+  async function fetchStatsAndProblems(e: any) {
+    e.preventDefault()
+    handleQuerySubmission(false)
+  }
+
+	async function fetchStatsOnly(e: any) {
+		e.preventDefault()
+    handleQuerySubmission(true)
 	}
 </script>
 
@@ -208,8 +220,12 @@
     </Collapsible>
   
     <button
-      on:click={handleProblemSubmit}>
-      Search
+      on:click={fetchStatsOnly}>
+      Fetch stats only
+    </button>
+    <button
+      on:click={fetchStatsAndProblems}>
+      Fetch stats and all problems
     </button>
   </form>
 
@@ -222,29 +238,31 @@
       label={'Statistics:'}>
       <Statistics stats={response.stats} />
     </Collapsible>
-    <Collapsible
-      open={showProblems}
-      label={'Problems:'}>
-      {#each response.problems as prob}
-        <div class="problem-wrapper response">
-          <p class="response-boldenned">Problem:</p>
-          <p>Active config: {prob.activeConstraints}</p>
-          <p>Passive config: {prob.passiveConstraints}</p>
-          <p>Graph: {getGraphType(prob)}</p>
-          {#if prob.rootConstraints.length !== 0}
-            <p>Root config: {prob.rootConstraints}</p>
-          {/if}
-          {#if prob.leafConstraints.length !== 0}
-            <p>Leaf config: {prob.leafConstraints}</p>
-          {/if}
-          <p class="response-boldenned">Classification:</p>
-          <p>Det. lower bound: {prob.detLowerBound}</p>
-          <p>Det. upper bound: {prob.detUpperBound}</p>
-          <p>Rand. lower bound: {prob.randLowerBound}</p>
-          <p>Rand. upper bound: {prob.randUpperBound}</p>
-        </div>
-      {/each}
-    </Collapsible>
+    {#if !!response.problems}
+      <Collapsible
+        open={showProblems}
+        label={'Problems:'}>
+        {#each response.problems as prob}
+          <div class="problem-wrapper response">
+            <p class="response-boldenned">Problem:</p>
+            <p>Active config: {prob.activeConstraints}</p>
+            <p>Passive config: {prob.passiveConstraints}</p>
+            <p>Graph: {getGraphType(prob)}</p>
+            {#if prob.rootConstraints.length !== 0}
+              <p>Root config: {prob.rootConstraints}</p>
+            {/if}
+            {#if prob.leafConstraints.length !== 0}
+              <p>Leaf config: {prob.leafConstraints}</p>
+            {/if}
+            <p class="response-boldenned">Classification:</p>
+            <p>Det. lower bound: {prob.detLowerBound}</p>
+            <p>Det. upper bound: {prob.detUpperBound}</p>
+            <p>Rand. lower bound: {prob.randLowerBound}</p>
+            <p>Rand. upper bound: {prob.randUpperBound}</p>
+          </div>
+        {/each}
+      </Collapsible>
+    {/if}
   {/if}
 </div>
 
