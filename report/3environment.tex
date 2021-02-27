@@ -352,71 +352,80 @@ FIXME
 
 \section{Summary of decidablity of LCL on trees}
 
+
 \begin{table}
-  \begin{tabular}{|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|p{1.90cm}|}
-  % Alignment of sells: l=left, c=center, r=right. 
-  % If you want wrapping lines, use p{width} exact cell widths.
-  % If you want vertical lines between columns, write | above between the letters
-  % Horizontal lines are generated with the \hline command:
-  \hline % The line on top of the table
-   & Paths and cycles & Labelled paths & Binary$\slash$Ternary labelling & Rooted regular trees & General trees \\
-  \hline 
-  % Place a & between the columns
-  % In the end of the line, use two backslashes \\ to break the line,
-  % then place a \hline to make a horizontal line below the row 
-    Input labelling & no & yes & no & no & yes \\
-  \hline
-
-    Regularity & any & any & regular & regular & any \\
-  \hline
-
-    Orientation & either & either & unrooted & rooted & either \\
-  \hline
-
-    \raggedright Output labelling & any & any & binary & any & any \\
-  \hline
-
-    Decidable & yes & yes & partially (a)$\slash$partially (b) & yes & partially (c) \\
-  \hline
-
-    Upper bound & $P$ & unknown & P$\slash$unknown & $\leq EXP$ & unknown \\
-  \hline
-
-    Hardness &  & $\geq PSPACE$ &  & unknown & $\geq EXPTIME$ \\
-  \hline
-
-    \textbf{Complexity classes} &  &  &  &  &  \\
-  \hline
-    $O(1)$ & det & det & det & det & det \\
-  \hline
-    \dots & no & no & no & no & no \\
-  \hline
-    $\Theta(\log \log^* n)$ & no & no & no & no & unknown \\
-  \hline
-    \dots & no & no & no & no & unknown \\
-  \hline
-    $\Theta(\log^* n)$ & det & det & no & det & det \\
-  \hline
-    \dots & no & no & no & no & no \\
-  \hline
-    $\Theta(\log \log n)$ & no & no & rand & no & rand \\
-  \hline
-    \dots & no & no & no & no & no \\
-  \hline
-    $\Theta(\log n)$ & no & no & det & det & det \\
-  \hline
-    \dots & no & no & no & no & no \\
-  \hline
-    $\Theta(n^{1/k})$ & no & no & no & no & det (d) \\
-  \hline
-    \dots & no & no & no & no & no \\
-  \hline
-    $\Theta(n)$ & det & det & det & det & det \\
-  \hline
-
-  \end{tabular} % for really simple tables, you can just use tabular
-  % You can place the caption either below (like here) or above the table
-  \caption{Overview of LCL problems on trees}
-  % Place the label just after the caption to make the link work
-  \label{table:courses}
-\end{table} % table makes a floating object with a title
+  \caption{An overview of the landscape and decidability of the round complexity of $\LCL$ problems in the $\LOCAL$ model. The case studied in the present work (unlabeled, rooted, regular trees) is highlighted with shading, and the darker shade indicates the key new results. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. We have listed a few key references for each column, focusing on decidability aspects; the overall picture of the complexity landscape is the result of a long sequence of papers, including FIXME}
+  \centering
+  \newcommand{\mysp}{0.1mm}
+  \newcommand{\mys}{0.1mm}
+  \newcommand{\myss}{0.1mm}
+  \newcommand{\mysl}{0.1mm}
+  \newcommand{\hsp}{\hspace{\mysp}}
+  \newcommand{\hs}{\hspace{\mys}}
+  \newcommand{\hsl}{\hspace{\mysl}}
+  \newcommand{\plog}{\log^\alpha}
+  \newcommand{\yy}{$\checkmark$}
+  \newcommand{\kludge}{\\[-0.02mm]}
+  \newcommand{\hl}[1]{\multicolumn{1}{@{}T@{}}{#1}}
+  \begin{adjustbox}{center}
+  \begin{tabular}{@{}ll@{\hsp}c@{\hs}c@{\hs}c@{\hs}c@{\hsp}c@{\hs}c@{\hs}c@{\hs}c@{\hs}c@{\hsp}}
+  \toprule
+  \textbf{Setting}
+  &
+  & \multicolumn{4}{@{}l@{}}{\emph{Paths and cycles}}
+  & \multicolumn{5}{@{}l@{}}{\emph{Trees}} \\
+  \cmidrule(r{\mysp}){3-6}\cmidrule(r{\mysp}){7-11}
+  & unlabeled input           & \yy & \yy & \yy &     & \yy & \yy &    \yy & \yy &  \kludge
+  & regular                   & \yy & \yy &     &     & \yy & \yy &    \yy & \yy &  \kludge
+  & directed or rooted        & \yy & \yy &     &     &     &     &    \yy &     &  \kludge
+  & binary output             & \yy &     &     &     &     & \yy &        &     &  \\
+  & homogeneous               &     &     &     &     & \yy &     &        &     &  \kludge
+  \midrule
+  \textbf{Complexity}
+  & $O(1)$                    & D+R & D+R & D+R & D+R & D+R & D+R &    D+R & D+R & D+R \kludge
+  \textbf{classes}
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log \log^* n)$   & --- & --- & --- & --- & --- & --- &    --- & ?   & ?   \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & ?   & ?   \kludge
+  & $\Theta(\log^* n)$        & --- & D+R & D+R & D+R & D+R & --- &    D+R & D+R & D+R \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log \log n)$     & --- & --- & --- & --- & R   & R   &    --- & R   & R   \kludge
+  & $\Theta(\plog \log n)$    & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log n)$          & --- & --- & --- & --- & D+R & D+R &    D+R & D+R & D+R \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(n^{1/k})$         & --- & --- & --- & --- & --- & --- &    --- & ?   &($n$)\kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(n)$               & D+R & D+R & D+R & D+R & --- & D+R &    D+R & D+R & D+R \\
+  \midrule
+  \textbf{Decidability}
+  & P                         & \yy & \yy & \yy & --- & ?   & (D) &    ?   & ?   & --- \kludge
+  & PSPACE                    & \yy & \yy & \yy & ?   & ?   & (D) &    ?   & ?   & --- \kludge
+  & EXPTIME                   & \yy & \yy & \yy & ?   & ?   & (D) &    \yy & ?   & ?   \kludge
+  & decidable                 & \yy & \yy & \yy & \yy & ?   & (D) &    \yy & (H) & (H) \\
+  \midrule
+  \textbf{References} &
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  & FIXME
+  \kludge
+  & & & & & & & & work & &
+  \\
+  \midrule
+  \textbf{Legend}
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ \yy = yes,\hsl ? = unknown,\hsl --- = not possible,\hsl $\alpha > 1$,\hsl $k = 2, 3, \dotsc$.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ D = class exists for deterministic algorithms,\hsl R = class exists for randomized algorithms.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ ($n$) = the current construction assumes the knowledge of $n$; unknown without this information.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ (D) = known only for deterministic complexities, unknown for randomized.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ (H) = known only for classes between $\Omega(\log n)$ and $O(n)$.} \\
+  \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table}
+  
