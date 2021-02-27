@@ -79,7 +79,7 @@
 % (ISO-8859-1 works). Change the latin1-option if you use UTF8 
 % (at some point LaTeX did not work with UTF8, but I'm not sure
 % what the current situation is) 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 % OT1 font encoding seems to work better than T1. Check the rendered
 % PDF file to see if the fonts are encoded properly as vectors (instead
 % of rendered bitmaps). You can do this by zooming very close to any letter 
@@ -289,17 +289,14 @@
 %\newcommand{\FSUPERVISOR}{Professori Antti Yl�-J��ski}
 %\newcommand{\SSUPERVISOR}{Professor Antti Yl�-J��ski}
 % Example of twosupervisors:
-\newcommand{\SUPERVISOR}{Professor Antti Yl�-J��ski\\
-  Professor Petra Perustieteilij�}
-\newcommand{\FSUPERVISOR}{Professori Antti Yl�-J��ski\\
-  Professori Petra Perustieteilij�}
-\newcommand{\SSUPERVISOR}{Professor Antti Yl�-J��ski\\
-  Professor Petra Perustieteilij�}
+\newcommand{\SUPERVISOR}{Professor Jukka Suomela}
+\newcommand{\FSUPERVISOR}{Professori Jukka Suomela}
+\newcommand{\SSUPERVISOR}{Professor Jukka Suomela}
 
 % If you have only one instructor, just write one name here
 \newcommand{\INSTRUCTOR}{Oili Ohjaaja M.Sc. (Tech.)}
-\newcommand{\FINSTRUCTOR}{Diplomi-insin��ri Oili Ohjaaja}
-\newcommand{\SINSTRUCTOR}{Diplomingenj�r Oili Ohjaaja}
+\newcommand{\FINSTRUCTOR}{Diplomi-insinööri Oili Ohjaaja}
+\newcommand{\SINSTRUCTOR}{Diplomingenjör Oili Ohjaaja}
 % If you have two instructors, separate them with \\ to create linefeeds
 % \newcommand{\INSTRUCTOR}{Oili Ohjaaja M.Sc. (Tech.)\\
 %  Elli Opas M.Sc. (Tech)}
@@ -312,8 +309,7 @@
 % of the supervisors in the cover page. If the following command is defined,
 % then the supervisor names shown here are printed in the cover page. Otherwise,
 % the supervisor names defined above are used.
-\newcommand{\COVERSUPERVISOR}{Professor Antti Yl�-J��ski, Aalto University\\
-  Professor Petra Perustieteilij�, University of Helsinki}
+\newcommand{\COVERSUPERVISOR}{Professor Jukka Suomela, Aalto University}
 
 % The same option is for the instructors, if you have multiple instructors.
 % \newcommand{\COVERINSTRUCTOR}{Oili Ohjaaja M.Sc. (Tech.), Aalto University\\
@@ -422,9 +418,8 @@ yrkesut�vare, intressef�retag, verifieringskedja}
 % ------------------------------------------------------------------
 % Options: finnish, english, and swedish
 % These control in which language the cover-page information is shown
+
 \coverpage{english}
-
-
 % Abstracts
 % ------------------------------------------------------------------
 % Include an abstract in the language that the thesis is written in,
