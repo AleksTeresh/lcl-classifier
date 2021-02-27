@@ -164,7 +164,7 @@ def getProblems(
     )]
   return res
 
-def updateClassifications(results):
+def updateClassifications(results, problemProps):
   conn = getConnection()
   cur = conn.cursor()
   execute_values(cur, """
@@ -193,6 +193,42 @@ def updateClassifications(results):
       p.solvableCount,
       p.unsolvableCount
     ) for p in results]
+  )
+  cur.execute("""
+    INSERT INTO batch_classifications (
+      active_degree,
+      passive_degree,
+      label_count,
+      actives_all_same,
+      passives_all_same,
+
+      is_tree,
+      is_cycle,
+      is_path,
+      is_directed_or_rooted,
+      is_regular,
+
+      count
+    ) VALUES (
+      %s, %s, %s, %s, %s,
+      %s, %s, %s, %s, %s,
+      %s
+    );""",
+    (
+      problemProps.activeDegree,
+      problemProps.passiveDegree,
+      problemProps.labelCount,
+      problemProps.activesAllSame,
+      problemProps.passivesAllSame,
+
+      problemProps.flags.isTree,
+      problemProps.flags.isCycle,
+      problemProps.flags.isPath,
+      problemProps.flags.isDirectedOrRooted,
+      problemProps.flags.isRegular,
+
+      len(results)
+    )
   )
   conn.commit()
   cur.close()
@@ -277,3 +313,13 @@ def storeProblemsAndGetWithIds(
   for i, p in enumerate(problems):
     p.id = ids[i]
   return problems
+
+def getBatchClassifications():
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("SELECT * FROM batch_classifications;")
+  res = cur.fetchall()
+  cur.close()
+  conn.close()
+
+  return res

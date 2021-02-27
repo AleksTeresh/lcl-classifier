@@ -5,7 +5,7 @@ from db import updateClassifications
 from classifier import classify
 from bindings.tlp_binding import batchClassify as tlpBatchClassify
 from bindings.brt_binding import batchClassify as brtBatchClassify
-from problem import GenericProblem, ProblemFlags
+from problem import GenericProblem, ProblemFlags, ProblemProps
 from classified_problem import ClassifiedProblem
 from classify_context import ClassifyContext
 
@@ -42,9 +42,9 @@ def batchClassify(problems: List[GenericProblem]):
     ) for i, x in enumerate(tqdm(problems))
   ]
 
-def classifyAndStore(problems: List[GenericProblem]):
+def classifyAndStore(problems: List[GenericProblem], props: ProblemProps):
   results = batchClassify(problems)
-  updateClassifications(results)
+  updateClassifications(results, props)
 
 def batchReclassify(classifiedProblems):
   return [classify(x.toProblem(), x.toResponse()) for x in tqdm(classifiedProblems)]

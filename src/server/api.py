@@ -8,7 +8,7 @@ from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
 from classifier import classify
 from statistics import compute as computeStats
-from db import getProblem, getProblems
+from db import getProblem, getProblems, getBatchClassifications
 from complexity import *
 
 app = flask.Flask(__name__)
@@ -125,6 +125,11 @@ def query(args):
     'stats': stats.dict()
   }
   return jsonify(response)
+
+@app.route('/api/batch_classifications', methods=['GET'])
+def batchClassifications():
+  classifications = getBatchClassifications()
+  return jsonify(classifications)
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -27,7 +27,7 @@ from db import storeProblemsAndGetWithIds, getProblems, getProblem
 
 activeDegree = 3
 passiveDegree = 2
-labelCount = 4
+labelCount = 2
 activesAllSame = True
 passivesAllSame = False
 flags = ProblemFlags(
@@ -70,7 +70,7 @@ ps = generate(
 )
 
 psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(psWithIds)
+classifyAndStore(psWithIds, props)
 
 # # classifiedProblems = getProblems(query)
 # # reclassifyAndStore(classifiedProblems)
