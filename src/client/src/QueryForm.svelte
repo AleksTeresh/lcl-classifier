@@ -1,6 +1,7 @@
 <script lang="ts">
   import './response.css'
   import { Stretch } from 'svelte-loading-spinners'
+  import VirtualList from '@sveltejs/svelte-virtual-list'
   import Statistics from './Statistics.svelte'
   import Collapsible from './Collapsible.svelte'
   import { getQueryResult } from './api'
@@ -239,29 +240,31 @@
       <Statistics stats={response.stats} />
     </Collapsible>
     {#if !!response.problems}
-      <Collapsible
-        open={showProblems}
-        label={'Problems:'}>
-        {#each response.problems as prob}
+    <Collapsible
+    open={showStatistics}
+    label={'Problems:'}>
+      <div class="problem-container">
+        <VirtualList height="calc(100vh - 5em)" items={response.problems} let:item>
           <div class="problem-wrapper response">
             <p class="response-boldenned">Problem:</p>
-            <p>Active config: {prob.activeConstraints}</p>
-            <p>Passive config: {prob.passiveConstraints}</p>
-            <p>Graph: {getGraphType(prob)}</p>
-            {#if prob.rootConstraints.length !== 0}
-              <p>Root config: {prob.rootConstraints}</p>
+            <p>Active config: {item.activeConstraints}</p>
+            <p>Passive config: {item.passiveConstraints}</p>
+            <p>Graph: {getGraphType(item)}</p>
+            {#if item.rootConstraints.length !== 0}
+              <p>Root config: {item.rootConstraints}</p>
             {/if}
-            {#if prob.leafConstraints.length !== 0}
-              <p>Leaf config: {prob.leafConstraints}</p>
+            {#if item.leafConstraints.length !== 0}
+              <p>Leaf config: {item.leafConstraints}</p>
             {/if}
             <p class="response-boldenned">Classification:</p>
-            <p>Det. lower bound: {prob.detLowerBound}</p>
-            <p>Det. upper bound: {prob.detUpperBound}</p>
-            <p>Rand. lower bound: {prob.randLowerBound}</p>
-            <p>Rand. upper bound: {prob.randUpperBound}</p>
+            <p>Det. lower bound: {item.detLowerBound}</p>
+            <p>Det. upper bound: {item.detUpperBound}</p>
+            <p>Rand. lower bound: {item.randLowerBound}</p>
+            <p>Rand. upper bound: {item.randUpperBound}</p>
           </div>
-        {/each}
-      </Collapsible>
+        </VirtualList>
+      </div>
+    </Collapsible>
     {/if}
   {/if}
 </div>
@@ -269,6 +272,12 @@
 <style>
   .boldenned {
     font-weight: bold;
+  }
+
+  .problem-container {
+    border-left: 2px solid  rgb(228, 226, 226);
+    /* border-right: 2px solid rgb(228, 226, 226); */
+		border-bottom: 2px solid  rgb(228, 226, 226);
   }
 	.form-wrapper {
 		margin: 20px;
@@ -285,6 +294,7 @@
 
   .problem-wrapper {
     border-bottom: 1px solid black;
+    margin: 5px;
   }
 
   textarea {
