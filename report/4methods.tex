@@ -45,13 +45,13 @@ When selecting the scope of the thesis, we need to decide on the limits
 in terms of the properties of the software. We present the limiting properties
 as a list of question:
 
-\begin{itemize}
+\begin{enumerate}
   \item What graph families should our tool be able to work with?
   \item What meta-algorithms are to be used as part of the solution?
   \item Are datasets of individual complexity results to be used
   in addition to the meta-algorithms? If so, which of the datasets we should use?
   \item How general should the query be, and what parameters the query should include?
-\end{itemize}
+\end{enumerate}
 
 To answer these questions, we utilize the existing literature on the subject, which was partly presented in Chapters~\ref{chapter:background} and~\ref{chapter:environment}. As was already explained earlier, problems on general graphs are not decidable. At the same time, all of the results listed in Chapter~\ref{chapter:environment} can be applied to problems on trees. Thus,
 we have decides to limit ourselves to trees as an answer to the first question in the list.
@@ -76,8 +76,29 @@ needs of the research community, to come up with some form of the
 query -- even if somewhat arbitrary -- and release an early version
 of the software as soon as possible to allow people on the
 research community to use the tool. This has enabled us to
-collect feedback about the imlpementation in general and about the
+collect feedback about the implementation in general and about the
 query functionality in particular, and to reiterate the structure of
-the query based on the feedback received.
+the query based on the feedback received. As the result, it was
+decided that the query functionality should be able to perform
+filtering based on the following properties of a problem:
 
-
+\begin{itemize}
+  \item Randomised complexity
+  \item Deterministic complexity
+  \item Graph family of problems (e.g. whether the problem in on
+  rooted or unrooted trees, whether the underlying graph is a tree
+  or a cycle, degree of the grah if a graph is regular, etc.)
+  \item Number of labels allowed in the solution of the problems
+  \item Restrictions on what outputs can nodes produce (e.g. the
+  produced output must always iniclude 2-coloring of a graph,
+  or all passive nodes in a graph must output the same
+  label on all incident edges, etc.)
+  \item Possibilty to query for only the "smallest" problem that
+  satisfies other query parameters. Noice that "smallest" here is
+  defined rather ambiguously and is open for interretation while implementing. Roughly speaking, it means a problem with smallest
+  number of valid outputs.
+  \item Possibilty to query for only the "largest" problem. Here again
+  "largest" is a rather ambiguous term and is used in a simlar sense
+  as explained above.
+  \item Possibility to query for the "smallest" not-yet-classified problem.
+\end{itemize}
