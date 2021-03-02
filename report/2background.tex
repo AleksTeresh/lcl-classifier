@@ -550,6 +550,61 @@ is matched with a neighbour or all neighbours are matched with someone else.
 And if the condition of the previous sentence is not satisfied, the output
 is invalid.
 
+\section{Decidability and undecidability}
+
+Before moving forward, it is important to remind about a notion of
+decidability in the context of theoretical computer science. It is
+assumed that the reader already has some basic knowledge on
+complexity theory, computability, Turing machines, automata and
+languages. The content of this section follows
+definitions and formalisms as defined in of Sipser~\cite{Sipser2012}
+unless specified otherwise.
+
+First of all, recall that a deterministic Turing machine is called
+\emph{decider} if it halts on all inputs. Similarly,
+a nondeterministic Turing machine is called a decider, if
+it ends up in a halting state in all of its branches. We then
+call a language \emph{decidable} if and only if there is some Turing
+machine that decides it. That is, a language $L$ is decidable
+if and only if there exists some Turing machine $M$ that given
+and input $x$, such that $x \in L$, always halts.
+
+\emph{A decision problem} is an algorithmic problem, that has only two
+valid solutions to it: "yes" and "no". We assume that a decision
+problem has an infinite set of inputs. That is, a decision problem
+defines an infinite but possible restricted set of valid inputs,
+and for each input only one of the two outputs is the correct
+output. An algorithm is said to solve a problem $P$ if and only
+if, given any input from a set of valid inputs, it can
+always produce the correct output. Recall also that we can
+represent any decision problem $P$ as a formal language $L_P$, where
+a string $x \in L_P$ if and only if, given that $x$ is an input
+to the problem $P$, the correct output is "yes". To clarify,
+for each problem $P$, there is a language $L_P$ such that
+if $P$'s output on some input $x$ is "yes", then $x \in L_P$,
+otherwise $x \notin L_P$. From now on, we will call such
+language $L_P$ that "represents" a decision problem $P_L$ as
+\emph{corresponding language} of problem $P$.
+
+Then, a decision problem $P$ is \emph{decidable}, if and only if
+there is a decidable corresponding language $L_P$.
+On the other hand, a decision problem is \emph{undecidable},
+if and only if, there is no decidable corresponding language $L_P$.
+Note that a problem is undecidable if and only if it is not
+decidable.
+
+To prove that a problem $P$ is decidable, it is sufficient to
+show an algorithm (formally a Turing machine) $A$, such that
+$A$ correctly solves the problem for all valid inputs. That is,
+such an algorithm $A$ must always halt and must produce the
+output "yes" if and only if it is the correct output of the
+problem $P$ given the input. Thus, proving decidability
+requires finding such an algorithm, and then proving
+that $A$ always halts and that $A$ is indeed correct.
+To prove that a problem is undecidable is however less
+trivial. One of the common techniques is to show that
+the problem can be reduced to the Halting problem~\cite{Margenstern2000, Turing1937}. 
+
 \section{Recent developments in automated classification of LCL probems}
 
 At this point that the theoretical background has been given, it is
