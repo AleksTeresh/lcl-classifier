@@ -40,3 +40,44 @@ which the returned results are based on.
 
 
 \section{Scope}
+
+When selecting the scope of the thesis, we need to decide on the limits
+in terms of the properties of the software. We present the limiting properties
+as a list of question:
+
+\begin{itemize}
+  \item What graph families should our tool be able to work with?
+  \item What meta-algorithms are to be used as part of the solution?
+  \item Are datasets of individual complexity results to be used
+  in addition to the meta-algorithms? If so, which of the datasets we should use?
+  \item How general should the query be, and what parameters the query should include?
+\end{itemize}
+
+To answer these questions, we utilize the existing literature on the subject, which was partly presented in Chapters~\ref{chapter:background} and~\ref{chapter:environment}. As was already explained earlier, problems on general graphs are not decidable. At the same time, all of the results listed in Chapter~\ref{chapter:environment} can be applied to problems on trees. Thus,
+we have decides to limit ourselves to trees as an answer to the first question in the list.
+
+At the moment of writing the thesis, the number of meta-algorithms is
+quite small. Indeed, all of the meta-algorithms that the author is aware of were listed and explained in Chapter~\ref{chapter:environment}. Therefore, there are only five meta-algorithms to use: the round elimination technique, the automata-theoretic lens classifier, classifier for binary labeling problems on unrooted trees, classifier for ternary labelling problems on unrooted trees, and classifier for problems on rooted trees. Moreover, for each of these classifiers, there exists an practical implementation of the meta-algorithm, even if in a limited form (e.g. an implementation of the classifier for problems on rooted trees, currently only supports problems on \emph{binary} rooted trees). Thus, we have decided to use all of the five listed meta-algorithm as part of the solution.
+
+There are only 2 LCL problem datasets the author is aware of. One of them is the dataset of binary and ternary labeling problems on binary rooted trees, which is a
+part of the python package for classifying binary rooted trees~\cite{Tereshchenko2020brt}. The other one is the dataset of binary and ternary labeling problems on
+unrooted $(2, 2)$-biregular and $(3, 2)$-biregular trees, which is a part of the TLP classifier python package~\cite{Rocher2020clas}. Since the latter dataseet is already incorporated in the tlp-classifier,
+the former dataset is the only one that we eventually decided to use
+in addition to the aforementioned meta-algorithms.
+
+Finally, we will attempt to the answer the last question.
+This is perhaps the most difficult one from the list,
+as research needs of different people involved in 
+the distributed algorthms research might differ a lot, and thus
+the parameters of the query that might prove to be useful
+will vary from case to case too. It was thus decided to first
+, based on some assumptions and general knowledge of the
+needs of the research community, to come up with some form of the
+query -- even if somewhat arbitrary -- and release an early version
+of the software as soon as possible to allow people on the
+research community to use the tool. This has enabled us to
+collect feedback about the imlpementation in general and about the
+query functionality in particular, and to reiterate the structure of
+the query based on the feedback received.
+
+
