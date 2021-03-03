@@ -170,9 +170,7 @@ def updateClassifications(results, problemProps):
   cur.execute("SELECT * FROM sources;")
   sources = cur.fetchall()
   sourcesMap = {s['short_name']: s['id'] for s in sources}
-  print(sourcesMap)
-  print(len(results))
-  print([sourcesMap[r.papers.getRUBSource()] for r in results])
+
   execute_values(cur, """
     UPDATE problems SET 
       rand_upper_bound = CAST (data.rand_upper_bound AS complexity),
