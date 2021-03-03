@@ -1,11 +1,33 @@
 from complexity import *
 
-class Paper:
-  def __init__(self, name, authors, year, url):
-    self.year = year
+class Source:
+  def __init__(
+    self,
+    name,
+    urls
+  ):
     self.name = name
-    self.authors = authors
-    self.url = url
+    self.urls = urls
+class Sources:
+  def __init__(
+    self,
+    randUpperBoundSource = None,
+    randLowerBoundSource = None,
+    detUpperBoundSource = None,
+    detLowerBoundSource = None
+  ):
+    self.randUpperBoundSource = randUpperBoundSource
+    self.randLowerBoundSource = randLowerBoundSource
+    self.detUpperBoundSource = detUpperBoundSource
+    self.detLowerBoundSource = detLowerBoundSource
+
+  def dict(self):
+    return {
+      "randUpperBoundSource": self.randUpperBoundSource,
+      "randLowerBoundSource": self.randLowerBoundSource,
+      "detUpperBoundSource": self.detUpperBoundSource,
+      "detLowerBoundSource": self.detLowerBoundSource
+    }
 
 class GenericResponse:
   def __init__(
@@ -17,7 +39,7 @@ class GenericResponse:
     detLowerBound = CONST,
     solvableCount = "",
     unsolvableCount = "",
-    papers = []
+    papers: Sources = Sources()
   ):
     self.problem = problem
     self.randUpperBound = randUpperBound
@@ -36,7 +58,7 @@ class GenericResponse:
       "detLowerBound": self.detLowerBound,
       "solvableCount": self.solvableCount,
       "unsolvableCount": self.unsolvableCount,
-      "papers": self.papers
+      "papers": self.papers.dict()
     }
 
   def __repr__(self):

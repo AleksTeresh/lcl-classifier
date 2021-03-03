@@ -13,7 +13,6 @@ def batchClassify(problems: List[GenericProblem]):
   context = ClassifyContext()
 
   try:
-    #raise Exception('asasa')
     tlpResponses = tlpBatchClassify(problems)
     context.tlpPreclassified = True
   except Exception as e:
@@ -34,10 +33,10 @@ def batchClassify(problems: List[GenericProblem]):
   return [
     classify(
       x,
-      [x for x in [
-        brtResponses[i] if context.brtPreclassified else None,
-        tlpResponses[i] if context.tlpPreclassified else None
-      ] if x is not None],
+      {k: v for k, v in {
+        'brt': (brtResponses[i] if context.brtPreclassified else None),
+        'tlp': (tlpResponses[i] if context.tlpPreclassified else None)
+       }.items() if v is not None},
       context
     ) for i, x in enumerate(tqdm(problems))
   ]
