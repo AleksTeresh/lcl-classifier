@@ -211,6 +211,22 @@ class TestClassifier(unittest.TestCase):
     self.assertEqual(res.randLowerBound, ITERATED_LOG)
 
 class TestGenerator(unittest.TestCase):
+  def __checkEquality(self, results, saved):
+    self.assertEqual(len(results), len(saved))
+    for r, s in zip(results, saved):
+      self.assertEqual(r.id, s.id)
+      self.assertEqual(r.activeConstraints, s.activeConstraints)
+      self.assertEqual(r.passiveConstraints, s.passiveConstraints)
+      self.assertEqual(r.leafConstraints, s.leafConstraints)
+      self.assertEqual(r.rootConstraints, s.rootConstraints)
+      self.assertEqual(r.leafAllowAll, s.leafAllowAll)
+      self.assertEqual(r.rootAllowAll, s.rootAllowAll)
+      self.assertEqual(r.flags.isTree, s.flags.isTree)
+      self.assertEqual(r.flags.isCycle, s.flags.isCycle)
+      self.assertEqual(r.flags.isPath, s.flags.isPath)
+      self.assertEqual(r.flags.isDirectedOrRooted, s.flags.isDirectedOrRooted)
+      self.assertEqual(r.flags.isRegular, s.flags.isRegular)
+
   def testGenerate1(self):
     activeDegree = 3
     passiveDegree = 2
@@ -234,8 +250,8 @@ class TestGenerator(unittest.TestCase):
     )
 
     with open('test_data/problems1.pickle', 'rb') as handle:
-      b = pickle.load(handle)
-      self.assertEqual(ps, b)
+      saved = pickle.load(handle)
+      self.__checkEquality(ps, saved)
 
   def testGenerate2(self):
     activeDegree = 3
@@ -260,8 +276,8 @@ class TestGenerator(unittest.TestCase):
     )
 
     with open('test_data/problems2.pickle', 'rb') as handle:
-      b = pickle.load(handle)
-      self.assertEqual(ps, b)
+      saved = pickle.load(handle)
+      self.__checkEquality(ps, saved)
 
   def testGenerate3(self):
     activeDegree = 2
@@ -286,8 +302,8 @@ class TestGenerator(unittest.TestCase):
     )
 
     with open('test_data/problems3.pickle', 'rb') as handle:
-      b = pickle.load(handle)
-      self.assertEqual(ps, b)
+      saved = pickle.load(handle)
+      self.__checkEquality(ps, saved)
 
   def testGenerate4(self):
     activeDegree = 2
@@ -312,8 +328,8 @@ class TestGenerator(unittest.TestCase):
     )
 
     with open('test_data/problems4.pickle', 'rb') as handle:
-      b = pickle.load(handle)
-      self.assertEqual(ps, b)
+      saved = pickle.load(handle)
+      self.__checkEquality(ps, saved)
 
 class TestBatchClassifier(unittest.TestCase):
   def __checkEquality(self, results, saved):
