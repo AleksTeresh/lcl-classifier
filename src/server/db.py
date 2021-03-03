@@ -25,7 +25,30 @@ def getProblem(problem: GenericProblem):
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cur.execute("""
-  SELECT * FROM problems WHERE
+  SELECT
+    problems.*,
+    rub.short_name AS rub_source_short_name,
+    rub.name AS rub_source_name,
+    rub.urls AS rub_source_urls,
+    rlb.short_name AS rlb_source_short_name,
+    rlb.name AS rlb_source_name,
+    rlb.urls AS rlb_source_urls,
+    dub.short_name AS dub_source_short_name,
+    dub.name AS dub_source_name,
+    dub.urls AS dub_source_urls,
+    dlb.short_name AS dlb_source_short_name,
+    dlb.name AS dlb_source_name,
+    dlb.urls AS dlb_source_urls
+  FROM problems
+  LEFT OUTER JOIN sources AS rub
+  ON (rand_upper_bound_source = rub.id)
+  LEFT OUTER JOIN sources AS rlb
+  ON (rand_lower_bound_source = rlb.id)
+  LEFT OUTER JOIN sources AS dub
+  ON (det_upper_bound_source = dub.id)
+  LEFT OUTER JOIN sources AS dlb
+  ON (det_lower_bound_source = dlb.id)
+  WHERE
     active_constraints = %s AND
     passive_constraints = %s AND
     leaf_constraints = %s AND
@@ -63,7 +86,30 @@ def getProblems(
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cur.execute("""
-  SELECT * FROM problems WHERE
+  SELECT
+    problems.*,
+    rub.short_name AS rub_source_short_name,
+    rub.name AS rub_source_name,
+    rub.urls AS rub_source_urls,
+    rlb.short_name AS rlb_source_short_name,
+    rlb.name AS rlb_source_name,
+    rlb.urls AS rlb_source_urls,
+    dub.short_name AS dub_source_short_name,
+    dub.name AS dub_source_name,
+    dub.urls AS dub_source_urls,
+    dlb.short_name AS dlb_source_short_name,
+    dlb.name AS dlb_source_name,
+    dlb.urls AS dlb_source_urls
+  FROM problems
+  LEFT OUTER JOIN sources AS rub
+  ON (rand_upper_bound_source = rub.id)
+  LEFT OUTER JOIN sources AS rlb
+  ON (rand_lower_bound_source = rlb.id)
+  LEFT OUTER JOIN sources AS dub
+  ON (det_upper_bound_source = dub.id)
+  LEFT OUTER JOIN sources AS dlb
+  ON (det_lower_bound_source = dlb.id)
+  WHERE
     active_degree = %s AND
     passive_degree = %s AND
     label_count = %s AND

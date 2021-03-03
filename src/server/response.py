@@ -35,10 +35,10 @@ class Sources:
 
   def dict(self):
     return {
-      "randUpperBoundSource": self.randUpperBoundSource,
-      "randLowerBoundSource": self.randLowerBoundSource,
-      "detUpperBoundSource": self.detUpperBoundSource,
-      "detLowerBoundSource": self.detLowerBoundSource
+      "randUpperBoundSource": self.getRUBSource(),
+      "randLowerBoundSource": self.getRLBSource(),
+      "detUpperBoundSource": self.getDUBSource(),
+      "detLowerBoundSource": self.getDLBSource()
     }
 
 class GenericResponse:
