@@ -2,7 +2,7 @@ from typing import List
 from tqdm import tqdm
 from collections import namedtuple
 from db import updateClassifications
-from classifier import classify
+from classifier import classify, Classifier
 from bindings.tlp_binding import batchClassify as tlpBatchClassify
 from bindings.brt_binding import batchClassify as brtBatchClassify
 from problem import GenericProblem, ProblemFlags, ProblemProps
@@ -34,8 +34,8 @@ def batchClassify(problems: List[GenericProblem]):
     classify(
       x,
       {k: v for k, v in {
-        'brt': (brtResponses[i] if context.brtPreclassified else None),
-        'tlp': (tlpResponses[i] if context.tlpPreclassified else None)
+        Classifier.BRT: (brtResponses[i] if context.brtPreclassified else None),
+        Classifier.TLP: (tlpResponses[i] if context.tlpPreclassified else None)
        }.items() if v is not None},
       context
     ) for i, x in enumerate(tqdm(problems))

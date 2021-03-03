@@ -11,15 +11,27 @@ class Source:
 class Sources:
   def __init__(
     self,
-    randUpperBoundSource = None,
-    randLowerBoundSource = None,
-    detUpperBoundSource = None,
-    detLowerBoundSource = None
+    randUpperBoundSource: str = None,
+    randLowerBoundSource: str = None,
+    detUpperBoundSource: str = None,
+    detLowerBoundSource: str = None
   ):
     self.randUpperBoundSource = randUpperBoundSource
     self.randLowerBoundSource = randLowerBoundSource
     self.detUpperBoundSource = detUpperBoundSource
     self.detLowerBoundSource = detLowerBoundSource
+
+  def getRUBSource(self):
+    return self.randUpperBoundSource.value
+
+  def getRLBSource(self):
+    return self.randLowerBoundSource.value
+
+  def getDUBSource(self):
+    return self.detUpperBoundSource.value
+
+  def getDLBSource(self):
+    return self.detLowerBoundSource.value
 
   def dict(self):
     return {

@@ -28,7 +28,7 @@ from db import storeProblemsAndGetWithIds, getProblems, getProblem
 activeDegree = 3
 passiveDegree = 2
 labelCount = 2
-activesAllSame = True
+activesAllSame = False
 passivesAllSame = False
 flags = ProblemFlags(
   isTree=True,

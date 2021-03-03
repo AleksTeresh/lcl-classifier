@@ -166,7 +166,13 @@ def getProblems(
 
 def updateClassifications(results, problemProps):
   conn = getConnection()
-  cur = conn.cursor()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("SELECT * FROM sources;")
+  sources = cur.fetchall()
+  sourcesMap = {s['short_name']: s['id'] for s in sources}
+  print(sourcesMap)
+  print(len(results))
+  print([sourcesMap[r.papers.getRUBSource()] for r in results])
   execute_values(cur, """
     UPDATE problems SET 
       rand_upper_bound = CAST (data.rand_upper_bound AS complexity),
@@ -174,7 +180,12 @@ def updateClassifications(results, problemProps):
       det_upper_bound = CAST (data.det_upper_bound AS complexity),
       det_lower_bound = CAST (data.det_lower_bound AS complexity),
       solvable_count = data.solvable_count,
-      unsolvable_count = data.unsolvable_count
+      unsolvable_count = data.unsolvable_count,
+
+      rand_upper_bound_source = data.rub_source,
+      rand_lower_bound_source = data.rlb_source,
+      det_upper_bound_source = data.dub_source,
+      det_lower_bound_source = data.dlb_source
     FROM (VALUES %s) AS data (
       id,
       rand_upper_bound,
@@ -182,7 +193,12 @@ def updateClassifications(results, problemProps):
       det_upper_bound,
       det_lower_bound,
       solvable_count,
-      unsolvable_count
+      unsolvable_count,
+
+      rub_source,
+      rlb_source,
+      dub_source,
+      dlb_source
     ) WHERE problems.id = data.id;""",
     [(
       p.problem.id,
@@ -191,7 +207,12 @@ def updateClassifications(results, problemProps):
       p.detUpperBound,
       p.detLowerBound,
       p.solvableCount,
-      p.unsolvableCount
+      p.unsolvableCount,
+      
+      sourcesMap[p.papers.getRUBSource()],
+      sourcesMap[p.papers.getRLBSource()],
+      sourcesMap[p.papers.getDUBSource()],
+      sourcesMap[p.papers.getDLBSource()]
     ) for p in results]
   )
   cur.execute("""
@@ -245,8 +266,14 @@ def storeProblemsAndGetWithIds(
     active_degree = %s AND
     passive_degree = %s AND
     label_count = %s AND
-    actives_all_same = %s AND
-    passives_all_same = %s AND
+    (
+      actives_all_same = %s OR
+      actives_all_same = true
+    ) AND
+    (
+      passives_all_same = %s OR
+      passives_all_same = true 
+    ) AND
     is_tree = %s AND
     is_cycle = %s AND
     is_path = %s AND

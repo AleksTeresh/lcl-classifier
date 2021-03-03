@@ -7,7 +7,7 @@ CREATE TABLE sources (
 
 INSERT INTO sources (short_name, name, urls)
 VALUES (
-  'cpsss',
+  'cp',
   'Distributed graph problems through
 an automata-theoretic lens',
   '{"https://arxiv.org/abs/2002.07659", "https://github.com/AleksTeresh/cyclepath-classifier"}'
@@ -22,7 +22,7 @@ VALUES (
 
 INSERT INTO sources (short_name, name, urls)
 VALUES (
-  'rt',s
+  'rt',
   'Rooted tree classifier',
   '{"https://arxiv.org/abs/2102.09277", "https://github.com/jendas1/rooted-tree-classifier"}'
 );

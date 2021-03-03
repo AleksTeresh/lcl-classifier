@@ -1,5 +1,6 @@
+from enum import Enum
 from problem import GenericProblem
-from response import GenericResponse
+from response import GenericResponse, Sources
 from complexity import complexities
 from complexity import *
 from classify_context import ClassifyContext
@@ -9,21 +10,40 @@ from bindings.rt_binding import classify as rtClassify
 from bindings.tlp_binding import classify as tlpClassify
 from bindings.brt_binding import classify as brtClassify
 
+class Classifier(Enum):
+  CP = 'cp'
+  BRT = 'brt'
+  RT = 'rt'
+  TLP = 'tlp'
+  RE = 're'
+
 def getUpperBound(
   responses: Dict[str, GenericResponse],
   attrStr: str
 ):
-  return complexities[
-    min([complexities.index(getattr(res, attrStr)) for res in responses.values()])
-  ]
+  classifierToComplexityIdx = {
+    k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
+  }
+  minClassifier = min(
+    classifierToComplexityIdx,
+    key=classifierToComplexityIdx.get
+  )
+  minComplexityIdx = classifierToComplexityIdx[minClassifier]
+  return minClassifier, complexities[minComplexityIdx]
 
 def getLowerBound(
   responses: Dict[str, GenericResponse],
   attrStr: str
 ):
-  return complexities[
-    max([complexities.index(getattr(res, attrStr)) for res in responses.values()])
-  ]
+  classifierToComplexityIdx = {
+    k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
+  }
+  maxClassifier = max(
+    classifierToComplexityIdx,
+    key=classifierToComplexityIdx.get
+  )
+  maxComplexityIdx = classifierToComplexityIdx[maxClassifier]
+  return maxClassifier, complexities[maxComplexityIdx]
 
 def removeUnknowns(response: GenericResponse):
   if response.randLowerBound == UNKNOWN:
@@ -74,10 +94,10 @@ def postprocess(response: GenericResponse):
 def checkForContradictions(
   responses: Dict[str, GenericResponse]
 ):
-  randUpperBound = getUpperBound(responses, 'randUpperBound')
-  detUpperBound = getUpperBound(responses, 'detUpperBound')
-  randLowerBound = getLowerBound(responses, 'randLowerBound')
-  detLowerBound = getLowerBound(responses, 'detLowerBound')
+  _, randUpperBound = getUpperBound(responses, 'randUpperBound')
+  _, detUpperBound = getUpperBound(responses, 'detUpperBound')
+  _, randLowerBound = getLowerBound(responses, 'randLowerBound')
+  _, detLowerBound = getLowerBound(responses, 'detLowerBound')
   for r in responses.values():
     if complexities.index(r.randLowerBound) > complexities.index(randUpperBound):
       raise Exception('classification-contradiction', 'randLowerBound in one of the respones is > randUpperBound in another response', responses, r.problem)
@@ -123,23 +143,34 @@ def classify(
     print(e)
 
   responses = {
-    'cp': cpResult,
-    'rt': rtResult,
-    'tlp': tlpResult,
-    'brt': brtResult,
+    Classifier.CP: cpResult,
+    Classifier.RT: rtResult,
+    Classifier.TLP: tlpResult,
+    Classifier.BRT: brtResult,
     **existingClassifications
   }
 
   checkForContradictions(responses)
 
+  rubSource, rub = getUpperBound(responses, 'randUpperBound')
+  rlbSource, rlb = getLowerBound(responses, 'randLowerBound')
+  dubSource, dub = getUpperBound(responses, 'detUpperBound')
+  dlbSource, dlb = getLowerBound(responses, 'detLowerBound')
+
   response = GenericResponse(
     problem,
-    getUpperBound(responses, 'randUpperBound'),
-    getLowerBound(responses, 'randLowerBound'),
-    getUpperBound(responses, 'detUpperBound'),
-    getLowerBound(responses, 'detLowerBound'),
+    rub,
+    rlb,
+    dub,
+    dlb,
     cpResult.solvableCount,
     cpResult.unsolvableCount,
+    papers = Sources(
+      rubSource,
+      rlbSource,
+      dubSource,
+      dlbSource
+    )
   )
 
   return postprocess(response)
