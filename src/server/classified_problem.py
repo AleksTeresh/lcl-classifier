@@ -22,6 +22,7 @@ class ClassifiedProblem:
     detLowerBound,
     solvableCount: str,
     unsolvableCount: str,
+    papers,
     **kwargs
   ):
     self.id = id
@@ -40,7 +41,7 @@ class ClassifiedProblem:
     self.detLowerBound = detLowerBound
     self.solvableCount = solvableCount
     self.unsolvableCount = unsolvableCount
-    self.papers = []
+    self.papers = papers
 
   def toProblem(self) -> GenericProblem:
       p = GenericProblem(['A A'], ['A A'])

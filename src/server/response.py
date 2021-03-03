@@ -3,18 +3,20 @@ from complexity import *
 class Source:
   def __init__(
     self,
+    shortName,
     name,
     urls
   ):
+    self.shortName = shortName
     self.name = name
     self.urls = urls
 class Sources:
   def __init__(
     self,
-    randUpperBoundSource: str = None,
-    randLowerBoundSource: str = None,
-    detUpperBoundSource: str = None,
-    detLowerBoundSource: str = None
+    randUpperBoundSource: Source = None,
+    randLowerBoundSource: Source = None,
+    detUpperBoundSource: Source = None,
+    detLowerBoundSource: Source = None
   ):
     self.randUpperBoundSource = randUpperBoundSource
     self.randLowerBoundSource = randLowerBoundSource
@@ -22,23 +24,39 @@ class Sources:
     self.detLowerBoundSource = detLowerBoundSource
 
   def getRUBSource(self):
-    return self.randUpperBoundSource.value
+    return (
+      self.randUpperBoundSource.shortName
+      if self.randUpperBoundSource is not None
+      else None
+    )
 
   def getRLBSource(self):
-    return self.randLowerBoundSource.value
+    return (
+      self.randLowerBoundSource.shortName
+      if self.randLowerBoundSource is not None
+      else None
+    )
 
   def getDUBSource(self):
-    return self.detUpperBoundSource.value
+    return (
+      self.detUpperBoundSource.shortName
+      if self.detUpperBoundSource is not None
+      else None
+    )
 
   def getDLBSource(self):
-    return self.detLowerBoundSource.value
+    return (
+      self.detLowerBoundSource.shortName
+      if self.detLowerBoundSource is not None
+      else None
+    )
 
   def dict(self):
     return {
-      "randUpperBoundSource": self.getRUBSource(),
-      "randLowerBoundSource": self.getRLBSource(),
-      "detUpperBoundSource": self.getDUBSource(),
-      "detLowerBoundSource": self.getDLBSource()
+      "randUpperBoundSource": self.randUpperBoundSource.__dict__,
+      "randLowerBoundSource": self.randLowerBoundSource.__dict__,
+      "detUpperBoundSource": self.detUpperBoundSource.__dict__,
+      "detLowerBoundSource": self.detLowerBoundSource.__dict__
     }
 
 class GenericResponse:

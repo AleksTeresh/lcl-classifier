@@ -87,7 +87,7 @@ def batchClassify(ps: List[GenericProblem]):
 
 def classify(
   p: GenericProblem,
-  context: ClassifyContext = ClassifyContext()
+  context: ClassifyContext
 ) -> GenericResponse:
   if context.brtPreclassified:
     return GenericResponse(p)

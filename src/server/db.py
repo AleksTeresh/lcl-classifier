@@ -4,7 +4,9 @@ from psycopg2.extras import execute_values
 import humps
 from problem import GenericProblem, ProblemProps
 from config_util import eachConstrIsHomogeneous
+from db_data_converter import mapToClassifiedProblem
 from query import Query
+
 
 def getConnection():
   conn = psycopg2.connect(
@@ -79,6 +81,10 @@ def getProblem(problem: GenericProblem):
   conn.close()
 
   return res
+
+def getClassifiedProblemObj(problem: GenericProblem):
+  r = getProblem(problem)
+  return mapToClassifiedProblem(r)
 
 def getProblems(
   query: Query
@@ -210,7 +216,54 @@ def getProblems(
     )]
   return res
 
-def updateClassifications(results, problemProps):
+def getClassifiedProblemObjs(
+  query: Query
+):
+  res = getProblems(query)
+  return [mapToClassifiedProblem(r) for r in res]
+
+def insertBatchClassifyTrace(
+  cursor,
+  problemProps,
+  problemCount
+):
+   cur.execute("""
+      INSERT INTO batch_classifications (
+        active_degree,
+        passive_degree,
+        label_count,
+        actives_all_same,
+        passives_all_same,
+
+        is_tree,
+        is_cycle,
+        is_path,
+        is_directed_or_rooted,
+        is_regular,
+
+        count
+      ) VALUES (
+        %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s,
+        %s
+      );""",
+      (
+        problemProps.activeDegree,
+        problemProps.passiveDegree,
+        problemProps.labelCount,
+        problemProps.activesAllSame,
+        problemProps.passivesAllSame,
+
+        problemProps.flags.isTree,
+        problemProps.flags.isCycle,
+        problemProps.flags.isPath,
+        problemProps.flags.isDirectedOrRooted,
+        problemProps.flags.isRegular,
+
+        problemCount
+      )
+    )
+def updateClassifications(results, problemProps = None):
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cur.execute("SELECT * FROM sources;")
@@ -259,42 +312,14 @@ def updateClassifications(results, problemProps):
       sourcesMap[p.papers.getDLBSource()]
     ) for p in results]
   )
-  cur.execute("""
-    INSERT INTO batch_classifications (
-      active_degree,
-      passive_degree,
-      label_count,
-      actives_all_same,
-      passives_all_same,
 
-      is_tree,
-      is_cycle,
-      is_path,
-      is_directed_or_rooted,
-      is_regular,
-
-      count
-    ) VALUES (
-      %s, %s, %s, %s, %s,
-      %s, %s, %s, %s, %s,
-      %s
-    );""",
-    (
-      problemProps.activeDegree,
-      problemProps.passiveDegree,
-      problemProps.labelCount,
-      problemProps.activesAllSame,
-      problemProps.passivesAllSame,
-
-      problemProps.flags.isTree,
-      problemProps.flags.isCycle,
-      problemProps.flags.isPath,
-      problemProps.flags.isDirectedOrRooted,
-      problemProps.flags.isRegular,
-
+  if problemProps is not None:
+    insertBatchClassifyTrace(
+      cur,
+      problemProps,
       len(results)
     )
-  )
+
   conn.commit()
   cur.close()
   conn.close()

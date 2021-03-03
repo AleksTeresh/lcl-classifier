@@ -48,10 +48,6 @@ def classifyAndStore(problems: List[GenericProblem], props: ProblemProps):
 def batchReclassify(classifiedProblems):
   return [classify(x.toProblem(), x.toResponse()) for x in tqdm(classifiedProblems)]
 
-def reclassifyAndStore(classifiedProblemsDicts):
-  objs = [
-    ClassifiedProblem(**x) for x in classifiedProblemsDicts
-  ]
-  
-  results = batchReclassify(objs)
+def reclassifyAndStore(classifiedProblems):
+  results = batchReclassify(classifiedProblems)
   updateClassifications(results)

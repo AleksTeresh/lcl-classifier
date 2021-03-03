@@ -72,7 +72,7 @@ ps = generate(
 psWithIds = storeProblemsAndGetWithIds(ps, props)
 classifyAndStore(psWithIds, props)
 
-# # classifiedProblems = getProblems(query)
+# # classifiedProblems = getClassifiedProblemObjs(query)
 # # reclassifyAndStore(classifiedProblems)
 
 res = getProblems(query)

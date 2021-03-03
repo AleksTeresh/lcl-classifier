@@ -63,7 +63,7 @@ def batchClassify(ps: List[GenericProblem]):
 
 def classify(
   p: GenericProblem,
-  context: ClassifyContext = ClassifyContext()
+  context: ClassifyContext
 ):
   if context.tlpPreclassified:
     return GenericResponse(p)

@@ -1,21 +1,14 @@
-from enum import Enum
 from problem import GenericProblem
 from response import GenericResponse, Sources
 from complexity import complexities
 from complexity import *
+from classifier_types import *
 from classify_context import ClassifyContext
 from typing import List, Dict
 from bindings.cp_binding import classify as cpClassify
 from bindings.rt_binding import classify as rtClassify
 from bindings.tlp_binding import classify as tlpClassify
 from bindings.brt_binding import classify as brtClassify
-
-class Classifier(Enum):
-  CP = 'cp'
-  BRT = 'brt'
-  RT = 'rt'
-  TLP = 'tlp'
-  RE = 're'
 
 def getUpperBound(
   responses: Dict[str, GenericResponse],
@@ -166,10 +159,10 @@ def classify(
     cpResult.solvableCount,
     cpResult.unsolvableCount,
     papers = Sources(
-      rubSource,
-      rlbSource,
-      dubSource,
-      dlbSource
+      context.sources[rubSource],
+      context.sources[rlbSource],
+      context.sources[dubSource],
+      context.sources[dlbSource]
     )
   )
 

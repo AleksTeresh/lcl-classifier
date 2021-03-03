@@ -8,8 +8,7 @@ CREATE TABLE sources (
 INSERT INTO sources (short_name, name, urls)
 VALUES (
   'cp',
-  'Distributed graph problems through
-an automata-theoretic lens',
+  'Distributed graph problems through an automata-theoretic lens',
   '{"https://arxiv.org/abs/2002.07659", "https://github.com/AleksTeresh/cyclepath-classifier"}'
 );
 
