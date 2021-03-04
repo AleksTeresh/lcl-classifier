@@ -47,7 +47,9 @@ def classify(
         randUpperBound = CONST
       else:
         detUpperBound = ITERATED_LOG
+        detLowerBound = ITERATED_LOG
         randUpperBound = ITERATED_LOG
+        randLowerBound = ITERATED_LOG
     else:
       detUpperBound = LOG
       detLowerBound = LOG
