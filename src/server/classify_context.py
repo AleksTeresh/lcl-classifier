@@ -13,7 +13,7 @@ class ClassifyContext:
     self.sources = {
       Classifier.CP: Source(
         'cp',
-        'Distributed graph problems through an automata-theoretic lens',
+        'Automata-theoretic lens paper',
         ["https://arxiv.org/abs/2002.07659", "https://github.com/AleksTeresh/cyclepath-classifier"]
       ),
       Classifier.BRT: Source(

@@ -8,14 +8,14 @@ CREATE TABLE sources (
 INSERT INTO sources (short_name, name, urls)
 VALUES (
   'cp',
-  'Distributed graph problems through an automata-theoretic lens',
+  'Automata-theoretic lens paper',
   '{"https://arxiv.org/abs/2002.07659", "https://github.com/AleksTeresh/cyclepath-classifier"}'
 );
 
 INSERT INTO sources (short_name, name, urls)
 VALUES (
   'brt',
-  'Binary rooted tree classifier (database)',
+  'Binary rooted tree classifier (dataset)',
   '{"https://github.com/AleksTeresh/tree-classifications"}'
 );
 
