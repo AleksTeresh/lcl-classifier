@@ -80,3 +80,5 @@ export interface Query {
   includeIfConfigHasAllOf: string[]
   includeIfConfigHasSomeOf: string[]
 }
+
+export type GraphType = 'tree' | 'cycle' | 'path'
