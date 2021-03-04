@@ -223,7 +223,7 @@ def getClassifiedProblemObjs(
   return [mapToClassifiedProblem(r) for r in res]
 
 def insertBatchClassifyTrace(
-  cursor,
+  cur,
   problemProps,
   problemCount
 ):
