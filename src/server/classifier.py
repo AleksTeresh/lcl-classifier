@@ -70,20 +70,28 @@ def propagateBounds(response: GenericResponse):
   if response.randUpperBound != LOGLOG:
     response.detUpperBound = response.randUpperBound
     response.papers.detUpperBoundSource = response.papers.randUpperBoundSource
-  else:
-    response.detUpperBound = complexities[min(
-      complexities.index(response.detUpperBound),
-      complexities.index(LOG)
-    )]
+  elif (
+    complexities.index(LOG) <
+    complexities.index(response.detUpperBound)
+  ):
+    response.detUpperBound = LOG
+    # source of detUpperBound is still in this case
+    # dictated by randUpperBound
+    response.papers.detUpperBoundSource = response.papers.randUpperBoundSource
+
   # propagate rand lower
   if response.detLowerBound != LOG:
     response.randLowerBound = response.detLowerBound
     response.papers.randLowerBoundSource = response.papers.detLowerBoundSource
-  else:
-    response.randLowerBound = complexities[max(
-      complexities.index(response.randLowerBound),
-      complexities.index(LOGLOG)
-    )]
+  elif (
+    complexities.index(LOGLOG) >
+    complexities.index(response.randLowerBound)
+  ):
+    response.randLowerBound = LOGLOG
+    # source of randLowerBoundSource is still in this case
+    # dictated by detLowerBoundSource
+    response.papers.randLowerBoundSource = response.papers.detLowerBoundSource
+  
   return response
 
 def postprocess(response: GenericResponse):
