@@ -163,7 +163,37 @@ def getProblems(
     is_cycle = %s AND
     is_path = %s AND
     is_directed_or_rooted = %s AND
-    is_regular = %s;
+    is_regular = %s AND
+    
+    (
+      %s = false OR
+      (
+        rand_upper_bound = '(n)' AND
+        rand_lower_bound = '(1)'
+      )
+    ) AND
+    
+    (
+      %s = false OR
+      (
+        rand_upper_bound != rand_lower_bound
+      )
+    ) AND
+
+    (
+      %s = false OR
+      (
+        det_upper_bound = '(n)' AND
+        det_lower_bound = '(1)'
+      )
+    ) AND
+    
+    (
+      %s = false OR
+      (
+        det_upper_bound != det_lower_bound
+      )
+    );
   """, (
     query.props.activeDegree,
     query.props.passiveDegree,
@@ -194,7 +224,12 @@ def getProblems(
     query.props.flags.isCycle,
     query.props.flags.isPath,
     query.props.flags.isDirectedOrRooted,
-    query.props.flags.isRegular
+    query.props.flags.isRegular,
+
+    query.excludeInclude.completelyRandUnclassifedOnly,
+    query.excludeInclude.partiallyRandUnclassifiedOnly,
+    query.excludeInclude.completelyDetUnclassifedOnly,
+    query.excludeInclude.partiallyDetUnclassifiedOnly
   ))
   res = cur.fetchall()
   res = humps.camelize(res)

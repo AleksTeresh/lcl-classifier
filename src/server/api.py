@@ -77,6 +77,10 @@ query_args = {
 
   "largest_problem_only": fields.Bool(missing=False),
   "smallest_problem_only": fields.Bool(missing=False),
+  "completely_rand_unclassified_only": fields.Bool(missing=False),
+  "partially_rand_unclassified_only": fields.Bool(missing=False),
+  "completely_det_unclassified_only": fields.Bool(missing=False),
+  "partially_det_unclassified_only": fields.Bool(missing=False),
 
   "active_degree": fields.Int(required=True),
   "passive_degree": fields.Int(required=True),
@@ -118,6 +122,10 @@ def query(args):
       includeIfConfigHasSomeOf=args['include_if_config_has_some_of'],
       returnLargestProblemOnly=args['largest_problem_only'],
       returnSmallestProblemOnly=args['smallest_problem_only'],
+      completelyRandUnclassifedOnly=args['completely_rand_unclassified_only'],
+      partiallyRandUnclassifiedOnly=args['partially_rand_unclassified_only'],
+      completelyDetUnclassifedOnly=args['completely_det_unclassified_only'],
+      partiallyDetUnclassifiedOnly=args['partially_det_unclassified_only'],
     )
   )
 

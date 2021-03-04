@@ -11,6 +11,10 @@ class QueryExcludeInclude:
     includeIfConfigHasSomeOf = [],
     returnLargestProblemOnly = False,
     returnSmallestProblemOnly = False,
+    completelyRandUnclassifedOnly = False,
+    partiallyRandUnclassifiedOnly = False,
+    completelyDetUnclassifedOnly = False,
+    partiallyDetUnclassifiedOnly = False
   ):
     self.excludeIfConfigHasAllOf = tuple(parseAndNormalize(excludeIfConfigHasAllOf))
     self.excludeIfConfigHasSomeOf = tuple(parseAndNormalize(excludeIfConfigHasSomeOf))
@@ -19,6 +23,10 @@ class QueryExcludeInclude:
 
     self.returnLargestProblemOnly = returnLargestProblemOnly
     self.returnSmallestProblemOnly = returnSmallestProblemOnly
+    self.completelyRandUnclassifedOnly = completelyRandUnclassifedOnly
+    self.partiallyRandUnclassifiedOnly = partiallyRandUnclassifiedOnly
+    self.completelyDetUnclassifedOnly = completelyDetUnclassifedOnly
+    self.partiallyDetUnclassifiedOnly = partiallyDetUnclassifiedOnly
 
 class Bounds:
   def __init__(

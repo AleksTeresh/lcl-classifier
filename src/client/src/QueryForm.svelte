@@ -43,6 +43,10 @@
 
   let largestProblemOnly = false
   let smallestProblemOnly = false
+  let completelyRandUnclassifiedOnly = false
+  let partiallyRandUnclassifiedOnly = false
+  let completelyDetUnclassifiedOnly = false
+  let partiallyDetUnclassifiedOnly = false
   let excludeIfConfigHasAllOf = ""
   let excludeIfConfigHasSomeOf = ""
   let includeIfConfigHasAllOf = ""
@@ -79,6 +83,10 @@
 
       largestProblemOnly,
       smallestProblemOnly,
+      completelyRandUnclassifiedOnly,
+      partiallyRandUnclassifiedOnly,
+      completelyDetUnclassifiedOnly,
+      partiallyDetUnclassifiedOnly,
       excludeIfConfigHasAllOf: excludeIfConfigHasAllOf.split('\n'),
       excludeIfConfigHasSomeOf: excludeIfConfigHasSomeOf.split('\n'),
       includeIfConfigHasAllOf: includeIfConfigHasAllOf.split('\n'),
@@ -148,6 +156,23 @@
       open={showComplexity}
       label={'Complexity:'}>
       <div class="inline-radio-wrapper">
+        <label>
+          <input type=checkbox bind:checked={completelyRandUnclassifiedOnly}>
+          Only completely unclassified (in rand. setting)
+        </label>
+        <label>
+          <input type=checkbox bind:checked={partiallyRandUnclassifiedOnly}>
+          Only partially unclassified (in rand. setting)
+        </label>
+        <label>
+          <input type=checkbox bind:checked={completelyDetUnclassifiedOnly}>
+          Only completely unclassified (in det. setting)
+        </label>
+        <label>
+          <input type=checkbox bind:checked={partiallyDetUnclassifiedOnly}>
+          Only partially unclassified (in det. setting)
+        </label>
+
         <p class="boldenned">Random lower bound</p>
         {#each Object.entries(Complexity) as [_, value]}
           <label class="inline-radio">
@@ -207,7 +232,7 @@
         <input type=checkbox bind:checked={smallestProblemOnly}>
         Return smallest problem only
       </label>
-    
+
       <label for="exclude-if-all">Exclude if configs have <strong>all</strong> of</label>
       <textarea id="exclude-if-all" bind:value={excludeIfConfigHasAllOf}></textarea>
     

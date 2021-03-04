@@ -71,6 +71,10 @@ export interface Query {
 
   largestProblemOnly: boolean,
   smallestProblemOnly: boolean,
+  completelyRandUnclassifiedOnly: boolean,
+  partiallyRandUnclassifiedOnly: boolean,
+  completelyDetUnclassifiedOnly: boolean,
+  partiallyDetUnclassifiedOnly: boolean,
   excludeIfConfigHasAllOf: string[]
   excludeIfConfigHasSomeOf: string[]
   includeIfConfigHasAllOf: string[]
