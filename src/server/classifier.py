@@ -51,19 +51,25 @@ def removeUnknowns(response: GenericResponse):
 
 def propagateBounds(response: GenericResponse):
   # propagate rand upper
-  response.randUpperBound = complexities[min(
-    complexities.index(response.randUpperBound),
-    complexities.index(response.detUpperBound)
-  )]
+  if (
+    complexities.index(response.detUpperBound) <
+    complexities.index(response.randUpperBound)
+  ):
+    response.randUpperBound = response.detUpperBound
+    response.papers.randUpperBoundSource = response.papers.detUpperBoundSource
+
   # propagate det lower
-  response.detLowerBound = complexities[max(
-    complexities.index(response.randLowerBound),
+  if (
+    complexities.index(response.randLowerBound) >
     complexities.index(response.detLowerBound)
-  )]
+  ):
+    response.detLowerBound = response.randLowerBound
+    response.papers.detLowerBoundSource = response.papers.randLowerBoundSource
 
   # propagate det upper
   if response.randUpperBound != LOGLOG:
     response.detUpperBound = response.randUpperBound
+    response.papers.detUpperBoundSource = response.papers.randUpperBoundSource
   else:
     response.detUpperBound = complexities[min(
       complexities.index(response.detUpperBound),
@@ -72,6 +78,7 @@ def propagateBounds(response: GenericResponse):
   # propagate rand lower
   if response.detLowerBound != LOG:
     response.randLowerBound = response.detLowerBound
+    response.papers.randLowerBoundSource = response.papers.detLowerBoundSource
   else:
     response.randLowerBound = complexities[max(
       complexities.index(response.randLowerBound),
