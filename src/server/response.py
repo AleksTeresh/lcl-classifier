@@ -53,11 +53,20 @@ class Sources:
 
   def dict(self):
     return {
-      "randUpperBoundSource": self.randUpperBoundSource.__dict__,
-      "randLowerBoundSource": self.randLowerBoundSource.__dict__,
-      "detUpperBoundSource": self.detUpperBoundSource.__dict__,
+      "randUpperBoundSource": self.randUpperBoundSource.__dict__
+      if self.randUpperBoundSource is not None
+      else None,
+      "randLowerBoundSource": self.randLowerBoundSource.__dict__
+      if self.randLowerBoundSource is not None
+      else None,
+      "detUpperBoundSource": self.detUpperBoundSource.__dict__
+      if self.detUpperBoundSource is not None
+      else None,
       "detLowerBoundSource": self.detLowerBoundSource.__dict__
+      if self.detLowerBoundSource is not None
+      else None
     }
+
 
 class GenericResponse:
   def __init__(

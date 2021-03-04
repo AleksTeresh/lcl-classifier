@@ -84,7 +84,7 @@ def getProblem(problem: GenericProblem):
 
 def getClassifiedProblemObj(problem: GenericProblem):
   r = getProblem(problem)
-  return mapToClassifiedProblem(r)
+  return mapToClassifiedProblem(r) if r is not None else None
 
 def getProblems(
   query: Query

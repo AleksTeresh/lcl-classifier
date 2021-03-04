@@ -8,7 +8,7 @@ from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
 from classifier import classify
 from statistics import compute as computeStats
-from db import getProblem, getProblems, getBatchClassifications
+from db import getClassifiedProblemObj, getClassifiedProblemObjs, getBatchClassifications
 from complexity import *
 
 app = flask.Flask(__name__)
@@ -42,9 +42,10 @@ def problem(args):
     )
   )
 
-  res = getProblem(p)
+  res = getClassifiedProblemObj(p)
   if res is not None:
-    return jsonify(res)
+    res = res.toResponse()
+    return jsonify(res.dict())
   else:
     res = classify(p)
     return jsonify(res.dict())
@@ -120,12 +121,15 @@ def query(args):
     )
   )
 
-  problems = getProblems(query)
+  problems = getClassifiedProblemObjs(query)
   stats = computeStats(problems)
   response = {
     'problems': (None
       if args['fetch_stats_only']
-      else problems),
+      else [{
+        **p.toProblem().dict(),
+        **p.toResponse().dict()
+      } for p in problems]),
     'stats': stats.dict()
   }
   return jsonify(response)

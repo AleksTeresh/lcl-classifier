@@ -125,7 +125,10 @@ class GenericProblem:
     return tuple(variableDict.values())
 
   def dict(self):
-    return self.__dict__
+    return {
+      **self.__dict__,
+      'flags': self.flags.dict()
+    }
 
   def __repr__(self):
     return self.__dict__.__repr__()

@@ -56,10 +56,10 @@ def compute(data):
     }
 
     for p in tqdm(data):
-      randLowerBound = p["randLowerBound"]
-      randUpperBound = p["randUpperBound"]
-      detLowerBound = p["detLowerBound"]
-      detUpperBound = p["detUpperBound"]
+      randLowerBound = p.randLowerBound
+      randUpperBound = p.randUpperBound
+      detLowerBound = p.detLowerBound
+      detUpperBound = p.detUpperBound
 
       cl = complexityMap[randLowerBound]
       cu = complexityMap[randUpperBound]

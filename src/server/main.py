@@ -7,7 +7,7 @@ from complexity import *
 from statistics import compute as computeStats, prettyPrint
 from query import Query, Bounds, QueryExcludeInclude
 from batch_classify import classifyAndStore, reclassifyAndStore
-from db import storeProblemsAndGetWithIds, getProblems, getProblem
+from db import storeProblemsAndGetWithIds, getClassifiedProblemObjs, getProblem
 
 # REtorProblem1 = GenericProblem(
 #   activeConstraints = ['M U U U', 'P P P P'],
@@ -75,6 +75,6 @@ classifyAndStore(psWithIds, props)
 # # classifiedProblems = getClassifiedProblemObjs(query)
 # # reclassifyAndStore(classifiedProblems)
 
-res = getProblems(query)
+res = getClassifiedProblemObjs(query)
 stats = computeStats(res)
 prettyPrint(stats)

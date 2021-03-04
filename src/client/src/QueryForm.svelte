@@ -13,14 +13,14 @@
     stats: QueryStatistics
   }
 
-  function getGraphType(problem: any) {
-    if (problem.isTree) {
+  function getGraphType(problem: ClassifiedProblem) {
+    if (problem.flags.isTree) {
       return 'Tree'
     }
-    if (problem.isCycle) {
+    if (problem.flags.isCycle) {
       return 'Cycle'
     }
-    if (problem.isPath) {
+    if (problem.flags.isPath) {
       return 'Path'
     }
   }

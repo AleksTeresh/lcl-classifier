@@ -17,6 +17,15 @@ export interface Problem {
 }
 
 export interface ClassifiedProblem extends Problem {
+  activeConstraints: string[],
+  passiveConstraints: string[],
+  leafConstraints?: string[],
+  rootConstraints?: string[],
+  flags: {
+    isTree: boolean,
+    isCycle: boolean,
+    isPath: boolean
+  }
   detLowerBound: Complexity,
   detUpperBound: Complexity,
   randLowerBound: Complexity,
