@@ -127,7 +127,7 @@ def query(args):
     'problems': (None
       if args['fetch_stats_only']
       else [{
-        **p.toProblem().dict(),
+        **p.toUnparsedProblem().dict(),
         **p.toResponse().dict()
       } for p in problems]),
     'stats': stats.dict()

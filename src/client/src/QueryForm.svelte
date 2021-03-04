@@ -247,8 +247,14 @@
         <VirtualList height="calc(100vh - 5em)" items={response.problems} let:item>
           <div class="problem-wrapper response">
             <p class="response-boldenned">Problem:</p>
-            <p>Active config: {item.activeConstraints}</p>
-            <p>Passive config: {item.passiveConstraints}</p>
+            <p>Active config:</p>
+            {#each item.activeConstraints as c}
+              <div>{c}</div>
+            {/each}
+            <p>Passive config:</p>
+            {#each item.passiveConstraints as c}
+              <div>{c}</div>
+            {/each}
             <p>Graph: {getGraphType(item)}</p>
             {#if item.rootConstraints.length !== 0}
               <p>Root config: {item.rootConstraints}</p>

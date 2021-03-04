@@ -1,4 +1,5 @@
 from typing import List
+from parser import unparseConfigs
 from problem import GenericProblem, ProblemFlags
 from response import GenericResponse
 from util import flatten
@@ -61,6 +62,26 @@ class ClassifiedProblem:
         isRegular=self.isRegular,
       )
       return p
+
+  def toUnparsedProblem(self):
+    p = self.toProblem()
+    p.activeConstraints = unparseConfigs(
+      p.activeConstraints,
+      p.flags.isDirectedOrRooted
+    )
+    p.passiveConstraints = unparseConfigs(
+      p.passiveConstraints,
+      p.flags.isDirectedOrRooted
+    )
+    p.rootConstraints = unparseConfigs(
+      p.rootConstraints,
+      p.flags.isDirectedOrRooted
+    )
+    p.leafConstraints = unparseConfigs(
+      p.leafConstraints,
+      p.flags.isDirectedOrRooted
+    )
+    return p
 
   def toResponse(self) -> GenericResponse:
     return GenericResponse(

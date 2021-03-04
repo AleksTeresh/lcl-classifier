@@ -25,3 +25,11 @@ def parseConfig(config):
 def parseConfigs(configs):
   configs = [x for x in configs if x.strip() != '']
   return [parseConfig(config) for config in configs]
+
+def unparseConfig(config, isDirectedOrRooted):
+  if isDirectedOrRooted and len(config) > 1:
+    config = config[0] + ':' + config[1:]
+  return " ".join(config)
+
+def unparseConfigs(configs, isDirectedOrRooted):
+  return [unparseConfig(config, isDirectedOrRooted) for config in configs]
