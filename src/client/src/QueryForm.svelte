@@ -3,6 +3,7 @@
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
   import Statistics from './Statistics.svelte'
+  import Classification from './Classification.svelte'
   import Collapsible from './Collapsible.svelte'
   import { getQueryResult } from './api'
   import type { Query, ClassifiedProblem, QueryStatistics } from './types'
@@ -263,10 +264,8 @@
               <p>Leaf config: {item.leafConstraints}</p>
             {/if}
             <p class="response-boldenned">Classification:</p>
-            <p>Det. lower bound: {item.detLowerBound}</p>
-            <p>Det. upper bound: {item.detUpperBound}</p>
-            <p>Rand. lower bound: {item.randLowerBound}</p>
-            <p>Rand. upper bound: {item.randUpperBound}</p>
+            <Classification
+              response={item} />
           </div>
         </VirtualList>
       </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Stretch } from 'svelte-loading-spinners'
   import Collapsible from './Collapsible.svelte'
-  import ClassificationSource from './ClassificationSource.svelte'
+  import Classification from './Classification.svelte'
 	import { getProblem } from './api'
 	import type { Problem } from './types'
 
@@ -88,26 +88,8 @@
     {#if !loading && response !== undefined}
       <div>
         <h3>Classification:</h3>
-        <p>
-          Det. lower bound: {response.detLowerBound}
-          <ClassificationSource
-            source={response.papers.detLowerBoundSource} />
-        </p>
-        <p>
-          Det. upper bound: {response.detUpperBound}
-          <ClassificationSource
-            source={response.papers.detUpperBoundSource} />
-        </p>
-        <p>
-          Rand. lower bound: {response.randLowerBound}
-          <ClassificationSource
-            source={response.papers.randLowerBoundSource} />
-        </p>
-        <p>
-          Rand. upper bound: {response.randUpperBound}
-          <ClassificationSource
-            source={response.papers.randUpperBoundSource} />
-        </p>
+        <Classification
+          response={response} />
       </div>
     {/if}
   </div>
