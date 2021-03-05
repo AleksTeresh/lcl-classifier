@@ -388,8 +388,42 @@ does not have any restrictions on its own output labels. However, a leaf's paren
 (and the leaf is a child of $y$). In this case, the restrictions still
 apply to the leaf node.
 
+As an example of an interesting problem, we will consiider
+\emph{3-coloring in binary trees}. In the described paradigm,
+the problem can be represented as following:
+$$212 213 313 121 123 323 131 132 232$$.
+It is easy to see why the se tof configurations represent
+3-coloring problem. Indeed, a node $x$ can be of any of the 3
+colors. However, if a node $x$ has color $c$, none of its
+children is allowed to have $c$ as its output color. On the
+other hand, children can be of 2 different colors or of the same
+color as long as this color is not $c$.
 
+As a second example, consider \emph{maximal independent set in
+binary trees}. Its representaion in the described formalism would be
+as following:
+$$a1a a1b b1b bab bb1 1b1$$.
+Here label $1$ indicates belonging to the independent set $I$, label $b$
+indicates the fact that the node has at least one child which belongs to
+$I$, and $a$ indicates that the node's parent belongs to $I$.
+Notice that nodes wth label $1$ are not allowed to have children with
+label $1$ -- this ensures independence of the independent set $I$.
+Besides, nodes with label $a$ or $b$ must have a parent or at least one
+child respectively that belongs to $I$. This ensures maximality of the
+independent set.
+Therefore,
+each node is either part of the independent set, has a child that belongs
+to $I$ or a parent that belongs to $I$. All this together makes sure
+that the set $I$ is independent and maximal.
 
+Thus, despite its simplicity, the representation language is very
+powerful and can represent almost all LCL problems in rooted trees, with
+the exceptions of problems that in one way or another emphasise
+nodes near leafs and/or roots~\cite{Balliu2021}. Furthermore, the
+practicality of the package -- especially the fact that most of the
+problems interesting for the purpose of the thesis can be classified
+in a matter of several milliseconds -- makes it a perfect candidate
+to be used as one of the meta-algorithms in our solution.
 
 \section{Summary of decidablity of LCL on trees}
 
