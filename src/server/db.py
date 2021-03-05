@@ -454,3 +454,14 @@ def getBatchClassifications():
   conn.close()
 
   return res
+
+def getProblemCount():
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("SELECT COUNT(*) as count FROM problems;")
+  res = cur.fetchone()
+  cur.close()
+  conn.close()
+
+  return res['count']
+
