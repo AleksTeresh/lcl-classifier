@@ -1,4 +1,4 @@
-import type { Problem, Query } from "./types"
+import type { Problem, Query } from './types'
 import { urlWithParams, keysToSnake, handleResponse } from './apiHelpers'
 
 // PRODUCTION variable needs to be in .svelte file

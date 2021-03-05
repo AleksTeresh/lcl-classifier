@@ -4,40 +4,40 @@ export enum Complexity {
   LogLog = '(loglog n)',
   Log = '(log n)',
   Global = '(n)',
-  Unsolvable =  'unsolvable'
+  Unsolvable = 'unsolvable',
 }
 export interface Problem {
-  activeConstraints: string[],
-  passiveConstraints: string[],
-  leafConstraints?: string[],
-  rootConstraints?: string[],
-  isTree: boolean,
-  isCycle: boolean,
-  isPath: boolean,
+  activeConstraints: string[]
+  passiveConstraints: string[]
+  leafConstraints?: string[]
+  rootConstraints?: string[]
+  isTree: boolean
+  isCycle: boolean
+  isPath: boolean
 }
 
 export interface ClassifiedProblem extends Problem {
-  activeConstraints: string[],
-  passiveConstraints: string[],
-  leafConstraints?: string[],
-  rootConstraints?: string[],
+  activeConstraints: string[]
+  passiveConstraints: string[]
+  leafConstraints?: string[]
+  rootConstraints?: string[]
   flags: {
-    isTree: boolean,
-    isCycle: boolean,
+    isTree: boolean
+    isCycle: boolean
     isPath: boolean
   }
-  detLowerBound: Complexity,
-  detUpperBound: Complexity,
-  randLowerBound: Complexity,
+  detLowerBound: Complexity
+  detUpperBound: Complexity
+  randLowerBound: Complexity
   randUpperBound: Complexity
 }
 
 interface StatisticsComplexityData {
-  randLowerBound: number,
-  detLowerBound: number,
-  randUpperBound: number,
-  detUpperBound: number,  
-  randSolvable: number,
+  randLowerBound: number
+  detLowerBound: number
+  randUpperBound: number
+  detUpperBound: number
+  randSolvable: number
   detSolvable: number
 }
 
@@ -52,29 +52,29 @@ export interface QueryStatistics {
 }
 
 export interface Query {
-  isTree: boolean,
-  isCycle: boolean,
-  isPath: boolean,
-  isDirectedOrRooted: boolean,
-  isRegular: boolean,
-  
-  randLowerBound: Complexity,
-  randUpperBound: Complexity,
-  detLowerBound: Complexity,
-  detUpperBound: Complexity,
-  
-  activeDegree: number,
-  passiveDegree: number,
-  labelCount: number,
-  activesAllSame: boolean,
-  passivesAllSame: boolean,
+  isTree: boolean
+  isCycle: boolean
+  isPath: boolean
+  isDirectedOrRooted: boolean
+  isRegular: boolean
 
-  largestProblemOnly: boolean,
-  smallestProblemOnly: boolean,
-  completelyRandUnclassifiedOnly: boolean,
-  partiallyRandUnclassifiedOnly: boolean,
-  completelyDetUnclassifiedOnly: boolean,
-  partiallyDetUnclassifiedOnly: boolean,
+  randLowerBound: Complexity
+  randUpperBound: Complexity
+  detLowerBound: Complexity
+  detUpperBound: Complexity
+
+  activeDegree: number
+  passiveDegree: number
+  labelCount: number
+  activesAllSame: boolean
+  passivesAllSame: boolean
+
+  largestProblemOnly: boolean
+  smallestProblemOnly: boolean
+  completelyRandUnclassifiedOnly: boolean
+  partiallyRandUnclassifiedOnly: boolean
+  completelyDetUnclassifiedOnly: boolean
+  partiallyDetUnclassifiedOnly: boolean
   excludeIfConfigHasAllOf: string[]
   excludeIfConfigHasSomeOf: string[]
   includeIfConfigHasAllOf: string[]

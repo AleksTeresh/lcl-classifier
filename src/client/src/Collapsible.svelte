@@ -1,28 +1,36 @@
 <script>
-  export let open;
+  export let open
   export let label
 </script>
 
-<p class="collapsible" class:openCollapsible={open} on:click={() => { open = !open }}>{label}</p>
+<p
+  class="collapsible"
+  class:openCollapsible={open}
+  on:click={() => {
+    open = !open
+  }}
+>
+  {label}
+</p>
 <div class="content" class:showContent={open}>
-  <slot></slot>
+  <slot />
 </div>
 
 <style>
   .collapsible {
     font-weight: bold;
-    border-bottom: 1px solid  rgb(184, 184, 184);
+    border-bottom: 1px solid rgb(184, 184, 184);
     cursor: pointer;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none;
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
   }
 
   .collapsible::after {
-    content: '\002B';
+    content: "\002B";
     float: right;
     margin-left: 5px;
   }

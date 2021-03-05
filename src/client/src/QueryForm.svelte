@@ -122,13 +122,13 @@
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
-      console.log('Here')
+      console.log("Here")
       let augmentedFormState = {
         ...formState,
         fetchStatsOnly: true,
       }
       augmentedFormState = loadStateFromUrl(augmentedFormState, FORM_PREFIX)
-      
+
       formState = augmentedFormState
       const { fetchStatsOnly } = augmentedFormState
       const query = formStateToQuery(formState, { fetchStatsOnly })
@@ -140,7 +140,7 @@
         alert("Error")
       } finally {
         loading = false
-      }     
+      }
     }
   })
 
