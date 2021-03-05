@@ -6,40 +6,81 @@
 	import { getProblem } from './api'
   import type { GraphType, Problem } from './types'
 
-	let activeConstraints = `A B
-    C C`
-	let passiveConstraints = `B B C
-    A A A
-    B B B
-    A A C
-    B C C`
-	let leafConstraints = undefined
-	let rootConstraints = undefined
+  function persistStateToUrl(
+    state: FormState,
+    prefix: string
+  ): void {
+    const params = new URLSearchParams(location.search)
+    Object.entries(state).forEach(([key, value]) => {
+      if (value) {
+        params.set(`${prefix}_${key}`, value)
+      }
+    })
+    window.location.search = params.toString()
+  }
 
-	let graphType: 'tree' | 'cycle' | 'path' = 'path'
+  function loadStateFromUrl(
+    initState: FormState,
+    prefix: string
+  ): FormState {
+    const newState = {...initState}
+    const params = new URLSearchParams(location.search)
+    Object.keys(initState)
+      .forEach((key) => {
+        const valueInUrl = params.get(`${prefix}_${key}`)
+        if (valueInUrl) {
+          newState[key] = valueInUrl
+        }
+      })
+    return newState
+  }
+
+  interface FormState {
+    activeConstraints: string,
+    passiveConstraints: string,
+    leafConstraints?: string,
+    rootConstraints?: string,
+    graphType: GraphType
+  }
+
+  const FORM_PREFIX = 'problem'
+
+  function formStateToProblem(
+    formState: FormState
+  ): Problem {
+    return {
+      activeConstraints: formState.activeConstraints.split('\n'),
+      passiveConstraints: formState.passiveConstraints.split('\n'),
+      leafConstraints: formState.leafConstraints?.split('\n'),
+      rootConstraints: formState.rootConstraints?.split('\n'),
+      isTree: formState.graphType === 'tree',
+      isCycle: formState.graphType === 'cycle',
+      isPath: formState.graphType === 'path',
+    }
+  }
+
+  let formState: FormState = {
+    activeConstraints: `A B
+    C C`,
+    passiveConstraints: `B B C
+      A A A
+      B B B
+      A A C
+      B C C`,
+    leafConstraints: undefined,
+    rootConstraints: undefined,
+    graphType: 'path'
+  }
+
   let response = undefined
   let loading = false
-
   let showLeafRootConfig = false
 
   onMount(async () => {
     if (!!window.location.search) {
-      const params = new URLSearchParams(location.search)
-      activeConstraints = params.get('problem_activeConstraints')
-      passiveConstraints = params.get('problem_passiveConstraints')
-      leafConstraints = params.get('problem_leafConstraints')
-      rootConstraints = params.get('problem_rootConstraints')
-      graphType = params.get('problem_graphType') as GraphType
+      formState = loadStateFromUrl(formState, FORM_PREFIX)
+      const problem = formStateToProblem(formState)
 
-      const problem: Problem = {
-        activeConstraints: activeConstraints.split('\n'),
-        passiveConstraints: passiveConstraints.split('\n'),
-        leafConstraints: leafConstraints?.split('\n'),
-        rootConstraints: rootConstraints?.split('\n'),
-        isTree: graphType === 'tree',
-        isCycle: graphType === 'cycle',
-        isPath: graphType === 'path',
-      }
       loading = true
       try {
         response = await getProblem(problem, PRODUCTION)
@@ -54,15 +95,7 @@
 
 	function handleProblemSubmit(e: any) {
 		e.preventDefault()
-    const params = new URLSearchParams(location.search)
-    params.set('problem_activeConstraints', activeConstraints)
-    params.set('problem_passiveConstraints', passiveConstraints)
-    if (leafConstraints)
-      params.set('problem_leafConstraints', leafConstraints)
-    if (rootConstraints)
-      params.set('problem_rootConstraints', rootConstraints)
-    params.set('problem_graphType', graphType)
-    window.location.search = params.toString()
+    persistStateToUrl(formState, FORM_PREFIX)
 	}
 </script>
 
@@ -70,21 +103,25 @@
   <form>
     <h2>Find a problem</h2>
     <label for="activeConfigs">Active configurations:</label>
-    <textarea id="activeConfigs" bind:value={activeConstraints}></textarea>
+    <textarea
+      id="activeConfigs"
+      bind:value={formState.activeConstraints} />
   
     <label for="activeConfigs">Passive configurations:</label>
-    <textarea id="passiveConfigs" bind:value={passiveConstraints}></textarea>
+    <textarea
+      id="passiveConfigs"
+      bind:value={formState.passiveConstraints} />
   
     <label>
-      <input type=radio bind:group={graphType} value="tree">
+      <input type=radio bind:group={formState.graphType} value="tree">
       Tree
     </label>
     <label>
-      <input type=radio bind:group={graphType} value="cycle">
+      <input type=radio bind:group={formState.graphType} value="cycle">
       Cycle
     </label>
     <label>
-      <input type=radio bind:group={graphType} value="path">
+      <input type=radio bind:group={formState.graphType} value="path">
       Path
     </label>
   
@@ -92,10 +129,14 @@
       open={showLeafRootConfig}
       label={"Leaf/Root constraints"}>
       <label for="leafConfig">Leaf constraints (optional):</label>
-      <textarea id="leafConfig" bind:value={leafConstraints}></textarea>
+      <textarea
+        id="leafConfig"
+        bind:value={formState.leafConstraints} />
   
       <label for="rootConfig">Root constraints (optional):</label>
-      <textarea id="rootConfig" bind:value={rootConstraints}></textarea>
+      <textarea
+        id="rootConfig"
+        bind:value={formState.rootConstraints} />
     </Collapsible>
     <button
       on:click={handleProblemSubmit}>
