@@ -374,7 +374,7 @@ of any LCL problem on binary trees. As an output, the program returns
 one of the above listed complexity classes. The program takes as input a
 number of allowed \emph{configurations}, each in the following format:\\*
 \mbox{(child's~output~label)(node's~own~output~label)(another~child's~output~label)}.
-For example $112 121$ means that if a node $x$ outputs 1 as its output label,
+For example $\{112~121\}$ means that if a node $x$ outputs 1 as its output label,
 its two children must have two different output labels: 1 and 2. If
 a node $x$ outputs 2 however, then both of its children must output 1.
 All the other combinations of output labels of any given node $x$ and
@@ -391,7 +391,7 @@ apply to the leaf node.
 As an example of an interesting problem, we will consiider
 \emph{3-coloring in binary trees}. In the described paradigm,
 the problem can be represented as following:
-$$212 213 313 121 123 323 131 132 232$$.
+$$\{212~213~313~121~123~323~131~132~232\}$$.
 It is easy to see why the se tof configurations represent
 3-coloring problem. Indeed, a node $x$ can be of any of the 3
 colors. However, if a node $x$ has color $c$, none of its
@@ -402,7 +402,7 @@ color as long as this color is not $c$.
 As a second example, consider \emph{maximal independent set in
 binary trees}. Its representaion in the described formalism would be
 as following:
-$$a1a a1b b1b bab bb1 1b1$$.
+$$\{a1a~a1b~b1b~bab~bb1~1b1\}$$.
 Here label $1$ indicates belonging to the independent set $I$, label $b$
 indicates the fact that the node has at least one child which belongs to
 $I$, and $a$ indicates that the node's parent belongs to $I$.
