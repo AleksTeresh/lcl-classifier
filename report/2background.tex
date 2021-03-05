@@ -603,9 +603,76 @@ requires finding such an algorithm, and then proving
 that $A$ always halts and that $A$ is indeed correct.
 To prove that a problem is undecidable is however less
 trivial. One of the common techniques is to show that
-the problem can be reduced to the Halting problem~\cite{Margenstern2000, Turing1937}. 
+the problem can be reduced to the Halting problem~\cite{Margenstern2000, Turing1937}.
 
-\section{Recent developments in automated classification of LCL probems}
+\section{Automatic synthesis and classification}
+
+\emph{Automatic classification}, broadly speaking, is a problem
+where objects of certain type that possible share some
+properties in common are required to be classified into
+several, often in-advance known categories automatically,
+that is, without or with minimal human supervision.
+Due to the recent successes in the field of machine learning,
+numerous automatic classification problems have been solved,
+or at least for many of the problems, significant
+progress have been made. In particular, automated classification
+of image, sound and text data
+based on deep neural networks -- one of the popular machine learning
+techniques that have had multiple breakthroughs in the recent years --
+had some significant results in the areas of medicine, biology,
+agriculture and many others~\cite{auto-class_Sharma2017,
+auto-class_Capizzi2015, auto-class_Ibrahim2018, auto-class_Colonna2016,
+auto-class_Winkler2017, auto-class_FabioDelFrate}.
+
+However, automatic classification is also possible beyond
+the physical media such as images, sounds, etc. For example,
+it is often useful to classify abstract problems, e.g.
+mathematical or computer science problems. Indeed,
+Fulton et al.~\cite{class_Fulton} have shown an approach
+for automatic classification of Sturm-Liouville
+problems~\cite{zettl2010sturm}.
+
+\emph{Automatic synthesis} is a problem of automatically
+synthesysing or finding
+a solution to a certain problem given a set of constraints and/or
+objectives. For example, automatic synthesis is fairly common
+in the field of electrical engineering, and is commonly
+applied when designing analog and digital circuits~\cite{synthesis_,
+synthesis_autoAx}. Furthermore, with the recent rise in popularity
+of quantum computing, the need has arisen for design of quantum
+circuits. Similar to the classical cases, synthesis of
+quantum circuits have become a popular research direction
+with numerous publications on the matter~\cite{synthesis_Khan2017,
+synthesis_Meuli2018, synthesis_Miller2003}.
+
+In general, algorithm synthesis in the context of theoretical
+computer science is undecidable. However, there are some
+research directions in the field of distributed computing and
+distributed algorithms, where some forms of automatic synthesis and/or
+automatic problem classifications have led to succesfull
+developments~\cite{Balliu2018, da-synthesis_Rybicki2015, da-synthesis_Klinkhamer2016,
+da-synthesis_Hirvonen2017, da-synthesis_Fathiyeh2015, da-synthesis_Dolev2016,
+Chang2017, Brandt2017, da-synthesis_Bloem2016}. Moreover,
+the notions of automatic synthesis and automatic classification are
+often interconnected in the context of distributed algorithms.
+To demonstrate this, we take an example of a common problem in
+a distributed computing: given a problem $\Pi$, we need to
+automatically determine its compelxity. Assignng a complexity
+class to the problem $\Pi$ can be viewed as classification
+problem here. On the other hand, proofs of the type that
+demonstrate that $\Pi$ belongs to a certain complexity class
+are often constructive in nature. That is, to show that a
+problem can be solved in the number of rounds $x$, we
+often need to develop and algorithm that solves the problem
+in the stated number of rounds. But developing such algorithm
+can potentially be automated, meaning that \emph{automatic
+algorithm synthesis} can be used. Thus, in the context of
+distributed computing, automatic algorithm
+synthesis and automatic problem classification are often two perspectives
+on the same thing: determinging whether a problem $\Pi$ can be solved
+in $x$ rounds or is it fundamentally more difficult.
+
+\section{Recent developments in automatic classification of LCL probems}
 
 At this point that the theoretical background has been given, it is
 useful to give a background to much more recent developments in the
