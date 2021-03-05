@@ -684,14 +684,14 @@ The algorithm for classifying the problems can be used in practice and has
 been implemented in Python programming language by Aalto's
 Distributed Algorithms research group~\cite{Tereshchenko2020}.
 
-Finally, a technique called round elimination was introduced in the context
+Furthermore, a technique called round elimination was introduced in the context
 of LCL problems by Brandt et al~\cite{Brandt2019}. It is a series of mechanical
 steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumption and the fact that
 $\Pi_0$ is solvable in constant time e.g.\ in $T$ rounds, $\Pi_1$ is guaranteed to be
 solvable in exactly $T - 1$ rounds. This single property has numerous implications.
 For example, if we apply the technique $k$ times and in the end obtain an LCL problem $\Pi_k$
 such that it is zero-round solvable, we know that the original problem $\Pi_0$ is
-exactly $k$-round solvable. Furthermore, round elimination is not only possible
+exactly $k$-round solvable. Moreover, round elimination is not only possible
 in theory but is also very much feasible in practive. Indeed, Olivetti has
 implemented a computer program that, given an LCL $\Pi_0$ solvable in $T$ rounds,
 it produces another LCL $\Pi_1$ solvable in $T - 1$ rounds. There even exists
@@ -699,6 +699,13 @@ a web interface for the program, and one can apply the technique and obtain
 its results within milliseconds. We will describe the technique and its implications
 in much more detail in the subsequent section.
 
-FIXME <Add section about yet-to-be-published manuscript by Jan, Alkoda, Sebastian, et al.
-which would give full rand and deterministic classification for problems on binary
-rooted trees.>
+Finally, very recently, Balliu et al.~\cite{Balliu2021} demonstrated
+that LCL problems on rooted trees are completely decidable.
+In particular, an LCL problem on rooted trees can be completely
+classified in both deterministic and randomised settings. The only
+exception to this completeness is deciding whether a given problem
+has round complexity of $\Theta(n)$ or it is unsolvable. In addition
+to the theoretical results in he manuscript, the authors also
+provide a freely available open souce software that is able to
+classify an LCL with relatively small number of labels in a matter
+of milliseconds~\cite{Studeny2021}.
