@@ -4,37 +4,11 @@
   import Collapsible from './Collapsible.svelte'
   import Classification from './Classification.svelte'
 	import { getProblem } from './api'
+  import {
+    persistStateToUrl,
+    loadStateFromUrl
+  } from './urlStore'
   import type { GraphType, Problem } from './types'
-
-  function persistStateToUrl(
-    state: FormState,
-    prefix: string
-  ): void {
-    const params = new URLSearchParams(location.search)
-    Object.entries(state).forEach(([key, value]) => {
-      if (value) {
-        params.set(`${prefix}_${key}`, value)
-      }
-    })
-    window.location.search = params.toString()
-  }
-
-  function loadStateFromUrl(
-    initState: FormState,
-    prefix: string
-  ): FormState {
-    const newState = {...initState}
-    const params = new URLSearchParams(location.search)
-    Object.keys(initState)
-      .forEach((key) => {
-        const valueInUrl = params.get(`${prefix}_${key}`)
-        if (valueInUrl) {
-          newState[key] = valueInUrl
-        }
-      })
-    return newState
-  }
-
   interface FormState {
     activeConstraints: string,
     passiveConstraints: string,
@@ -77,7 +51,7 @@
   let showLeafRootConfig = false
 
   onMount(async () => {
-    if (!!window.location.search) {
+    if (window.location.search.includes(`${FORM_PREFIX}_`)) {
       formState = loadStateFromUrl(formState, FORM_PREFIX)
       const problem = formStateToProblem(formState)
 
