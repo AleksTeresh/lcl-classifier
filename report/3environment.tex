@@ -347,8 +347,49 @@ techniques only for deterministic setting, which further limits the kinds of LCL
 can be classified using the techniques.
 
 \section{Classification of problems on rooted trees}
-FIXME
-<Section on yet-to-be published paper>
+
+This section will introduce a recent work by Balliu et al.~\cite{Balliu2021}
+and how it can be used to automatically classify LCL problems on rooted trees.
+In particular, we will concentrate on the practical implementation of the
+ideas presented in the manuscript. The computer program implementing some of the ideas presented in the
+publication was written in Python programming language by Studený and
+Tereshchenko~\cite{Studeny2021}. The program is limited to the case
+of binary trees only, although the theoremes presented in the manuscript
+generalize to rooted trees of any bounded degree.
+
+The manuscript demonstrate that for LCL problems on rooted trees,
+randomness does not help at all. That means that if a problem $\Pi$
+has the round complexity of $\Theta(X)$ in determiniistic setting, $\Pi$
+also has the round complexity of $\Theta(X)$ in randomised setting. The
+converse also holds, i.e. a randomised complexity of $\Theta(X)$ for some
+problem implies deterministic complexity of $\Theta(X)$ for the same problem.
+The aforementioned holds for any LCL problem where a graph family is
+a rooted tree. Moreover, the manuscript also shows that any such LCL will
+necessarily fall into one of the four complexity classes (if it is solvable at all). The complexity classes are $O(1)$, $\Theta(\log* n)$, $\Theta(\log n)$
+and $\Omega(n)$. In particual, the complexity class of $\Theta(\log \log n)$
+is non-existent for LCL problems of this graph family.
+
+In turn, the developed software provides a simple way to ask for a complexity
+of any LCL problem on binary trees. As an output, the program returns
+one of the above listed complexity classes. The program takes as input a
+number of allowed \emph{configurations}, each in the following format:\\*
+\mbox{(child's~output~label)(node's~own~output~label)(another~child's~output~label)}.
+For example $112 121$ means that if a node $x$ outputs 1 as its output label,
+its two children must have two different output labels: 1 and 2. If
+a node $x$ outputs 2 however, then both of its children must output 1.
+All the other combinations of output labels of any given node $x$ and
+its children -- referred from now on simply as configurations --
+are forbidden. All other output labels except for 1 and 2 are also
+forbidden. Finally, it is worth mentioning that, similar to previous
+meta-algorithms, we do not care about node's outputs if a node is a leaf,
+a root, or has only one child. In other words, if a node $x$ has less than
+2 children or is a root, it
+does not have any restrictions on its own output labels. However, a leaf's parent $y$ might have restrictions on possible output labels of its children
+(and the leaf is a child of $y$). In this case, the restrictions still
+apply to the leaf node.
+
+
+
 
 \section{Summary of decidablity of LCL on trees}
 
