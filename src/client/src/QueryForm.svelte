@@ -126,7 +126,7 @@
       const r = await getTotalProblemCount(PRODUCTION)
       problemCount = r.problemCount
     } catch (e) {
-      alert('Error')
+      alert(e.message)
     } finally {
       loading = false
     }
@@ -146,7 +146,7 @@
       try {
         response = await getQueryResult(query, PRODUCTION)
       } catch (e) {
-        alert('Error')
+        alert(e.message)
       } finally {
         loading = false
       }

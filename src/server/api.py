@@ -154,6 +154,19 @@ def problemCount():
     "problemCount": problemCount
   })
 
+@app.errorhandler(Exception)
+def handle_exception(e):
+    args = e.args
+    if len(args) < 2:
+      return jsonify({
+        'error': 'Something went wrong'
+      }), 500
+
+    if args[0] == 'problem':
+      return jsonify({
+        'error': args[1]
+      }), 400
+
 @app.errorhandler(404)
 def page_not_found(e):
     return "<h1>404</h1><p>The resource could not be found.</p>", 404

@@ -53,9 +53,8 @@
       loading = true
       try {
         response = await getProblem(problem, PRODUCTION)
-        console.log(response)
       } catch (e) {
-        alert("Error")
+        alert(e.message)
       } finally {
         loading = false
       }
