@@ -179,6 +179,8 @@
     <h2>Search among classified problems</h2>
 
     <p>Total number of problems in the database: {problemCount}</p>
+    <p>All of the data is also available at
+      <a href="https://zenodo.org/record/4587681">Zenodo</a></p>
 
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
