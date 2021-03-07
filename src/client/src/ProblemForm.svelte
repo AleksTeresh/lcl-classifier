@@ -70,7 +70,7 @@
 
 <div class="form-wrapper">
   <form>
-    <h2>Find a problem</h2>
+    <h2>Classify a problem</h2>
     <label for="activeConfigs">Active configurations:</label>
     <textarea id="activeConfigs" bind:value={formState.activeConstraints} />
 

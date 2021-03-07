@@ -167,7 +167,7 @@
 
 <div class="form-wrapper">
   <form>
-    <h2>Execute a query</h2>
+    <h2>Search among classified problems</h2>
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
     <input
