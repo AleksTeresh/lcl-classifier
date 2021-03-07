@@ -7,7 +7,6 @@ from config_util import eachConstrIsHomogeneous
 from db_data_converter import mapToClassifiedProblem
 from query import Query
 
-
 def getConnection():
   conn = psycopg2.connect(
     host=(os.environ['POSTGRES_HOST']

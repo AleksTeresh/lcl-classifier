@@ -1,20 +1,20 @@
 <script lang="ts">
-  import "./response.css"
-  import { onMount } from "svelte"
-  import { Stretch } from "svelte-loading-spinners"
-  import VirtualList from "@sveltejs/svelte-virtual-list"
-  import Statistics from "./Statistics.svelte"
-  import Classification from "./Classification.svelte"
-  import Collapsible from "./Collapsible.svelte"
-  import { getQueryResult } from "./api"
-  import { persistStateToUrl, loadStateFromUrl } from "./urlStore"
+  import './response.css'
+  import { onMount } from 'svelte'
+  import { Stretch } from 'svelte-loading-spinners'
+  import VirtualList from '@sveltejs/svelte-virtual-list'
+  import Statistics from './Statistics.svelte'
+  import Classification from './Classification.svelte'
+  import Collapsible from './Collapsible.svelte'
+  import { getQueryResult, getTotalProblemCount } from './api'
+  import { persistStateToUrl, loadStateFromUrl } from './urlStore'
   import type {
     Query,
     ClassifiedProblem,
     QueryStatistics,
     GraphType,
-  } from "./types"
-  import { Complexity } from "./types"
+  } from './types'
+  import { Complexity } from './types'
 
   interface QueryResponse {
     problems: ClassifiedProblem[]
@@ -53,7 +53,7 @@
     fetchStatsOnly: boolean
   }
 
-  const FORM_PREFIX = "query"
+  const FORM_PREFIX = 'query'
 
   function formStateToQuery(
     formState: FormState,
@@ -62,30 +62,30 @@
     return {
       ...formState,
       ...extraConfigs,
-      isTree: formState.graphType === "tree",
-      isCycle: formState.graphType === "cycle",
-      isPath: formState.graphType === "path",
-      excludeIfConfigHasAllOf: formState.excludeIfConfigHasAllOf.split("\n"),
-      excludeIfConfigHasSomeOf: formState.excludeIfConfigHasSomeOf.split("\n"),
-      includeIfConfigHasAllOf: formState.includeIfConfigHasAllOf.split("\n"),
-      includeIfConfigHasSomeOf: formState.includeIfConfigHasSomeOf.split("\n"),
+      isTree: formState.graphType === 'tree',
+      isCycle: formState.graphType === 'cycle',
+      isPath: formState.graphType === 'path',
+      excludeIfConfigHasAllOf: formState.excludeIfConfigHasAllOf.split('\n'),
+      excludeIfConfigHasSomeOf: formState.excludeIfConfigHasSomeOf.split('\n'),
+      includeIfConfigHasAllOf: formState.includeIfConfigHasAllOf.split('\n'),
+      includeIfConfigHasSomeOf: formState.includeIfConfigHasSomeOf.split('\n'),
     }
   }
 
   function getGraphType(problem: ClassifiedProblem) {
     if (problem.flags.isTree) {
-      return "Tree"
+      return 'Tree'
     }
     if (problem.flags.isCycle) {
-      return "Cycle"
+      return 'Cycle'
     }
     if (problem.flags.isPath) {
-      return "Path"
+      return 'Path'
     }
   }
 
   let formState: FormState = {
-    graphType: "path",
+    graphType: 'path',
     isDirectedOrRooted: false,
     isRegular: true,
 
@@ -106,14 +106,15 @@
     partiallyRandUnclassifiedOnly: false,
     completelyDetUnclassifiedOnly: false,
     partiallyDetUnclassifiedOnly: false,
-    excludeIfConfigHasAllOf: "",
-    excludeIfConfigHasSomeOf: "",
-    includeIfConfigHasAllOf: "",
-    includeIfConfigHasSomeOf: "",
+    excludeIfConfigHasAllOf: '',
+    excludeIfConfigHasSomeOf: '',
+    includeIfConfigHasAllOf: '',
+    includeIfConfigHasSomeOf: '',
   }
 
   let loading = false
   let response: QueryResponse = undefined
+  let problemCount = ''
 
   let showExcludeInclude = false
   let showComplexity = false
@@ -121,8 +122,16 @@
   let showProblems = false
 
   onMount(async () => {
+    try {
+      const r = await getTotalProblemCount(PRODUCTION)
+      problemCount = r.problemCount
+    } catch (e) {
+      alert('Error')
+    } finally {
+      loading = false
+    }
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
-      console.log("Here")
+      console.log('Here')
       let augmentedFormState = {
         ...formState,
         fetchStatsOnly: true,
@@ -137,7 +146,7 @@
       try {
         response = await getQueryResult(query, PRODUCTION)
       } catch (e) {
-        alert("Error")
+        alert('Error')
       } finally {
         loading = false
       }
@@ -168,6 +177,9 @@
 <div class="form-wrapper">
   <form>
     <h2>Search among classified problems</h2>
+
+    <p>Total number of problems in the database: {problemCount}</p>
+
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
     <input
@@ -219,7 +231,7 @@
       Regular
     </label>
 
-    <Collapsible open={showComplexity} label={"Complexity:"}>
+    <Collapsible open={showComplexity} label={'Complexity:'}>
       <div class="inline-radio-wrapper">
         <label>
           <input
@@ -287,7 +299,7 @@
       </div>
     </Collapsible>
 
-    <Collapsible open={showExcludeInclude} label={"Configs restrictions:"}>
+    <Collapsible open={showExcludeInclude} label={'Configs restrictions:'}>
       <label>
         <input type="checkbox" bind:checked={formState.activesAllSame} />
         Active configs are all the same
@@ -351,11 +363,11 @@
     <Stretch size="60" unit="px" color="#0d0d0d" />
   {/if}
   {#if !loading && response !== undefined}
-    <Collapsible open={showStatistics} label={"Statistics:"}>
+    <Collapsible open={showStatistics} label={'Statistics:'}>
       <Statistics stats={response.stats} />
     </Collapsible>
     {#if !!response.problems}
-      <Collapsible open={showProblems} label={"Problems:"}>
+      <Collapsible open={showProblems} label={'Problems:'}>
         <div class="problem-container">
           <VirtualList
             height="calc(100vh - 5em)"

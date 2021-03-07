@@ -22,3 +22,12 @@ export async function getQueryResult(query: Query, isProd: boolean) {
   const response = await fetch(url)
   return handleResponse(response)
 }
+
+// PRODUCTION variable needs to be in .svelte file
+// that's the reason why isProd is passed as a param here
+export async function getTotalProblemCount(isProd: boolean) {
+  const url = `${isProd ? '' : 'http://localhost:5000'}/api/problem_count`
+  const response = await fetch(url)
+  return handleResponse(response)
+}
+
