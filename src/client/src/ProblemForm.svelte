@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte"
-  import { Stretch } from "svelte-loading-spinners"
-  import Collapsible from "./Collapsible.svelte"
-  import Classification from "./Classification.svelte"
-  import { getProblem } from "./api"
-  import { persistStateToUrl, loadStateFromUrl } from "./urlStore"
-  import type { GraphType, Problem } from "./types"
+  import { onMount } from 'svelte'
+  import { Stretch } from 'svelte-loading-spinners'
+  import Collapsible from './Collapsible.svelte'
+  import Classification from './Classification.svelte'
+  import { getProblem } from './api'
+  import { persistStateToUrl, loadStateFromUrl } from './urlStore'
+  import type { GraphType, Problem } from './types'
   interface FormState {
     activeConstraints: string
     passiveConstraints: string
@@ -14,17 +14,17 @@
     graphType: GraphType
   }
 
-  const FORM_PREFIX = "problem"
+  const FORM_PREFIX = 'problem'
 
   function formStateToProblem(formState: FormState): Problem {
     return {
-      activeConstraints: formState.activeConstraints.split("\n"),
-      passiveConstraints: formState.passiveConstraints.split("\n"),
-      leafConstraints: formState.leafConstraints?.split("\n"),
-      rootConstraints: formState.rootConstraints?.split("\n"),
-      isTree: formState.graphType === "tree",
-      isCycle: formState.graphType === "cycle",
-      isPath: formState.graphType === "path",
+      activeConstraints: formState.activeConstraints.split('\n'),
+      passiveConstraints: formState.passiveConstraints.split('\n'),
+      leafConstraints: formState.leafConstraints?.split('\n'),
+      rootConstraints: formState.rootConstraints?.split('\n'),
+      isTree: formState.graphType === 'tree',
+      isCycle: formState.graphType === 'cycle',
+      isPath: formState.graphType === 'path',
     }
   }
 
@@ -38,7 +38,7 @@
       B C C`,
     leafConstraints: undefined,
     rootConstraints: undefined,
-    graphType: "path",
+    graphType: 'tree',
   }
 
   let response = undefined
@@ -89,7 +89,7 @@
       Path
     </label>
 
-    <Collapsible open={showLeafRootConfig} label={"Leaf/Root constraints"}>
+    <Collapsible open={showLeafRootConfig} label={'Leaf/Root constraints'}>
       <label for="leafConfig">Leaf constraints (optional):</label>
       <textarea id="leafConfig" bind:value={formState.leafConstraints} />
 
