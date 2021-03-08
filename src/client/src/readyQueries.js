@@ -14,4 +14,9 @@ export const readyQueries = [
     linkText: '3-label problems on (3, 2)-biregular undirected trees with complexity O(log* n)',
     afterText: ' - just 14 problems'
   },
+  {
+    href: 'http://lcl-classifier.cs.aalto.fi/?query_graphType=tree&query_isDirectedOrRooted=false&query_isRegular=true&query_randLowerBound=%281%29&query_randUpperBound=unsolvable&query_detLowerBound=%281%29&query_detUpperBound=unsolvable&query_activeDegree=3&query_passiveDegree=2&query_labelCount=3&query_activesAllSame=false&query_passivesAllSame=false&query_largestProblemOnly=false&query_smallestProblemOnly=true&query_completelyRandUnclassifiedOnly=false&query_partiallyRandUnclassifiedOnly=true&query_completelyDetUnclassifiedOnly=false&query_partiallyDetUnclassifiedOnly=false&query_excludeIfConfigHasAllOf=&query_excludeIfConfigHasSomeOf=&query_includeIfConfigHasAllOf=&query_includeIfConfigHasSomeOf=&query_fetchStatsOnly=false',
+    linkText: 'Smallest unclassified problem among 3-label problems on (3, 2)-biregular undirected trees',
+    afterText: ''
+  }
 ]
