@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2.extras import execute_values
 import humps
 from problem import GenericProblem, ProblemProps
+from response import GenericResponse
 from config_util import eachConstrIsHomogeneous
 from db_data_converter import mapToClassifiedProblem
 from query import Query
@@ -303,6 +304,51 @@ def insertBatchClassifyTrace(
         0 if skipCount is None else skipCount
       )
     )
+
+def updateClassification(
+  result: GenericResponse,
+  problemId: int
+):
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("SELECT * FROM sources;")
+  sources = cur.fetchall()
+  sourcesMap = {s['short_name']: s['id'] for s in sources}
+
+  cur.execute("""
+    UPDATE problems SET 
+      rand_upper_bound = CAST (%s AS complexity),
+      rand_lower_bound = CAST (%s AS complexity),
+      det_upper_bound = CAST (%s AS complexity),
+      det_lower_bound = CAST (%s AS complexity),
+      solvable_count = %s,
+      unsolvable_count = %s,
+
+      rand_upper_bound_source = %s,
+      rand_lower_bound_source = %s,
+      det_upper_bound_source = %s,
+      det_lower_bound_source = %s
+    WHERE problems.id = %s;""",
+    (
+      result.randUpperBound,
+      result.randLowerBound,
+      result.detUpperBound,
+      result.detLowerBound,
+      result.solvableCount,
+      result.unsolvableCount,
+      
+      sourcesMap[result.papers.getRUBSource()],
+      sourcesMap[result.papers.getRLBSource()],
+      sourcesMap[result.papers.getDUBSource()],
+      sourcesMap[result.papers.getDLBSource()],
+
+      problemId,
+    )
+  )
+  conn.commit()
+  cur.close()
+  conn.close()
+
 def updateClassifications(
   results,
   problemProps = None,
@@ -370,6 +416,60 @@ def updateClassifications(
   conn.commit()
   cur.close()
   conn.close()
+
+def storeProblem(p: GenericProblem):
+  r = getProblem(p)
+  if r is not None:
+    return r
+
+  conn = getConnection()
+  cur = conn.cursor()
+  cur.execute("""
+    INSERT INTO problems (
+      active_degree,
+      passive_degree,
+      label_count,
+      actives_all_same,
+      passives_all_same,
+
+      active_constraints,
+      passive_constraints,
+      root_constraints,
+      leaf_constraints,
+      is_tree,
+      is_cycle,
+      is_path,
+      is_directed_or_rooted,
+      is_regular
+    ) VALUES (
+      %s, %s, %s, %s, %s,
+      %s, %s, %s, %s, %s,
+      %s, %s, %s, %s
+    ) RETURNING id;""",
+    (
+      p.getActiveDegree(),
+      p.getPassiveDegree(),
+      len(p.getAlphabet()),
+      eachConstrIsHomogeneous(p.activeConstraints),
+      eachConstrIsHomogeneous(p.passiveConstraints),
+      list(p.activeConstraints),
+      list(p.passiveConstraints),
+      list(p.leafConstraints),
+      list(p.rootConstraints),
+      p.flags.isTree,
+      p.flags.isCycle,
+      p.flags.isPath,
+      p.flags.isDirectedOrRooted,
+      p.flags.isRegular
+    )
+  )
+  
+  id = cur.fetchone()
+  conn.commit()
+  cur.close()
+  conn.close()
+
+  return id
 
 def storeProblemsAndGetWithIds(
   problems,

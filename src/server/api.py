@@ -8,7 +8,12 @@ from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
 from classifier import classify
 from statistics import compute as computeStats
-from db import getClassifiedProblemObj, getClassifiedProblemObjs, getBatchClassifications, getProblemCount
+from db import getClassifiedProblemObj
+from db import getClassifiedProblemObjs
+from db import getBatchClassifications
+from db import getProblemCount
+from db import storeProblem
+from db import updateClassification
 from complexity import *
 
 app = flask.Flask(__name__)
@@ -48,6 +53,8 @@ def problem(args):
     return jsonify(res.dict())
   else:
     res = classify(p)
+    problemId = storeProblem(p)
+    updateClassification(res, problemId)
     return jsonify(res.dict())
 
 query_args = {
