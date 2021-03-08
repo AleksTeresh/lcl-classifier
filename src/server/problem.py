@@ -179,17 +179,17 @@ class GenericProblem:
 
   def __checkParams(self):
     if not self.__checkDegrees(self.activeConstraints):
-      raise Exception('degree', 'The configurations should be of the same degree', self.activeConstraints)
+      raise Exception('problem', 'The configurations should be of the same degree', self.activeConstraints)
 
     if not self.__checkDegrees(self.passiveConstraints):
-      raise Exception('degree', 'The configurations should be of the same degree', self.passiveConstraints)
+      raise Exception('problem', 'The configurations should be of the same degree', self.passiveConstraints)
 
     if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
-      raise Exception('graph family', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
+      raise Exception('problem', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
 
     if self.flags.isPath and not self.flags.isDirectedOrRooted and (
       self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
-      raise Exception('invalid parameters', 'Leaf and root constraints must be the same on undirected paths') 
+      raise Exception('problem', 'Leaf and root constraints must be the same on undirected paths') 
 
   def __checkBadConstrInputs(
     self,
