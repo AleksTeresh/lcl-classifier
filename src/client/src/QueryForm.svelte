@@ -4,6 +4,7 @@
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
   import Statistics from './Statistics.svelte'
+  import { readyQueries } from './readyQueries'
   import Classification from './Classification.svelte'
   import Collapsible from './Collapsible.svelte'
   import { getQueryResult, getTotalProblemCount } from './api'
@@ -183,9 +184,9 @@
       <a href="https://zenodo.org/record/4587681">Zenodo</a></p>
 
     <h5>Here are some examples of interesting queries:</h5>
-    <p><a href="http://lcl-classifier.cs.aalto.fi/?query_graphType=path&query_isDirectedOrRooted=true&query_isRegular=true&query_randLowerBound=%281%29&query_randUpperBound=unsolvable&query_detLowerBound=%281%29&query_detUpperBound=unsolvable&query_activeDegree=2&query_passiveDegree=2&query_labelCount=3&query_activesAllSame=false&query_passivesAllSame=false&query_largestProblemOnly=false&query_smallestProblemOnly=false&query_completelyRandUnclassifiedOnly=false&query_partiallyRandUnclassifiedOnly=false&query_completelyDetUnclassifiedOnly=false&query_partiallyDetUnclassifiedOnly=false&query_excludeIfConfigHasAllOf=&query_excludeIfConfigHasSomeOf=&query_includeIfConfigHasAllOf=&query_includeIfConfigHasSomeOf=&query_fetchStatsOnly=false">All 3-label problem on directed paths</a></p>
-    <p><a href="http://lcl-classifier.cs.aalto.fi/?query_graphType=tree&query_isDirectedOrRooted=false&query_isRegular=true&query_randLowerBound=%281%29&query_randUpperBound=unsolvable&query_detLowerBound=%281%29&query_detUpperBound=unsolvable&query_activeDegree=3&query_passiveDegree=2&query_labelCount=3&query_activesAllSame=false&query_passivesAllSame=false&query_largestProblemOnly=false&query_smallestProblemOnly=false&query_completelyRandUnclassifiedOnly=false&query_partiallyRandUnclassifiedOnly=false&query_completelyDetUnclassifiedOnly=false&query_partiallyDetUnclassifiedOnly=false&query_excludeIfConfigHasAllOf=&query_excludeIfConfigHasSomeOf=&query_includeIfConfigHasAllOf=&query_includeIfConfigHasSomeOf=&query_fetchStatsOnly=false">All 3-label problems on (3, 2)-biregular undirected trees</a> - </p>
-    <p><a href="http://lcl-classifier.cs.aalto.fi/?query_graphType=tree&query_isDirectedOrRooted=false&query_isRegular=true&query_randLowerBound=%28log*+n%29&query_randUpperBound=%28log*+n%29&query_detLowerBound=%281%29&query_detUpperBound=unsolvable&query_activeDegree=3&query_passiveDegree=2&query_labelCount=3&query_activesAllSame=false&query_passivesAllSame=false&query_largestProblemOnly=false&query_smallestProblemOnly=false&query_completelyRandUnclassifiedOnly=false&query_partiallyRandUnclassifiedOnly=false&query_completelyDetUnclassifiedOnly=false&query_partiallyDetUnclassifiedOnly=false&query_excludeIfConfigHasAllOf=&query_excludeIfConfigHasSomeOf=&query_includeIfConfigHasAllOf=&query_includeIfConfigHasSomeOf=&query_fetchStatsOnly=false">3-label problems on (3, 2)-biregular undirected trees with complexity O(log* n)</a> - just 14 problems</p>
+    {#each readyQueries as q}
+      <p><a href={q.href}>{q.linkText}</a>{q.afterText}</p>
+    {/each}
 
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
