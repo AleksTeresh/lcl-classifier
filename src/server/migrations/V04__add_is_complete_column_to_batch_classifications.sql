@@ -1,2 +1,3 @@
 ALTER TABLE batch_classifications
-ADD COLUMN is_complete BOOLEAN NOT NULL DEFAULT true;
+ADD COLUMN count_limit BIGINT DEFAULT NULL,
+ADD COLUMN skip_count BIGINT NOT NULL DEFAULT 0;

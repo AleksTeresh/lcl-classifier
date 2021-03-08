@@ -81,9 +81,9 @@ def generate(
   if passivesAllSame:
     passives = [x for x in passives if x[0]*len(x) == x]
 
-  activeConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(actives)]
-  passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
-  problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints if a and b])
+  activeConstraints = [tuple([" ".join(y) for y in x]) for x in tqdm(powerset(actives))]
+  passiveConstraints = [tuple([" ".join(y) for y in x]) for x in tqdm(powerset(passives))]
+  problemTuples = set([(a,b) for a in tqdm(activeConstraints) for b in passiveConstraints if a and b])
   problemTuples = sorted(list(problemTuples))
   problems = problemFromConstraints(
     problemTuples,

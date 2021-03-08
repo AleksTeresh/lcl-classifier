@@ -260,7 +260,8 @@ def insertBatchClassifyTrace(
   cur,
   problemProps,
   problemCount,
-  isComplete
+  countLimit,
+  skipCount
 ):
    cur.execute("""
       INSERT INTO batch_classifications (
@@ -277,11 +278,12 @@ def insertBatchClassifyTrace(
         is_regular,
 
         count,
-        is_complete
+        count_limit,
+        skip_count
       ) VALUES (
         %s, %s, %s, %s, %s,
         %s, %s, %s, %s, %s,
-        %s, %s
+        %s, %s, %s
       );""",
       (
         problemProps.activeDegree,
@@ -297,13 +299,15 @@ def insertBatchClassifyTrace(
         problemProps.flags.isRegular,
 
         problemCount,
-        isComplete
+        countLimit,
+        0 if skipCount is None else skipCount
       )
     )
 def updateClassifications(
   results,
-  isCompleteClassification: bool,
-  problemProps = None
+  problemProps = None,
+  countLimit = None,
+  skipCount = None
 ):
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -359,7 +363,8 @@ def updateClassifications(
       cur,
       problemProps,
       len(results),
-      isCompleteClassification
+      countLimit,
+      skipCount
     )
 
   conn.commit()
