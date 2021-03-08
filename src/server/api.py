@@ -156,6 +156,7 @@ def problemCount():
 
 @app.errorhandler(Exception)
 def handle_exception(e):
+    print(e)
     args = e.args
     if len(args) < 2:
       return jsonify({

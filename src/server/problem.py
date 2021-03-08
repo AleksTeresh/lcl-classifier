@@ -146,8 +146,8 @@ class GenericProblem:
     if len(configs) == 0:
       return configs
       
-    degree = len(list(configs)[0].split(' '))
-    isSameDegree = reduce(lambda acc, x: acc and len(x.split(' ')) == degree, configs, True)
+    degree = self.__getDegree(configs)
+    isSameDegree = reduce(lambda acc, x: acc and len(x) == degree, configs, True)
     return isSameDegree
 
   def __getFlags(
@@ -179,10 +179,10 @@ class GenericProblem:
 
   def __checkParams(self):
     if not self.__checkDegrees(self.activeConstraints):
-      raise Exception('problem', 'The configurations should be of the same degree', self.activeConstraints)
+      raise Exception('problem', 'Active configurations must be of the same degree', self.activeConstraints)
 
     if not self.__checkDegrees(self.passiveConstraints):
-      raise Exception('problem', 'The configurations should be of the same degree', self.passiveConstraints)
+      raise Exception('problem', 'Passive configurations must be of the same degree', self.passiveConstraints)
 
     if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
       raise Exception('problem', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
@@ -190,6 +190,10 @@ class GenericProblem:
     if self.flags.isPath and not self.flags.isDirectedOrRooted and (
       self.leafAllowAll != self.rootAllowAll or self.leafConstraints != self.rootConstraints):
       raise Exception('problem', 'Leaf and root constraints must be the same on undirected paths') 
+
+    if ((self.flags.isPath or self.flags.isCycle) and
+       (self.getActiveDegree() != 2 or self.getPassiveDegree() != 2)):
+      raise Exception('problem', 'Problems on paths or cycles must have active and passive configs of degree 2')
 
   def __checkBadConstrInputs(
     self,
@@ -348,8 +352,17 @@ class GenericProblem:
     if rootDiff:
       self.rootConstraints = [conf for conf in self.rootConstraints if not rootDiff.intersection(set(conf))]
 
+  def __getDegree(self, configs):
+    return len(configs[0])
+
   def getAlphabet(self):
     return set(flatten(self.activeConstraints + self.passiveConstraints)) - {' '}
+
+  def getActiveDegree(self):
+    return self.__getDegree(self.activeConstraints)
+
+  def getPassiveDegree(self):
+    return self.__getDegree(self.passiveConstraints)
 
   # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
   def normalize(self):
