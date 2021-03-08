@@ -23,10 +23,10 @@ def generateProblemClass(
   skipCount = None
 ):
   print('Generating the following:')
-  print('activeDegree = %s' %activeDegree)
-  print('passiveDegree = %s' %passiveDegree)
-  print('labelCount = %s' %labelCount)
-  print('isDirectedOrRooted = %s' %isDirectedOrRooted)
+  print('  activeDegree = %s,' %activeDegree)
+  print('  passiveDegree = %s,' %passiveDegree)
+  print('  labelCount = %s,' %labelCount)
+  print('  isDirectedOrRooted = %s' %isDirectedOrRooted)
 
 
   flags = ProblemFlags(
@@ -62,7 +62,7 @@ def generateProblemClass(
   classifyAndStore(
     psWithIds,
     props = props,
-    countLimit = countLimit,
+    countLimit = len(ps),
     skipCount = skipCount
   )
 
@@ -70,7 +70,6 @@ def generateProblemClass(
   stats = computeStats(res)
   prettyPrint(stats)
 
-
 generateProblemClass(
   activeDegree = 2,
   passiveDegree = 2,
@@ -132,7 +131,10 @@ generateProblemClass(
   passiveDegree = 2,
   labelCount = 4,
   isDirectedOrRooted = True,
-  isPath = True
+  isPath = True,
+
+  countLimit = sys.maxsize,
+  skipCount = 0
 )
 
 generateProblemClass(
@@ -164,7 +166,10 @@ generateProblemClass(
   passiveDegree = 2,
   labelCount = 3,
   isDirectedOrRooted = True,
-  isTree = True
+  isTree = True,
+
+  countLimit = sys.maxsize,
+  skipCount = 0
 )
 
 generateProblemClass(
