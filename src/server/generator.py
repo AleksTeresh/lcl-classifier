@@ -1,3 +1,4 @@
+import sys
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
 from problem import GenericProblem as P, BasicProblemFlags, ProblemProps
@@ -8,37 +9,40 @@ from storeJson import storeJson
 
 def problemFromConstraints(
   tulpes,
-  flags
+  flags,
+  countLimit,
+  skipCount
 ):
   problems = set()
-  for i, (a, b) in enumerate(tqdm(tulpes)):
-    if a and b:
-      try:
-        p = P(
-          (
-            a if
-            (not flags.isDirectedOrRooted) else
-            [c.replace(' ', ' : ', 1) for c in a]
-          ),
-          (
-            b if
-            (not flags.isDirectedOrRooted) else
-            [c.replace(' ', ' : ', 1) for c in b]
-          ),
-          flags=BasicProblemFlags(
-            isTree = flags.isTree,
-            isCycle = flags.isCycle,
-            isPath = flags.isPath
-          ),
-          id=i
-        )
-      except Exception as e:
-        if e.args[0] == 'problem':
-          continue
-        else:
-          raise e
-      # p.normalize()
-      problems.add(p)
+  startIdx = skipCount
+  endIdx = min(countLimit + skipCount, len(tulpes))
+  for i, (a, b) in enumerate(tqdm(tulpes[startIdx:endIdx])):
+    try:
+      p = P(
+        (
+          a if
+          (not flags.isDirectedOrRooted) else
+          [c.replace(' ', ' : ', 1) for c in a]
+        ),
+        (
+          b if
+          (not flags.isDirectedOrRooted) else
+          [c.replace(' ', ' : ', 1) for c in b]
+        ),
+        flags=BasicProblemFlags(
+          isTree = flags.isTree,
+          isCycle = flags.isCycle,
+          isPath = flags.isPath
+        ),
+        id=i
+      )
+    except Exception as e:
+      if e.args[0] == 'problem':
+        continue
+      else:
+        raise e
+    # p.normalize()
+    problems.add(p)  
 
   return problems
 
@@ -48,7 +52,9 @@ def generate(
   labelCount,
   activesAllSame,
   passivesAllSame,
-  flags
+  flags,
+  countLimit = sys.maxsize,
+  skipCount = 0
 ):
   alphabet = letterRange(labelCount)
   # take activeDegree labels
@@ -77,7 +83,12 @@ def generate(
 
   activeConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(actives)]
   passiveConstraints = [tuple([" ".join(y) for y in x]) for x in powerset(passives)]
-  problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints])
+  problemTuples = set([(a,b) for a in activeConstraints for b in passiveConstraints if a and b])
   problemTuples = sorted(list(problemTuples))
-  problems = problemFromConstraints(problemTuples, flags)
+  problems = problemFromConstraints(
+    problemTuples,
+    flags,
+    countLimit,
+    skipCount
+  )
   return sorted(list(problems), key=lambda p: p.id)

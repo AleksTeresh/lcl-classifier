@@ -9,22 +9,6 @@ from query import Query, Bounds, QueryExcludeInclude
 from batch_classify import classifyAndStore, reclassifyAndStore
 from db import storeProblemsAndGetWithIds, getClassifiedProblemObjs, getProblem
 
-# REtorProblem1 = GenericProblem(
-#   activeConstraints = ['M U U U', 'P P P P'],
-#   passiveConstraints = ['M UP UP UP', 'U U U U']
-# )
-
-# REtorProblem2 = GenericProblem(
-#   activeConstraints = ['M(W->B) S(W->B)(B->W)MP (W->B)(B->W) (W->B)(B->W)SUS'],
-#   passiveConstraints = ['(B->W) (W->B)(B->W) (W->B)(B->W)']
-# )
-
-# # const, 1 round solvable
-# REtorProblem3 = GenericProblem(
-#   ['M U U U', 'PM PM PM PM'],
-#   ['M UP UP UP', 'U U U U']
-# )
-
 activeDegree = 3
 passiveDegree = 2
 labelCount = 2

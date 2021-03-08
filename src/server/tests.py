@@ -214,7 +214,6 @@ class TestGenerator(unittest.TestCase):
   def __checkEquality(self, results, saved):
     self.assertEqual(len(results), len(saved))
     for r, s in zip(results, saved):
-      self.assertEqual(r.id, s.id)
       self.assertEqual(r.activeConstraints, s.activeConstraints)
       self.assertEqual(r.passiveConstraints, s.passiveConstraints)
       self.assertEqual(r.leafConstraints, s.leafConstraints)
