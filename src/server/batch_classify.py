@@ -41,13 +41,17 @@ def batchClassify(problems: List[GenericProblem]):
     ) for i, x in enumerate(tqdm(problems))
   ]
 
-def classifyAndStore(problems: List[GenericProblem], props: ProblemProps):
+def classifyAndStore(
+  problems: List[GenericProblem],
+  isCompleteClassification: bool,
+  props: ProblemProps
+):
   results = batchClassify(problems)
-  updateClassifications(results, props)
+  updateClassifications(results, isCompleteClassification, props)
 
 def batchReclassify(classifiedProblems):
   return [classify(x.toProblem(), x.toResponse()) for x in tqdm(classifiedProblems)]
 
 def reclassifyAndStore(classifiedProblems):
   results = batchReclassify(classifiedProblems)
-  updateClassifications(results)
+  updateClassifications(results, isCompleteClassification=True)

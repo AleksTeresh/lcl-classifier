@@ -28,6 +28,9 @@ def validate(p: GenericProblem):
   if not p.rootAllowAll or not p.leafAllowAll:
     raise Exception('tlp', 'Leaves and roots must allow all configurations')
 
+  if len(p.getAlphabet()) > 3:
+    raise Exception('tlp', 'Cannot classify problems with more than 3 labels')
+
   activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
   passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
 

@@ -259,7 +259,8 @@ def getClassifiedProblemObjs(
 def insertBatchClassifyTrace(
   cur,
   problemProps,
-  problemCount
+  problemCount,
+  isComplete
 ):
    cur.execute("""
       INSERT INTO batch_classifications (
@@ -275,11 +276,12 @@ def insertBatchClassifyTrace(
         is_directed_or_rooted,
         is_regular,
 
-        count
+        count,
+        is_complete
       ) VALUES (
         %s, %s, %s, %s, %s,
         %s, %s, %s, %s, %s,
-        %s
+        %s, %s
       );""",
       (
         problemProps.activeDegree,
@@ -294,10 +296,15 @@ def insertBatchClassifyTrace(
         problemProps.flags.isDirectedOrRooted,
         problemProps.flags.isRegular,
 
-        problemCount
+        problemCount,
+        isComplete
       )
     )
-def updateClassifications(results, problemProps = None):
+def updateClassifications(
+  results,
+  isCompleteClassification: bool,
+  problemProps = None
+):
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   cur.execute("SELECT * FROM sources;")
@@ -351,7 +358,8 @@ def updateClassifications(results, problemProps = None):
     insertBatchClassifyTrace(
       cur,
       problemProps,
-      len(results)
+      len(results),
+      isCompleteClassification
     )
 
   conn.commit()

@@ -9,15 +9,15 @@ from query import Query, Bounds, QueryExcludeInclude
 from batch_classify import classifyAndStore, reclassifyAndStore
 from db import storeProblemsAndGetWithIds, getClassifiedProblemObjs, getProblem
 
-activeDegree = 3
+activeDegree = 2
 passiveDegree = 2
-labelCount = 2
+labelCount = 4
 activesAllSame = False
 passivesAllSame = False
 flags = ProblemFlags(
-  isTree=True,
+  isTree=False,
   isCycle=False,
-  isPath=False,
+  isPath=True,
   isDirectedOrRooted=False
 )
 
@@ -50,11 +50,17 @@ ps = generate(
   labelCount,
   activesAllSame,
   passivesAllSame,
-  flags
+  flags,
+  countLimit=5000,
+  skipCount=20000
 )
 
 psWithIds = storeProblemsAndGetWithIds(ps, props)
-classifyAndStore(psWithIds, props)
+classifyAndStore(
+  psWithIds,
+  isCompleteClassification=False,
+  props=props
+)
 
 # # classifiedProblems = getClassifiedProblemObjs(query)
 # # reclassifyAndStore(classifiedProblems)
