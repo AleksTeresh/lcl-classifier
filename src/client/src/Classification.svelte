@@ -6,17 +6,25 @@
 
 <p>
   Det. lower bound: {response.detLowerBound}
-  <ClassificationSource source={response.papers.detLowerBoundSource} />
+  <ClassificationSource
+    lowerBound={response.detLowerBound}
+    source={response.papers.detLowerBoundSource} />
 </p>
 <p>
   Det. upper bound: {response.detUpperBound}
-  <ClassificationSource source={response.papers.detUpperBoundSource} />
+  <ClassificationSource
+    upperBound={response.detUpperBound}
+    source={response.papers.detUpperBoundSource} />
 </p>
 <p>
   Rand. lower bound: {response.randLowerBound}
-  <ClassificationSource source={response.papers.randLowerBoundSource} />
+  <ClassificationSource
+    lowerBound={response.randLowerBound}
+    source={response.papers.randLowerBoundSource} />
 </p>
 <p>
   Rand. upper bound: {response.randUpperBound}
-  <ClassificationSource source={response.papers.randUpperBoundSource} />
+  <ClassificationSource
+    upperBound={response.randUpperBound}
+    source={response.papers.randUpperBoundSource} />
 </p>
