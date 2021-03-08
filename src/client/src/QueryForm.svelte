@@ -133,7 +133,6 @@
       loading = false
     }
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
-      console.log('Here')
       let augmentedFormState = {
         ...formState,
         fetchStatsOnly: true,
