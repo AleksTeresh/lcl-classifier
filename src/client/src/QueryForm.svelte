@@ -20,6 +20,7 @@
   interface QueryResponse {
     problems: ClassifiedProblem[]
     stats: QueryStatistics
+    isComplete: boolean
   }
 
   interface FormState {
@@ -371,6 +372,12 @@
     <Stretch size="60" unit="px" color="#0d0d0d" />
   {/if}
   {#if !loading && response !== undefined}
+    {#if !response.isComplete}
+      <p>
+        <strong>Warning:</strong> the database contains only a subset of problems of the queried problem family.
+        Therefore, the results are not complete.
+      </p>
+    {/if}
     <Collapsible open={showStatistics} label={'Statistics:'}>
       <Statistics stats={response.stats} />
     </Collapsible>
