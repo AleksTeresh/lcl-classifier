@@ -1,5 +1,6 @@
 import os
 import flask
+from functools import reduce
 from flask import request, jsonify
 from flask_cors import CORS
 from webargs import fields, validate
@@ -14,6 +15,7 @@ from db import getBatchClassifications
 from db import getProblemCount
 from db import storeProblem
 from db import updateClassification
+from db import getBatchClassificationByQuery
 from complexity import *
 
 app = flask.Flask(__name__)
@@ -138,6 +140,11 @@ def query(args):
 
   problems = getClassifiedProblemObjs(query)
   stats = computeStats(problems)
+  batches = getBatchClassificationByQuery(query)
+  isResponseComplete = (
+    len(batches) != 0 and
+    batches[-1]['countLimit'] is None and batches[-1]['skipCount'] == 0
+  )
   response = {
     'problems': (None
       if args['fetch_stats_only']
@@ -145,7 +152,8 @@ def query(args):
         **p.toUnparsedProblem().dict(),
         **p.toResponse().dict()
       } for p in problems]),
-    'stats': stats.dict()
+    'stats': stats.dict(),
+    'isComplete': isResponseComplete
   }
   return jsonify(response)
 

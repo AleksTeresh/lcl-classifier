@@ -567,6 +567,50 @@ def getBatchClassifications():
 
   return res
 
+def getBatchClassificationByQuery(query: Query):
+  conn = getConnection()
+  cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  cur.execute("""
+    SELECT * FROM batch_classifications
+    WHERE
+      active_degree = %s AND
+      passive_degree = %s AND
+      label_count = %s AND
+      (
+        actives_all_same = %s OR
+        actives_all_same = false
+      ) AND
+      (
+        passives_all_same = %s OR
+        passives_all_same = false
+      ) AND
+
+      is_tree = %s AND
+      is_cycle = %s AND
+      is_path = %s AND
+      is_directed_or_rooted = %s AND
+      is_regular = %s;
+  """,
+  (
+    query.props.activeDegree,
+    query.props.passiveDegree,
+    query.props.labelCount,
+    query.props.activesAllSame,
+    query.props.passivesAllSame,
+    query.props.flags.isTree,
+    query.props.flags.isCycle,
+    query.props.flags.isPath,
+    query.props.flags.isDirectedOrRooted,
+    query.props.flags.isRegular
+  ))
+  res = cur.fetchall()
+  if res is not None:
+    res = humps.camelize(res)
+  cur.close()
+  conn.close()
+
+  return [] if res is None else res
+
 def getProblemCount():
   conn = getConnection()
   cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
