@@ -62,7 +62,7 @@ def generateProblemClass(
   classifyAndStore(
     psWithIds,
     props = props,
-    countLimit = len(ps),
+    countLimit = countLimit if countLimit is None else len(ps),
     skipCount = skipCount
   )
 
@@ -126,16 +126,16 @@ generateProblemClass(
   isPath = True
 )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 4,
-  isDirectedOrRooted = True,
-  isPath = True,
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 4,
+#   isDirectedOrRooted = True,
+#   isPath = True,
 
-  countLimit = sys.maxsize,
-  skipCount = 0
-)
+#   countLimit = sys.maxsize,
+#   skipCount = 0
+# )
 
 generateProblemClass(
   activeDegree = 3,
@@ -161,15 +161,35 @@ generateProblemClass(
   isTree = True
 )
 
+# generateProblemClass(
+#   activeDegree = 3,
+#   passiveDegree = 2,
+#   labelCount = 3,
+#   isDirectedOrRooted = True,
+#   isTree = True,
+
+#   countLimit = sys.maxsize,
+#   skipCount = 0
+# )
+
+# generateProblemClass(
+#   activeDegree = 3,
+#   passiveDegree = 2,
+#   labelCount = 4,
+#   isDirectedOrRooted = True,
+#   isTree = True,
+#   passivesAllSame = True,
+#   countLimit = sys.maxsize,
+#   skipCount = 0
+# )
+
 generateProblemClass(
   activeDegree = 3,
   passiveDegree = 2,
   labelCount = 3,
   isDirectedOrRooted = True,
   isTree = True,
-
-  countLimit = sys.maxsize,
-  skipCount = 0
+  passivesAllSame = True
 )
 
 generateProblemClass(
@@ -178,7 +198,5 @@ generateProblemClass(
   labelCount = 4,
   isDirectedOrRooted = True,
   isTree = True,
-  passivesAllSame = True,
-  countLimit = sys.maxsize,
-  skipCount = 0
+  activesAllSame = True
 )
