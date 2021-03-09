@@ -179,14 +179,18 @@
   <form>
     <h2>Search among classified problems</h2>
 
-    <p>Total number of problems in the database: {problemCount}</p>
-    <p>All of the data is also available at
-      <a href="https://zenodo.org/record/4587681">Zenodo</a></p>
+    <p>
+      Total number of problems in the database: {problemCount}<br />
+      All of the data is also available at
+      <a href="https://zenodo.org/record/4587681">Zenodo</a>
+    </p>
 
     <h5>Here are some examples of interesting queries:</h5>
+    <ul>
     {#each readyQueries as q}
-      <p><a href={q.href}>{q.linkText}</a>{q.afterText}</p>
+      <li><a href={q.href}>{q.linkText}</a>{q.afterText}</li>
     {/each}
+    </ul>
 
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
@@ -441,6 +445,18 @@
   .problem-wrapper {
     border-bottom: 1px solid black;
     margin: 5px;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
+
+  h5 {
+    margin-bottom: 10px;
   }
 
   textarea {

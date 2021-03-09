@@ -30,12 +30,12 @@
 
   let formState: FormState = {
     activeConstraints: `A B
-    C C`,
+C C`,
     passiveConstraints: `B B C
-      A A A
-      B B B
-      A A C
-      B C C`,
+A A A
+B B B
+A A C
+B C C`,
     leafConstraints: undefined,
     rootConstraints: undefined,
     graphType: 'tree',
