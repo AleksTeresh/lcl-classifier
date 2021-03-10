@@ -192,6 +192,5 @@ def handle_exception(e):
 def page_not_found(e):
     return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
-
 if __name__ == "__main__":
   app.run(host='0.0.0.0')
