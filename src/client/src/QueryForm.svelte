@@ -193,7 +193,7 @@
       </p>
     </Collapsible>
 
-    <Collapsible open={showPremadeQueries} label={'Here are some examples of interesting queries:'}>
+    <Collapsible open={showPremadeQueries} label={'Some examples of interesting queries:'}>
       <ul>
         {#each readyQueries as q}
           <li><a href={q.href}>{q.linkText}</a>{q.afterText}</li>
