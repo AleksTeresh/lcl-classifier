@@ -26,7 +26,6 @@
   interface FormState {
     graphType: GraphType
     isDirectedOrRooted: boolean
-    isRegular: boolean
 
     randLowerBound: Complexity
     randUpperBound: Complexity
@@ -89,7 +88,6 @@
   let formState: FormState = {
     graphType: 'path',
     isDirectedOrRooted: false,
-    isRegular: true,
 
     randLowerBound: Complexity.Const,
     randUpperBound: Complexity.Unsolvable,
@@ -237,10 +235,6 @@
     <label>
       <input type="checkbox" bind:checked={formState.isDirectedOrRooted} />
       Directed or rooted
-    </label>
-    <label>
-      <input type="checkbox" bind:checked={formState.isRegular} />
-      Regular
     </label>
 
     <Collapsible open={showComplexity} label={'Complexity:'}>

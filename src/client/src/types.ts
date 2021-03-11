@@ -56,7 +56,6 @@ export interface Query {
   isCycle: boolean
   isPath: boolean
   isDirectedOrRooted: boolean
-  isRegular: boolean
 
   randLowerBound: Complexity
   randUpperBound: Complexity

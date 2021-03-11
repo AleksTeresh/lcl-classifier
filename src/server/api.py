@@ -64,7 +64,10 @@ query_args = {
   "is_cycle": fields.Bool(required=True),
   "is_path": fields.Bool(required=True),
   "is_directed_or_rooted": fields.Bool(missing=False),
-  "is_regular": fields.Bool(missing=False),
+  # is_regular is not currently selectable in fornt-end
+  # since currently the tool works only with regular trees anyway.
+  # This might change in the future though
+  "is_regular": fields.Bool(missing=True),
 
   "rand_upper_bound": fields.Str(
     missing=UNSOLVABLE,
