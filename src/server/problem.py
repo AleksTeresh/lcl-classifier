@@ -1,7 +1,11 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
-from config_util import parseAndNormalize, areRegular, isDirectedByUnparsedConfigs, getDegreeByUnparsedConfig
+from config_util import parseAndNormalize
+from config_util import areRegular
+from config_util import isDirectedByUnparsedConfigs
+from config_util import getDegreeByUnparsedConfig
+from config_util import isRegularByUnparsedConfigs
 import itertools, copy
 
 class BasicProblemFlags:
@@ -115,7 +119,7 @@ class GenericProblem:
     )
     self.id = id
 
-    self.__checkParams()
+    self.__checkFlags()
     self.normalize()
 
   def __key(self):
@@ -177,13 +181,7 @@ class GenericProblem:
       isRegular = isRegular
     )
 
-  def __checkParams(self):
-    if not self.__checkDegrees(self.activeConstraints):
-      raise Exception('problem', 'Active configurations must be of the same degree', self.activeConstraints)
-
-    if not self.__checkDegrees(self.passiveConstraints):
-      raise Exception('problem', 'Passive configurations must be of the same degree', self.passiveConstraints)
-
+  def __checkFlags(self):
     if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
       raise Exception('problem', 'Select exactly one option out of "isTree", "isCycle", "isPath"')
 
@@ -222,6 +220,18 @@ class GenericProblem:
       if (':' in c) != directedConfig:
         raise Exception('problem', 'If a single config is directed, all configs has to be directed')
 
+    if not isRegularByUnparsedConfigs(activeConstraints):
+      raise Exception('problem', 'Active configurations must be of the same degree', activeConstraints)
+
+    if not isRegularByUnparsedConfigs(passiveConstraints):
+      raise Exception('problem', 'Passive configurations must be of the same degree', passiveConstraints)
+
+  def __swapConstraints(self):
+    temp = self.activeConstraints
+    self.activeConstraints = self.passiveConstraints
+    self.passiveConstraints = temp
+
+
   def __assignActivesAndPassives(
     self,
     activeConstraints,
@@ -240,6 +250,9 @@ class GenericProblem:
     if passiveAllowAll:
       allowAllNotnormnalized = ["".join(alphabet) for _ in passiveConstraints[0].split(' ')]
       self.passiveConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
+
+    if self.getActiveDegree() < self.getPassiveDegree():
+      self.__swapConstraints()
 
   def __assignLeafs(
     self,

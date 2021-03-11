@@ -50,3 +50,6 @@ def getDegreeByUnparsedConfig(unparsedConfig):
   perEdgeConfigs = flatten(perEdgeConfigs)
   perEdgeConfigs = [x for x in perEdgeConfigs if x != '']
   return len(perEdgeConfigs)
+
+def isRegularByUnparsedConfigs(unparsedConfigs):
+  return areAllTheSame([getDegreeByUnparsedConfig(c) for c in unparsedConfigs])
