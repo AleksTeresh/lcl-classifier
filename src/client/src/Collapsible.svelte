@@ -3,20 +3,25 @@
   export let label
 </script>
 
-<p
-  class="collapsible"
-  class:openCollapsible={open}
-  on:click={() => {
-    open = !open
-  }}
->
-  {label}
-</p>
-<div class="content" class:showContent={open}>
-  <slot />
+<div class="wrapper">
+  <p
+    class="collapsible"
+    class:openCollapsible={open}
+    on:click={() => {
+      open = !open
+    }}
+  >
+    {label}
+  </p>
+  <div class="content" class:showContent={open}>
+    <slot />
+  </div>
 </div>
 
 <style>
+  .wrapper {
+   margin-bottom: 15px; 
+  }
   .collapsible {
     font-weight: bold;
     border-bottom: 1px solid rgb(184, 184, 184);
@@ -27,6 +32,7 @@
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
+    margin-bottom: 10px;
   }
 
   .collapsible::after {
