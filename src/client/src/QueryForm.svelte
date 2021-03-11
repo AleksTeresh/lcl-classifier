@@ -121,6 +121,7 @@
   let showStatistics = false
   let showProblems = false
   let showPremadeQueries = false
+  let showExplanation = false
 
   onMount(async () => {
     try {
@@ -183,6 +184,14 @@
       All of the data is also available at
       <a href="https://zenodo.org/record/4587681">Zenodo</a>
     </p>
+
+    <Collapsible open={showExplanation} label={'Explanation:'}>
+      <p>
+        The form below allows to query our database containing {problemCount}
+        preclassifed problems. Alongside the problems satisfying
+        the query, some statistics about the problems will be returned as well.
+      </p>
+    </Collapsible>
 
     <Collapsible open={showPremadeQueries} label={'Here are some examples of interesting queries:'}>
       <ul>

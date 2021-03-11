@@ -5,8 +5,12 @@
 
 <main>
   <div class="container">
-    <ProblemForm />
-    <QueryForm />
+    <div class="problem-form">
+      <ProblemForm />
+    </div>
+    <div class="query-form">
+      <QueryForm />
+    </div>
   </div>
 </main>
 
@@ -14,5 +18,13 @@
   .container {
     display: flex;
     justify-content: space-between;
+  }
+
+  .problem-form {
+    flex-basis: 35%;
+  }
+
+  .query-form {
+    flex-basis: 65%;
   }
 </style>

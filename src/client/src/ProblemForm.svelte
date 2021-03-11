@@ -44,6 +44,7 @@ B C C`,
   let response = undefined
   let loading = false
   let showLeafRootConfig = false
+  let showExplanation = false
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
@@ -70,6 +71,16 @@ B C C`,
 <div class="form-wrapper">
   <form>
     <h2>Classify a problem</h2>
+
+    <Collapsible open={showExplanation} label={'Explanation:'}>
+      <p>The problem specified below, once submitted, will be classified by multiple
+        automatic LCL classifiers, the results will be combined and presented below.
+        If no classifier can say anything meaningful about the problem, a trivial
+        classification (O(1) as a lower bound and "unsolvable" as an upper bound)
+        will be shown.
+      </p>
+    </Collapsible>
+
     <label for="activeConfigs">Active configurations:</label>
     <textarea id="activeConfigs" bind:value={formState.activeConstraints} />
 
