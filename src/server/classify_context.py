@@ -6,7 +6,9 @@ class ClassifyContext:
     self,
     brtPreclassified = False,
     tlpPreclassified = False,
+    isBatch = False
   ):
+    self.isBatch = isBatch
     self.brtPreclassified = brtPreclassified
     self.tlpPreclassified = tlpPreclassified
     # TODO: this probably shouldn't be hardcoded here

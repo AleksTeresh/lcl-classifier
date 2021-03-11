@@ -20,7 +20,10 @@ def validate(problem: GenericProblem):
   if not problem.rootAllowAll or not problem.leafAllowAll:
     raise Exception('re', 'Leaves and roots must allow all configurations')
 
-def runRE(data, q):
+def runRE(
+  data,
+  q
+):
   (lb, ub) = rust2py.get_complexity(
     data,
     labels = 5,
@@ -39,15 +42,19 @@ def classify(p: GenericProblem, context: ClassifyContext):
     '\n\n' +
     "\n".join(unparseConfigs(p.passiveConstraints, p.flags.isDirectedOrRooted)))
 
+  timeoutSeconds = 0.1 if context.isBatch else 0.3
+  # potentially add here things like labels and iter
+  # that depend on whether we're operating in a batch mode
+
   ctx = mp.get_context('fork')
   q = ctx.Queue()
   p = ctx.Process(target=runRE, kwargs={'data': data, 'q': q})
   p.start()
   try:
-    (lowerBoundRaw, upperBoundRaw) = q.get(timeout=0.1)
+    (lowerBoundRaw, upperBoundRaw) = q.get(timeout=timeoutSeconds)
   except:
     pass
-  p.join(0.1)
+  p.join(timeoutSeconds)
   if p.is_alive():
     p.terminate()
     p.join()

@@ -10,7 +10,7 @@ from classified_problem import ClassifiedProblem
 from classify_context import ClassifyContext
 
 def batchClassify(problems: List[GenericProblem]):
-  context = ClassifyContext()
+  context = ClassifyContext(isBatch = True)
 
   try:
     tlpResponses = tlpBatchClassify(problems)
