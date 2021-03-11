@@ -120,6 +120,7 @@
   let showComplexity = false
   let showStatistics = false
   let showProblems = false
+  let showPremadeQueries = false
 
   onMount(async () => {
     try {
@@ -183,12 +184,13 @@
       <a href="https://zenodo.org/record/4587681">Zenodo</a>
     </p>
 
-    <h5>Here are some examples of interesting queries:</h5>
-    <ul>
-    {#each readyQueries as q}
-      <li><a href={q.href}>{q.linkText}</a>{q.afterText}</li>
-    {/each}
-    </ul>
+    <Collapsible open={showPremadeQueries} label={'Here are some examples of interesting queries:'}>
+      <ul>
+        {#each readyQueries as q}
+          <li><a href={q.href}>{q.linkText}</a>{q.afterText}</li>
+        {/each}
+      </ul>
+    </Collapsible>
 
     <h4>Problem class</h4>
     <label for="active-degree">Active degree:</label>
