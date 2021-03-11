@@ -6,8 +6,40 @@ from generator import generate
 from db import storeProblemsAndGetWithIds
 from batch_classify import batchClassify
 import pickle
-
 class TestClassifier(unittest.TestCase):
+  def testRe1(self):
+    REtorProblem1 = GenericProblem(
+      activeConstraints = ['M U U U', 'P P P P'],
+      passiveConstraints = ['M UP UP UP', 'U U U U'],
+    )
+    res = classify(REtorProblem1)
+    self.assertEqual(res.detLowerBound, CONST)
+    self.assertEqual(res.detUpperBound, UNSOLVABLE)
+    self.assertEqual(res.randUpperBound, UNSOLVABLE)
+    self.assertEqual(res.randLowerBound, CONST)
+
+  def testRe2(self):
+    REtorProblem2 = GenericProblem(
+      activeConstraints = ['A AB AB AB'],
+      passiveConstraints = ['B AB AB']
+    )
+    res = classify(REtorProblem2)
+    self.assertEqual(res.detLowerBound, LOG)
+    self.assertEqual(res.detUpperBound, UNSOLVABLE)
+    self.assertEqual(res.randUpperBound, UNSOLVABLE)
+    self.assertEqual(res.randLowerBound, LOGLOG)
+
+  def testRe3(self):
+    # const, 1 round solvable
+    REtorProblem3 = GenericProblem(
+      ['M U U U', 'PM PM PM PM'],
+      ['M UP UP UP', 'U U U U']
+    )
+    res = classify(REtorProblem3)
+    self.assertEqual(res.detLowerBound, CONST)
+    self.assertEqual(res.detUpperBound, CONST)
+    self.assertEqual(res.randUpperBound, CONST)
+    self.assertEqual(res.randLowerBound, CONST)
   def testTlp1(self):
     # AB, CC
     # BBC, AAA, BBB, AAC, BCC

@@ -9,6 +9,7 @@ from bindings.cp_binding import classify as cpClassify
 from bindings.rt_binding import classify as rtClassify
 from bindings.tlp_binding import classify as tlpClassify
 from bindings.brt_binding import classify as brtClassify
+from bindings.re_binding import classify as reClassify
 
 def getUpperBound(
   responses: Dict[str, GenericResponse],
@@ -150,11 +151,19 @@ def classify(
   except e:
     print(e)
 
+  try:
+    reResult = reClassify(problem, context)    
+  except Exception as e:
+    reResult = GenericResponse(problem)
+  except e:
+    print(e)
+
   responses = {
     Classifier.CP: cpResult,
     Classifier.RT: rtResult,
     Classifier.TLP: tlpResult,
     Classifier.BRT: brtResult,
+    Classifier.RE: reResult,
     **existingClassifications
   }
 

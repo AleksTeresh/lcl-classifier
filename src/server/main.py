@@ -70,96 +70,118 @@ def generateProblemClass(
   stats = computeStats(res)
   prettyPrint(stats)
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = False,
-  isPath = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = False,
+#   isPath = True
+# )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = False,
-  isCycle = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = False,
+#   isCycle = True
+# )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = True,
-  isPath = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = True,
+#   isPath = True
+# )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = True,
-  isCycle = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = True,
+#   isCycle = True
+# )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 3,
-  isDirectedOrRooted = False,
-  isPath = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 3,
+#   isDirectedOrRooted = False,
+#   isPath = True
+# )
 
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 3,
-  isDirectedOrRooted = True,
-  isPath = True
-)
-
-generateProblemClass(
-  activeDegree = 2,
-  passiveDegree = 2,
-  labelCount = 4,
-  isDirectedOrRooted = False,
-  isPath = True
-)
+# generateProblemClass(
+#   activeDegree = 2,
+#   passiveDegree = 2,
+#   labelCount = 3,
+#   isDirectedOrRooted = True,
+#   isPath = True
+# )
 
 # generateProblemClass(
 #   activeDegree = 2,
 #   passiveDegree = 2,
 #   labelCount = 4,
-#   isDirectedOrRooted = True,
-#   isPath = True,
-
-#   countLimit = sys.maxsize,
-#   skipCount = 0
+#   isDirectedOrRooted = False,
+#   isPath = True
 # )
 
-generateProblemClass(
-  activeDegree = 3,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = False,
-  isTree = True
-)
+# # generateProblemClass(
+# #   activeDegree = 2,
+# #   passiveDegree = 2,
+# #   labelCount = 4,
+# #   isDirectedOrRooted = True,
+# #   isPath = True,
 
-generateProblemClass(
-  activeDegree = 3,
-  passiveDegree = 2,
-  labelCount = 2,
-  isDirectedOrRooted = True,
-  isTree = True
-)
+# #   countLimit = sys.maxsize,
+# #   skipCount = 0
+# # )
 
-generateProblemClass(
-  activeDegree = 3,
-  passiveDegree = 2,
-  labelCount = 3,
-  isDirectedOrRooted = False,
-  isTree = True
-)
+# generateProblemClass(
+#   activeDegree = 3,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = False,
+#   isTree = True
+# )
+
+# generateProblemClass(
+#   activeDegree = 3,
+#   passiveDegree = 2,
+#   labelCount = 2,
+#   isDirectedOrRooted = True,
+#   isTree = True
+# )
+
+# generateProblemClass(
+#   activeDegree = 3,
+#   passiveDegree = 2,
+#   labelCount = 3,
+#   isDirectedOrRooted = False,
+#   isTree = True
+# )
+
+# # generateProblemClass(
+# #   activeDegree = 3,
+# #   passiveDegree = 2,
+# #   labelCount = 3,
+# #   isDirectedOrRooted = True,
+# #   isTree = True,
+
+# #   countLimit = sys.maxsize,
+# #   skipCount = 0
+# # )
+
+# # generateProblemClass(
+# #   activeDegree = 3,
+# #   passiveDegree = 2,
+# #   labelCount = 4,
+# #   isDirectedOrRooted = True,
+# #   isTree = True,
+# #   passivesAllSame = True,
+# #   countLimit = sys.maxsize,
+# #   skipCount = 0
+# # )
 
 # generateProblemClass(
 #   activeDegree = 3,
@@ -167,9 +189,7 @@ generateProblemClass(
 #   labelCount = 3,
 #   isDirectedOrRooted = True,
 #   isTree = True,
-
-#   countLimit = sys.maxsize,
-#   skipCount = 0
+#   passivesAllSame = True
 # )
 
 # generateProblemClass(
@@ -178,25 +198,5 @@ generateProblemClass(
 #   labelCount = 4,
 #   isDirectedOrRooted = True,
 #   isTree = True,
-#   passivesAllSame = True,
-#   countLimit = sys.maxsize,
-#   skipCount = 0
+#   activesAllSame = True
 # )
-
-generateProblemClass(
-  activeDegree = 3,
-  passiveDegree = 2,
-  labelCount = 3,
-  isDirectedOrRooted = True,
-  isTree = True,
-  passivesAllSame = True
-)
-
-generateProblemClass(
-  activeDegree = 3,
-  passiveDegree = 2,
-  labelCount = 4,
-  isDirectedOrRooted = True,
-  isTree = True,
-  activesAllSame = True
-)
