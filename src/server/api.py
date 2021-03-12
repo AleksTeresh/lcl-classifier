@@ -18,6 +18,13 @@ from db import updateClassification
 from db import getBatchClassificationByQuery
 from complexity import *
 
+def isQueryResponseComplete(batches):
+    return (
+        len(batches) != 0
+        and batches[-1]["countLimit"] is None
+        and batches[-1]["skipCount"] == 0
+    )
+
 app = flask.Flask(__name__)
 app.config["DEBUG"] = (
     "FLASK_ENV" not in os.environ or os.environ["FLASK_ENV"] != "production"
@@ -138,11 +145,7 @@ def query(args):
     problems = getClassifiedProblemObjs(query)
     stats = computeStats(problems)
     batches = getBatchClassificationByQuery(query)
-    isResponseComplete = (
-        len(batches) != 0
-        and batches[-1]["countLimit"] is None
-        and batches[-1]["skipCount"] == 0
-    )
+    isResponseComplete = isQueryResponseComplete(batches)
     response = {
         "problems": (
             None
