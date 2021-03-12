@@ -2,6 +2,7 @@ from typing import List
 from tqdm import tqdm
 from collections import namedtuple
 from db import updateClassifications
+from db import storeProblemAndClassification
 from classifier import classify, Classifier
 from bindings.tlp_binding import batchClassify as tlpBatchClassify
 from bindings.brt_binding import batchClassify as brtBatchClassify
@@ -59,10 +60,7 @@ def classifyAndStore(
     updateClassifications(results, props, countLimit, skipCount)
 
 
-def batchReclassify(classifiedProblems):
-    return [classify(x.toProblem(), x.toResponse()) for x in tqdm(classifiedProblems)]
-
-
 def reclassifyAndStore(classifiedProblems):
-    results = batchReclassify(classifiedProblems)
-    updateClassifications(results)
+    for p in tqdm(classifiedProblems):
+        res = classify(p.toProblem())
+        storeProblemAndClassification(p, res)

@@ -271,6 +271,36 @@ def getClassifiedProblemObjs(query: Query):
 def insertBatchClassifyTrace(cur, problemProps, problemCount, countLimit, skipCount):
     cur.execute(
         """
+      DELETE FROM batch_classifications WHERE
+       (
+          active_degree = %s AND
+          passive_degree = %s AND
+          label_count = %s AND
+          actives_all_same = %s AND
+          passives_all_same = %s AND
+
+          is_tree = %s AND
+          is_cycle = %s AND
+          is_path = %s AND
+          is_directed_or_rooted = %s AND
+          is_regular = %s
+       );
+      """,
+        (
+            problemProps.activeDegree,
+            problemProps.passiveDegree,
+            problemProps.labelCount,
+            problemProps.activesAllSame,
+            problemProps.passivesAllSame,
+            problemProps.flags.isTree,
+            problemProps.flags.isCycle,
+            problemProps.flags.isPath,
+            problemProps.flags.isDirectedOrRooted,
+            problemProps.flags.isRegular,
+        ),
+    )
+    cur.execute(
+        """
       INSERT INTO batch_classifications (
         active_degree,
         passive_degree,
@@ -308,6 +338,31 @@ def insertBatchClassifyTrace(cur, problemProps, problemCount, countLimit, skipCo
             0 if skipCount is None else skipCount,
         ),
     )
+
+
+def getBatchlessProblems():
+    conn = getConnection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    cur.execute("SELECT * FROM problems WHERE batch_id = NULL;")
+    problems = cur.fetchall()
+    problems = humps.camelize(problems)
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return problems
+
+
+def getBatchlessProblemObjs():
+    problems = getBatchlessProblems()
+    return [mapToClassifiedProblem(r) for r in problems]
+
+
+def storeProblemAndClassification(problem: GenericProblem, response: GenericResponse):
+    problemId = storeProblem(problem)
+    updateClassification(response, problemId)
 
 
 def updateClassification(result: GenericResponse, problemId: int):
@@ -407,16 +462,18 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
 
     if problemProps is not None:
         insertBatchClassifyTrace(cur, problemProps, len(results), countLimit, skipCount)
-        batchId = cur.fetchone()
-        cur.execute(
-        """
+        batchId = cur.fetchone()['id']
+        execute_values(
+            cur,
+            """
           UPDATE problems SET
-            batch_id = %s
-          WHERE problems.id = %s;""",
-          (
-            batchId,
-            p.problem.id
-          ),
+            batch_id = data.batch_id
+          FROM (VALUES %s) AS data (
+            batch_id,
+            problem_id
+          )
+          WHERE problems.id = data.problem_id;""",
+            [(batchId, p.problem.id) for p in results],
         )
 
     conn.commit()
@@ -426,11 +483,12 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
 
 def storeProblem(p: GenericProblem):
     r = getProblem(p)
-    if r is not None:
-        return r
 
     conn = getConnection()
     cur = conn.cursor()
+    if r is not None:
+        cur.execute("DELETE FROM problems WHERE id = %s", (r["id"]))
+
     cur.execute(
         """
     INSERT INTO problems (

@@ -13,10 +13,10 @@ from db import getClassifiedProblemObj
 from db import getClassifiedProblemObjs
 from db import getBatchClassifications
 from db import getProblemCount
-from db import storeProblem
-from db import updateClassification
+from db import storeProblemAndClassification
 from db import getBatchClassificationByQuery
 from complexity import *
+
 
 def isQueryResponseComplete(batches):
     return (
@@ -24,6 +24,7 @@ def isQueryResponseComplete(batches):
         and batches[-1]["countLimit"] is None
         and batches[-1]["skipCount"] == 0
     )
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = (
@@ -63,8 +64,7 @@ def problem(args):
         return jsonify(res.dict())
     else:
         res = classify(p)
-        problemId = storeProblem(p)
-        updateClassification(res, problemId)
+        storeProblemAndClassification(p, res)
         return jsonify(res.dict())
 
 

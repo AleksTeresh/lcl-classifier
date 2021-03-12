@@ -2,12 +2,21 @@ import sys, getopt, pickle
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from classifier import classify
 from batch_classify import batchClassify
+from batch_classify import reclassifyAndStore
 from generator import generate
 from complexity import *
 from statistics import compute as computeStats, prettyPrint
 from query import Query, Bounds, QueryExcludeInclude
 from batch_classify import classifyAndStore, reclassifyAndStore
-from db import storeProblemsAndGetWithIds, getClassifiedProblemObjs, getProblem
+from db import storeProblemsAndGetWithIds
+from db import getClassifiedProblemObjs
+from db import getProblem
+from db import getBatchlessProblemObjs
+
+
+def reclassifyIndividualProblems():
+    problems = getBatchlessProblemObjs()
+    reclassifyAndStore(problems)
 
 
 def generateProblemClass(
@@ -71,6 +80,8 @@ def generateProblemClass(
     prettyPrint(stats)
 
 
+reclassifyIndividualProblems()
+
 generateProblemClass(
     activeDegree=2, passiveDegree=2, labelCount=2, isDirectedOrRooted=False, isPath=True
 )
@@ -104,16 +115,6 @@ generateProblemClass(
 )
 
 generateProblemClass(
-    activeDegree=2,
-    passiveDegree=2,
-    labelCount=4,
-    isDirectedOrRooted=True,
-    isPath=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
-)
-
-generateProblemClass(
     activeDegree=3, passiveDegree=2, labelCount=2, isDirectedOrRooted=False, isTree=True
 )
 
@@ -123,27 +124,6 @@ generateProblemClass(
 
 generateProblemClass(
     activeDegree=3, passiveDegree=2, labelCount=3, isDirectedOrRooted=False, isTree=True
-)
-
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=3,
-    isDirectedOrRooted=True,
-    isTree=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
-)
-
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=4,
-    isDirectedOrRooted=True,
-    isTree=True,
-    passivesAllSame=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
 )
 
 generateProblemClass(
@@ -162,4 +142,36 @@ generateProblemClass(
     isDirectedOrRooted=True,
     isTree=True,
     activesAllSame=True,
+
+)
+
+generateProblemClass(
+    activeDegree=2,
+    passiveDegree=2,
+    labelCount=4,
+    isDirectedOrRooted=True,
+    isPath=True,
+    countLimit=sys.maxsize,
+    skipCount=0,
+)
+
+generateProblemClass(
+    activeDegree=3,
+    passiveDegree=2,
+    labelCount=3,
+    isDirectedOrRooted=True,
+    isTree=True,
+    countLimit=sys.maxsize,
+    skipCount=0,
+)
+
+generateProblemClass(
+    activeDegree=3,
+    passiveDegree=2,
+    labelCount=4,
+    isDirectedOrRooted=True,
+    isTree=True,
+    passivesAllSame=True,
+    countLimit=sys.maxsize,
+    skipCount=0,
 )
