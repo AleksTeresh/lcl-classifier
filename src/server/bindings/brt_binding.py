@@ -23,91 +23,95 @@ complexityMapping = {
     BRT_GLOBAL: GLOBAL,
     BRT_UNSOLVABLE: UNSOLVABLE,
     BRT_UNKNOWN: UNKNOWN,
-  }
+}
+
 
 def preprocessProblem(p):
-  alphabet = p.getAlphabet()
-  constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
+    alphabet = p.getAlphabet()
+    constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
 
-  for i, label in enumerate(alphabet):
-    constraints = [x.replace(label, str(i+1)) for x in constraints]
-  return constraints
+    for i, label in enumerate(alphabet):
+        constraints = [x.replace(label, str(i + 1)) for x in constraints]
+    return constraints
+
 
 def validate(p: GenericProblem):
-  if not p.flags.isTree:
-    raise Exception('brt', 'Cannot classify if the problem is not a tree')
+    if not p.flags.isTree:
+        raise Exception("brt", "Cannot classify if the problem is not a tree")
 
-  if not p.flags.isDirectedOrRooted:
-    raise Exception('brt', 'Cannot classify if the tree is not rooted')
+    if not p.flags.isDirectedOrRooted:
+        raise Exception("brt", "Cannot classify if the tree is not rooted")
 
-  if not p.flags.isRegular:
-    raise Exception('brt', 'Cannot classify if the graph is not regular')
+    if not p.flags.isRegular:
+        raise Exception("brt", "Cannot classify if the graph is not regular")
 
-  if not p.rootAllowAll or not p.leafAllowAll:
-    raise Exception('brt', 'Leaves and roots must allow all configurations')
+    if not p.rootAllowAll or not p.leafAllowAll:
+        raise Exception("brt", "Leaves and roots must allow all configurations")
 
-  activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
-  passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
+    activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 3
+    passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
 
-  if activeDegree != 3:
-    raise Exception('brt', 'Active configurations must be of size 3')
+    if activeDegree != 3:
+        raise Exception("brt", "Active configurations must be of size 3")
 
-  if passiveDegree != 2:
-    raise Exception('brt', 'Passive configurations must be of size 2')
+    if passiveDegree != 2:
+        raise Exception("brt", "Passive configurations must be of size 2")
 
-  if not eachConstrIsHomogeneous(p.passiveConstraints):
-    raise Exception('brt', 'Passive constraints must be simple pairs of the same labels.')
+    if not eachConstrIsHomogeneous(p.passiveConstraints):
+        raise Exception(
+            "brt", "Passive constraints must be simple pairs of the same labels."
+        )
+
 
 def batchClassify(ps: List[GenericProblem]):
-  try:
-    for p in ps:
-      validate(p)
-  except Exception as e:
-    print(e)
-    raise Exception('Cannot batch classify')
+    try:
+        for p in ps:
+            validate(p)
+    except Exception as e:
+        print(e)
+        raise Exception("Cannot batch classify")
 
-  constrs = [preprocessProblem(p) for p in ps]
+    constrs = [preprocessProblem(p) for p in ps]
 
-  results = getProblems(
-    constrs,
-    len(set(flatten(flatten(constrs))))
-  )
+    results = getProblems(constrs, len(set(flatten(flatten(constrs)))))
 
-  return [
-    GenericResponse(
-      ps[i],
-      complexityMapping[r['upper-bound']],
-      complexityMapping[r['lower-bound']],
-      UNSOLVABLE,
-      complexityMapping[r['lower-bound']], # because randomised LB is also a deterministic LB
-      r['solvable-count'],
-      r['unsolvable-count']
-    ) for i, r in enumerate(results)
-  ]
+    return [
+        GenericResponse(
+            ps[i],
+            complexityMapping[r["upper-bound"]],
+            complexityMapping[r["lower-bound"]],
+            UNSOLVABLE,
+            complexityMapping[
+                r["lower-bound"]
+            ],  # because randomised LB is also a deterministic LB
+            r["solvable-count"],
+            r["unsolvable-count"],
+        )
+        for i, r in enumerate(results)
+    ]
 
-def classify(
-  p: GenericProblem,
-  context: ClassifyContext
-) -> GenericResponse:
-  if context.brtPreclassified:
-    return GenericResponse(p)
 
-  validate(p)
-  alphabet = p.getAlphabet()
-  constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
+def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
+    if context.brtPreclassified:
+        return GenericResponse(p)
 
-  for i, label in enumerate(alphabet):
-    constraints = [x.replace(label, str(i+1)) for x in constraints]
-  
-  result = getProblem(constraints)
+    validate(p)
+    alphabet = p.getAlphabet()
+    constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
 
-  return GenericResponse(
-    p,
-    complexityMapping[result['upper-bound']],
-    complexityMapping[result['lower-bound']],
-    UNSOLVABLE,
-    complexityMapping[result['lower-bound']], # because randomised LB is also a deterministic LB
-    result['solvable-count'],
-    result['unsolvable-count']
-  )
+    for i, label in enumerate(alphabet):
+        constraints = [x.replace(label, str(i + 1)) for x in constraints]
 
+    result = getProblem(constraints)
+
+    return GenericResponse(
+        p,
+        complexityMapping[result["upper-bound"]],
+        complexityMapping[result["lower-bound"]],
+        UNSOLVABLE,
+        complexityMapping[
+            result["lower-bound"]
+        ],  # because randomised LB is also a deterministic LB
+        result["solvable-count"],
+        result["unsolvable-count"],
+    )
