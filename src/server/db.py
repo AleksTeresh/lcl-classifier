@@ -291,7 +291,7 @@ def insertBatchClassifyTrace(cur, problemProps, problemCount, countLimit, skipCo
         %s, %s, %s, %s, %s,
         %s, %s, %s, %s, %s,
         %s, %s, %s
-      );""",
+      ) RETURNING id;""",
         (
             problemProps.activeDegree,
             problemProps.passiveDegree,
@@ -407,6 +407,17 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
 
     if problemProps is not None:
         insertBatchClassifyTrace(cur, problemProps, len(results), countLimit, skipCount)
+        batchId = cur.fetchone()
+        cur.execute(
+        """
+          UPDATE problems SET
+            batch_id = %s
+          WHERE problems.id = %s;""",
+          (
+            batchId,
+            p.problem.id
+          ),
+        )
 
     conn.commit()
     cur.close()
