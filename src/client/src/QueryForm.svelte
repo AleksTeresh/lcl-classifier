@@ -182,18 +182,21 @@
     <p>
       Total number of problems in the database: {problemCount}<br />
       All of the data is also available at
-      <a href="https://zenodo.org/record/4587681">Zenodo</a>
+      <a target="_blank" href="https://zenodo.org/record/4601234">Zenodo</a>
     </p>
 
     <Collapsible open={showExplanation} label={'Explanation:'}>
       <p>
         The form below allows to query our database containing {problemCount}
-        preclassifed problems. Alongside the problems satisfying
-        the query, some statistics about the problems will be returned as well.
+        preclassifed problems. Alongside the problems satisfying the query, some
+        statistics about the problems will be returned as well.
       </p>
     </Collapsible>
 
-    <Collapsible open={showPremadeQueries} label={'Some examples of interesting queries:'}>
+    <Collapsible
+      open={showPremadeQueries}
+      label={'Some examples of interesting queries:'}
+    >
       <ul>
         {#each readyQueries as q}
           <li><a href={q.href}>{q.linkText}</a>{q.afterText}</li>
@@ -382,8 +385,8 @@
   {#if !loading && response !== undefined}
     {#if !response.isComplete}
       <p>
-        <strong>Warning:</strong> the database contains only a subset of problems of the queried problem family.
-        Therefore, the results are not complete.
+        <strong>Warning:</strong> the database contains only a subset of problems
+        of the queried problem family. Therefore, the results are not complete.
       </p>
     {/if}
     <Collapsible open={showStatistics} label={'Statistics:'}>
