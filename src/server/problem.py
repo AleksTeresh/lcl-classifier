@@ -327,7 +327,6 @@ class GenericProblem:
         return (newActive, newPassive, newLeaf, newRoot)
 
     def __removeUnusedConfigs(self):
-        # print('enter')
         newActiveConstraints = self.activeConstraints
         newPassiveConstraints = self.passiveConstraints
 
@@ -352,10 +351,16 @@ class GenericProblem:
                     if not diff.intersection(set(conf))
                 ]
 
-            if not newActiveConstraints or not newPassiveConstraints:
+            if not newActiveConstraints:
                 raise Exception(
                     "problem",
-                    "If passive or active configuration are empty, the problem is always unsolvable",
+                    "After removing configs that can never be used, active configurations become empty.",
+                )
+
+            if not newPassiveConstraints:
+                raise Exception(
+                    "problem",
+                    "After removing configs that can never be used, passive configurations become empty.",
                 )
 
             activeAlphabet = set(flatten(newActiveConstraints)) - {" "}
