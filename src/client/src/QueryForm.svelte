@@ -354,7 +354,7 @@
       />
 
       <label for="include-if-all"
-        >Include if configs have <strong>all</strong> of</label
+        >Include only if configs have <strong>all</strong> of</label
       >
       <textarea
         id="include-if-all"
@@ -362,7 +362,7 @@
       />
 
       <label for="include-if-some"
-        >Include if configs have <strong>some</strong> of</label
+        >Include only if configs have <strong>some</strong> of</label
       >
       <textarea
         id="include-if-some"
