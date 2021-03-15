@@ -41,8 +41,16 @@ def areRegular(activeConfig, passiveConfig):
     return allSameSizes(activeConfig) and allSameSizes(passiveConfig)
 
 
-def isDirectedByUnparsedConfigs(unparsedConfigs):
-    return reduce(lambda acc, x: acc or (":" in x), unparsedConfigs, False)
+def isDirectedByUnparsedConfig(unparsedConfig):
+    return (":" in unparsedConfig)
+
+def areSomeDirectedByUnparsedConfigs(unparsedConfigs):
+    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
+    return reduce(lambda acc, x: acc or isDirectedByUnparsedConfig(x), unparsedConfigs, False)
+
+def areAllDirectedByUnparsedConfigs(unparsedConfigs):
+    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
+    return areAllTheSame([isDirectedByUnparsedConfig(x) for x in unparsedConfigs])
 
 
 def getDegreeByUnparsedConfig(unparsedConfig):
@@ -53,4 +61,5 @@ def getDegreeByUnparsedConfig(unparsedConfig):
 
 
 def isRegularByUnparsedConfigs(unparsedConfigs):
+    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
     return areAllTheSame([getDegreeByUnparsedConfig(c) for c in unparsedConfigs])

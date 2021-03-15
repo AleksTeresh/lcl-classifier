@@ -3,7 +3,8 @@ from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
 from config_util import parseAndNormalize
 from config_util import areRegular
-from config_util import isDirectedByUnparsedConfigs
+from config_util import areSomeDirectedByUnparsedConfigs
+from config_util import areAllDirectedByUnparsedConfigs
 from config_util import getDegreeByUnparsedConfig
 from config_util import isRegularByUnparsedConfigs
 import itertools, copy
@@ -154,7 +155,7 @@ class GenericProblem:
             isTree=basicFlags.isTree and not isPath,
             isCycle=basicFlags.isCycle,
             isPath=isPath,
-            isDirectedOrRooted=isDirectedByUnparsedConfigs(unparsedActiveConstraints),
+            isDirectedOrRooted=areAllDirectedByUnparsedConfigs(unparsedActiveConstraints),
             isRegular=isRegular,
         )
 
@@ -215,16 +216,18 @@ class GenericProblem:
                 "Specify at least one passive config, s.t. the tool knows the degree of passive nodes",
             )
 
-        directedConfig = isDirectedByUnparsedConfigs(
+        someConfigsAreDirected = areSomeDirectedByUnparsedConfigs(
+            activeConstraints + passiveConstraints
+        )
+        allConfigsAreDirected = areAllDirectedByUnparsedConfigs(
             activeConstraints + passiveConstraints
         )
         # if a single constraint is directed, all has to be directed
-        for c in activeConstraints + passiveConstraints:
-            if (":" in c) != directedConfig:
-                raise Exception(
-                    "problem",
-                    "If a single config is directed, all configs has to be directed",
-                )
+        if someConfigsAreDirected != allConfigsAreDirected:
+            raise Exception(
+                "problem",
+                "If a single config is directed, all configs have to be directed",
+            )   
 
         if not isRegularByUnparsedConfigs(activeConstraints):
             raise Exception(
