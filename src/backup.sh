@@ -1,7 +1,9 @@
 #!/bin/bash
 
-pg_dumpall -h 195.148.21.214 -U postgres -f ./backup/$(date '+%Y-%m-%d').sql
+source ./.env
 
-psql -h 195.148.21.214 -U postgres -c "\copy (SELECT ROW_TO_JSON(t) 
+pg_dump "host=195.148.21.214 port=5432 dbname=postgres user=postgres password=$POSTGRES_PASSWORD" -f ./backup/$(date '+%Y-%m-%d').sql
+
+psql "host=195.148.21.214 port=5432 dbname=postgres user=postgres password=$POSTGRES_PASSWORD" -c "\copy (SELECT ROW_TO_JSON(t) 
 FROM (SELECT * FROM problems) t)
 TO '$PWD/backup/$(date '+%Y-%m-%d').json';"
