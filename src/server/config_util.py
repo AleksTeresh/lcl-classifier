@@ -50,7 +50,7 @@ def areSomeDirectedByUnparsedConfigs(unparsedConfigs):
 
 def areAllDirectedByUnparsedConfigs(unparsedConfigs):
     unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
-    return areAllTheSame([isDirectedByUnparsedConfig(x) for x in unparsedConfigs])
+    return reduce(lambda acc, x: acc and isDirectedByUnparsedConfig(x), unparsedConfigs, True)
 
 
 def getDegreeByUnparsedConfig(unparsedConfig):
