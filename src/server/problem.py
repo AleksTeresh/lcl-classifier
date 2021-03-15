@@ -227,6 +227,8 @@ class GenericProblem:
             raise Exception(
                 "problem",
                 "If a single config is directed, all configs have to be directed",
+                activeConstraints,
+                passiveConstraints
             )   
 
         if not isRegularByUnparsedConfigs(activeConstraints):

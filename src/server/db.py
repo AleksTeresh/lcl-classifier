@@ -1,11 +1,13 @@
 import os
 import psycopg2
+from typing import List
 from psycopg2.extras import execute_values
 import humps
 from problem import GenericProblem, ProblemProps
 from response import GenericResponse
 from config_util import eachConstrIsHomogeneous
 from db_data_converter import mapToClassifiedProblem
+from classified_problem import ClassifiedProblem
 from query import Query
 
 
@@ -263,7 +265,7 @@ def getProblems(query: Query):
         return res
 
 
-def getClassifiedProblemObjs(query: Query):
+def getClassifiedProblemObjs(query: Query) -> List[ClassifiedProblem]:
     res = getProblems(query)
     return [mapToClassifiedProblem(r) for r in res]
 
@@ -413,6 +415,7 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
     sources = cur.fetchall()
     sourcesMap = {s["short_name"]: s["id"] for s in sources}
 
+    print('Updating classification data...')
     execute_values(
         cur,
         """
