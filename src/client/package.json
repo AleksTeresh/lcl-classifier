@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@sveltejs/svelte-virtual-list": "^3.0.1",
+    "fp-ts": "^2.9.5",
+    "io-ts": "^2.2.16",
     "milligram": "^1.4.1",
     "normalize.css": "^8.0.1",
     "svelte-loading-spinners": "^0.1.4"
