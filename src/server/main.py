@@ -18,6 +18,7 @@ def reclassifyIndividualProblems():
     problems = getBatchlessProblemObjs()
     reclassifyAndStore(problems)
 
+
 def reclassifyProblemClass(
     activeDegree,
     passiveDegree,
@@ -31,12 +32,12 @@ def reclassifyProblemClass(
     countLimit=None,
     skipCount=None,
 ):
-    '''
+    """
     Reclassify a class of already existing problems that are stored
     in the DB. This is much faster than generating the class of problems all over again and classifying them.
     This is mainly because the generation step takes very long
     for big (even if partial) problem classes
-    '''
+    """
     flags = ProblemFlags(
         isTree=isTree,
         isCycle=isCycle,
@@ -66,7 +67,7 @@ def reclassifyProblemClass(
     res = getClassifiedProblemObjs(query)
     stats = computeStats(res)
     prettyPrint(stats)
-    
+
 
 def generateProblemClass(
     activeDegree,

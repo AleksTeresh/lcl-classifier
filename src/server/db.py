@@ -415,7 +415,7 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
     sources = cur.fetchall()
     sourcesMap = {s["short_name"]: s["id"] for s in sources}
 
-    print('Updating classification data...')
+    print("Updating classification data...")
     execute_values(
         cur,
         """
@@ -465,7 +465,7 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
 
     if problemProps is not None:
         insertBatchClassifyTrace(cur, problemProps, len(results), countLimit, skipCount)
-        batchId = cur.fetchone()['id']
+        batchId = cur.fetchone()["id"]
         execute_values(
             cur,
             """

@@ -42,15 +42,21 @@ def areRegular(activeConfig, passiveConfig):
 
 
 def isDirectedByUnparsedConfig(unparsedConfig):
-    return (":" in unparsedConfig)
+    return ":" in unparsedConfig
+
 
 def areSomeDirectedByUnparsedConfigs(unparsedConfigs):
     unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
-    return reduce(lambda acc, x: acc or isDirectedByUnparsedConfig(x), unparsedConfigs, False)
+    return reduce(
+        lambda acc, x: acc or isDirectedByUnparsedConfig(x), unparsedConfigs, False
+    )
+
 
 def areAllDirectedByUnparsedConfigs(unparsedConfigs):
     unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
-    return reduce(lambda acc, x: acc and isDirectedByUnparsedConfig(x), unparsedConfigs, True)
+    return reduce(
+        lambda acc, x: acc and isDirectedByUnparsedConfig(x), unparsedConfigs, True
+    )
 
 
 def getDegreeByUnparsedConfig(unparsedConfig):

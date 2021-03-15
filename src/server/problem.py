@@ -155,7 +155,9 @@ class GenericProblem:
             isTree=basicFlags.isTree and not isPath,
             isCycle=basicFlags.isCycle,
             isPath=isPath,
-            isDirectedOrRooted=areAllDirectedByUnparsedConfigs(unparsedActiveConstraints),
+            isDirectedOrRooted=areAllDirectedByUnparsedConfigs(
+                unparsedActiveConstraints
+            ),
             isRegular=isRegular,
         )
 
@@ -228,8 +230,8 @@ class GenericProblem:
                 "problem",
                 "If a single config is directed, all configs have to be directed",
                 activeConstraints,
-                passiveConstraints
-            )   
+                passiveConstraints,
+            )
 
         if not isRegularByUnparsedConfigs(activeConstraints):
             raise Exception(
