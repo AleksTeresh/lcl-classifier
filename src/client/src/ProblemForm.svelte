@@ -120,6 +120,12 @@ B C C`,
         label on all its outgoing edges), or it can output <code>P</code> on its
         incoming edge (and then <code>P</code> label on all its outgoing edges).
       </p>
+      <p>
+        For more instructions and source code see <a
+          href="https://github.com/AleksTeresh/master-thesis"
+          target="_blank">this repo on GitHub</a
+        >
+      </p>
     </Collapsible>
 
     <label for="activeConfigs">Active configurations:</label>
