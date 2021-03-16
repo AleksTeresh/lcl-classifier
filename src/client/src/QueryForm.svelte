@@ -322,12 +322,12 @@
     <Collapsible open={showExcludeInclude} label={'Configs restrictions:'}>
       <label>
         <input type="checkbox" bind:checked={formState.activesAllSame} />
-        Active configs are all the same
+        Active configs are monochromatic
       </label>
 
       <label>
         <input type="checkbox" bind:checked={formState.passivesAllSame} />
-        Passive configs are all the same
+        Passive configs are monochromatic
       </label>
 
       <label>
