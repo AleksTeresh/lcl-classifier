@@ -5,6 +5,7 @@
   import VirtualList from '@sveltejs/svelte-virtual-list'
   import Statistics from './Statistics.svelte'
   import { readyQueries } from './readyQueries'
+  import { getGraphType } from './graph'
   import Classification from './Classification.svelte'
   import Collapsible from './Collapsible.svelte'
   import { getQueryResult, getTotalProblemCount } from './api'
@@ -16,6 +17,7 @@
     GraphType,
   } from './types'
   import { Complexity } from './types'
+import ReturnedProblem from './ReturnedProblem.svelte'
 
   interface QueryResponse {
     problems: ClassifiedProblem[]
@@ -70,18 +72,6 @@
       excludeIfConfigHasSomeOf: formState.excludeIfConfigHasSomeOf.split('\n'),
       includeIfConfigHasAllOf: formState.includeIfConfigHasAllOf.split('\n'),
       includeIfConfigHasSomeOf: formState.includeIfConfigHasSomeOf.split('\n'),
-    }
-  }
-
-  function getGraphType(problem: ClassifiedProblem) {
-    if (problem.flags.isTree) {
-      return 'Tree'
-    }
-    if (problem.flags.isCycle) {
-      return 'Cycle'
-    }
-    if (problem.flags.isPath) {
-      return 'Path'
     }
   }
 
@@ -402,21 +392,7 @@
           >
             <div class="problem-wrapper response">
               <p class="response-boldenned">Problem:</p>
-              <p>Active config:</p>
-              {#each item.activeConstraints as c}
-                <div>{c}</div>
-              {/each}
-              <p>Passive config:</p>
-              {#each item.passiveConstraints as c}
-                <div>{c}</div>
-              {/each}
-              <p>Graph: {getGraphType(item)}</p>
-              {#if item.rootConstraints.length !== 0}
-                <p>Root config: {item.rootConstraints}</p>
-              {/if}
-              {#if item.leafConstraints.length !== 0}
-                <p>Leaf config: {item.leafConstraints}</p>
-              {/if}
+              <ReturnedProblem item={item} />
               <p class="response-boldenned">Classification:</p>
               <Classification response={item} />
             </div>

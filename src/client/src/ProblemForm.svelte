@@ -3,6 +3,7 @@
   import { Stretch } from 'svelte-loading-spinners'
   import Collapsible from './Collapsible.svelte'
   import Classification from './Classification.svelte'
+  import ReturnedProblem from './ReturnedProblem.svelte'
   import { getProblem } from './api'
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
   import type { GraphType, Problem } from './types'
@@ -45,6 +46,7 @@ B C C`,
   let loading = false
   let showLeafRootConfig = false
   let showExplanation = false
+  let openNormalized = false
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
@@ -117,7 +119,10 @@ B C C`,
     {#if !loading && response !== undefined}
       <div>
         <h3>Classification:</h3>
-        <Classification {response} />
+        <Classification response={response.result} />
+        <Collapsible open={openNormalized} label={'Normalized representation:'}>
+          <ReturnedProblem item={response.problem} />          
+        </Collapsible>
       </div>
     {/if}
   </div>

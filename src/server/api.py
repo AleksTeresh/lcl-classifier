@@ -58,14 +58,19 @@ def problem(args):
         ),
     )
 
-    res = getClassifiedProblemObj(p)
-    if res is not None:
-        res = res.toResponse()
-        return jsonify(res.dict())
+    classifiedProblem = getClassifiedProblemObj(p)
+    if classifiedProblem is not None:
+        return jsonify({
+            'problem': classifiedProblem.toProblem().dict(),
+            'result': classifiedProblem.toResponse().dict()
+        })
     else:
         res = classify(p)
         storeProblemAndClassification(p, res)
-        return jsonify(res.dict())
+        return jsonify({
+            'problem': p.dict(),
+            'result': res.dict()
+        })
 
 
 query_args = {
