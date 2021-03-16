@@ -66,7 +66,13 @@ def problem(args):
         })
     else:
         res = classify(p)
-        storeProblemAndClassification(p, res)
+        if not (
+            res.detLowerBound == CONST and
+            res.detUpperBound == UNSOLVABLE and
+            res.randLowerBound == CONST and
+            res.randUpperBound == UNSOLVABLE
+        ):
+            storeProblemAndClassification(p, res)
         return jsonify({
             'problem': p.dict(),
             'result': res.dict()
