@@ -1,30 +1,15 @@
 # Running locally
 
-1. 
+1. Generate a dummy certificate
 
 ```
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
+./init-dummycert.sh
 ```
 
-or if the container already exists
+2. Spin up front-end, back-end and a database with docker-compose
 
 ```
-docker start some-postgres
-```
-
-
-2.
-
-```
-cd server/
-python ./api.py
-```
-
-3.
-
-```
-cd client/
-npm run dev
+docker-compose up --build
 ```
 
 # Generating problems on the remote server
