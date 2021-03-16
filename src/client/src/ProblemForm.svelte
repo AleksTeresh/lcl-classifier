@@ -75,11 +75,50 @@ B C C`,
     <h2>Classify a problem</h2>
 
     <Collapsible open={showExplanation} label={'Explanation:'}>
-      <p>The problem specified below, once submitted, will be classified by multiple
-        automatic LCL classifiers, the results will be combined and presented below.
-        If no classifier can say anything meaningful about the problem, a trivial
-        classification (O(1) as a lower bound and "unsolvable" as an upper bound)
-        will be shown.
+      <p>
+        The problem specified below, once submitted, will be classified by
+        multiple automatic LCL classifiers.
+      </p>
+      <p>
+        The tool uses problem representation similar to <a
+          href="https://github.com/olidennis/round-eliminator"
+          target="_blank">Round Eliminator</a
+        > e.g.
+      </p>
+
+      <p>Active configurations:</p>
+      <pre>
+        {'M U U U\nP P P P'}
+      </pre>
+
+      <p>Passive configurations:</p>
+      <pre>
+        {'M UP UP UP\nU U U U'}
+      </pre>
+
+      <p>
+        If a problem assumes that the underlying graph is directed (for cycles
+        and paths) or rooted (for trees), the directedness is indicated as
+        follows:
+      </p>
+
+      <p>Active configurations:</p>
+      <pre>
+        {'M : U U U\nP : P P P'}
+      </pre>
+
+      <p>Passive configurations:</p>
+      <pre>
+        {'M : UP UP UP\nU : U U U'}
+      </pre>
+
+      <p>
+        Here, the label before the <code>:</code> sign is an output label on the
+        incoming edge. So in the example below, we have a rooted tree, in which
+        an active node can output <code>M</code> on its incoming edge (and then
+        <code>U</code>
+        label on all its outgoing edges), or it can output <code>P</code> on its
+        incoming edge (and then <code>P</code> label on all its outgoing edges).
       </p>
     </Collapsible>
 
@@ -121,7 +160,7 @@ B C C`,
         <h3>Classification:</h3>
         <Classification response={response.result} />
         <Collapsible open={openNormalized} label={'Normalized representation:'}>
-          <ReturnedProblem item={response.problem} />          
+          <ReturnedProblem item={response.problem} />
         </Collapsible>
       </div>
     {/if}
@@ -137,8 +176,7 @@ B C C`,
     display: block;
   }
 
-  textarea {
-    width: 250px;
-    height: 100px;
+  pre {
+    padding-left: 10px;
   }
 </style>

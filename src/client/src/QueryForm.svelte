@@ -431,20 +431,5 @@ import ReturnedProblem from './ReturnedProblem.svelte'
     margin: 5px;
   }
 
-  li {
-    margin: 0;
-  }
-
-  p {
-    margin-bottom: 5px;
-  }
-
-  h5 {
-    margin-bottom: 10px;
-  }
-
-  textarea {
-    width: 250px;
-    height: 100px;
-  }
+  
 </style>

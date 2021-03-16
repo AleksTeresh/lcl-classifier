@@ -19,9 +19,3 @@
 {#if item.leafConstraints.length !== 0}
   <p>Leaf config: {item.leafConstraints}</p>
 {/if}
-
-<style>
-  p {
-    margin-bottom: 5px;
-  }
-</style>
