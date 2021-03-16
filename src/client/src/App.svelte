@@ -45,10 +45,13 @@
   }
 
   main {
+    min-width: fit-content;
     height: 100%;
   }
 
   footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: rgba(218, 216, 216, 0.473);
     min-height: 70px;
     font-size: 15px;
