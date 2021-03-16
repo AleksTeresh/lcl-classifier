@@ -25,7 +25,9 @@ def validate(problem: GenericProblem):
 def runRE(data, q):
     (lb, ub) = rust2py.get_complexity(
         data,
-        labels=5,
+        # if pp_only is set to True, labels param does not matter
+        # since it essentially not being used anywhere
+        labels=7,
         iter=5,
         merge=False,
         autolb_features="diag,addarrow",
@@ -44,7 +46,7 @@ def classify(p: GenericProblem, context: ClassifyContext):
         + "\n".join(unparseConfigs(p.passiveConstraints, p.flags.isDirectedOrRooted))
     )
 
-    timeoutSeconds = 0.1 if context.isBatch else 0.3
+    timeoutSeconds = 0.1 if context.isBatch else 0.5
     # potentially add here things like labels and iter
     # that depend on whether we're operating in a batch mode
 
