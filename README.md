@@ -36,7 +36,7 @@ M : UP UP UP
 U : U U U
 ```
 
-Here, the label before the `:` sign can be an output label on the incoming edge.
+Here, the label before the `:` sign is an output label on the incoming edge.
 
 So in the example below, we have a rooted tree, in which an active node
 can output `M` on its incoming edge (and then `U` label on all its outgoing edges), or it can output `P` on its incoming edge (and then `P` label on all its outgoing edges).
