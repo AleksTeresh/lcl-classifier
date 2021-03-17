@@ -1,19 +1,52 @@
 \chapter{Implementation}
 \label{chapter:implementation}
 
-\section{General architecture of the tool}
+% \section{General architecture of the tool}
 
-\section{Problem representation}
+% \section{Problem representation}
 
-\subsection{Problem normalization}
+% \subsection{Problem normalization}
 
-\section{Query representation}
+% \section{Query representation}
 
-\section{Batch classification}
+% \section{Batch classification and reclassification}
 
-\section{Integration of Round Eliminator}
+% \section{Integration of Round Eliminator}
 
 \section{Web interface}
 
+This section will briefly discuss some implementation details of
+the client side of the application. First, we start explaining why
+the web interface has been implmented in the first place and why it
+is important. Then, we describe some of the technologes that were
+chosen as part of the implementation.
 
-// use black
+The reason why we decided to spend additional time and implement
+the web interface can be best unnderstood when considering
+another tool that has recently been rising in popularity among
+the distributed algorithms community -- Round Eliminator~\cite{Olivetti2020}. The tool has proved to be a very useful utility
+when doing research connected to LCL problems on biregular trees.
+However, if it wasn't for the web interface that Olivetti has
+implemented, it is most likely that the popularity and
+frequency of use of the tool would have been nowhere near the current
+levels. Indeed, almost all users of the tool use it via the web
+client. Otherwise, a user would need to install Rust programming
+language~\cite{FIXME}, build the tool locally using the tool
+called "Cargo"~\cite{FIXME} and then run it using the command-line.
+It is clear that the number of people willing to do that would be
+significantly smaller than number of people who ended up using
+an easy-to-use web interface that requires no installation or 
+configuration.
+
+By analogy, we can assume with high confidence that significantly more
+user would be willing to use our tool vie the web interface rather
+than downloading the soource of the tool locally and installing
+a specific version of Python programming language~\cite{FIXME}.
+Moreover, the richness of the web user interface allows us to convey complicated
+ideas related distributed computing in way that is easier to understand, at least for knowledgable audience. Thus, it is has been
+decided to spend some time resources -- even though they were 
+quite limited -- on implementing a web user interface that is
+relatively easy to use and understand compared to its
+command line -based analog.
+
+
