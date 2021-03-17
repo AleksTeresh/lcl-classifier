@@ -17,7 +17,7 @@
     GraphType,
   } from './types'
   import { Complexity } from './types'
-import ReturnedProblem from './ReturnedProblem.svelte'
+  import ReturnedProblem from './ReturnedProblem.svelte'
 
   interface QueryResponse {
     problems: ClassifiedProblem[]
@@ -185,7 +185,7 @@ import ReturnedProblem from './ReturnedProblem.svelte'
 
     <Collapsible
       open={showPremadeQueries}
-      label={'Some examples of interesting queries:'}
+      label={'Examples of interesting queries:'}
     >
       <ul>
         {#each readyQueries as q}

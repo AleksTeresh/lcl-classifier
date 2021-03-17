@@ -7,6 +7,7 @@
   import { getProblem } from './api'
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
   import type { GraphType, Problem } from './types'
+  import { readyProblems } from './readyProblems'
   interface FormState {
     activeConstraints: string
     passiveConstraints: string
@@ -47,6 +48,7 @@ B C C`,
   let showLeafRootConfig = false
   let showExplanation = false
   let openNormalized = false
+  let showPremadeProblems = false
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
@@ -126,6 +128,16 @@ B C C`,
           target="_blank">this repo on GitHub</a
         >
       </p>
+    </Collapsible>
+    <Collapsible
+      open={showPremadeProblems}
+      label={'Examples of interesting problems:'}
+    >
+      <ul>
+        {#each readyProblems as q}
+          <li><a href={q.href}>{q.text}</a></li>
+        {/each}
+      </ul>
     </Collapsible>
 
     <label for="activeConfigs">Active configurations:</label>
