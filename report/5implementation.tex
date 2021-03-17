@@ -18,8 +18,10 @@
 This section will briefly discuss some implementation details of
 the client side of the application. First, we start explaining why
 the web interface has been implmented in the first place and why it
-is important. Then, we describe some of the technologes that were
-chosen as part of the implementation.
+is important. Then, we describe some of the technologies that were
+chosen as part of the implementation. Finally, we describe the
+reasoning behind and advantages of the forms' state being stored
+as a query part of the URL.
 
 The reason why we decided to spend additional time and implement
 the web interface can be best unnderstood when considering
@@ -49,4 +51,33 @@ quite limited -- on implementing a web user interface that is
 relatively easy to use and understand compared to its
 command line -based analog.
 
+As a programming language for our front end application, we decided
+to use TypeScript~\cite{FiXMEs}. TypeScript is a general purpose
+programming language developed and maintained by Microsoft~\cite{FIXME}. It is closely related to JavaScript programming language~\cite{FIXME}, which has become de facto standard programming language for the Web.
+As a framework for our client application, we have decided to use
+Svelte~\cite{FIXME}. Svelte is an open-source front end framework
+written in TypeScript. Among other things, it allows a simplified
+approach for application state management, and reduces initial
+page load times compared to other front end frameworks~\cite{FIXME}.
+
+For the styling of the front end, we used a minimalist CSS framework
+called "Milligram"~\cite{FIXME}. It provides a good starting point
+when it comes to styling a modern web application. Besides, the total
+size of the framework is just 2 kilobytes when zipped~\cite{FIXME}.
+This, simplicity to use, and our previous positive experience with
+the framework were the decisive factors that influenced our final
+choice.
+
+As a final interesting piece of technology used, we describe properties
+and our reason for choosing to use svelte-virtual-list~\cite{FIXME}.
+The library allows rendering only part of the content instead of rendering
+the whole of the content on a web page. In our case, this is
+particularly useful as it allows us to
+show tens of thousands of LCL problems (returned as part of the described above querying functionality) in a virtual list.
+The virtual list, implemented via the above mentioned svelte-virtual-list library, renders only a small number (about 3-4)
+LCL problems at the same time. At the same time, it allows user to
+scroll through the list of problems with no noticable delay.
+If not for the library, our client application would have to render
+tens of thousands of LCL problems all at once. This would result in
+the user interface freezing for a prologned period (up to several minutes).
 
