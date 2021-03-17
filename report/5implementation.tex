@@ -81,3 +81,20 @@ If not for the library, our client application would have to render
 tens of thousands of LCL problems all at once. This would result in
 the user interface freezing for a prologned period (up to several minutes).
 
+Finally, we will explain the reasoning behind and benefits for
+storing the state of the two forms as part of the URL's query
+component. When searching for interesting query results, or even
+just classifying different individual LCL problems, it is often
+required to demonstrate the results to somebody else. To allow for such
+a sharing, we decided to encode the state of both forms in the URL.
+Thus, once e.g. the results of a query are obtained, it is possible
+to copy the link and simply send it to, for example, a colleague.
+When opening the link, both forms will be prefilled with
+exactly the same values as those of the sender. This will make sure
+that in most cases the sender and the reciever of the link will end
+up with the same results displayed. Besides, if a particularly
+interesting query has been discovered, it is possible to
+simply copy and store the link. Oening the link in the future,
+will prefill the forms with the same parameters and display
+the same relevant results.
+
