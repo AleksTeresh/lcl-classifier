@@ -60,23 +60,22 @@ def problem(args):
 
     classifiedProblem = getClassifiedProblemObj(p)
     if classifiedProblem is not None:
-        return jsonify({
-            'problem': classifiedProblem.toProblem().dict(),
-            'result': classifiedProblem.toResponse().dict()
-        })
+        return jsonify(
+            {
+                "problem": classifiedProblem.toProblem().dict(),
+                "result": classifiedProblem.toResponse().dict(),
+            }
+        )
     else:
         res = classify(p)
         if not (
-            res.detLowerBound == CONST and
-            res.detUpperBound == UNSOLVABLE and
-            res.randLowerBound == CONST and
-            res.randUpperBound == UNSOLVABLE
+            res.detLowerBound == CONST
+            and res.detUpperBound == UNSOLVABLE
+            and res.randLowerBound == CONST
+            and res.randUpperBound == UNSOLVABLE
         ):
             storeProblemAndClassification(p, res)
-        return jsonify({
-            'problem': p.dict(),
-            'result': res.dict()
-        })
+        return jsonify({"problem": p.dict(), "result": res.dict()})
 
 
 query_args = {
