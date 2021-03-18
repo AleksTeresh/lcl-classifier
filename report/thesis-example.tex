@@ -207,6 +207,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{adjustbox}
+\usepackage[ruled]{algorithm2e}
 
 % The aalto-thesis package provides typesetting instructions for the
 % standard master's thesis parts (abstracts, front page, and so on)
@@ -224,6 +225,8 @@
 %\usepackage[mydraft,doublenumbering]{aalto-thesis}
 %\usepackage{aalto-thesis}
 
+
+\renewcommand{\algorithmautorefname}{Algorithm} % so algorithm is capitalized when using autoref
 
 
 % Hyperref
@@ -511,7 +514,7 @@ Thank you, and keep up the good work!
 % You only need a list of tables for your thesis if you have very 
 % many tables. If you do, uncomment the following two lines.
 % \cleardoublepage
-% \listoftables
+% \listoftables\begin{itemize}
 
 % Table of figures
 % ------------------------------------------------------------------

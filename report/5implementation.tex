@@ -5,11 +5,108 @@
 
 % \section{Problem representation}
 
-% \subsection{Problem normalization}
+\section{Problem normalization}
+
+This section describes the above mentioned problem normalization
+algorithm. The algorithm is used for determining which problems
+are equivalent to each other. This, in turn, allows us
+to reduce the amount of needed storage. Besides, this prevents
+situtaions when a tool needs to run classification for a problem $A$
+from the very beginning while an isomorphic problem $B$ has already been classified
+by the tool previously and saved in the database. Thus, the normalization
+algorithm also allows us to reduce the usage of computational resources.
+
+The algorithm is based on the problem normalization algorithm
+from Round Eliminator~\cite{FIXME}. While the original
+algorithm is written in Rust programming language, we
+reimplemented it in Python and changed some of its
+implementation details to better suit our purpose.
+However, the general idea of the algorithm stays the same.
+
+First, we determine how many labels are used in the description of the
+problem $P$ i.e. its alphabet size. Then, we map each letter in the description
+to a letter from A to Z. For example, if numbers were used for describing
+the problem, the numbers will be mapped to capital letters of
+English alphabet. It is important to point out already now that
+one limitation of the current implementation is the fact that
+a problem with more than 26 labels cannot be correctly normalized.
+Once we obtain the list of letters used, we calculate all
+permutations of the list. For each permutation, we execute the following
+subroutine:
+
+\begin{itemize}
+  \item Based on the given permutation, create a mapping from each
+  element of the problem's alphabet to each symbol in the permutation.
+  That is, we map the $i$'th letter of the $P$ alphabet to the $i$'th symbol
+  in the permutation for all $i$ from 1 to the size of $P$'s alphabet.
+  \item Based on the obtained mapping, do the following with the problem's
+  active configurations, passive configurations, leaf constraints and
+  root constraints one at a time.
+  
+  \begin{itemize}
+    \item For each line of the configurations/restrictions, rename symbols
+    according to the mapping constructed above.
+    \item If the problem $P$ is specified on unrooted/undirected graph,
+    change position of all symbols on each line of the configurations/restrictions according to symbols alphabetical order.
+    If the underlying graph of $P$ is directed/rooted, keep the currently first
+    symbol as first, but change positions of all the rest symbols (again separately for each line)
+    according to symbols alphabetical order.
+    \item If at this point, some configuration lines are
+    duplicated, remove all the duplicates so that each configuration
+    line is unique.
+    \item Sort the unique configuration lines in alphabetical order
+    treating the lines as strings.
+  \end{itemize}
+
+  \item Return the newly constructed active configurations,
+  passive configurations, leaf constraints and root constraints as
+  a tuple of four elements.
+\end{itemize}
+
+Each execution of the subroutine described above yields a tuple
+of size four. Thus, after executing the subroutine on each permutation of
+labels, we eventually obtain a list of tuples of size four.
+Then we sort the list, and take its first element. The four
+tuple's elements are then assigned to the $P$'s
+active configurations, passive configurations, leaf
+constraints and root constraints respectively.
+
+% \begin{algorithm}
+% \DontPrintSemicolon
+% \caption{\label{alg:normalize}normalize($P$)}
+% \KwIn{problem $P$}
+% \KwOut{problem $P$ with its constraints and configurations normalized}
+
+% $lc \gets$ number of labels in $P$ \;
+% $ls \gets$ first $lc$ capital letters of English alphabet \;
+% $perms \gets$ a list of all permutations of $ls$  \;
+% $all_normalized \gets$ empty array \;
+% \For{every $perm$ in $perms$} {
+%     add $normalizeForPermutation()$ $all_normalized \;
+% }
+
+% this is just an example 
+
+
+% \Repeat{$R_{i} = R_{i-1}$}{
+%   $i \gets i + 1$\;
+%   $R_{i} \gets R_{i-1}$\;
+  
+  
+% \uIf{$(\Sigma_\Pi,a \neq \epsilon) \in R_i$ and $\Pi$ is non-empty}{
+%   \Return $\Sigma$
+%   }
+% \Else{
+%   \Return $\epsilon$
+% }
+% \end{algorithm}
+
 
 % \section{Query representation}
 
 % \section{Batch classification and reclassification}
+
+
 
 \section{Integration of Round Eliminator}
 
@@ -166,3 +263,5 @@ simply copy and store the link. Opening the link in the future,
 will prefill the forms with the same parameters and display
 the same relevant results.
 
+
+% \section{Deployment details}
