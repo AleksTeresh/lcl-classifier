@@ -11,7 +11,62 @@
 
 % \section{Batch classification and reclassification}
 
-% \section{Integration of Round Eliminator}
+\section{Integration of Round Eliminator}
+
+This section describes how the Round Eliminator
+tool~\cite{FIXME} has been integrated in our solution.
+Prior to integration we had had considered several options:
+
+\begin{itemize}
+  \item Using an API of a server that runs the back end of the Round Eliminator tool
+  \item Calling REtor as a command line tool from our Python
+  application and then parsing the output, which is returned
+  in a text format as part of stdout~\cite{FIXME}
+  \item Compiling REtor's source code to a "Shared Object" file (.so extension)
+  using CPython ~\cite{FIXME} bindings and then importing the compiled
+  functions to our Python application as CPython dependency.
+\end{itemize}
+
+At the moment of writing the thesis, the Round Eliminator tool
+is deployed using WASM~\cite{FIXME}. This virtually means that
+there is no back-end part running on a server, but instead
+all of the logic is executed on the client side of the application.
+Redeploying the tool with a standalone server and a separate client
+part did not seem like a feasible alternative since this would
+require a nontrivial amount of work from the tool's maintainers.
+Thus, the first option was not feasible.
+
+On the other hand, the second option was feasible. Indeed,
+this method of using REtor had already been used in the
+implementation of TLP Classifier~\cite{FIXME}. However,
+this approach has several crucial disadvantages.
+Firstly, the overhead of calling a command line command
+from a Python program is significant compared to just calling
+a Python function. Secondly, the output of Round Eliminator
+would have to be parsed from the plain textual format, which
+would have added an additional complexity of the software.
+Finally, the approach complicates distribution and deployment of
+the software. Indeed, one would have to install the specific
+version of Rust programming language as well as download and
+build form source codes the specific version of REtor required.
+
+Instead, we have decided to go with the latter option. This
+alternative does not have any of the disadvantages listed
+in the previous paragraph while being just as feasible and
+easy to implement. Compiled in this manner, the whole of
+Round Eliminator logic is contained in a single .so file
+that can be easily deployed to e.g. a production server.
+Besides, the speed improvement is significant: we were
+able to execute up to 3 rounds of round eliminator
+in under 100 milliseconds. Finally, the functions
+exposed via the .so file, return python-native
+data structures so that no additional parsing is required on our side.
+This, in turn has been achieved by adding CPythin bindings
+to the REtor source code. The bindings wrap the relevant functions
+written in Rust, thus enabling us to pass Python data structures
+as parameters and recieve the return values as python-interpretable values.
+The bindings were implemented using the rust-cpython library~\cite{FIXME}.
+
 
 \section{Web interface}
 
