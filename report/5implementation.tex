@@ -153,6 +153,28 @@ complexity bounds are found for both deterministic and randomized
 settings. In the worst case, trivial bounds are returned:
 "unsolvable" for upper bounds and $\Omega(1)$ for lower bounds.
 
+Each of the underlying meta-algorithms or datasets is wrapped
+in a function -- we will refer to it as "subclassify" from now on -- such
+that it provides unified interface for the main
+"classify" function. In particular, subclassify takes
+as input an instance of the Problem class and
+returns an instance of Response class. A Response object
+simply encapsulates upper and lower bounds for both
+deterministic and randomized settings. There is
+exactly one subclassify function for each meta-algorithm
+or dataset that we use. Inside each subclassify function,
+we first check if the provided problem can be classified
+at all by the underlyinng meta-algorithm. Often, we can
+exit early already at this stage if, for examle, the meta-algorithm
+in question deals only with rooted trees and the provided input is a 
+problem on unrooted trees (or e.g. a problem on cycles). Then,
+if we haven't exited the function yet,
+we transform an instance of the Problem class to a problem
+representation used by the meta-algorithm that the given
+subclassify wraps around. The meta-algorithm is then executed,
+the retured result is transformed into an instance of the
+Response class and the Response object is returned as
+a result of the subclassify function.
 
 
 \subsection{Query}
