@@ -18,10 +18,38 @@ This section will outline general architecture of the tool and
 will describe in further detail some of its most important
 components. Despite the chapter's name, we are not going
 to describe low-level implementation detail in this section,
-but instead try to convey the technical perspective on the tool
+but instead try to convey technical perspective on the tool
 as a whole. We will also discuss and critically analyze some
 of the architectural and technological decisions that have been
 made during the implementation phase.
+
+On the high level, the software consists of three parts:
+front-end application, back-end application and a database.
+The database contains arguably the most important component
+of this project -- definitions of LCL problems as well as their
+known upper and lower bounds. The back-end part contains
+the core logic for classifying LCL problems. Besides, it acts
+as a middle layer between the database and the front-end part.
+That is, it is responsible for receiving data from one of the
+components (e.g. database), transforming it to the
+format understandable by the other part (e.g. the front end),
+and finally sending it to that part. Finally, the
+front-end part's main responsibility is to provide
+an understandable and user-friendly user interface
+through which one could classify individual LCL problems
+as well as query for the whole families of problems
+that satisfy specified criteria. Furthermore,
+the clint-side part of the application is
+resonsible for displaying the results returned by the
+back-end part in a concise and understandable manner.
+
+The database contains only three tables: one for
+storing LCL problems together with their upper and
+lower bounds, one for keeping track of what families of
+problems have been generated and classified via batch
+classification mechanisms, and one storing meta-data
+of the meta-algorithms used in classifying the LCLs.
+The front end
 
 
 
@@ -234,14 +262,14 @@ submitted will be transformed in to the previously described
 the results will be returned to the client side and rendered
 in a user-friendly format.
 
-As a programming language for our front end application, we decided
+As a programming language for our front-end application, we decided
 to use TypeScript~\cite{FiXMEs}. TypeScript is a general purpose
 programming language developed and maintained by Microsoft~\cite{FIXME}. It is closely related to JavaScript programming language~\cite{FIXME}, which has become de facto standard programming language for the Web.
 As a framework for our client application, we have decided to use
-Svelte~\cite{FIXME}. Svelte is an open-source front end framework
+Svelte~\cite{FIXME}. Svelte is an open-source front-end framework
 written in TypeScript. Among other things, it allows a simplified
 approach for application state management, and reduces initial
-page load times compared to other front end frameworks~\cite{FIXME}.
+page load times compared to other front-end frameworks~\cite{FIXME}.
 
 For the styling of the front end, we used a minimalist CSS framework
 called "Milligram"~\cite{FIXME}. It provides a good starting point

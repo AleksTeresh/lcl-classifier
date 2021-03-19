@@ -6,7 +6,7 @@
 ./init-dummycert.sh
 ```
 
-2. Spin up front-end, back-end and a database with docker-compose
+2. Spin up the front end, back end and a database with docker-compose
 
 ```
 docker-compose up --build
