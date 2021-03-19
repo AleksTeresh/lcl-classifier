@@ -56,6 +56,8 @@ The back end, however, contains most of the compplexity of
 the tool. Therefore, in this section, we will concentrate
 mainly on the sever side.
 
+\subsection{Problem}
+
 The core element of the whole application and of the
 back-end part in particular is the Problem class.
 For representing an LCL problem, we have decided
@@ -129,16 +131,37 @@ a problem is misspecified so that some of the
 configurations are "directed" while others are not,
 an exception is thrown containing a message with
 a human-readable explanation for why the
-specification was invalid.
+specification was invalid. After the validity
+of the specification is checked, a problem is
+normalized by executing the normalization algorithm
+described below in Section~\ref{section:problem-normalization}.
 
-% problem normalization
+\subsection{Classification}
 
-% classify function
+Another central component of the back end is
+the function responsible for classification of LCL problems.
+On the high level, the function takes as input an LCL problem and
+runs underlying meta-algorithms, some of which might be
+able to provide some useful information about the complexity of the
+problem. After that, the function combines the results
+returned by all the meta-algorithms. Based on teh results returned,
+the function determines the tightest known lower and upper bounds of
+the LCL problem both in the deterministic and randomised LOCAL
+models. Finally, a Response object is constructed based on the bounds
+and is returned as the functions result. In the best case, tight
+complexity bounds are found for both deterministic and randomized
+settings. In the worst case, trivial bounds are returned:
+"unsolvable" for upper bounds and $\Omega(1)$ for lower bounds.
+
+
+
+\subsection{Query}
 
 % query itself (query representation)
 % querying functionality
 
 \section{Problem normalization}
+\label{section:problem-normalization}
 
 This section describes the above mentioned problem normalization
 algorithm. The algorithm is used for determining which problems
