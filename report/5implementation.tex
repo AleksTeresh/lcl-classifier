@@ -176,8 +176,55 @@ the retured result is transformed into an instance of the
 Response class and the Response object is returned as
 a result of the subclassify function.
 
-
 \subsection{Query}
+
+The query class encapsulates some of the properties
+based to which the database is then queried for problems.
+Only problems that satisfy the provided Query object will be
+returned. The properties encapsulated by a Query object are
+more or less directly mapped to an SQL query's WHERE clause.
+The Query class groups those properties in three groups:
+
+\begin{itemize}
+  \item problem properties
+  \item complexity bounds
+  \item include/exclude configuration
+\end{itemize}
+
+\emph{Problem properties} define a class of problems that are to be
+returned from the database. It includes the following fields:
+
+\begin{itemize}
+  \item active degree
+  \item passive degree
+  \item alphabet size (upper bound on it to be precise)
+  \item Whether active/passive configurations are necessarily monochromatic
+  \item Whether underlyig graph directed/rooted or not
+  \item Type of the underlying graph. Which is always one of the following three
+  options: tree, cycle, path
+\end{itemize}
+
+\emph{Complexity bounds} limit the returned problems further by
+restricting their complexities. The \emph{complexity bounds} object
+contains the following items:
+
+\begin{itemize}
+  \item upper bound in randomized LOCAL setting (referred to as RUB)
+  \item lower bound in randomized LOCAL setting (referred to as RLB)
+  \item upper bound in deterministic LOCAL setting (referred to as DUB)
+  \item lower bound in deterministic LOCAL setting (referred to as DLB)
+\end{itemize}
+
+The restriction of the fetched problems is done according to the
+following logic: only those problems are returned (not filtered out)
+whose known randomized upper bound is at most as high as RUB, whose
+known randomized lower bound is at least as high as RLB, whose
+known deterministic upper bound is at most as high as DUB and whose
+known deterministic lower bounds is at least as high as DLB. Notice that
+for a problem not to be filtered out, all the four criteria must be
+satisfied.
+
+Finally, \emph{include/exclude configuration}
 
 % query itself (query representation)
 % querying functionality
@@ -281,8 +328,6 @@ constraints and root constraints respectively.
 
 
 % \section{Batch classification and reclassification}
-
-
 
 \section{Integration of Round Eliminator}
 
