@@ -224,10 +224,35 @@ known deterministic lower bounds is at least as high as DLB. Notice that
 for a problem not to be filtered out, all the four criteria must be
 satisfied.
 
-Finally, \emph{include/exclude configuration}
+Finally, \emph{include/exclude configuration} has the following
+items encapsulated in it:
 
-% query itself (query representation)
-% querying functionality
+\begin{itemize}
+  \item whether only "smallest" problem has to be returned (in terms of the number of configurations)
+  \item whether only "largest" problem has to be returned (in terms of the number of configurations)
+  \item Whether only those problems must be returned whose randomised upper
+  and lower bounds do not match
+  \item Whether only those problems must be returned whose deterministic upper
+  and lower bounds do not match
+  \item Whether only those problems must be returned whose randomised both
+  upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
+  respectively)
+  \item Whether only those problems must be returned whose deterministic both
+  upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
+  respectively)
+  \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note
+  the item has not effect if left empty.
+  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is excluded. Note
+  the item has not effect if left empty.
+  \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is included.
+  Otherwise a problem is excluded.
+  Note
+  the item has not effect if left empty.
+  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is included.
+  Otherwise a problem is excluded.
+  Note
+  the item has not effect if left empty.
+\end{itemize}
 
 \section{Problem normalization}
 \label{section:problem-normalization}
