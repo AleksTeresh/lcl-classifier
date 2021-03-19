@@ -51,13 +51,37 @@ classification mechanisms, and one storing meta-data
 of the meta-algorithms used in classifying the LCLs.
 The front end is quite simple from technical perspective
 too. Some of the details about the client side of the
-application will be discussed more in~\ref{section:webinterface}.
+application will be discussed more in Section~\ref{section:webinterface}.
 The back end, however, contains most of the compplexity of
 the tool. Therefore, in this section, we will concentrate
 mainly on the sever side.
 
+The core element of the whole application and of the
+back-end part in particular is the Problem class.
+For representing an LCL problem, we have decided
+to use notation similar to that of Round
+Eliminator. Our representaion however also
+allows for graph types other than trees -- namely cycles.
+Besides, it allows the underlying graph of a problem
+to be rooted (or directed in the case of cycles).
+Finally, it allows representing problems where
+leaves' and root's out labels are also constrained
+(unlike in the case of homogeneous problems).
+The representaion similar to that of a Round
+Eliminator has been chosen because of its generality.
+In particular, we have shown in Theorem~\ref{theorem:re_formalism_is_general} that any LCL problem
+on $(\beta, \delta)$-biregular unrooted trees -- provided
+that nodes of degrees other than $\beta$ and $\delta$ are unconstrained
+and nodes near leaves are unconstrained -- can be represented
+using the formalism used in the Round Eliminator.
 
+% problem itself (even its representation)
+% problem normalization
 
+% classify function
+
+% query itself (query representation)
+% querying functionality
 
 \section{Problem normalization}
 
@@ -264,7 +288,7 @@ problem can be found in a database. If not, it will proceed to
 running the classifiers (which corresponds with the "classify" function described above) and will eventially return the newly
 classified result. If the classification result is not trivial (which means that lower bounds are constant and upper bounds are unsolvable),
 it will also be stored in the database. The second "query" form, once
-submitted will be transformed in to the previously described
+submitted will be transformed into the previously described
 "Query" object. The query will then be executed against the database,
 the results will be returned to the client side and rendered
 in a user-friendly format.

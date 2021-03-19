@@ -208,6 +208,26 @@
 \usepackage{tabularx}
 \usepackage{adjustbox}
 \usepackage[ruled]{algorithm2e}
+\usepackage{amsthm}
+\usepackage{thmtools}
+
+\declaretheorem[style=plain,numberwithin=section]{theorem}
+\declaretheorem[style=plain,sibling=theorem]{lemma}
+\declaretheorem[style=plain,sibling=theorem]{proposition}
+\declaretheorem[style=plain,sibling=theorem]{corollary}
+\declaretheorem[style=plain,sibling=theorem]{claim}
+\declaretheorem[style=plain,sibling=theorem]{observation}
+
+
+\declaretheorem[style=definition,sibling=theorem]{definition}
+\declaretheorem[style=definition,sibling=theorem]{conjecture}
+\declaretheorem[style=definition,sibling=theorem]{example}
+\declaretheorem[style=definition,sibling=theorem]{problem}
+
+\declaretheorem[style=remark,sibling=theorem]{remark}
+
+
+
 
 % The aalto-thesis package provides typesetting instructions for the
 % standard master's thesis parts (abstracts, front page, and so on)
