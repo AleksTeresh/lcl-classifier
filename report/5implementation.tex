@@ -69,13 +69,68 @@ leaves' and root's out labels are also constrained
 (unlike in the case of homogeneous problems).
 The representaion similar to that of a Round
 Eliminator has been chosen because of its generality.
-In particular, we have shown in Theorem~\ref{theorem:re_formalism_is_general} that any LCL problem
+In particular, as we have shown in Theorem~\ref{theorem:re_formalism_is_general},
+any LCL problem
 on $(\beta, \delta)$-biregular unrooted trees -- provided
 that nodes of degrees other than $\beta$ and $\delta$ are unconstrained
 and nodes near leaves are unconstrained -- can be represented
 using the formalism used in the Round Eliminator.
 
-% problem itself (even its representation)
+Since we are only concerned with problems on regular trees and cycles
+this representation works well for us. For the cases of cycles,
+the only restriction is that degree of both passive and
+active configurations has to be two. Also, the case
+of directed (rooted) cycles (trees) can be handled
+using the "colon notation" that has been already
+previously used in a recent paper on automating
+the classification of LCLs in rooted trees~\cite{Balliu2021}.
+Furthermore, the cases when "irregular" nodes, i.e.
+leaf nodes or root node, are restricted can also
+be handled by specifying those restrictions
+(separately for leaf nodes and a root node)
+as separate properties of the Problem object.
+Thus, our representation of LCL problems is general
+enough to cover all the LCL problems that are
+included in the scope of the project.
+
+Having explained this, we can finally list all the
+properties that are encapsulated into the
+Problem object. The object contains the already
+mentioned active configuration, passive configurations,
+leaf constraints (which can be an empty set), root constraints
+(which can be an empty set too), as well as special flag variables
+indicating whether all active or all passive configurations
+are allowed for active and passive nodes respectively.
+If one of the two flag variables are set to true,
+it overrides whatever is contained in the variables
+holding the actual active and passive configs.
+Besides, each problem object contains information
+on the type of the underlhing graph: path, cycle or
+tree. Notice that although any path is always a tree,
+we chose to differentiate between those two
+for convinience. It is worth mentioning that
+a path graph type will be chosen as internal
+representation whenever both active and
+passive configurations are of degree two and
+the user-selected graph type is not cycle.
+In particular, if a user specifies tree as a graph
+type and provides configurations of degree two,
+tree will still be chosen as a graph type of the problem
+internally. Finally, after parsing the configs
+that are always provided in a string format,
+the tool automatically decides whether the given problem's
+underlyhing graph is rooted/directed or not.
+
+It is also worth noting that as a first step of
+creating a Problem object, the specified parameters,
+including nodes' configurations and constraints
+are checked for validity. Thus, if, for example,
+a problem is misspecified so that some of the
+configurations are "directed" while others are not,
+an exception is thrown containing a message with
+a human-readable explanation for why the
+specification was invalid.
+
 % problem normalization
 
 % classify function
