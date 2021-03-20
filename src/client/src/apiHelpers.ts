@@ -1,12 +1,22 @@
+import type { Type } from 'io-ts'
+import * as Either from 'fp-ts/lib/Either'
+import { PathReporter } from 'io-ts/PathReporter'
+
 export async function handleResponse<T>(
-  response: Response
+  response: Response,
+  codec: Type<T>
 ): Promise<T> {
   if (!response.ok) {
     // try to get `error` field from response body.
     // if not, fall back to statusText
     throw new Error((await response.json())?.error ?? response.statusText)
+  }
+  const json = await response.json()
+  const result = codec.decode(json)
+  if (Either.isRight(result)) {
+    return result.right
   } else {
-    return response.json()
+    throw Error(PathReporter.report(result).join('\n'))
   }
 }
 

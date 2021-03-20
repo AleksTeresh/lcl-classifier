@@ -9,7 +9,7 @@ export enum Complexity {
   Global = '(n)',
   Unsolvable = 'unsolvable',
 }
-const ComplexityCodec = fromEnum<Complexity>('Complexity', Complexity)
+export const ComplexityCodec = fromEnum<Complexity>('Complexity', Complexity)
 
 const FlagsCodec = t.type(
   {
@@ -19,7 +19,7 @@ const FlagsCodec = t.type(
   },
   'Flags'
 )
-const ProblemCodec = t.type(
+export const ProblemCodec = t.type(
   {
     activeConstraints: t.array(t.string),
     passiveConstraints: t.array(t.string),
@@ -40,7 +40,7 @@ const SourceCodec = t.type(
   'Source'
 )
 
-const SourcesCodec = t.type(
+export const SourcesCodec = t.type(
   {
     detLowerBoundSource: SourceCodec,
     detUpperBoundSource: SourceCodec,
@@ -51,7 +51,7 @@ const SourcesCodec = t.type(
 )
 export type Sources = t.TypeOf<typeof SourcesCodec>
 
-const ClassificationCodec = t.type(
+export const ClassificationCodec = t.type(
   {
     detLowerBound: ComplexityCodec,
     detUpperBound: ComplexityCodec,
@@ -63,7 +63,7 @@ const ClassificationCodec = t.type(
 )
 export type Classification = t.TypeOf<typeof ClassificationCodec>
 
-const ClassifiedProblemCodec = t.intersection(
+export const ClassifiedProblemCodec = t.intersection(
   [ProblemCodec, ClassificationCodec],
   'ClassifiedProblem'
 )
@@ -81,7 +81,7 @@ const StatisticsComplexityDataCodec = t.type(
   'StatisticsComplexityData'
 )
 
-const QueryStatisticsCodec = t.type({
+export const QueryStatisticsCodec = t.type({
   const: StatisticsComplexityDataCodec,
   logStar: StatisticsComplexityDataCodec,
   logLog: StatisticsComplexityDataCodec,
@@ -92,7 +92,7 @@ const QueryStatisticsCodec = t.type({
 })
 export type QueryStatistics = t.TypeOf<typeof QueryStatisticsCodec>
 
-const Query = t.type({
+export const Query = t.type({
   isTree: t.boolean,
   isCycle: t.boolean,
   isPath: t.boolean,
@@ -122,13 +122,13 @@ const Query = t.type({
 })
 export type Query = t.TypeOf<typeof Query>
 
-const GraphTypeCodec = t.union(
+export const GraphTypeCodec = t.union(
   [t.literal('tree'), t.literal('cycle'), t.literal('path')],
   'GraphType'
 )
 export type GraphType = t.TypeOf<typeof GraphTypeCodec>
 
-const FindProblemResponseCodec = t.type(
+export const FindProblemResponseCodec = t.type(
   {
     result: ClassificationCodec,
     problem: ProblemCodec,
@@ -137,7 +137,7 @@ const FindProblemResponseCodec = t.type(
 )
 export type FindProblemResponse = t.TypeOf<typeof FindProblemResponseCodec>
 
-const QueryResponseCodec = t.type(
+export const QueryResponseCodec = t.type(
   {
     problems: t.array(ClassifiedProblemCodec),
     stats: QueryStatisticsCodec,
@@ -147,7 +147,7 @@ const QueryResponseCodec = t.type(
 )
 export type QueryResponse = t.TypeOf<typeof QueryResponseCodec>
 
-const ProblemCountResponseCodec = t.type(
+export const ProblemCountResponseCodec = t.type(
   {
     problemCount: t.number,
   },
