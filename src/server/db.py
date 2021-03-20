@@ -490,7 +490,7 @@ def storeProblem(p: GenericProblem):
     conn = getConnection()
     cur = conn.cursor()
     if r is not None:
-        cur.execute("DELETE FROM problems WHERE id = %s", (r["id"]))
+        cur.execute("DELETE FROM problems WHERE id = %s", [r["id"]])
 
     cur.execute(
         """
