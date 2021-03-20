@@ -1,6 +1,6 @@
-<script>
-  export let open
-  export let label
+<script lang="ts">
+  export let open: boolean
+  export let label: string
 </script>
 
 <div class="wrapper">

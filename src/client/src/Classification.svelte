@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import ClassificationSource from "./ClassificationSource.svelte"
+  import type { Classification } from './types'
 
-  export let response
+  export let response: Classification
 </script>
 
 <p>

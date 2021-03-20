@@ -34,8 +34,8 @@ export type Problem = t.TypeOf<typeof ProblemCodec>
 export type ProblemRequest = {
   activeConstraints: string[],
   passiveConstraints: string[],
-  leafConstraints: string[],
-  rootConstraints: string[],
+  leafConstraints?: string[],
+  rootConstraints?: string[],
   isTree: boolean,
   isCycle: boolean,
   isPath: boolean,
@@ -49,6 +49,7 @@ const SourceCodec = t.type(
   },
   'Source'
 )
+export type Source = t.TypeOf<typeof SourceCodec>
 
 export const SourcesCodec = t.type(
   {

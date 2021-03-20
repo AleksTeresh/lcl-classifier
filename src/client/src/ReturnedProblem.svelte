@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import { getGraphType } from './graph'
+  import type { Problem } from './types'
 
-  export let item
+  export let item: Problem
 </script>
 
 <p>Active config:</p>

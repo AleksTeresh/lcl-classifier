@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import { Complexity } from './types'
+  import type { Source } from './types'
 
-  export let source
-  export let lowerBound
-  export let upperBound
+  export let source: Source
+  export let lowerBound: Complexity | undefined = undefined
+  export let upperBound: Complexity | undefined = undefined
 </script>
 
 {#if source && lowerBound != Complexity.Const && upperBound != Complexity.Unsolvable}
