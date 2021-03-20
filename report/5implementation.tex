@@ -387,6 +387,50 @@ the subsequent classification step. For this reason,
 we decided to have separate functionality for
 batch reclassification.
 
+The batch classification process starts with creating
+an object that specifies a family of problems to be
+generated, classified and stored in the database.
+The specification includes properties like
+active and passive degrees, label count, type of the
+underlying graph, etc. The problems of the given
+family are then generated via the following algorithm:
+
+\begin{enumerate}
+  \item Based on the specified label count, get a list of
+  all symbols i.e. alphabet of the problem family
+  \item Based on the alphabet and the specified active/passive
+  degrees, generate lists of all the possible
+  active and passive one-line configurations
+  \item Get a list of all possible combinations
+  of active one-line configurations and a list of all possible
+  combinations of passive one-line configurations. The combinations
+  can be of any size. This can be accomplished via
+  the "powerset" function. Now we have lists of
+  all possible active and passive configurations.
+  \item Remove configurations that are empty.
+  \item Generatate all possible tuples of size two
+  where the first element is an active configuration and
+  the second is a passive configuration. This corresponds
+  to cartesian product between the previousy generated
+  lists of all active and passive configurations.
+  \item Remove tuples that have exact duplicates in the
+  gnerated list of tuples, so that all tuples are unique.
+  \item Turn each tuple into a Problem object using
+  elements of the tuple as active and passive configurations.
+  \item Normalize all the problems
+  \item Now that all the problems are in a normalized 
+  representation, it is easy to detect whether any two
+  problems are isomorphic to each other. Remove such
+  problems from the list so that the list contains only
+  unique non-isomorphic problems.
+  \item Return the list of newly-generated problems.
+\end{enumerate}
+
+Once the problems are generated, we store them to the database,
+even though they are not classified yet. This is done mainly
+because the database will automatically associate a unique
+identifier with each of the problems.
+
 
 
 \section{Integration of Round Eliminator}
