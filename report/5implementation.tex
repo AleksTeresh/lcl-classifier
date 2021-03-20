@@ -179,11 +179,11 @@ a result of the subclassify function.
 \subsection{Query}
 
 The query class encapsulates some of the properties
-based to which the database is then queried for problems.
+based on which the database is queried for problems.
 Only problems that satisfy the provided Query object will be
 returned. The properties encapsulated by a Query object are
 more or less directly mapped to an SQL query's WHERE clause.
-The Query class groups those properties in three groups:
+The Query class groups those properties in three parent items:
 
 \begin{itemize}
   \item problem properties
@@ -352,7 +352,42 @@ constraints and root constraints respectively.
 % \end{algorithm}
 
 
-% \section{Batch classification and reclassification}
+\section{Batch classification and reclassification}
+
+This section describes how batch classification and
+batch reclassification mechanisms have been implemented.
+Batch classification is important since we want our database
+to be prepopulated with significant number of classified
+problems already before the first users start using it.
+In particular, we would need to classify huge but finite
+families of problems consisting of tens and hundreds of
+thousands of LCL problems. Moreover, once a family of
+problems is selected, the problems of the famnily need to
+be generated and turned into instances of Problem class before
+we can actually classify them. Batch reclassify functionality,
+on the other hand, is needed for cases when, for one reason
+or another, we would want to reclassify a certain
+family of LCL problems that is already stored in our
+database. For example, if we integrate a new meta-algorithm
+to our solution in the future, we would need to reclassify
+all problem families that are compatible with the newly-integrated
+meta-algorithm. Or purhaps, a programming mistake has been
+made when integrating one of the meta-algorithms, and therefore,
+the problems need to be reclassified again.
+
+One option for implementing batch reclassification
+mechanisms would be to simply delete all of the problems
+of the class in question from the database and execute
+the batch classificatoin logic from the beginning
+including its first step of generating the problems
+of the problem class. However, this is suboptimal,
+since generation of problems of a certain family
+usually takes significantly longer times than
+the subsequent classification step. For this reason,
+we decided to have separate functionality for
+batch reclassification.
+
+
 
 \section{Integration of Round Eliminator}
 
