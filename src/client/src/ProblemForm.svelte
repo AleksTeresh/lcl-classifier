@@ -6,7 +6,7 @@
   import ReturnedProblem from './ReturnedProblem.svelte'
   import { getProblem } from './api'
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
-  import type { GraphType, Problem } from './types'
+  import type { GraphType, FindProblemResponse, ProblemRequest } from './types'
   import { readyProblems } from './readyProblems'
   interface FormState {
     activeConstraints: string
@@ -18,7 +18,7 @@
 
   const FORM_PREFIX = 'problem'
 
-  function formStateToProblem(formState: FormState): Problem {
+  function formStateToProblem(formState: FormState): ProblemRequest {
     return {
       activeConstraints: formState.activeConstraints.split('\n'),
       passiveConstraints: formState.passiveConstraints.split('\n'),
@@ -43,7 +43,7 @@ B C C`,
     graphType: 'tree',
   }
 
-  let response = undefined
+  let response: FindProblemResponse | undefined = undefined
   let loading = false
   let showLeafRootConfig = false
   let showExplanation = false
@@ -56,8 +56,11 @@ B C C`,
       const problem = formStateToProblem(formState)
 
       loading = true
+
+      //@ts-ignore
+      const isProd: boolean = PRODUCTION
       try {
-        response = await getProblem(problem, PRODUCTION)
+        response = await getProblem(problem, isProd)
       } catch (e) {
         alert(e.message)
       } finally {

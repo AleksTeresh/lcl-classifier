@@ -95,8 +95,8 @@
   }
 
   let loading = false
-  let response: QueryResponse = undefined
-  let problemCount = ''
+  let response: QueryResponse | undefined = undefined
+  let problemCount: number | string = ''
 
   let showExcludeInclude = false
   let showComplexity = false
@@ -106,8 +106,10 @@
   let showExplanation = false
 
   onMount(async () => {
+    //@ts-ignore
+    const isProd: boolean = PRODUCTION
     try {
-      const r = await getTotalProblemCount(PRODUCTION)
+      const r = await getTotalProblemCount(isProd)
       problemCount = r.problemCount
     } catch (e) {
       alert(e.message)
@@ -126,8 +128,10 @@
       const query = formStateToQuery(formState, { fetchStatsOnly })
 
       loading = true
+      //@ts-ignore
+      const isProd: boolean = PRODUCTION
       try {
-        response = await getQueryResult(query, PRODUCTION)
+        response = await getQueryResult(query, isProd)
       } catch (e) {
         alert(e.message)
       } finally {

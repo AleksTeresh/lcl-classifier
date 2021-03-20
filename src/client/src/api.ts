@@ -1,9 +1,9 @@
 import type {
-  Problem,
   Query,
   QueryResponse,
   ProblemCountResponse,
   FindProblemResponse,
+  ProblemRequest
 } from './types'
 import {
   FindProblemResponseCodec,
@@ -15,7 +15,7 @@ import { urlWithParams, keysToSnake, handleResponse } from './apiHelpers'
 // PRODUCTION variable needs to be in .svelte file
 // that's the reason why isProd is passed as a param here
 export async function getProblem(
-  problem: Problem,
+  problem: ProblemRequest,
   isProd: boolean
 ): Promise<FindProblemResponse> {
   const url = urlWithParams(
