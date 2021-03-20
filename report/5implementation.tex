@@ -431,7 +431,40 @@ even though they are not classified yet. This is done mainly
 because the database will automatically associate a unique
 identifier with each of the problems.
 
+After that, the problems are classified. Notice that
+some of the meta-algorithms provide a way to classify
+lists of problems at the same time, which is often
+significantly faster than classifying one problem at a time.
+This is due to the fact that some meta-algorithms
+(e.g. TLP classifier and BRT classifier) are in fact
+huge datasets of preclassified problems. When
+classifying each problem individually, such
+meta-algorithms would need to read out the whole
+dataset from the disk, find one specific problem,
+and return the result. On the other hand, when
+classifying multiple problems at the same time,
+numerous optimizations can be applied e.g. reading the 
+dataset from the disk just once and search for all
+requested problems at the same time. For this reason,
+when batch classifying families of problems we first
+call such batch classiicatio methods of meta-algorithm
+if such methods exist. Once this is done, a modification
+of the previously-described classify function is called
+for each individual Problem object. The difference is
+that if a meta-algorithm $A$'s batch classify method has been
+already called, its "subclassify" function is not called
+anymore during the individual-problem classification which
+can significantly speedup the whole batch classification
+functionality. Finally, when all problems have been classified,
+the database is updated with the classification results.
 
+The batch reclassification functionality resembles
+what has been described above with the excpetion that,
+once a family of problems has been specified, it is
+not generated but is instead queries from the database.
+After that, the fetched problems undergo the same
+batch classification process. Finally, the database is
+updated with the received classifications.
 
 \section{Integration of Round Eliminator}
 
