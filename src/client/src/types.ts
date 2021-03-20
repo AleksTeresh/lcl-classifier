@@ -1,3 +1,5 @@
+import * as t from 'io-ts'
+
 export enum Complexity {
   Const = '(1)',
   IteratedLog = '(log* n)',
@@ -11,26 +13,29 @@ export interface Problem {
   passiveConstraints: string[]
   leafConstraints?: string[]
   rootConstraints?: string[]
-  isTree: boolean
-  isCycle: boolean
-  isPath: boolean
-}
-
-export interface ClassifiedProblem extends Problem {
-  activeConstraints: string[]
-  passiveConstraints: string[]
-  leafConstraints?: string[]
-  rootConstraints?: string[]
   flags: {
     isTree: boolean
     isCycle: boolean
     isPath: boolean
   }
+}
+
+export interface Sources {
   detLowerBound: Complexity
   detUpperBound: Complexity
   randLowerBound: Complexity
   randUpperBound: Complexity
 }
+
+export interface Classification {
+  detLowerBound: Complexity
+  detUpperBound: Complexity
+  randLowerBound: Complexity
+  randUpperBound: Complexity
+  papers: Sources
+}
+
+export type ClassifiedProblem = Problem & Classification
 
 interface StatisticsComplexityData {
   randLowerBound: number
@@ -81,3 +86,18 @@ export interface Query {
 }
 
 export type GraphType = 'tree' | 'cycle' | 'path'
+
+export interface FindProblemResponse {
+  result: Classification,
+  problem: Problem
+}
+
+export interface QueryResponse {
+  problems: ClassifiedProblem[]
+  stats: QueryStatistics
+  isComplete: boolean
+}
+
+export interface ProblemCountResponse {
+  problemCount: number
+}

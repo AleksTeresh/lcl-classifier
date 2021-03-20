@@ -1,6 +1,6 @@
-import type { ClassifiedProblem } from './types'
+import type { Problem } from './types'
 
-export function getGraphType(problem: ClassifiedProblem) {
+export function getGraphType(problem: Problem) {
   if (problem.flags.isTree) {
     return 'Tree'
   }

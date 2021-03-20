@@ -5,25 +5,17 @@
   import VirtualList from '@sveltejs/svelte-virtual-list'
   import Statistics from './Statistics.svelte'
   import { readyQueries } from './readyQueries'
-  import { getGraphType } from './graph'
   import Classification from './Classification.svelte'
   import Collapsible from './Collapsible.svelte'
   import { getQueryResult, getTotalProblemCount } from './api'
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
   import type {
     Query,
-    ClassifiedProblem,
-    QueryStatistics,
     GraphType,
+    QueryResponse
   } from './types'
   import { Complexity } from './types'
   import ReturnedProblem from './ReturnedProblem.svelte'
-
-  interface QueryResponse {
-    problems: ClassifiedProblem[]
-    stats: QueryStatistics
-    isComplete: boolean
-  }
 
   interface FormState {
     graphType: GraphType
