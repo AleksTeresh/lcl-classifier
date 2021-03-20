@@ -1,4 +1,5 @@
 import * as t from 'io-ts'
+import { fromEnum } from './typeUtil'
 
 export enum Complexity {
   Const = '(1)',
@@ -8,96 +9,148 @@ export enum Complexity {
   Global = '(n)',
   Unsolvable = 'unsolvable',
 }
-export interface Problem {
-  activeConstraints: string[]
-  passiveConstraints: string[]
-  leafConstraints?: string[]
-  rootConstraints?: string[]
-  flags: {
-    isTree: boolean
-    isCycle: boolean
-    isPath: boolean
-  }
-}
+const ComplexityCodec = fromEnum<Complexity>('Complexity', Complexity)
 
-export interface Sources {
-  detLowerBound: Complexity
-  detUpperBound: Complexity
-  randLowerBound: Complexity
-  randUpperBound: Complexity
-}
+const FlagsCodec = t.type(
+  {
+    isTree: t.boolean,
+    isCycle: t.boolean,
+    isPath: t.boolean,
+  },
+  'Flags'
+)
+const ProblemCodec = t.type(
+  {
+    activeConstraints: t.array(t.string),
+    passiveConstraints: t.array(t.string),
+    leafConstraints: t.array(t.string),
+    rootConstraints: t.array(t.string),
+    flags: FlagsCodec,
+  },
+  'Problem'
+)
+export type Problem = t.TypeOf<typeof ProblemCodec>
 
-export interface Classification {
-  detLowerBound: Complexity
-  detUpperBound: Complexity
-  randLowerBound: Complexity
-  randUpperBound: Complexity
-  papers: Sources
-}
+const SourceCodec = t.type(
+  {
+    urls: t.array(t.string),
+    name: t.string,
+    shortName: t.string,
+  },
+  'Source'
+)
 
-export type ClassifiedProblem = Problem & Classification
+const SourcesCodec = t.type(
+  {
+    detLowerBoundSource: SourceCodec,
+    detUpperBoundSource: SourceCodec,
+    randLowerBoundSource: SourceCodec,
+    randUpperBoundSource: SourceCodec,
+  },
+  'Sources'
+)
+export type Sources = t.TypeOf<typeof SourcesCodec>
 
-interface StatisticsComplexityData {
-  randLowerBound: number
-  detLowerBound: number
-  randUpperBound: number
-  detUpperBound: number
-  randSolvable: number
-  detSolvable: number
-}
+const ClassificationCodec = t.type(
+  {
+    detLowerBound: ComplexityCodec,
+    detUpperBound: ComplexityCodec,
+    randLowerBound: ComplexityCodec,
+    randUpperBound: ComplexityCodec,
+    papers: SourcesCodec,
+  },
+  'Classification'
+)
+export type Classification = t.TypeOf<typeof ClassificationCodec>
 
-export interface QueryStatistics {
-  const: StatisticsComplexityData
-  logStar: StatisticsComplexityData
-  logLog: StatisticsComplexityData
-  log: StatisticsComplexityData
-  linear: StatisticsComplexityData
-  unsolvable: StatisticsComplexityData
-  totalSize: number
-}
+const ClassifiedProblemCodec = t.intersection(
+  [ProblemCodec, ClassificationCodec],
+  'ClassifiedProblem'
+)
+export type ClassifiedProblem = t.TypeOf<typeof ClassifiedProblemCodec>
 
-export interface Query {
-  isTree: boolean
-  isCycle: boolean
-  isPath: boolean
-  isDirectedOrRooted: boolean
+const StatisticsComplexityDataCodec = t.type(
+  {
+    randLowerBound: t.number,
+    detLowerBound: t.number,
+    randUpperBound: t.number,
+    detUpperBound: t.number,
+    randSolvable: t.number,
+    detSolvable: t.number,
+  },
+  'StatisticsComplexityData'
+)
 
-  randLowerBound: Complexity
-  randUpperBound: Complexity
-  detLowerBound: Complexity
-  detUpperBound: Complexity
+const QueryStatisticsCodec = t.type({
+  const: StatisticsComplexityDataCodec,
+  logStar: StatisticsComplexityDataCodec,
+  logLog: StatisticsComplexityDataCodec,
+  log: StatisticsComplexityDataCodec,
+  linear: StatisticsComplexityDataCodec,
+  unsolvable: StatisticsComplexityDataCodec,
+  totalSize: t.number,
+})
+export type QueryStatistics = t.TypeOf<typeof QueryStatisticsCodec>
 
-  activeDegree: number
-  passiveDegree: number
-  labelCount: number
-  activesAllSame: boolean
-  passivesAllSame: boolean
+const Query = t.type({
+  isTree: t.boolean,
+  isCycle: t.boolean,
+  isPath: t.boolean,
+  isDirectedOrRooted: t.boolean,
 
-  largestProblemOnly: boolean
-  smallestProblemOnly: boolean
-  completelyRandUnclassifiedOnly: boolean
-  partiallyRandUnclassifiedOnly: boolean
-  completelyDetUnclassifiedOnly: boolean
-  partiallyDetUnclassifiedOnly: boolean
-  excludeIfConfigHasAllOf: string[]
-  excludeIfConfigHasSomeOf: string[]
-  includeIfConfigHasAllOf: string[]
-  includeIfConfigHasSomeOf: string[]
-}
+  randLowerBound: ComplexityCodec,
+  randUpperBound: ComplexityCodec,
+  detLowerBound: ComplexityCodec,
+  detUpperBound: ComplexityCodec,
 
-export type GraphType = 'tree' | 'cycle' | 'path'
+  activeDegree: t.number,
+  passiveDegree: t.number,
+  labelCount: t.number,
+  activesAllSame: t.boolean,
+  passivesAllSame: t.boolean,
 
-export interface FindProblemResponse {
-  result: Classification,
-  problem: Problem
-}
+  largestProblemOnly: t.boolean,
+  smallestProblemOnly: t.boolean,
+  completelyRandUnclassifiedOnly: t.boolean,
+  partiallyRandUnclassifiedOnly: t.boolean,
+  completelyDetUnclassifiedOnly: t.boolean,
+  partiallyDetUnclassifiedOnly: t.boolean,
+  excludeIfConfigHasAllOf: t.array(t.string),
+  excludeIfConfigHasSomeOf: t.array(t.string),
+  includeIfConfigHasAllOf: t.array(t.string),
+  includeIfConfigHasSomeOf: t.array(t.string),
+})
+export type Query = t.TypeOf<typeof Query>
 
-export interface QueryResponse {
-  problems: ClassifiedProblem[]
-  stats: QueryStatistics
-  isComplete: boolean
-}
+const GraphTypeCodec = t.union(
+  [t.literal('tree'), t.literal('cycle'), t.literal('path')],
+  'GraphType'
+)
+export type GraphType = t.TypeOf<typeof GraphTypeCodec>
 
-export interface ProblemCountResponse {
-  problemCount: number
-}
+const FindProblemResponseCodec = t.type(
+  {
+    result: ClassificationCodec,
+    problem: ProblemCodec,
+  },
+  'FindProblemResponse'
+)
+export type FindProblemResponse = t.TypeOf<typeof FindProblemResponseCodec>
+
+const QueryResponseCodec = t.type(
+  {
+    problems: t.array(ClassifiedProblemCodec),
+    stats: QueryStatisticsCodec,
+    isComplete: t.boolean,
+  },
+  'QueryResponse'
+)
+export type QueryResponse = t.TypeOf<typeof QueryResponseCodec>
+
+const ProblemCountResponseCodec = t.type(
+  {
+    problemCount: t.number,
+  },
+  'ProblemCountResponse'
+)
+export type ProblemCountResponse = t.TypeOf<typeof ProblemCountResponseCodec>

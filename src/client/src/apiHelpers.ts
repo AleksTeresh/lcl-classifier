@@ -1,4 +1,6 @@
-export async function handleResponse(response: Response) {
+export async function handleResponse<T>(
+  response: Response
+): Promise<T> {
   if (!response.ok) {
     // try to get `error` field from response body.
     // if not, fall back to statusText

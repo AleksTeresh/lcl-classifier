@@ -73,9 +73,3 @@
   <p>Linear time: {stats.linear.detUpperBound}</p>
   <p>Unsolvable: {stats.unsolvable.detUpperBound}</p>
 </div>
-
-<style>
-  .problem-wrapper {
-    border-bottom: 1px solid black;
-  }
-</style>
