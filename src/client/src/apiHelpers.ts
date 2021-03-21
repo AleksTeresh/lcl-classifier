@@ -2,7 +2,7 @@ import type { Type } from 'io-ts'
 import * as Either from 'fp-ts/lib/Either'
 import { PathReporter } from 'io-ts/PathReporter'
 
-export async function handleResponse<T>(
+async function handleResponse<T>(
   response: Response,
   codec: Type<T>
 ): Promise<T> {
@@ -17,6 +17,23 @@ export async function handleResponse<T>(
     return result.right
   } else {
     throw Error(PathReporter.report(result).join('\n'))
+  }
+}
+
+export async function fetchJson<T>(url: string, codec: Type<T>): Promise<T | undefined> {
+  let response
+  try {
+    response = await fetch(url)
+  } catch (e) {
+    console.error(e)
+    return undefined
+  }
+
+  try {
+    return await handleResponse(response, codec)
+  } catch (e) {
+    alert(e.message)
+    return undefined
   }
 }
 

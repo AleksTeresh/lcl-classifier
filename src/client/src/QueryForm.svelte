@@ -108,14 +108,12 @@
   onMount(async () => {
     //@ts-ignore
     const isProd: boolean = PRODUCTION
-    try {
-      const r = await getTotalProblemCount(isProd)
+    const r = await getTotalProblemCount(isProd)
+    if (r) {
       problemCount = r.problemCount
-    } catch (e) {
-      alert(e.message)
-    } finally {
-      loading = false
     }
+    loading = false
+
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
       let augmentedFormState = {
         ...formState,
@@ -130,13 +128,8 @@
       loading = true
       //@ts-ignore
       const isProd: boolean = PRODUCTION
-      try {
-        response = await getQueryResult(query, isProd)
-      } catch (e) {
-        alert(e.message)
-      } finally {
-        loading = false
-      }
+      response = await getQueryResult(query, isProd)
+      loading = false
     }
   })
 

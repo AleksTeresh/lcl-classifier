@@ -59,13 +59,8 @@ B C C`,
 
       //@ts-ignore
       const isProd: boolean = PRODUCTION
-      try {
-        response = await getProblem(problem, isProd)
-      } catch (e) {
-        alert(e.message)
-      } finally {
-        loading = false
-      }
+      response = await getProblem(problem, isProd)
+      loading = false
     }
   })
 
