@@ -24,6 +24,28 @@ where input labelling is allowed. Since none of the used classifiers
 are capable of processing problems with inputs, this family of problems
 has not been covered by our implementation, although it has been shown that
 LCLs of this class are decidable (even though it is PSPACE-hard)~\cite{Balliu2018}.
+
+As can be seen from the first column of the "Tree" grouping, it is unknown whether
+unlabeled regular homogeneous~\cite{BalliuHomogeneous}
+undirected trees are classifiable if the number of
+output labels exceeds two. On the other hand, LCL problems on
+unlabeled regular undirected trees with binary label output is fully decidable, albeit
+only in deterministic setting. In addition to this, for some problems of the problem family,
+complexity is decidable even in randomised setting~\cite{Balliu2019c}.
+Since our solution does not directly include a classifier that would implement
+classification of problems of the described family, our tool is not capable of
+classifying the problems. It is important to notice however that the TLP
+Classifier~\cite{Rocher2020clas} uses the classifier as part of its implementation.
+Therefore, at least some problems of the described family can be classified. Specifically,
+only problems on (2, 2)-, (2, 3)-, and (3, 2)- biregular trees of the family
+(and only in deterministic setting) can be classified in our implementation.
+Therefore, a natural opportunity for extending the current functionality of the tool
+would be to integrate a clasifier that would classify all binary labeling LCL problems
+on unlabeled regular undirected trees. Given that such implementation would
+essentially involve a simple table lookup (the authors of the original paper
+reduce the classification problem to a two-dimensional table lookup), the
+classifier could work efficiently even with trees of relatively high degree.
+
 % go through other columns
 % summarize in the end what families of problems we have failed to cover
 
