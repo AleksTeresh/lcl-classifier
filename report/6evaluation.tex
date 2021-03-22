@@ -102,18 +102,22 @@ both of these functionalities have been succesfully implemented.
 Notice that we address performance issues in another section later in
 this chapter, as well as we have already evaluated the number of
 problem families our tool is capable of working with. In this section,
-we are discussing just the availability of the functionality, while not
+we are discussing just the availability of the functionality itself, while not
 being concerned with other -- although related -- metrics.
 Thus, we can conclude that the two goals have been full accomplished.
 
-\section{Querying for problem families}
-
-% return all problems on e.g. binary rooted trees that have complexity e.g. log* N
-
-\section{Understanding where the results come from}
-
-% references to sources
-
+As a final research goal in our list, we had a possibility
+to see which of the meta-algorithms has determined each
+of the lower and upper bounds for each of the preclassified
+LCL problems being stored in our database. As described in the
+previous chapter, this is automatically done for all problems being
+classified via our solution. At the same time as a problem is classified,
+all of its classification results -- deterministic upper bound,
+deterministic lower bound, randomized upper bound, randomized lower bound --
+are associated with one of the meta-algorithms. This information is also
+persisted in the database at the same time a newly classified problem
+is being stored. Thus, we can consider this research goal as being
+fulfilled as well.
 
 \section{Performance}
 
