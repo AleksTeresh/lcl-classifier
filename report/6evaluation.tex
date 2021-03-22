@@ -8,6 +8,8 @@ we have decided to combine the evaluation with discussion on opportunities for f
 development. Therefore, we will also propose several ideas for how our implementation
 can be improved and extended.
 
+\section{Decidability of a wide range of problem families on trees}
+
 The first goal among the research goals listed in Chapter~\ref{chapter:methods}
 was to store (or be able to compute dynamically) most
 (if not all) of the existing knowledge on classification of LCL problems on trees.
@@ -46,33 +48,57 @@ essentially involve a simple table lookup (the authors of the original paper
 reduce the classification problem to a two-dimensional table lookup), the
 classifier could work efficiently even with trees of relatively high degree.
 
-% go through other columns
-% summarize in the end what families of problems we have failed to cover
+The next column in the table is for LCL problems on unlabeled regular directed
+trees. It has been shown that the problems of this family are fully decidable
+with any finite number of output labels~\cite{Balliu2021}. However, the
+only currently-existing implementation of the decidability algorithm
+works exclusively with binary rooted trees~\cite{Studeny2021}. The
+meta-algorithm has been successfully integrated into our solution, and
+thus all LCL problems on binary rooted trees can be classified also In
+practive using our tool. Nevertheless, an implementation of the
+decidability algorithm that would work for trees of higher degrees
+would be of high interest to the research community. The original
+paper shows that such implementation for arbitrary number of output
+labels is possible at least in principle. Besides, there is no
+evidence that such implementation would be impractical from the
+performance perspective. Therefore, a natural opportunity for
+extending the software would be to build such an implementation and
+consequently integrate it in our tool.
 
-% store most/all existing knowledge about complexity of LCL problems on Trees
-% Does it work on all trees?
+All other -- more general -- LCL problem families
+are currently only known to be decidable between complexity classes of
+$\Omega(\log n)$ and $O(n)$~\cite{Chang2020a}. There are currently
+no known implementation of the classification algorithm described in the
+referenced paper. Although the described meta-algorithm is at least
+EXPTIME-hard, there is also no evidence that the algorithm wouldn't be
+practical at least for a limited subfamily of problems. Therefore, its
+implementation and integration into our solution would be a potential
+direction for the tool's future development.
+
+Thus, while many of the listed graph families are classifiable
+already with our tool, a lot more meta-algorithms can be developed
+and integrated in our solution. Moreover, the theoretical
+research of decidability of LCL problems on tree is currently
+developing at a high pace, which will likely bring even more
+positive theoretical decidability results in the future.
+It is then the task of the practitioners to catch up with
+the theory and make the practical decidability landscape
+as complete as possible.
+
+\section{Obtaining complexity of a given problem}
 
 % get Complexity of a problem X
 
+\section{Querying for problem families}
+
 % return all problems on e.g. binary rooted trees that have complexity e.g. log* N
+
+\section{Understanding where the results come from}
 
 % references to sources
 
 
-% all meta-algorithms used?
-  % RE (label limitations?)
-  % cycle-path classifier
-  % binary label classifier (Rust implementation by Dennis)
-  % TLP classifier (degree limitations?)
-  % rooted tree classifier (by Jan) (only binary?)
-  % BRT dataset
-
-
-% currently label count is UB. People want to be able to specify a LB for labels used
-% people want to query for only fixed-points problems
-% people want to query for problems of exact constant complexity
-% restrictions on what output nodes can produce is currently somewhat limited (at least there is no differentiation between active/passive nodes)
-
+\section{Performance}
 
 % speed of classifying a problems
 
@@ -80,6 +106,14 @@ classifier could work efficiently even with trees of relatively high degree.
 
 % speed of batch classification
 
+\section{Number of preclassified problems}
+
 % number of preclassified problems in the database
    % how many of them are not trivially classified
 
+
+\section{Miscellaneous improvements}
+% currently label count is UB. People want to be able to specify a LB for labels used
+% people want to query for only fixed-points problems
+% people want to query for problems of exact constant complexity
+% restrictions on what output nodes can produce is currently somewhat limited (at least there is no differentiation between active/passive nodes)
