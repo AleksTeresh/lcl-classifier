@@ -1,4 +1,4 @@
-\chapter{Evaluation and opportunities for further development}
+\chapter{Evaluation and opportunities for future development}
 \label{chapter:evaluation}
 
 In this chapter, we will attempt to evaluate success of our implementation
@@ -11,7 +11,7 @@ can be improved and extended.
 \section{Decidability of a wide range of problem families on trees}
 
 The first goal among the research goals listed in Chapter~\ref{chapter:methods}
-was to store (or be able to compute dynamically) most
+was to store (or to be able to compute dynamically) most
 (if not all) of the existing knowledge on classification of LCL problems on trees.
 To evaluate how well we have done, we can refer once again to Table~\ref{table:summary}.
 The first three columns under the "Paths and cycles" grouping refer to LCL problems on
@@ -75,8 +75,8 @@ practical at least for a limited subfamily of problems. Therefore, its
 implementation and integration into our solution would be a potential
 direction for the tool's future development.
 
-Thus, while many of the listed graph families are classifiable
-already with our tool, a lot more meta-algorithms can be developed
+Thus, while many of the listed graph families are already classifiable
+with our tool, a lot more meta-algorithms can be developed
 and integrated in our solution. Moreover, the theoretical
 research of decidability of LCL problems on tree is currently
 developing at a high pace, which will likely bring even more
@@ -85,9 +85,26 @@ It is then the task of the practitioners to catch up with
 the theory and make the practical decidability landscape
 as complete as possible.
 
-\section{Obtaining complexity of a given problem}
+\section{Finding a problem's complexity and performing group queries}
 
-% get Complexity of a problem X
+The two other goals in our list of the research goals was to
+
+\begin{enumerate}
+  \item be able to find deterministic and randomised complexity of
+  of a particular problem $P$, provided that the problem belongs to
+  one of the classes that one tool is capable of classifying,
+  \item be able to query for groups of multiple problems based
+  on a variety of parameters.
+\end{enumerate}
+
+As can be deduced from Chapter~\ref{chapter:implementation},
+both of these functionalities have been succesfully implemented.
+Notice that we address performance issues in another section later in
+this chapter, as well as we have already evaluated the number of
+problem families our tool is capable of working with. In this section,
+we are discussing just the availability of the functionality, while not
+being concerned with other -- although related -- metrics.
+Thus, we can conclude that the two goals have been full accomplished.
 
 \section{Querying for problem families}
 
