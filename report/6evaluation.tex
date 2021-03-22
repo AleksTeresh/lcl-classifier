@@ -121,6 +121,15 @@ fulfilled as well.
 
 \section{Performance}
 
+In this section, we will evaluate our implementation from
+performance perspective. Performance is essential for
+our tool to be useful for the research community.
+We will evaluate performance of our tool
+in the context of classifying a single LCL problem,
+generating and classifying a huge but finite family of
+LCL problem, and querying the database for a group
+of problems matching user-defined specification.
+
 % speed of classifying a problems
 
 % speed of getting batch query resutls
@@ -129,11 +138,37 @@ fulfilled as well.
 
 \section{Number of preclassified problems}
 
-% number of preclassified problems in the database
-   % how many of them are not trivially classified
+At the moment of writing the thesis, the database contains 335314
+LCL problems. Out of them, 197218 have at least one non-trivial bound. \emph{Trivial bound} here
+refers to $\Omega(1)$ for lower bounds and "unsolvable" for upper bounds.
 
+The following families of LCL groups have been pre-generated batch classified
+using the batch classification functionality described in Chapter~\ref{chapter:implementation}:
 
-\section{Miscellaneous improvements}
+\begin{itemize}
+  \item binary labeling problems on both directed and undericted paths and cycles
+  \item ternary labeling problems on both directed and undirected paths
+  \item 4-labeling problems on undirected paths
+  \item binary labeling problems on both rooted and unrooted (3, 2)-biregular trees
+  \item ternary labeling problems on unrooted (3, 2)-biregular trees
+  \item ternary labeling problems on rooted (3, 2)-biregular trees where passive configurations are monochromatic
+  \item 4-labeling problems on rooted (3, 2)-biregular trees where active configurations are monochromatic
+  \item a part of 4-labeling problems on directed paths
+  \item a part of ternary labeling problems on rooted (3, 2)-biregular trees (with no constraints on active or passive configurations)
+  \item a part of 4-labeling problems on rooted (3, 2)-biregular trees where passive configurations are monochromatic
+\end{itemize}
+Notice that in all of the problem families listed above, leaf and root nodes
+(or equivalently nodes of degree one on paths) are unconstrained. Moreover, in addition to the
+groups of preclassified problems, the database contains several individual problems that
+were added as a result of the application being used by several of the members of the
+distributed algorithms research community.
+
+Thus, it is evident that the number of preclassified problems is already at this stage sufficient
+for the tool to be useful to the research community. Populating the database
+with more problems of more diverse problem families is a natural opportunity for future
+development.
+
+\section{Miscellaneous}
 % currently label count is UB. People want to be able to specify a LB for labels used
 % people want to query for only fixed-points problems
 % people want to query for problems of exact constant complexity
