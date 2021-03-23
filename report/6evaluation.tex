@@ -169,7 +169,39 @@ with more problems of more diverse problem families is a natural opportunity for
 development.
 
 \section{Miscellaneous}
-% currently label count is UB. People want to be able to specify a LB for labels used
-% people want to query for only fixed-points problems
-% people want to query for problems of exact constant complexity
-% restrictions on what output nodes can produce is currently somewhat limited (at least there is no differentiation between active/passive nodes)
+
+This section contains some of the possibilities
+for improving and extending the solution. The ideas collected
+here has been obtained as a result of feedback
+received from members of the distributed algorithms
+research community who had already used the system
+as part of their research process.
+
+Currently, it is only possible to specify an upper bound for
+the number of labels used in a problem when constructing a query.
+A common request was to also be able to specify a lower bound for the
+number of labels.
+
+Another request was the ability to query only for those problems that are
+or lead to periodic points as a result of applying round elimination.
+The information about whether a problem is a periodic point ot not
+is currently only available at the time of classification but is
+not stored in the database. Storing the data and allowing for
+querying based on it would be yet another possibility to expand the tool.
+
+Similarly, it would be useful to query for problems based on their
+exact constant complexity (as opposed to asymptotics) if such
+information is available. Besides, displaying precise constant complexity
+would also be benefitial when classifying a single problem.
+Currently, precise constant complexity is sometimes available when
+classifying a problem with the Round Eliminator. Storing this
+information to the database, showing it to users and incorporating it
+in the Query object would be another useful extension to the tool.
+
+Finally, the query functionality is still currently rather limited.
+Moreover, it is not clear which features of it are going to be the
+most useful to the users and which will not be used often.
+Thus, investigating this via collecting feedback from
+research community and then modifying the tool based on
+this feedback is yet another opportunity for improving the software.
+
