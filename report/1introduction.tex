@@ -30,9 +30,52 @@ in cases where the size of the network is extremely
 large, and thus each computational unit
 cannot afford to check every other unit in the system.
 
+As the field has been studied, more and more knowledge
+about such problems has been accumulated by the
+research community. In particular, as is common
+in the field of algorithm design, much of the
+research has been focused on complexity of
+problems in distributed computing. Apart from
+individual compplexity results, the research
+community has invented several "meta-algorithms".
+These are centralized algorithms that
+automatically determine
+computational complexity of a provided
+problem.
+
 \section{Problem statement}
 
 
 
-\section{Structure of the Thesis}
+\section{Structure of the thesis}
 \label{section:structure} 
+
+Chapter~\ref{chapter:background} provides a theoretical
+background necessary for understanding the contents of the
+following chapters. The chapter opens with
+a brief but informative overview of graph-theoretic
+concepts. Then, the chapter provides basic
+theoretical background related to distributed computing.
+Moreover, the chapter explains notions of
+locally checkable problems, decidability, as well as
+covers recent developments in the aread of
+automatic classification in distributed algorithms.
+
+Chapter~\ref{chapter:environment} describes
+meta-algorithms that are used in our final
+solution. The meta-algorithms take a description
+of a locally verifiable problem as an input and
+as an output produce some information about the
+problem's compplexity.
+
+Chapter~\ref{chapter:methods} states our research goals
+and defines the scope of the thesis project.
+Chapter~\ref{chapter:implementation}
+provides an overview of an implementation of
+our solution. Chapter~\ref{chapter:evaluation}
+evaluates the outcomes of the implementation
+against the earlier stated research goals. It
+also points out possible directions for
+future development. Finally, Chapter~\ref{chapter:conclusions}
+summarizes the entirety of the work.
+
