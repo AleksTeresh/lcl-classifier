@@ -12,6 +12,19 @@ systems consist of many computational units each
 performing local computation and communicating
 with other such units close to it.
 
+Unlike traditional
+centralized algorithms, in distributed computing,
+there is no centralized entity that would see the
+entirety of system's input or output. Instead,
+input is shared among the computational units, each
+knowing only a part of it. Also, once a distributed
+algorithm halts, each unit is only aware of its
+own output piece. This, among other things, implies
+that it is now non-trivial to ensure that the
+executed algorithm has succeeded and the
+outputs of the computational units are
+indeed valid when considered together.
+
 The field of distributed algorithms has several
 decades of research history and has had grown
 in width significantly since its inception in 1980s.
@@ -22,9 +35,9 @@ community is the study of \emph{locally verifiable}
 problems.
 These are the kinds of problems, where, roughly speaking,
 once an execution of an algorithm has ended, each
-computation unit in the distributed system can just
-collect information from other compputational units
-close to it to ensure that the executed algorithm has succeeded. Problems of this kind are particularly
+computational unit can
+collect information only from close-by computational units,
+and it will be sufficient to ensure that the executed algorithm has succeeded. Problems of this kind are particularly
 interesting because they have obvious relevance
 in cases where the size of the network is extremely
 large, and thus each computational unit
