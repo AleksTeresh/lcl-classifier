@@ -37,7 +37,7 @@ export function loadStateFromUrl<T extends { [key: string]: AllowedProperty }>(
   if (Either.isRight(result)) {
     return result.right
   } else {
-    const errorMessage = PathReporter.report(result).join('\n')
+    const errorMessage = `The URL's query part is invalid\n${PathReporter.report(result).join('\n')}`
     alert(errorMessage)
     return undefined
   }
