@@ -1,6 +1,5 @@
 from complexity import *
 
-
 class Source:
     def __init__(self, shortName, name, urls):
         self.shortName = shortName

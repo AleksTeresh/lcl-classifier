@@ -1,9 +1,9 @@
-from problem import GenericProblem
+from problem.problem import GenericProblem
 from response import GenericResponse, Sources
 from complexity import complexities
 from complexity import *
-from classifier_types import *
-from classify_context import ClassifyContext
+from .classifier_types import *
+from .classify_context import ClassifyContext
 from typing import List, Dict
 from bindings.cp_binding import classify as cpClassify
 from bindings.rt_binding import classify as rtClassify

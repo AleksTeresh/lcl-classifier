@@ -1,12 +1,12 @@
 from typing import NamedTuple, List, Set
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
-from config_util import parseAndNormalize
-from config_util import areRegular
-from config_util import areSomeDirectedByUnparsedConfigs
-from config_util import areAllDirectedByUnparsedConfigs
-from config_util import getDegreeByUnparsedConfig
-from config_util import isRegularByUnparsedConfigs
+from problem.config_util import parseAndNormalize
+from problem.config_util import areRegular
+from problem.config_util import areSomeDirectedByUnparsedConfigs
+from problem.config_util import areAllDirectedByUnparsedConfigs
+from problem.config_util import getDegreeByUnparsedConfig
+from problem.config_util import isRegularByUnparsedConfigs
 import itertools, copy
 
 

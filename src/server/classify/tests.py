@@ -1,12 +1,129 @@
 import unittest
-from problem import GenericProblem, ProblemFlags, ProblemProps
-from classifier import classify
-from complexity import *
-from generator import generate
-from db import storeProblemsAndGetWithIds
-from batch_classify import batchClassify
 import pickle
+from . import batchClassify
+from . import classify
+from complexity import *
+from problem.problem import GenericProblem, ProblemFlags, ProblemProps
+from problem.generator import generate
 
+class TestBatchClassifier(unittest.TestCase):
+    def __checkEquality(self, results, saved):
+        self.assertEqual(len(results), len(saved))
+        for r, s in zip(results, saved):
+            self.assertEqual(r.randLowerBound, s.randLowerBound)
+            self.assertEqual(r.randUpperBound, s.randUpperBound)
+            self.assertEqual(r.detLowerBound, s.detLowerBound)
+            self.assertEqual(r.detUpperBound, s.detUpperBound)
+
+    def testClassifier1(self):
+        activeDegree = 2
+        passiveDegree = 2
+        labelCount = 2
+        activesAllSame = False
+        passivesAllSame = False
+        flags = ProblemFlags(
+            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=False
+        )
+        ps = generate(
+            activeDegree,
+            passiveDegree,
+            labelCount,
+            activesAllSame,
+            passivesAllSame,
+            flags,
+        )
+        results = batchClassify(ps)
+        with open("test_data/classifications1.pickle", "rb") as handle:
+            saved = pickle.load(handle)
+            self.__checkEquality(results, saved)
+
+    def testClassifier2(self):
+        activeDegree = 2
+        passiveDegree = 2
+        labelCount = 2
+        activesAllSame = False
+        passivesAllSame = False
+        flags = ProblemFlags(
+            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=True
+        )
+        ps = generate(
+            activeDegree,
+            passiveDegree,
+            labelCount,
+            activesAllSame,
+            passivesAllSame,
+            flags,
+        )
+        results = batchClassify(ps)
+        with open("test_data/classifications2.pickle", "rb") as handle:
+            saved = pickle.load(handle)
+            self.__checkEquality(results, saved)
+
+    def testClassifier3(self):
+        activeDegree = 2
+        passiveDegree = 2
+        labelCount = 3
+        activesAllSame = False
+        passivesAllSame = False
+        flags = ProblemFlags(
+            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=False
+        )
+        ps = generate(
+            activeDegree,
+            passiveDegree,
+            labelCount,
+            activesAllSame,
+            passivesAllSame,
+            flags,
+        )
+        results = batchClassify(ps)
+        with open("test_data/classifications3.pickle", "rb") as handle:
+            saved = pickle.load(handle)
+            self.__checkEquality(results, saved)
+
+    def testClassifier4(self):
+        activeDegree = 3
+        passiveDegree = 2
+        labelCount = 2
+        activesAllSame = False
+        passivesAllSame = False
+        flags = ProblemFlags(
+            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=False
+        )
+        ps = generate(
+            activeDegree,
+            passiveDegree,
+            labelCount,
+            activesAllSame,
+            passivesAllSame,
+            flags,
+        )
+        results = batchClassify(ps)
+        with open("test_data/classifications4.pickle", "rb") as handle:
+            saved = pickle.load(handle)
+            self.__checkEquality(results, saved)
+
+    def testClassifier5(self):
+        activeDegree = 3
+        passiveDegree = 2
+        labelCount = 2
+        activesAllSame = False
+        passivesAllSame = False
+        flags = ProblemFlags(
+            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=True
+        )
+        ps = generate(
+            activeDegree,
+            passiveDegree,
+            labelCount,
+            activesAllSame,
+            passivesAllSame,
+            flags,
+        )
+        results = batchClassify(ps)
+        with open("test_data/classifications5.pickle", "rb") as handle:
+            saved = pickle.load(handle)
+            self.__checkEquality(results, saved)
 
 class TestClassifier(unittest.TestCase):
     def testRe1(self):
@@ -231,241 +348,3 @@ class TestClassifier(unittest.TestCase):
         self.assertEqual(res.detUpperBound, ITERATED_LOG)
         self.assertEqual(res.randUpperBound, ITERATED_LOG)
         self.assertEqual(res.randLowerBound, ITERATED_LOG)
-
-
-class TestGenerator(unittest.TestCase):
-    def __checkEquality(self, results, saved):
-        self.assertEqual(len(results), len(saved))
-        for r, s in zip(results, saved):
-            self.assertEqual(r.activeConstraints, s.activeConstraints)
-            self.assertEqual(r.passiveConstraints, s.passiveConstraints)
-            self.assertEqual(r.leafConstraints, s.leafConstraints)
-            self.assertEqual(r.rootConstraints, s.rootConstraints)
-            self.assertEqual(r.leafAllowAll, s.leafAllowAll)
-            self.assertEqual(r.rootAllowAll, s.rootAllowAll)
-            self.assertEqual(r.flags.isTree, s.flags.isTree)
-            self.assertEqual(r.flags.isCycle, s.flags.isCycle)
-            self.assertEqual(r.flags.isPath, s.flags.isPath)
-            self.assertEqual(r.flags.isDirectedOrRooted, s.flags.isDirectedOrRooted)
-            self.assertEqual(r.flags.isRegular, s.flags.isRegular)
-
-    def testGenerate1(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = True
-        flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=True
-        )
-
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-
-        with open("test_data/problems1.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
-
-    def testGenerate2(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=False
-        )
-
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-
-        with open("test_data/problems2.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
-
-    def testGenerate3(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=False,
-            isCycle=False,
-            isPath=True,
-            isDirectedOrRooted=False,
-        )
-
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-
-        with open("test_data/problems3.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
-
-    def testGenerate4(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=False,
-            isCycle=False,
-            isPath=True,
-            isDirectedOrRooted=True,
-        )
-
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-
-        with open("test_data/problems4.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
-
-
-class TestBatchClassifier(unittest.TestCase):
-    def __checkEquality(self, results, saved):
-        self.assertEqual(len(results), len(saved))
-        for r, s in zip(results, saved):
-            self.assertEqual(r.randLowerBound, s.randLowerBound)
-            self.assertEqual(r.randUpperBound, s.randUpperBound)
-            self.assertEqual(r.detLowerBound, s.detLowerBound)
-            self.assertEqual(r.detUpperBound, s.detUpperBound)
-
-    def testClassifier1(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=False
-        )
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-        results = batchClassify(ps)
-        with open("test_data/classifications1.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(results, saved)
-
-    def testClassifier2(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=True
-        )
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-        results = batchClassify(ps)
-        with open("test_data/classifications2.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(results, saved)
-
-    def testClassifier3(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 3
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=False, isCycle=False, isPath=True, isDirectedOrRooted=False
-        )
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-        results = batchClassify(ps)
-        with open("test_data/classifications3.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(results, saved)
-
-    def testClassifier4(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=False
-        )
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-        results = batchClassify(ps)
-        with open("test_data/classifications4.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(results, saved)
-
-    def testClassifier5(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
-        flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=True
-        )
-        ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
-            flags,
-        )
-        results = batchClassify(ps)
-        with open("test_data/classifications5.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__checkEquality(results, saved)
-
-
-unittest.main()

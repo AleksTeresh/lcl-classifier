@@ -1,12 +1,9 @@
 import sys
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from problem import GenericProblem as P, BasicProblemFlags, ProblemProps
-from classifier import classify
+from problem.problem import GenericProblem as P, BasicProblemFlags, ProblemProps
 from complexity import *
 from itertools import combinations_with_replacement, product
-from storeJson import storeJson
-
 
 def problemFromConstraints(tulpes, flags, countLimit, skipCount):
     problems = set()

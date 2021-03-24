@@ -1,4 +1,4 @@
-from classified_problem import ClassifiedProblem
+from db.classified_problem import ClassifiedProblem
 from response import Sources, Source
 
 

@@ -7,11 +7,11 @@ from brt_classifier import LOG as BRT_LOG
 from brt_classifier import GLOBAL as BRT_GLOBAL
 from brt_classifier import UNSOLVABLE as BRT_UNSOLVABLE
 from brt_classifier import UNKNOWN as BRT_UNKNOWN
-from problem import GenericProblem
-from config_util import eachConstrIsHomogeneous, normalizeConstraints
+from problem.problem import GenericProblem
+from problem.config_util import eachConstrIsHomogeneous, normalizeConstraints
 from .common import moveRootLabelToCenter
 from util import flatten
-from classifier import ClassifyContext
+from classify.classifier import ClassifyContext
 from response import GenericResponse
 from complexity import *
 

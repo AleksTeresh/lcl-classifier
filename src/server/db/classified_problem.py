@@ -1,6 +1,6 @@
 from typing import List
-from parser import unparseConfigs
-from problem import GenericProblem, ProblemFlags
+from problem.parser import unparseConfigs
+from problem.problem import GenericProblem, ProblemFlags
 from response import GenericResponse
 from util import flatten
 

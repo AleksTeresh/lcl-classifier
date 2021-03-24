@@ -1,6 +1,6 @@
-from problem import ProblemProps
+from problem.problem import ProblemProps
 from complexity import *
-from config_util import parseAndNormalize
+from problem.config_util import parseAndNormalize
 
 
 class QueryExcludeInclude:

@@ -1,12 +1,11 @@
-from problem import GenericProblem
-from parser import unparseConfigs
+from problem.problem import GenericProblem
+from problem.parser import unparseConfigs
 from response import GenericResponse
-from classify_context import ClassifyContext
+from classify.classify_context import ClassifyContext
 from complexity import *
 from multiprocessing import Process, Queue
 import multiprocessing as mp
-import rust2py
-
+import bin.rust2py as rust2py
 
 def validate(problem: GenericProblem):
     if problem.flags.isCycle:

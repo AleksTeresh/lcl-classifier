@@ -5,16 +5,16 @@ from flask import request, jsonify
 from flask_cors import CORS
 from webargs import fields, validate
 from webargs.flaskparser import use_args
-from problem import GenericProblem, ProblemFlags, ProblemProps
+from problem.problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
-from classifier import classify
+from classify.classifier import classify
 from statistics import compute as computeStats
-from db import getClassifiedProblemObj
-from db import getClassifiedProblemObjs
-from db import getBatchClassifications
-from db import getProblemCount
-from db import storeProblemAndClassification
-from db import getBatchClassificationByQuery
+from db.db import getClassifiedProblemObj
+from db.db import getClassifiedProblemObjs
+from db.db import getBatchClassifications
+from db.db import getProblemCount
+from db.db import storeProblemAndClassification
+from db.db import getBatchClassificationByQuery
 from complexity import *
 
 

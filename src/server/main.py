@@ -1,17 +1,17 @@
 import sys, getopt, pickle
 from problem import GenericProblem, ProblemFlags, ProblemProps
-from classifier import classify
-from batch_classify import batchClassify
-from batch_classify import reclassifyAndStore
-from batch_classify import classifyAndStore
-from generator import generate
+from classify.classifier import classify
+from classify.batch_classify import batchClassify
+from classify.batch_classify import reclassifyAndStore
+from classify.batch_classify import classifyAndStore
+from problem.generator import generate
 from complexity import *
 from statistics import compute as computeStats, prettyPrint
 from query import Query, Bounds, QueryExcludeInclude
-from db import storeProblemsAndGetWithIds
-from db import getClassifiedProblemObjs
-from db import getProblem
-from db import getBatchlessProblemObjs
+from db.db import storeProblemsAndGetWithIds
+from db.db import getClassifiedProblemObjs
+from db.db import getProblem
+from db.db import getBatchlessProblemObjs
 
 
 def reclassifyIndividualProblems():

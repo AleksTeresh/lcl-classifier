@@ -3,10 +3,10 @@ from rooted_tree_classifier import (
     is_log_solvable,
     is_constant_solvable,
 )
-from problem import GenericProblem
-from config_util import eachConstrIsHomogeneous, normalizeConstraints
+from problem.problem import GenericProblem
+from problem.config_util import eachConstrIsHomogeneous, normalizeConstraints
 from response import GenericResponse
-from classifier import ClassifyContext
+from classify.classifier import ClassifyContext
 from complexity import *
 from .common import moveRootLabelToCenter
 

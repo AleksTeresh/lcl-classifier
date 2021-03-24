@@ -1,13 +1,13 @@
 from typing import List
-from problem import GenericProblem
-from classify_context import ClassifyContext
+from problem.problem import GenericProblem
+from classify.classify_context import ClassifyContext
 from tlp_classifier import (
     get_problem,
     get_problems,
     complexity_name,
     Complexity as tlpComplexity,
 )
-from config_util import normalizeConstraints
+from problem.config_util import normalizeConstraints
 from response import GenericResponse
 from complexity import *
 

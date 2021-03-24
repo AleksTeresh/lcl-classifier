@@ -1,5 +1,5 @@
 from response import Source
-from classifier_types import *
+from .classifier_types import *
 
 
 class ClassifyContext:

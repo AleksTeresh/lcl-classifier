@@ -1,7 +1,7 @@
 from functools import reduce
 from itertools import product
 from util import flatMap, flatten, areAllTheSame, allSameSizes
-from parser import parseConfigs
+from problem.parser import parseConfigs
 
 
 def flattenBinaryConfigs(left, right):
