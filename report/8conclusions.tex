@@ -1,13 +1,58 @@
 \chapter{Conclusions}
 \label{chapter:conclusions}
 
-Time to wrap it up!  Write down the most important findings from your
-work.  Like the introduction, this chapter is not very long.  One to
-two (never over three) pages might be a good limit. Still, the chapter
-gives the background, goals, content, and the findings. However, all that
-should already be in the previous chapters. This is just a summary (as
-are the abstract and the introduction).
+The study of distributed algorithms has become
+one of the central topics in theoretical computer science
+over the last twenty years. Many significant results in the area
+has been achieved especially when it comes to topics related
+to computational complexity. Some of these results
+try to move the field into a direction where deciding
+computational complexity of a distributed problem becomes
+increasingly automated. A long term goal behind this is
+to show theoretically -- and often oractially via an
+implementation -- that deciding complexity of a certain class
+of problems can be done in a mechanical manner relying
+on systematic algorithms instead of ad-hoc proof techniques
+by humans.
 
-For making PDF/A version requested by the Aalto Library, open the end result pdf file in Acrobat and store it as PDF/A. Then verify the result (everything should be fine, at least as PDF/A-2b version works).
+In this thesis, we have shown that, although the work on
+decidability of LCL problems has seen a surge over the last
+several years in term of research output, the results
+failed to adopt a unified framework or formalism. This
+prevents the research community from utilizing the
+results in their everyday work, even though practical
+implementations for many of the theoretical results have been
+made available. Therefore, as the goal of this project we
+inivisioned a solution that would unify the individual
+implementations behind a common interface. Moreover, to make
+the system more useful to the research community we had decided
+to implement a Web interface fo our tool.
 
-Congratulations, your thesis is ready and it looks beautiful!
+Although we have reached our rather ambitious initially formulated
+research goal of encapsulating "most -- if not
+all -- of
+the so far existing knowledge on complexity of LCL
+problems in trees", we did succeed in creating a userful
+tool that unifies most of the existing implementations that
+provide some possiblity of computer-aided classification of LCL
+problems. Moreover, the tool has been designed and implemented in
+such a way that it can be easily extended with more meta-algorithms
+and other decidability implementation if such were to appear.
+Some of the details of the implementation are described
+in Chapter~\ref{chapter:implementation}.
+
+Finally, the ground work done will allow for numerous
+extension and improvements to the tool. We describe
+some of the opportuniti for future development in
+Chapter~\ref{chapter:evaluation}. Apart from
+integrating more meta-algorithms and problem datasets into the
+solution, a lot can be improved regarding what data
+is stored and displayed to the user
+(providing information about exact constant complexity of
+a problem is just one example of this). Besides,
+possibilities related to populating our database with more
+families of preclassified problems are virtually limitless.
+Furthermore, getting feedback from research community and
+developing the query functionality to become even more
+relevant is yet another way to continue the current
+project.
