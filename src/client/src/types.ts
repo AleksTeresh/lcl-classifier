@@ -150,7 +150,10 @@ export type FindProblemResponse = t.TypeOf<typeof FindProblemResponseCodec>
 
 export const QueryResponseCodec = t.type(
   {
-    problems: t.array(ClassifiedProblemCodec),
+    problems: t.union([
+      t.array(ClassifiedProblemCodec),
+      t.null
+    ]),
     stats: QueryStatisticsCodec,
     isComplete: t.boolean,
   },
