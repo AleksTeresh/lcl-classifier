@@ -1,4 +1,5 @@
 <script lang="ts">
+  import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import Collapsible from './Collapsible.svelte'
@@ -6,15 +7,28 @@
   import ReturnedProblem from './ReturnedProblem.svelte'
   import { getProblem } from './api'
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
-  import type { GraphType, FindProblemResponse, ProblemRequest } from './types'
+  import type { FindProblemResponse, ProblemRequest } from './types'
+  import { GraphTypeCodec } from './types'
   import { readyProblems } from './readyProblems'
-  interface FormState {
-    activeConstraints: string
-    passiveConstraints: string
-    leafConstraints?: string
-    rootConstraints?: string
-    graphType: GraphType
-  }
+
+  const FormStateCodec = t.type(
+    {
+      activeConstraints: t.string,
+      passiveConstraints: t.string,
+      leafConstraints: t.union([
+        t.string,
+        t.undefined
+      ]),
+      rootConstraints: t.union([
+        t.string,
+        t.undefined
+      ]),
+      graphType: GraphTypeCodec
+    },
+    'ProblemFormState'
+  )
+
+  type FormState = t.TypeOf<typeof FormStateCodec>
 
   const FORM_PREFIX = 'problem'
 
@@ -52,9 +66,12 @@ B C C`,
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
-      formState = loadStateFromUrl(formState, FORM_PREFIX)
+      const parsedFormState = loadStateFromUrl(formState, FORM_PREFIX, FormStateCodec)
+      if (parsedFormState === undefined)
+        return
+        
+      formState = parsedFormState
       const problem = formStateToProblem(formState)
-
       loading = true
 
       //@ts-ignore

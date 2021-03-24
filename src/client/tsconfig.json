@@ -5,8 +5,7 @@
 				"es2019",
 				"dom"
 			],
-			"strict": true,
-			"noImplicitAny": false
+			"strict": true
 		},
 		"include": ["src/**/*", "src/node_modules/**/*"],
 		"exclude": ["node_modules/*", "__sapper__/*", "static/*"]

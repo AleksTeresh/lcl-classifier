@@ -20,7 +20,10 @@ async function handleResponse<T>(
   }
 }
 
-export async function fetchJson<T>(url: string, codec: Type<T>): Promise<T | undefined> {
+export async function fetchJson<T>(
+  url: string,
+  codec: Type<T>
+): Promise<T | undefined> {
   let response
   try {
     response = await fetch(url)
@@ -38,10 +41,10 @@ export async function fetchJson<T>(url: string, codec: Type<T>): Promise<T | und
 }
 
 // adapted from https://matthiashager.com/converting-snake-case-to-camel-case-object-keys-with-javascript
-export const keysToSnake = function (o: any) {
-  const n = {}
-  Object.keys(o).forEach((k) => {
-    n[toSnake(k)] = o[k]
+export const keysToSnake = function <T extends { [key: string]: any }>(o: T) {
+  const n: { [key: string]: any } = {}
+  Object.typedKeys(o).forEach((k: keyof T) => {
+    n[toSnake(k as string)] = o[k]
   })
 
   return n
@@ -79,6 +82,6 @@ function isNil(x: any) {
 }
 
 // adapted from https://stackoverflow.com/questions/30970286/convert-javascript-object-camelcase-keys-to-underscore-case
-function toSnake(key: string) {
+function toSnake(key: string): string {
   return key.replace(/([A-Z])/g, '_$1').toLowerCase()
 }

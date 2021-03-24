@@ -1,5 +1,6 @@
 <script lang="ts">
   import './response.css'
+  import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
@@ -11,38 +12,49 @@
   import { persistStateToUrl, loadStateFromUrl } from './urlStore'
   import type {
     Query,
-    GraphType,
     QueryResponse
   } from './types'
-  import { Complexity } from './types'
+  import { Complexity, ComplexityCodec } from './types'
+  import { GraphTypeCodec } from './types'
   import ReturnedProblem from './ReturnedProblem.svelte'
 
-  interface FormState {
-    graphType: GraphType
-    isDirectedOrRooted: boolean
+  const FormStateCodec = t.type(
+    {
+      graphType: GraphTypeCodec,
+      isDirectedOrRooted: t.boolean,
 
-    randLowerBound: Complexity
-    randUpperBound: Complexity
-    detLowerBound: Complexity
-    detUpperBound: Complexity
+      randLowerBound: ComplexityCodec,
+      randUpperBound: ComplexityCodec,
+      detLowerBound: ComplexityCodec,
+      detUpperBound: ComplexityCodec,
 
-    activeDegree: number
-    passiveDegree: number
-    labelCount: number
-    activesAllSame: boolean
-    passivesAllSame: boolean
+      activeDegree: t.number,
+      passiveDegree: t.number,
+      labelCount: t.number,
+      activesAllSame: t.boolean,
+      passivesAllSame: t.boolean,
 
-    largestProblemOnly: boolean
-    smallestProblemOnly: boolean
-    completelyRandUnclassifiedOnly: boolean
-    partiallyRandUnclassifiedOnly: boolean
-    completelyDetUnclassifiedOnly: boolean
-    partiallyDetUnclassifiedOnly: boolean
-    excludeIfConfigHasAllOf: string
-    excludeIfConfigHasSomeOf: string
-    includeIfConfigHasAllOf: string
-    includeIfConfigHasSomeOf: string
-  }
+      largestProblemOnly: t.boolean,
+      smallestProblemOnly: t.boolean,
+      completelyRandUnclassifiedOnly: t.boolean,
+      partiallyRandUnclassifiedOnly: t.boolean,
+      completelyDetUnclassifiedOnly: t.boolean,
+      partiallyDetUnclassifiedOnly: t.boolean,
+      excludeIfConfigHasAllOf: t.string,
+      excludeIfConfigHasSomeOf: t.string,
+      includeIfConfigHasAllOf: t.string,
+      includeIfConfigHasSomeOf: t.string
+    },
+    'QueryFormState'
+  )
+  const ExtendedFormStateCodec = t.intersection([
+    FormStateCodec,
+    t.type({
+      fetchStatsOnly: t.boolean
+    })
+  ], 'ExtendedFormStateCodec')
+
+  type FormState = t.TypeOf<typeof FormStateCodec>
 
   interface ExtraConfigs {
     fetchStatsOnly: boolean
@@ -119,8 +131,11 @@
         ...formState,
         fetchStatsOnly: true,
       }
-      augmentedFormState = loadStateFromUrl(augmentedFormState, FORM_PREFIX)
+      const parsedFormState = loadStateFromUrl(augmentedFormState, FORM_PREFIX, ExtendedFormStateCodec)
+      if (parsedFormState === undefined)
+        return
 
+      augmentedFormState = parsedFormState
       formState = augmentedFormState
       const { fetchStatsOnly } = augmentedFormState
       const query = formStateToQuery(formState, { fetchStatsOnly })
