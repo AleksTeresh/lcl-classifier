@@ -1,22 +1,21 @@
 <script lang="ts">
-  import './response.css'
+  import '../css/response.css'
   import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
-  import Statistics from './Statistics.svelte'
-  import { readyQueries } from './readyQueries'
-  import Classification from './Classification.svelte'
-  import Collapsible from './Collapsible.svelte'
-  import { getQueryResult, getTotalProblemCount } from './api'
-  import { persistStateToUrl, loadStateFromUrl } from './urlStore'
+  import Statistics from '../components/Statistics.svelte'
+  import { readyQueries } from '../links/readyQueries'
+  import Classification from '../components/Classification.svelte'
+  import Collapsible from '../components/Collapsible.svelte'
+  import { getQueryResult, getTotalProblemCount } from '../api/api'
+  import { persistStateToUrl, loadStateFromUrl } from '../urlStore'
   import type {
     Query,
     QueryResponse
-  } from './types'
-  import { Complexity, ComplexityCodec } from './types'
-  import { GraphTypeCodec } from './types'
-  import ReturnedProblem from './ReturnedProblem.svelte'
+  } from '../types'
+  import { Complexity, ComplexityCodec, GraphTypeCodec } from '../types'
+  import ReturnedProblem from '../components/ReturnedProblem.svelte'
 
   const FormStateCodec = t.type(
     {

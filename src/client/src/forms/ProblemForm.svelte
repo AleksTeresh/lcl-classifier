@@ -2,14 +2,14 @@
   import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
-  import Collapsible from './Collapsible.svelte'
-  import Classification from './Classification.svelte'
-  import ReturnedProblem from './ReturnedProblem.svelte'
-  import { getProblem } from './api'
-  import { persistStateToUrl, loadStateFromUrl } from './urlStore'
-  import type { FindProblemResponse, ProblemRequest } from './types'
-  import { GraphTypeCodec } from './types'
-  import { readyProblems } from './readyProblems'
+  import Collapsible from '../components/Collapsible.svelte'
+  import Classification from '../components/Classification.svelte'
+  import ReturnedProblem from '../components/ReturnedProblem.svelte'
+  import { getProblem } from '../api/api'
+  import { persistStateToUrl, loadStateFromUrl } from '../urlStore'
+  import type { FindProblemResponse, ProblemRequest } from '../types'
+  import { GraphTypeCodec } from '../types'
+  import { readyProblems } from '../links/readyProblems'
 
   const FormStateCodec = t.type(
     {

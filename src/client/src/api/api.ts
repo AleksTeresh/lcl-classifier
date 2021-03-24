@@ -4,12 +4,12 @@ import type {
   ProblemCountResponse,
   FindProblemResponse,
   ProblemRequest,
-} from './types'
+} from '../types'
 import {
   FindProblemResponseCodec,
   QueryResponseCodec,
   ProblemCountResponseCodec,
-} from './types'
+} from '../types'
 import { urlWithParams, keysToSnake, fetchJson } from './apiHelpers'
 
 // PRODUCTION variable needs to be in .svelte file

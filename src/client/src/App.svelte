@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ProblemForm from './ProblemForm.svelte'
-  import QueryForm from './QueryForm.svelte'
+  import ProblemForm from './forms/ProblemForm.svelte'
+  import QueryForm from './forms/QueryForm.svelte'
 </script>
 
 <main>

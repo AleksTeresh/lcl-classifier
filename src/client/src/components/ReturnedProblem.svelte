@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getGraphType } from './graph'
-  import type { Problem } from './types'
+  import { getGraphType } from '../util/graph'
+  import type { Problem } from '../types'
 
   export let item: Problem
 </script>

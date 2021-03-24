@@ -1,4 +1,4 @@
-import type { Problem } from './types'
+import type { Problem } from '../types'
 
 export function getGraphType(problem: Problem) {
   if (problem.flags.isTree) {

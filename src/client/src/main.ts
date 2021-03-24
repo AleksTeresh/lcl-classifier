@@ -1,6 +1,6 @@
 import 'normalize.css/normalize.css'
 import 'milligram/dist/milligram.min.css'
-import './global.css'
+import './css/global.css'
 
 import App from './App.svelte'
 

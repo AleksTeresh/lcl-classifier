@@ -1,5 +1,5 @@
 import * as t from 'io-ts'
-import { fromEnum } from './typeUtil'
+import { fromEnum } from './util/typeUtil'
 
 export enum Complexity {
   Const = '(1)',

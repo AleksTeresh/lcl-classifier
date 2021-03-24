@@ -1,7 +1,7 @@
 import type { Type } from 'io-ts'
 import * as Either from 'fp-ts/lib/Either'
 import { PathReporter } from 'io-ts/PathReporter'
-import { isNumeric } from './typeUtil'
+import { isNumeric } from './util/typeUtil'
 
 export function persistStateToUrl<T>(state: T, prefix: string): void {
   const params = new URLSearchParams(location.search)

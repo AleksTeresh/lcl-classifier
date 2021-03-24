@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Complexity } from './types'
-  import type { Source } from './types'
+  import { Complexity } from '../types'
+  import type { Source } from '../types'
 
   export let source: Source
   export let lowerBound: Complexity | undefined = undefined
