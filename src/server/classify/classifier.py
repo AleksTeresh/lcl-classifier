@@ -131,36 +131,26 @@ def classify(
         cpResult = cpClassify(problem, context)
     except Exception as e:
         cpResult = GenericResponse(problem)
-    except e:
-        print(e)
 
     try:
         rtResult = rtClassify(problem, context)
     except Exception as e:
         rtResult = GenericResponse(problem)
-    except e:
-        print(e)
 
     try:
         tlpResult = tlpClassify(problem, context)
     except Exception as e:
         tlpResult = GenericResponse(problem)
-    except e:
-        print(e)
 
     try:
         brtResult = brtClassify(problem, context)
     except Exception as e:
         brtResult = GenericResponse(problem)
-    except e:
-        print(e)
 
     try:
         reResult = reClassify(problem, context)
     except Exception as e:
         reResult = GenericResponse(problem)
-    except e:
-        print(e)
 
     responses = {
         Classifier.CP: cpResult,
