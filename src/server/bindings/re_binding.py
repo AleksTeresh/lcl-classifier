@@ -5,7 +5,8 @@ from .classify_context import ClassifyContext
 from complexity import *
 from multiprocessing import Process, Queue
 import multiprocessing as mp
-import bin.rust2py as rust2py
+import rust2py
+
 
 def validate(problem: GenericProblem) -> None:
     if problem.flags.isCycle:
@@ -36,13 +37,17 @@ def runRE(data: str, q: Queue) -> None:
     q.put((lb, ub))
 
 
-def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
-    validate(p)
+def classify(problem: GenericProblem, context: ClassifyContext) -> GenericResponse:
+    validate(problem)
 
     data = (
-        "\n".join(unparseConfigs(p.activeConstraints, p.flags.isDirectedOrRooted))
+        "\n".join(
+            unparseConfigs(problem.activeConstraints, problem.flags.isDirectedOrRooted)
+        )
         + "\n\n"
-        + "\n".join(unparseConfigs(p.passiveConstraints, p.flags.isDirectedOrRooted))
+        + "\n".join(
+            unparseConfigs(problem.passiveConstraints, problem.flags.isDirectedOrRooted)
+        )
     )
 
     timeoutSeconds = 0.1 if context.isBatch else 0.5
@@ -51,16 +56,16 @@ def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
 
     ctx = mp.get_context("fork")
     q = ctx.Queue()
-    p = ctx.Process(target=runRE, kwargs={"data": data, "q": q})
-    p.start()
+    process = ctx.Process(target=runRE, kwargs={"data": data, "q": q})
+    process.start()
     try:
         (lowerBoundRaw, upperBoundRaw) = q.get(timeout=timeoutSeconds)
     except:
         pass
-    p.join(timeoutSeconds)
-    if p.is_alive():
-        p.terminate()
-        p.join()
+    process.join(timeoutSeconds)
+    if process.is_alive():
+        process.terminate()
+        process.join()
 
     if lowerBoundRaw == "log n":
         lowerBound = LOG
@@ -80,7 +85,7 @@ def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
         upperBoundRand = CONST
 
     return GenericResponse(
-        p,
+        problem,
         upperBoundRand,
         lowerBoundRand,
         upperBound,

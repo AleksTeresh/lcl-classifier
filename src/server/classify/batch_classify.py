@@ -21,8 +21,6 @@ def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
     except Exception as e:
         print(e)
         tlpResponses = []
-    except e:
-        print(e)
 
     try:
         brtResponses = brtBatchClassify(problems)
@@ -30,8 +28,6 @@ def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
     except Exception as e:
         print(e)
         brtResponses = []
-    except e:
-        print(e)
 
     return [
         classify(

@@ -15,8 +15,8 @@ WORKDIR /usr/src/app
 COPY requirements.txt lcl_classifier.ini /usr/src/app/
 RUN pip install -r requirements.txt
 COPY . .
-RUN rm /usr/src/app/bin/rust2py.so
-COPY ./bin/rust2py-linux.so /usr/src/app/bin/rust2py.so
+RUN rm /usr/src/app/rust2py.so
+COPY ./rust2py-linux.so /usr/src/app/rust2py.so
 
 ENTRYPOINT [ "uwsgi" ]
 CMD ["--ini=lcl_classifier.ini"]

@@ -1,12 +1,19 @@
 import sys
+from typing import Optional, List, Tuple
+from own_types import ConfigType
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from .problem import GenericProblem as P, BasicProblemFlags, ProblemProps
+from .problem import GenericProblem as P, BasicProblemFlags, ProblemFlags
 from complexity import *
 from itertools import combinations_with_replacement, product
 
 
-def problemFromConstraints(tulpes, flags, countLimit, skipCount):
+def problemFromConstraints(
+    tulpes: List[Tuple[ConfigType, ConfigType]],
+    flags: ProblemFlags,
+    countLimit: int,
+    skipCount: int,
+):
     problems = set()
     startIdx = skipCount
     endIdx = min(countLimit + skipCount, len(tulpes))
@@ -33,21 +40,21 @@ def problemFromConstraints(tulpes, flags, countLimit, skipCount):
                 continue
             else:
                 raise e
-        # p.normalize()
+
         problems.add(p)
 
     return problems
 
 
 def generate(
-    activeDegree,
-    passiveDegree,
-    labelCount,
-    activesAllSame,
-    passivesAllSame,
-    flags,
-    countLimit=sys.maxsize,
-    skipCount=0,
+    activeDegree: int,
+    passiveDegree: int,
+    labelCount: int,
+    activesAllSame: bool,
+    passivesAllSame: bool,
+    flags: ProblemFlags,
+    countLimit: Optional[int] = sys.maxsize,
+    skipCount: Optional[int] = 0,
 ):
     alphabet = letterRange(labelCount)
     # take activeDegree labels

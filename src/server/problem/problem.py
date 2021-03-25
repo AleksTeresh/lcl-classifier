@@ -1,5 +1,5 @@
 from typing import NamedTuple, List, Set, Dict, Tuple
-from own_types import UnparsedConfigType
+from own_types import UnparsedConfigType, ConfigType
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
 from .config_util import parseAndNormalize
@@ -309,7 +309,7 @@ class GenericProblem:
                 ["".join(alphabet) for _ in rootConstraints[0].split(" ")]
             )
 
-    def __getNewConfig(self, renaming, configuration: str):
+    def __getNewConfig(self, renaming: Dict[str, str], configuration: str) -> str:
         "returns a string of chars"
         newConfig = [renaming[char] for char in configuration]
         # if a graph directed/rooted, the first letter in the config
@@ -322,15 +322,19 @@ class GenericProblem:
         return "".join(newConfig)
 
     # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/constraint.rs#L469-L489
-    def __permuteNormalize(self, renaming, constraints: tuple):
+    def __permuteNormalize(
+        self, renaming: Dict[str, str], constraints: ConfigType
+    ) -> ConfigType:
         "returns a list of strings"
         newConfigs = [self.__getNewConfig(renaming, x) for x in constraints]
 
         newConfigs = list(set(newConfigs))  # i.e. unique()
         newConfigs = sorted(newConfigs)
-        return newConfigs
+        return tuple(newConfigs)
 
-    def __handleAlphabetPerm(self, perm):
+    def __handleAlphabetPerm(
+        self, perm: List[str]
+    ) -> Tuple[ConfigType, ConfigType, ConfigType, ConfigType]:
         "returns a tuple of lists"
         renaming = {}
 
@@ -344,7 +348,7 @@ class GenericProblem:
 
         return (newActive, newPassive, newLeaf, newRoot)
 
-    def __removeUnusedConfigs(self):
+    def __removeUnusedConfigs(self) -> None:
         newActiveConstraints = self.activeConstraints
         newPassiveConstraints = self.passiveConstraints
 
@@ -407,11 +411,13 @@ class GenericProblem:
                 if not rootDiff.intersection(set(conf))
             ]
 
-    def __getDegree(self, configs) -> int:
+    def __getDegree(self, configs: ConfigType) -> int:
         return len(configs[0])
 
-    def getAlphabet(self) -> Set[str]:
-        return set(flatten(self.activeConstraints + self.passiveConstraints)) - {" "}
+    def getAlphabet(self) -> List[str]:
+        return list(
+            set(flatten(self.activeConstraints + self.passiveConstraints)) - {" "}
+        )
 
     def getActiveDegree(self) -> int:
         return self.__getDegree(self.activeConstraints)
@@ -420,14 +426,14 @@ class GenericProblem:
         return self.__getDegree(self.passiveConstraints)
 
     # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
-    def normalize(self):
+    def normalize(self) -> None:
         labelCount = len(self.getAlphabet())
         letters = letterRange(labelCount)
         allPerms = list(itertools.permutations(letters))
         normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
         # normalized is a list of tulpes of lists
         normalized = sorted(normalized)[0]
-        self.activeConstraints = tuple(normalized[0])
-        self.passiveConstraints = tuple(normalized[1])
-        self.leafConstraints = tuple(normalized[2])
-        self.rootConstraints = tuple(normalized[3])
+        self.activeConstraints = normalized[0]
+        self.passiveConstraints = normalized[1]
+        self.leafConstraints = normalized[2]
+        self.rootConstraints = normalized[3]
