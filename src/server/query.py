@@ -2,7 +2,6 @@ from problem import ProblemProps
 from complexity import *
 from problem import parseAndNormalize
 
-
 class QueryExcludeInclude:
     def __init__(
         self,
@@ -17,14 +16,11 @@ class QueryExcludeInclude:
         completelyDetUnclassifedOnly=False,
         partiallyDetUnclassifiedOnly=False,
     ):
-        self.excludeIfConfigHasAllOf = tuple(parseAndNormalize(excludeIfConfigHasAllOf))
-        self.excludeIfConfigHasSomeOf = tuple(
-            parseAndNormalize(excludeIfConfigHasSomeOf)
-        )
-        self.includeIfConfigHasAllOf = tuple(parseAndNormalize(includeIfConfigHasAllOf))
-        self.includeIfConfigHasSomeOf = tuple(
-            parseAndNormalize(includeIfConfigHasSomeOf)
-        )
+        self.excludeIfConfigHasAllOf = parseAndNormalize(excludeIfConfigHasAllOf)
+        self.excludeIfConfigHasSomeOf = parseAndNormalize(excludeIfConfigHasSomeOf)
+        
+        self.includeIfConfigHasAllOf = parseAndNormalize(includeIfConfigHasAllOf)
+        self.includeIfConfigHasSomeOf = parseAndNormalize(includeIfConfigHasSomeOf)
 
         self.returnLargestProblemOnly = returnLargestProblemOnly
         self.returnSmallestProblemOnly = returnSmallestProblemOnly

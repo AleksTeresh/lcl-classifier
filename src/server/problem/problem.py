@@ -1,4 +1,5 @@
 from typing import NamedTuple, List, Set, Dict, Tuple
+from own_types import UnparsedConfigType
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
 from .config_util import parseAndNormalize
@@ -38,7 +39,7 @@ class ProblemFlags(BasicProblemFlags):
     def __key(self) -> Tuple:
         return tuple(self.__dict__.values())
 
-    def __eq__(self, other: ProblemFlags) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return self.__key() == other.__key()
         else:
@@ -72,10 +73,10 @@ class ProblemProps:
 class GenericProblem:
     def __init__(
         self,
-        activeConstraints: List[str],
-        passiveConstraints: List[str],
-        leafConstraints: List[str] = [],
-        rootConstraints: List[str] = [],
+        activeConstraints: UnparsedConfigType,
+        passiveConstraints: UnparsedConfigType,
+        leafConstraints: UnparsedConfigType = [],
+        rootConstraints: UnparsedConfigType = [],
         activeAllowAll: bool = False,
         passiveAllowAll: bool = False,
         leafAllowAll: bool = True,
@@ -121,7 +122,7 @@ class GenericProblem:
     def __repr__(self) -> str:
         return self.__dict__.__repr__()
 
-    def __eq__(self, other: GenericProblem) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return self.__key() == other.__key()
         else:
@@ -133,8 +134,8 @@ class GenericProblem:
     def __getFlags(
         self,
         basicFlags: BasicProblemFlags,
-        unparsedActiveConstraints: List[str],
-        unparsedPassiveConstraints: List[str],
+        unparsedActiveConstraints: UnparsedConfigType,
+        unparsedPassiveConstraints: UnparsedConfigType,
     ) -> ProblemFlags:
         isRegular = areRegular(self.activeConstraints, self.passiveConstraints)
         isPath = basicFlags.isPath or (
@@ -183,8 +184,8 @@ class GenericProblem:
 
     def __checkBadConstrInputs(
         self,
-        activeConstraints: List[str],
-        passiveConstraints: List[str],
+        activeConstraints: UnparsedConfigType,
+        passiveConstraints: UnparsedConfigType,
         activeAllowAll: bool,
         passiveAllowAll: bool
     ) -> None:
@@ -250,47 +251,49 @@ class GenericProblem:
 
     def __assignActivesAndPassives(
         self,
-        activeConstraints: List[str],
-        passiveConstraints: List[str],
+        activeConstraints: UnparsedConfigType,
+        passiveConstraints: UnparsedConfigType,
         activeAllowAll: bool, passiveAllowAll: bool
     ) -> None:
-        self.activeConstraints = tuple(parseAndNormalize(activeConstraints))
-        self.passiveConstraints = tuple(parseAndNormalize(passiveConstraints))
+        self.activeConstraints = parseAndNormalize(activeConstraints)
+        self.passiveConstraints = parseAndNormalize(passiveConstraints)
         alphabet = self.getAlphabet()
 
         if activeAllowAll:
             allowAllNotnormnalized = [
                 "".join(alphabet) for _ in activeConstraints[0].split(" ")
             ]
-            self.activeConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
+            self.activeConstraints = parseAndNormalize(allowAllNotnormnalized)
 
         if passiveAllowAll:
             allowAllNotnormnalized = [
                 "".join(alphabet) for _ in passiveConstraints[0].split(" ")
             ]
-            self.passiveConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
+            self.passiveConstraints = parseAndNormalize(allowAllNotnormnalized)
 
         if self.getActiveDegree() < self.getPassiveDegree():
             self.__swapConstraints()
 
-    def __assignLeafs(self, leafConstraints: List[str], leafAllowAll: bool) -> None:
-        self.leafConstraints = tuple(leafConstraints)
+    def __assignLeafs(self, leafConstraints: UnparsedConfigType, leafAllowAll: bool) -> None:
         if leafAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
-            self.leafConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
+            self.leafConstraints = parseAndNormalize(allowAllNotnormnalized)
+        else:
+            self.leafConstraints = parseAndNormalize(leafConstraints)
 
-    def __assignRoots(self, rootConstraints: List[str], rootAllowAll: bool) -> None:
-        self.rootConstraints = tuple(rootConstraints)
+    def __assignRoots(self, rootConstraints: UnparsedConfigType, rootAllowAll: bool) -> None:
         if rootAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
-            self.rootConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
+            self.rootConstraints = parseAndNormalize(allowAllNotnormnalized)
+        else:
+            self.rootConstraints = parseAndNormalize(rootConstraints)
 
     def __assumeRootConstr(
         self,
         rootAllowAll: bool,
-        rootConstraints: List[str],
-        activeConstraints: List[str],
-        passiveConstraints: List[str]
+        rootConstraints: UnparsedConfigType,
+        activeConstraints: UnparsedConfigType,
+        passiveConstraints: UnparsedConfigType
     ) -> None:
         # if root degree cannot be deduced because rootConstraints is an empty set,
         # assume (rather arbitrarily) that root is an active node
