@@ -1,4 +1,4 @@
-from typing import NamedTuple, List, Set
+from typing import NamedTuple, List, Set, Dict, Tuple
 from util import onlyOneIsTrue, flatten, letterRange
 from functools import reduce
 from .config_util import parseAndNormalize
@@ -35,19 +35,19 @@ class ProblemFlags(BasicProblemFlags):
         self.isDirectedOrRooted = isDirectedOrRooted
         self.isRegular = isRegular
 
-    def __key(self):
+    def __key(self) -> Tuple:
         return tuple(self.__dict__.values())
 
-    def __eq__(self, other):
+    def __eq__(self, other: ProblemFlags) -> bool:
         if isinstance(other, self.__class__):
             return self.__key() == other.__key()
         else:
             return False
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.__key())
 
-    def dict(self):
+    def dict(self) -> Dict:
         return self.__dict__
 
 
@@ -109,41 +109,33 @@ class GenericProblem:
         self.__checkFlags()
         self.normalize()
 
-    def __key(self):
+    def __key(self) -> Tuple:
         variableDict = copy.deepcopy(self.__dict__)
         if self.id is not None:
             del variableDict["id"]
         return tuple(variableDict.values())
 
-    def dict(self):
+    def dict(self) -> Dict:
         return {**self.__dict__, "flags": self.flags.dict()}
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__dict__.__repr__()
 
-    def __eq__(self, other):
+    def __eq__(self, other: GenericProblem) -> bool:
         if isinstance(other, self.__class__):
             return self.__key() == other.__key()
         else:
             return False
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.__key())
-
-    def __checkDegrees(self, configs):
-        if len(configs) == 0:
-            return configs
-
-        degree = self.__getDegree(configs)
-        isSameDegree = reduce(lambda acc, x: acc and len(x) == degree, configs, True)
-        return isSameDegree
 
     def __getFlags(
         self,
         basicFlags: BasicProblemFlags,
         unparsedActiveConstraints: List[str],
         unparsedPassiveConstraints: List[str],
-    ):
+    ) -> ProblemFlags:
         isRegular = areRegular(self.activeConstraints, self.passiveConstraints)
         isPath = basicFlags.isPath or (
             basicFlags.isTree
@@ -161,7 +153,7 @@ class GenericProblem:
             isRegular=isRegular,
         )
 
-    def __checkFlags(self):
+    def __checkFlags(self) -> None:
         if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
             raise Exception(
                 "problem",
@@ -190,8 +182,12 @@ class GenericProblem:
             )
 
     def __checkBadConstrInputs(
-        self, activeConstraints, passiveConstraints, activeAllowAll, passiveAllowAll
-    ):
+        self,
+        activeConstraints: List[str],
+        passiveConstraints: List[str],
+        activeAllowAll: bool,
+        passiveAllowAll: bool
+    ) -> None:
         if activeAllowAll and passiveAllowAll:
             raise Exception(
                 "problem",
@@ -247,14 +243,17 @@ class GenericProblem:
                 passiveConstraints,
             )
 
-    def __swapConstraints(self):
+    def __swapConstraints(self) -> None:
         temp = self.activeConstraints
         self.activeConstraints = self.passiveConstraints
         self.passiveConstraints = temp
 
     def __assignActivesAndPassives(
-        self, activeConstraints, passiveConstraints, activeAllowAll, passiveAllowAll
-    ):
+        self,
+        activeConstraints: List[str],
+        passiveConstraints: List[str],
+        activeAllowAll: bool, passiveAllowAll: bool
+    ) -> None:
         self.activeConstraints = tuple(parseAndNormalize(activeConstraints))
         self.passiveConstraints = tuple(parseAndNormalize(passiveConstraints))
         alphabet = self.getAlphabet()
@@ -274,21 +273,25 @@ class GenericProblem:
         if self.getActiveDegree() < self.getPassiveDegree():
             self.__swapConstraints()
 
-    def __assignLeafs(self, leafConstraints, leafAllowAll):
+    def __assignLeafs(self, leafConstraints: List[str], leafAllowAll: bool) -> None:
         self.leafConstraints = tuple(leafConstraints)
         if leafAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
             self.leafConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
-    def __assignRoots(self, rootConstraints, rootAllowAll):
+    def __assignRoots(self, rootConstraints: List[str], rootAllowAll: bool) -> None:
         self.rootConstraints = tuple(rootConstraints)
         if rootAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
             self.rootConstraints = tuple(parseAndNormalize(allowAllNotnormnalized))
 
     def __assumeRootConstr(
-        self, rootAllowAll, rootConstraints, activeConstraints, passiveConstraints
-    ):
+        self,
+        rootAllowAll: bool,
+        rootConstraints: List[str],
+        activeConstraints: List[str],
+        passiveConstraints: List[str]
+    ) -> None:
         # if root degree cannot be deduced because rootConstraints is an empty set,
         # assume (rather arbitrarily) that root is an active node
         if rootAllowAll and not rootConstraints:
@@ -396,16 +399,16 @@ class GenericProblem:
                 if not rootDiff.intersection(set(conf))
             ]
 
-    def __getDegree(self, configs):
+    def __getDegree(self, configs) -> int:
         return len(configs[0])
 
-    def getAlphabet(self):
+    def getAlphabet(self) -> Set[str]:
         return set(flatten(self.activeConstraints + self.passiveConstraints)) - {" "}
 
-    def getActiveDegree(self):
+    def getActiveDegree(self) -> int:
         return self.__getDegree(self.activeConstraints)
 
-    def getPassiveDegree(self):
+    def getPassiveDegree(self) -> int:
         return self.__getDegree(self.passiveConstraints)
 
     # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
