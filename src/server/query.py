@@ -1,7 +1,6 @@
-from problem.problem import ProblemProps
+from problem import ProblemProps
 from complexity import *
-from problem.config_util import parseAndNormalize
-
+from problem import parseAndNormalize
 
 class QueryExcludeInclude:
     def __init__(

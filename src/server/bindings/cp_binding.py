@@ -1,5 +1,5 @@
-from problem.problem import GenericProblem
-from classify.classify_context import ClassifyContext
+from problem import GenericProblem
+from .classify_context import ClassifyContext
 from cyclepath_classifier import classify as cpClassify
 from cyclepath_classifier import Problem as CyclePathProblem
 from cyclepath_classifier import Type
@@ -8,11 +8,10 @@ from cyclepath_classifier import CONST as CP_CONST
 from cyclepath_classifier import GLOBAL as CP_GLOBAL
 from cyclepath_classifier import ITERATED_LOG as CP_ITERATED_LOG
 from cyclepath_classifier import UNSOLVABLE as CP_UNSOLVABLE
-from problem.config_util import normalizeConstraints, eachConstrIsHomogeneous
+from problem import eachConstrIsHomogeneous
 from util import flatten
 from response import GenericResponse
 from complexity import *
-
 
 def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
     activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2

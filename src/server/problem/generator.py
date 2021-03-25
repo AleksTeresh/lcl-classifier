@@ -1,7 +1,7 @@
 import sys
 from tqdm import tqdm
 from util import letterRange, powerset, flatten
-from problem.problem import GenericProblem as P, BasicProblemFlags, ProblemProps
+from .problem import GenericProblem as P, BasicProblemFlags, ProblemProps
 from complexity import *
 from itertools import combinations_with_replacement, product
 

@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class Classifier(Enum):
     CP = "cp"
     BRT = "brt"

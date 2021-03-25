@@ -1,10 +1,10 @@
 import unittest
 import pickle
-from . import batchClassify
-from . import classify
+from .batch_classify import batchClassify
+from .classifier import classify
 from complexity import *
-from problem.problem import GenericProblem, ProblemFlags, ProblemProps
-from problem.generator import generate
+from problem import GenericProblem, ProblemFlags, ProblemProps
+from problem import generate
 
 class TestBatchClassifier(unittest.TestCase):
     def __checkEquality(self, results, saved):

@@ -1,6 +1,5 @@
-from db.classified_problem import ClassifiedProblem
+from .classified_problem import ClassifiedProblem
 from response import Sources, Source
-
 
 def mapToClassifiedProblem(dbProblem) -> ClassifiedProblem:
     return ClassifiedProblem(

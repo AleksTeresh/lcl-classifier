@@ -3,11 +3,11 @@ import psycopg2
 from typing import List
 from psycopg2.extras import execute_values
 import humps
-from problem.problem import GenericProblem, ProblemProps
+from problem import GenericProblem, ProblemProps
 from response import GenericResponse
-from problem.config_util import eachConstrIsHomogeneous
-from db.db_data_converter import mapToClassifiedProblem
-from db.classified_problem import ClassifiedProblem
+from problem import eachConstrIsHomogeneous
+from .db_data_converter import mapToClassifiedProblem
+from .classified_problem import ClassifiedProblem
 from query import Query
 
 

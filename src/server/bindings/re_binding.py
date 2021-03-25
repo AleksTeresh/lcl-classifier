@@ -1,7 +1,7 @@
-from problem.problem import GenericProblem
-from problem.parser import unparseConfigs
+from problem import GenericProblem
+from problem import unparseConfigs
 from response import GenericResponse
-from classify.classify_context import ClassifyContext
+from .classify_context import ClassifyContext
 from complexity import *
 from multiprocessing import Process, Queue
 import multiprocessing as mp

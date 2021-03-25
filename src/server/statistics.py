@@ -2,10 +2,9 @@ from complexity import *
 import json
 from tqdm import tqdm
 from typing import NamedTuple
-from problem.problem import ProblemFlags, ProblemProps
+from problem import ProblemFlags, ProblemProps
 from query import Query
-from db.db import getProblems
-
+from db import getProblems
 
 class ComplexityClassData:
     def __init__(

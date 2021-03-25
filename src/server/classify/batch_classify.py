@@ -1,15 +1,14 @@
 from typing import List
 from tqdm import tqdm
 from collections import namedtuple
-from db.db import updateClassifications
-from db.db import storeProblemAndClassification
-from classify.classifier import classify, Classifier
-from bindings.tlp_binding import batchClassify as tlpBatchClassify
-from bindings.brt_binding import batchClassify as brtBatchClassify
-from problem.problem import GenericProblem, ProblemFlags, ProblemProps
-from db.classified_problem import ClassifiedProblem
-from classify.classify_context import ClassifyContext
-
+from db import updateClassifications
+from db import storeProblemAndClassification
+from .classifier import classify, Classifier
+from bindings import tlpBatchClassify
+from bindings import brtBatchClassify
+from problem import GenericProblem, ProblemFlags, ProblemProps
+from db import ClassifiedProblem
+from bindings import ClassifyContext
 
 def batchClassify(problems: List[GenericProblem]):
     context = ClassifyContext(isBatch=True)
