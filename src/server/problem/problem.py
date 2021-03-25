@@ -397,19 +397,23 @@ class GenericProblem:
 
         leafDiff = leafAlphabet - allowedAlphabet
         if leafDiff:
-            self.leafConstraints = tuple([
-                conf
-                for conf in self.leafConstraints
-                if not leafDiff.intersection(set(conf))
-            ])
+            self.leafConstraints = tuple(
+                [
+                    conf
+                    for conf in self.leafConstraints
+                    if not leafDiff.intersection(set(conf))
+                ]
+            )
 
         rootDiff = rootAlphabet - allowedAlphabet
         if rootDiff:
-            self.rootConstraints = tuple([
-                conf
-                for conf in self.rootConstraints
-                if not rootDiff.intersection(set(conf))
-            ])
+            self.rootConstraints = tuple(
+                [
+                    conf
+                    for conf in self.rootConstraints
+                    if not rootDiff.intersection(set(conf))
+                ]
+            )
 
     def __getDegree(self, configs: ConfigType) -> int:
         return len(configs[0])

@@ -47,7 +47,7 @@ class StatisticsData:
         return d
 
 
-def compute(data):
+def compute(data: List[ClassifiedProblem]) -> StatisticsData:
     stats = StatisticsData()
     complexityMap = {
         CONST: "const",
@@ -82,7 +82,7 @@ def compute(data):
     return stats
 
 
-def prettyPrint(stats):
+def prettyPrint(stats: StatisticsData) -> None:
     print("In total: %s problems" % stats.totalSize)
     print()
 
@@ -215,9 +215,3 @@ def prettyPrint(stats):
         )
     )
     print()
-
-
-def printStatistics(query):
-    data = getProblems(query)
-    stats = compute(data)
-    prettyPrint(stats)

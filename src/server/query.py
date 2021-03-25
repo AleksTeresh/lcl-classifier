@@ -1,3 +1,5 @@
+from typing import List
+from own_types import ComplexityType
 from problem import ProblemProps
 from complexity import *
 from problem import parseAndNormalize
@@ -6,16 +8,16 @@ from problem import parseAndNormalize
 class QueryExcludeInclude:
     def __init__(
         self,
-        excludeIfConfigHasAllOf=[],
-        excludeIfConfigHasSomeOf=[],
-        includeIfConfigHasAllOf=[],
-        includeIfConfigHasSomeOf=[],
-        returnLargestProblemOnly=False,
-        returnSmallestProblemOnly=False,
-        completelyRandUnclassifedOnly=False,
-        partiallyRandUnclassifiedOnly=False,
-        completelyDetUnclassifedOnly=False,
-        partiallyDetUnclassifiedOnly=False,
+        excludeIfConfigHasAllOf: List[str] = [],
+        excludeIfConfigHasSomeOf: List[str] = [],
+        includeIfConfigHasAllOf: List[str] = [],
+        includeIfConfigHasSomeOf: List[str] = [],
+        returnLargestProblemOnly: bool = False,
+        returnSmallestProblemOnly: bool = False,
+        completelyRandUnclassifedOnly: bool = False,
+        partiallyRandUnclassifiedOnly: bool = False,
+        completelyDetUnclassifedOnly: bool = False,
+        partiallyDetUnclassifiedOnly: bool = False,
     ):
         self.excludeIfConfigHasAllOf = parseAndNormalize(excludeIfConfigHasAllOf)
         self.excludeIfConfigHasSomeOf = parseAndNormalize(excludeIfConfigHasSomeOf)
@@ -34,10 +36,10 @@ class QueryExcludeInclude:
 class Bounds:
     def __init__(
         self,
-        randUpperBound=UNSOLVABLE,
-        randLowerBound=CONST,
-        detUpperBound=UNSOLVABLE,
-        detLowerBound=CONST,
+        randUpperBound: ComplexityType = UNSOLVABLE,
+        randLowerBound: ComplexityType = CONST,
+        detUpperBound: ComplexityType = UNSOLVABLE,
+        detLowerBound: ComplexityType = CONST,
     ):
         self.randUpperBound = randUpperBound
         self.randLowerBound = randLowerBound

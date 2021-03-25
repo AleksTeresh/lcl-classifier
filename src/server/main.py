@@ -1,4 +1,5 @@
 import sys, getopt, pickle
+from typing import Optional
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from classify import classify
 from classify import batchClassify
@@ -20,17 +21,17 @@ def reclassifyIndividualProblems():
 
 
 def reclassifyProblemClass(
-    activeDegree,
-    passiveDegree,
-    labelCount,
-    isDirectedOrRooted,
-    activesAllSame=False,
-    passivesAllSame=False,
-    isTree=False,
-    isCycle=False,
-    isPath=False,
-    countLimit=None,
-    skipCount=None,
+    activeDegree: int,
+    passiveDegree: int,
+    labelCount: int,
+    isDirectedOrRooted: bool,
+    activesAllSame: bool = False,
+    passivesAllSame: bool = False,
+    isTree: bool = False,
+    isCycle: bool = False,
+    isPath: bool = False,
+    countLimit: Optional[int] = None,
+    skipCount: Optional[int] = None,
 ):
     """
     Reclassify a class of already existing problems that are stored
@@ -70,17 +71,17 @@ def reclassifyProblemClass(
 
 
 def generateProblemClass(
-    activeDegree,
-    passiveDegree,
-    labelCount,
-    isDirectedOrRooted,
-    activesAllSame=False,
-    passivesAllSame=False,
-    isTree=False,
-    isCycle=False,
-    isPath=False,
-    countLimit=None,
-    skipCount=None,
+    activeDegree: int,
+    passiveDegree: int,
+    labelCount: int,
+    isDirectedOrRooted: bool,
+    activesAllSame: bool = False,
+    passivesAllSame: bool = False,
+    isTree: bool = False,
+    isCycle: bool = False,
+    isPath: bool = False,
+    countLimit: Optional[int] = None,
+    skipCount: Optional[int] = None,
 ):
     print("Generating the following:")
     print("  activeDegree = %s," % activeDegree)

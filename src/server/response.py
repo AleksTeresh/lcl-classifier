@@ -1,8 +1,11 @@
+from typing import List, Union
+from own_types import ComplexityType
+from problem import GenericProblem
 from complexity import *
 
 
 class Source:
-    def __init__(self, shortName, name, urls):
+    def __init__(self, shortName: str, name: str, urls: List[str]):
         self.shortName = shortName
         self.name = name
         self.urls = urls
@@ -69,13 +72,13 @@ class Sources:
 class GenericResponse:
     def __init__(
         self,
-        problem,
-        randUpperBound=UNSOLVABLE,
-        randLowerBound=CONST,
-        detUpperBound=UNSOLVABLE,
-        detLowerBound=CONST,
-        solvableCount="",
-        unsolvableCount="",
+        problem: Union[GenericProblem, int],
+        randUpperBound: ComplexityType = UNSOLVABLE,
+        randLowerBound: ComplexityType = CONST,
+        detUpperBound: ComplexityType = UNSOLVABLE,
+        detLowerBound: ComplexityType = CONST,
+        solvableCount: str = "",
+        unsolvableCount: str = "",
         papers: Sources = Sources(),
     ):
         self.problem = problem

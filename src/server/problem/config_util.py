@@ -33,7 +33,9 @@ def normalizeConstraints(constr: List[List[List[str]]]) -> List[str]:
 
 def parseAndNormalize(constr: UnparsedConfigType) -> ConfigType:
     parsedConstr = parseConfigs(constr)
-    normalizedConstr = [] if not parsedConstr else list(normalizeConstraints(parsedConstr))
+    normalizedConstr = (
+        [] if not parsedConstr else list(normalizeConstraints(parsedConstr))
+    )
     return tuple(normalizedConstr)
 
 

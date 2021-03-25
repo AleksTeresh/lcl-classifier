@@ -184,7 +184,7 @@ def problemCount():
 
 
 @app.errorhandler(Exception)
-def handle_exception(e):
+def handle_exception(e: Exception):
     print(e)
     args = e.args
     if len(args) < 2:
@@ -198,7 +198,7 @@ def handle_exception(e):
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e: Exception):
     return "<h1>404</h1><p>The resource could not be found.</p>", 404
 
 
