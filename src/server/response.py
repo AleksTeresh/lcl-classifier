@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List
 from own_types import ComplexityType
 from problem import GenericProblem
 from complexity import *
@@ -72,7 +72,7 @@ class Sources:
 class GenericResponse:
     def __init__(
         self,
-        problem: Union[GenericProblem, int],
+        problem: GenericProblem,
         randUpperBound: ComplexityType = UNSOLVABLE,
         randLowerBound: ComplexityType = CONST,
         detUpperBound: ComplexityType = UNSOLVABLE,

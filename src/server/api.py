@@ -1,5 +1,6 @@
 import os
 import flask
+from typing import List, Dict
 from functools import reduce
 from flask import request, jsonify
 from flask_cors import CORS
@@ -18,7 +19,7 @@ from db import getBatchClassificationByQuery
 from complexity import *
 
 
-def isQueryResponseComplete(batches):
+def isQueryResponseComplete(batches: List[Dict]) -> bool:
     return (
         len(batches) != 0
         and batches[-1]["countLimit"] is None

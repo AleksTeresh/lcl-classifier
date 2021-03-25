@@ -359,19 +359,23 @@ class GenericProblem:
             # print(activeAlphabet, passiveAlphabet)
             diff = activeAlphabet - passiveAlphabet
             if diff:
-                newActiveConstraints = [
-                    conf
-                    for conf in newActiveConstraints
-                    if not diff.intersection(set(conf))
-                ]
+                newActiveConstraints = tuple(
+                    [
+                        conf
+                        for conf in newActiveConstraints
+                        if not diff.intersection(set(conf))
+                    ]
+                )
 
             diff = passiveAlphabet - activeAlphabet
             if diff:
-                newPassiveConstraints = [
-                    conf
-                    for conf in newPassiveConstraints
-                    if not diff.intersection(set(conf))
-                ]
+                newPassiveConstraints = tuple(
+                    [
+                        conf
+                        for conf in newPassiveConstraints
+                        if not diff.intersection(set(conf))
+                    ]
+                )
 
             if not newActiveConstraints:
                 raise Exception(
@@ -388,8 +392,8 @@ class GenericProblem:
             activeAlphabet = set(flatten(newActiveConstraints)) - {" "}
             passiveAlphabet = set(flatten(newPassiveConstraints)) - {" "}
 
-        self.activeConstraints = tuple(newActiveConstraints)
-        self.passiveConstraints = tuple(newPassiveConstraints)
+        self.activeConstraints = newActiveConstraints
+        self.passiveConstraints = newPassiveConstraints
 
         leafAlphabet = set(flatten(self.leafConstraints)) - {" "}
         rootAlphabet = set(flatten(self.rootConstraints)) - {" "}

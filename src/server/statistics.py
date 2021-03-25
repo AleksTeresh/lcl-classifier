@@ -1,9 +1,10 @@
 from complexity import *
 import json
 from tqdm import tqdm
-from typing import NamedTuple
+from typing import NamedTuple, List
 from problem import ProblemFlags, ProblemProps
 from query import Query
+from db import ClassifiedProblem
 from db import getProblems
 
 

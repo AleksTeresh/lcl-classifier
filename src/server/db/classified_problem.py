@@ -83,7 +83,7 @@ class ClassifiedProblem:
 
     def toResponse(self) -> GenericResponse:
         return GenericResponse(
-            problem=self.id,
+            problem=self.toProblem(),
             randUpperBound=self.randUpperBound,
             randLowerBound=self.randLowerBound,
             detUpperBound=self.detUpperBound,
