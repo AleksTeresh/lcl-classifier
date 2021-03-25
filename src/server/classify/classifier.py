@@ -4,7 +4,8 @@ from complexity import complexities
 from complexity import *
 from classifier_types import *
 from bindings import ClassifyContext
-from typing import List, Dict
+from typing import List, Dict, Tuple
+from own_types import ComplexityType
 from bindings import cpClassify
 from bindings import rtClassify
 from bindings import tlpClassify
@@ -12,7 +13,9 @@ from bindings import brtClassify
 from bindings import reClassify
 
 
-def getUpperBound(responses: Dict[str, GenericResponse], attrStr: str):
+def getUpperBound(
+    responses: Dict[str, GenericResponse], attrStr: str
+) -> Tuple[Classifier, ComplexityType]:
     classifierToComplexityIdx = {
         k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
     }
@@ -21,7 +24,9 @@ def getUpperBound(responses: Dict[str, GenericResponse], attrStr: str):
     return minClassifier, complexities[minComplexityIdx]
 
 
-def getLowerBound(responses: Dict[str, GenericResponse], attrStr: str):
+def getLowerBound(
+    responses: Dict[str, GenericResponse], attrStr: str
+) -> Tuple[Classifier, ComplexityType]:
     classifierToComplexityIdx = {
         k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
     }
@@ -30,7 +35,7 @@ def getLowerBound(responses: Dict[str, GenericResponse], attrStr: str):
     return maxClassifier, complexities[maxComplexityIdx]
 
 
-def removeUnknowns(response: GenericResponse):
+def removeUnknowns(response: GenericResponse) -> GenericResponse:
     if response.randLowerBound == UNKNOWN:
         response.randLowerBound = CONST
     if response.detLowerBound == UNKNOWN:
@@ -42,7 +47,7 @@ def removeUnknowns(response: GenericResponse):
     return response
 
 
-def propagateBounds(response: GenericResponse):
+def propagateBounds(response: GenericResponse) -> GenericResponse:
     # propagate rand upper
     if complexities.index(response.detUpperBound) < complexities.index(
         response.randUpperBound
@@ -80,13 +85,13 @@ def propagateBounds(response: GenericResponse):
     return response
 
 
-def postprocess(response: GenericResponse):
+def postprocess(response: GenericResponse) -> GenericResponse:
     response = removeUnknowns(response)
     response = propagateBounds(response)
     return response
 
 
-def checkForContradictions(responses: Dict[str, GenericResponse]):
+def checkForContradictions(responses: Dict[str, GenericResponse]) -> None:
     _, randUpperBound = getUpperBound(responses, "randUpperBound")
     _, detUpperBound = getUpperBound(responses, "detUpperBound")
     _, randLowerBound = getLowerBound(responses, "randLowerBound")
@@ -126,30 +131,30 @@ def classify(
     problem: GenericProblem,
     existingClassifications: Dict[str, GenericResponse] = {},
     context: ClassifyContext = ClassifyContext(),
-):
+) -> GenericResponse:
     try:
         cpResult = cpClassify(problem, context)
-    except Exception as e:
+    except Exception:
         cpResult = GenericResponse(problem)
 
     try:
         rtResult = rtClassify(problem, context)
-    except Exception as e:
+    except Exception:
         rtResult = GenericResponse(problem)
 
     try:
         tlpResult = tlpClassify(problem, context)
-    except Exception as e:
+    except Exception:
         tlpResult = GenericResponse(problem)
 
     try:
         brtResult = brtClassify(problem, context)
-    except Exception as e:
+    except Exception:
         brtResult = GenericResponse(problem)
 
     try:
         reResult = reClassify(problem, context)
-    except Exception as e:
+    except Exception:
         reResult = GenericResponse(problem)
 
     responses = {

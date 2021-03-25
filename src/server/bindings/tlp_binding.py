@@ -21,7 +21,7 @@ complexityMapping = {
 }
 
 
-def validate(p: GenericProblem):
+def validate(p: GenericProblem) -> None:
     if p.flags.isCycle:
         raise Exception("tlp", "Cannot classify if the graph is a cycle")
 
@@ -50,7 +50,7 @@ def validate(p: GenericProblem):
         )
 
 
-def batchClassify(ps: List[GenericProblem]):
+def batchClassify(ps: List[GenericProblem]) -> List[GenericResponse]:
     try:
         for p in ps:
             validate(p)
@@ -73,7 +73,7 @@ def batchClassify(ps: List[GenericProblem]):
     ]
 
 
-def classify(p: GenericProblem, context: ClassifyContext):
+def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
     if context.tlpPreclassified:
         return GenericResponse(p)
 

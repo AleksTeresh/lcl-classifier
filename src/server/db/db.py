@@ -551,7 +551,9 @@ def storeProblem(p: GenericProblem) -> int:
     return id
 
 
-def storeProblemsAndGetWithIds(problems: List[GenericProblem], problemProps: ProblemProps) -> List[GenericProblem]:
+def storeProblemsAndGetWithIds(
+    problems: List[GenericProblem], problemProps: ProblemProps
+) -> List[GenericProblem]:
     conn = getConnection()
     cur = conn.cursor()
     cur.execute(

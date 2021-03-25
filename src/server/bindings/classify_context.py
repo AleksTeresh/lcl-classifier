@@ -3,7 +3,12 @@ from classifier_types import Classifier
 
 
 class ClassifyContext:
-    def __init__(self, brtPreclassified=False, tlpPreclassified=False, isBatch=False):
+    def __init__(
+        self,
+        brtPreclassified: bool = False,
+        tlpPreclassified: bool = False,
+        isBatch: bool = False,
+    ):
         self.isBatch = isBatch
         self.brtPreclassified = brtPreclassified
         self.tlpPreclassified = tlpPreclassified

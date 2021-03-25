@@ -7,11 +7,12 @@ from .classifier import classify, Classifier
 from bindings import tlpBatchClassify
 from bindings import brtBatchClassify
 from problem import GenericProblem, ProblemFlags, ProblemProps
+from response import GenericResponse
 from db import ClassifiedProblem
 from bindings import ClassifyContext
 
 
-def batchClassify(problems: List[GenericProblem]):
+def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
     context = ClassifyContext(isBatch=True)
 
     try:
@@ -58,12 +59,12 @@ def classifyAndStore(
     props: ProblemProps,
     countLimit: Optional[int],
     skipCount: Optional[int],
-):
+) -> None:
     results = batchClassify(problems)
     updateClassifications(results, props, countLimit, skipCount)
 
 
-def reclassifyAndStore(classifiedProblems):
+def reclassifyAndStore(classifiedProblems: List[ClassifiedProblem]) -> None:
     for p in tqdm(classifiedProblems):
         res = classify(p.toProblem())
         storeProblemAndClassification(p, res)

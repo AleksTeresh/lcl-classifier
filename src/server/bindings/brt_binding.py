@@ -26,7 +26,7 @@ complexityMapping = {
 }
 
 
-def preprocessProblem(p):
+def preprocessProblem(p: GenericProblem) -> List[str]:
     alphabet = p.getAlphabet()
     constraints = [moveRootLabelToCenter(x) for x in p.activeConstraints]
 
@@ -35,7 +35,7 @@ def preprocessProblem(p):
     return constraints
 
 
-def validate(p: GenericProblem):
+def validate(p: GenericProblem) -> None:
     if not p.flags.isTree:
         raise Exception("brt", "Cannot classify if the problem is not a tree")
 
@@ -63,7 +63,7 @@ def validate(p: GenericProblem):
         )
 
 
-def batchClassify(ps: List[GenericProblem]):
+def batchClassify(ps: List[GenericProblem]) -> List[GenericResponse]:
     try:
         for p in ps:
             validate(p)

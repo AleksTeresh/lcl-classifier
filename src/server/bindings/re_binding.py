@@ -7,8 +7,7 @@ from multiprocessing import Process, Queue
 import multiprocessing as mp
 import bin.rust2py as rust2py
 
-
-def validate(problem: GenericProblem):
+def validate(problem: GenericProblem) -> None:
     if problem.flags.isCycle:
         raise Exception("re", "Cannot classify if the graph is a cycle")
 
@@ -22,7 +21,7 @@ def validate(problem: GenericProblem):
         raise Exception("re", "Leaves and roots must allow all configurations")
 
 
-def runRE(data, q):
+def runRE(data: str, q: Queue) -> None:
     (lb, ub) = rust2py.get_complexity(
         data,
         # if pp_only is set to True, labels param does not matter
@@ -37,7 +36,7 @@ def runRE(data, q):
     q.put((lb, ub))
 
 
-def classify(p: GenericProblem, context: ClassifyContext):
+def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
     validate(p)
 
     data = (
