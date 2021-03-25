@@ -13,6 +13,7 @@ from util import flatten
 from response import GenericResponse
 from complexity import *
 
+
 def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
     activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2
     passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2

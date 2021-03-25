@@ -11,6 +11,7 @@ from bindings import tlpClassify
 from bindings import brtClassify
 from bindings import reClassify
 
+
 def getUpperBound(responses: Dict[str, GenericResponse], attrStr: str):
     classifierToComplexityIdx = {
         k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()

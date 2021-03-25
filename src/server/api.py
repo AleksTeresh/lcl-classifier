@@ -17,6 +17,7 @@ from db import storeProblemAndClassification
 from db import getBatchClassificationByQuery
 from complexity import *
 
+
 def isQueryResponseComplete(batches):
     return (
         len(batches) != 0

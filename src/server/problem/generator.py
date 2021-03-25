@@ -5,6 +5,7 @@ from .problem import GenericProblem as P, BasicProblemFlags, ProblemProps
 from complexity import *
 from itertools import combinations_with_replacement, product
 
+
 def problemFromConstraints(tulpes, flags, countLimit, skipCount):
     problems = set()
     startIdx = skipCount

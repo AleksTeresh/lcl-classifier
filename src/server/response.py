@@ -1,5 +1,6 @@
 from complexity import *
 
+
 class Source:
     def __init__(self, shortName, name, urls):
         self.shortName = shortName
@@ -98,15 +99,12 @@ class GenericResponse:
         }
 
     def __repr__(self):
-        return (
-            "Rand. UB: %s\n\
+        return "Rand. UB: %s\n\
 Rand. LB: %s\n\
 Det. UB: %s\n\
-Det. LB: %s\n"
-            % (
-                self.randUpperBound,
-                self.randLowerBound,
-                self.detUpperBound,
-                self.detLowerBound,
-            )
+Det. LB: %s\n" % (
+            self.randUpperBound,
+            self.randLowerBound,
+            self.detUpperBound,
+            self.detLowerBound,
         )

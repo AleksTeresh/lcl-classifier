@@ -6,6 +6,7 @@ from problem import ProblemFlags, ProblemProps
 from query import Query
 from db import getProblems
 
+
 class ComplexityClassData:
     def __init__(
         self,

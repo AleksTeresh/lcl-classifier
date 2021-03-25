@@ -13,9 +13,11 @@ from db import getClassifiedProblemObjs
 from db import getProblem
 from db import getBatchlessProblemObjs
 
+
 def reclassifyIndividualProblems():
     problems = getBatchlessProblemObjs()
     reclassifyAndStore(problems)
+
 
 def reclassifyProblemClass(
     activeDegree,

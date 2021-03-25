@@ -7,6 +7,7 @@ from multiprocessing import Process, Queue
 import multiprocessing as mp
 import bin.rust2py as rust2py
 
+
 def validate(problem: GenericProblem):
     if problem.flags.isCycle:
         raise Exception("re", "Cannot classify if the graph is a cycle")

@@ -1,6 +1,7 @@
 from response import Source
 from classifier_types import Classifier
 
+
 class ClassifyContext:
     def __init__(self, brtPreclassified=False, tlpPreclassified=False, isBatch=False):
         self.isBatch = isBatch

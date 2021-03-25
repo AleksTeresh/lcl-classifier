@@ -2,6 +2,7 @@ from problem import ProblemProps
 from complexity import *
 from problem import parseAndNormalize
 
+
 class QueryExcludeInclude:
     def __init__(
         self,

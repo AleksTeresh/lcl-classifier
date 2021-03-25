@@ -6,6 +6,7 @@ from complexity import *
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from problem import generate
 
+
 class TestBatchClassifier(unittest.TestCase):
     def __checkEquality(self, results, saved):
         self.assertEqual(len(results), len(saved))
@@ -124,6 +125,7 @@ class TestBatchClassifier(unittest.TestCase):
         with open("test_data/classifications5.pickle", "rb") as handle:
             saved = pickle.load(handle)
             self.__checkEquality(results, saved)
+
 
 class TestClassifier(unittest.TestCase):
     def testRe1(self):

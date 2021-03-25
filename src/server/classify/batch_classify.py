@@ -10,6 +10,7 @@ from problem import GenericProblem, ProblemFlags, ProblemProps
 from db import ClassifiedProblem
 from bindings import ClassifyContext
 
+
 def batchClassify(problems: List[GenericProblem]):
     context = ClassifyContext(isBatch=True)
 

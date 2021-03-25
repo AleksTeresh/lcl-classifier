@@ -1,5 +1,6 @@
 from util import flatMap, flatten
 
+
 def splitConfig(config):
     res = flatten([x.split(" ") for x in config.split(" : ")])
     return [x for x in res if x.strip() != ""]

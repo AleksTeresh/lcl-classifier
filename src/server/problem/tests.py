@@ -3,6 +3,7 @@ import pickle
 from .problem import GenericProblem, ProblemFlags, ProblemProps
 from .generator import generate
 
+
 class TestGenerator(unittest.TestCase):
     def __checkEquality(self, results, saved):
         self.assertEqual(len(results), len(saved))
@@ -116,4 +117,3 @@ class TestGenerator(unittest.TestCase):
         with open("test_data/problems4.pickle", "rb") as handle:
             saved = pickle.load(handle)
             self.__checkEquality(ps, saved)
-
