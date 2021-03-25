@@ -333,7 +333,7 @@ class GenericProblem:
         return tuple(newConfigs)
 
     def __handleAlphabetPerm(
-        self, perm: List[str]
+        self, perm: Tuple[str, ...]
     ) -> Tuple[ConfigType, ConfigType, ConfigType, ConfigType]:
         "returns a tuple of lists"
         renaming = {}
@@ -397,19 +397,19 @@ class GenericProblem:
 
         leafDiff = leafAlphabet - allowedAlphabet
         if leafDiff:
-            self.leafConstraints = [
+            self.leafConstraints = tuple([
                 conf
                 for conf in self.leafConstraints
                 if not leafDiff.intersection(set(conf))
-            ]
+            ])
 
         rootDiff = rootAlphabet - allowedAlphabet
         if rootDiff:
-            self.rootConstraints = [
+            self.rootConstraints = tuple([
                 conf
                 for conf in self.rootConstraints
                 if not rootDiff.intersection(set(conf))
-            ]
+            ])
 
     def __getDegree(self, configs: ConfigType) -> int:
         return len(configs[0])
@@ -432,8 +432,8 @@ class GenericProblem:
         allPerms = list(itertools.permutations(letters))
         normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
         # normalized is a list of tulpes of lists
-        normalized = sorted(normalized)[0]
-        self.activeConstraints = normalized[0]
-        self.passiveConstraints = normalized[1]
-        self.leafConstraints = normalized[2]
-        self.rootConstraints = normalized[3]
+        normalizedFirst = sorted(normalized)[0]
+        self.activeConstraints = normalizedFirst[0]
+        self.passiveConstraints = normalizedFirst[1]
+        self.leafConstraints = normalizedFirst[2]
+        self.rootConstraints = normalizedFirst[3]

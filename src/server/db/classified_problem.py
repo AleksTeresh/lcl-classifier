@@ -1,4 +1,5 @@
 from typing import List
+from own_types import ConfigType
 from problem import unparseConfigs
 from problem import GenericProblem, ProblemFlags
 from response import GenericResponse
@@ -9,10 +10,10 @@ class ClassifiedProblem:
     def __init__(
         self,
         id: int,
-        activeConstraints: List[str],
-        passiveConstraints: List[str],
-        leafConstraints: List[str],
-        rootConstraints: List[str],
+        activeConstraints: ConfigType,
+        passiveConstraints: ConfigType,
+        leafConstraints: ConfigType,
+        rootConstraints: ConfigType,
         isTree: bool,
         isCycle: bool,
         isPath: bool,

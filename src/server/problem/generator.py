@@ -53,8 +53,8 @@ def generate(
     activesAllSame: bool,
     passivesAllSame: bool,
     flags: ProblemFlags,
-    countLimit: Optional[int] = sys.maxsize,
-    skipCount: Optional[int] = 0,
+    countLimit: int = sys.maxsize,
+    skipCount: int = 0,
 ):
     alphabet = letterRange(labelCount)
     # take activeDegree labels
@@ -97,9 +97,9 @@ def generate(
     passiveConstraints = [
         tuple([" ".join(y) for y in x]) for x in tqdm(powerset(passives))
     ]
-    problemTuples = set(
+    problemTuplesSet = set(
         [(a, b) for a in tqdm(activeConstraints) for b in passiveConstraints if a and b]
     )
-    problemTuples = sorted(list(problemTuples))
+    problemTuples = sorted(list(problemTuplesSet))
     problems = problemFromConstraints(problemTuples, flags, countLimit, skipCount)
     return sorted(list(problems), key=lambda p: p.id)

@@ -14,7 +14,7 @@ from bindings import reClassify
 
 
 def getUpperBound(
-    responses: Dict[str, GenericResponse], attrStr: str
+    responses: Dict[Classifier, GenericResponse], attrStr: str
 ) -> Tuple[Classifier, ComplexityType]:
     classifierToComplexityIdx = {
         k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
@@ -25,7 +25,7 @@ def getUpperBound(
 
 
 def getLowerBound(
-    responses: Dict[str, GenericResponse], attrStr: str
+    responses: Dict[Classifier, GenericResponse], attrStr: str
 ) -> Tuple[Classifier, ComplexityType]:
     classifierToComplexityIdx = {
         k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
@@ -91,7 +91,7 @@ def postprocess(response: GenericResponse) -> GenericResponse:
     return response
 
 
-def checkForContradictions(responses: Dict[str, GenericResponse]) -> None:
+def checkForContradictions(responses: Dict[Classifier, GenericResponse]) -> None:
     _, randUpperBound = getUpperBound(responses, "randUpperBound")
     _, detUpperBound = getUpperBound(responses, "detUpperBound")
     _, randLowerBound = getLowerBound(responses, "randLowerBound")
@@ -129,7 +129,7 @@ def checkForContradictions(responses: Dict[str, GenericResponse]) -> None:
 
 def classify(
     problem: GenericProblem,
-    existingClassifications: Dict[str, GenericResponse] = {},
+    existingClassifications: Dict[Classifier, GenericResponse] = {},
     context: ClassifyContext = ClassifyContext(),
 ) -> GenericResponse:
     try:

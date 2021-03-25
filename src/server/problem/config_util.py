@@ -32,9 +32,9 @@ def normalizeConstraints(constr: List[List[List[str]]]) -> List[str]:
 
 
 def parseAndNormalize(constr: UnparsedConfigType) -> ConfigType:
-    constr = parseConfigs(constr)
-    constr = [] if not constr else list(normalizeConstraints(constr))
-    return tuple(constr)
+    parsedConstr = parseConfigs(constr)
+    normalizedConstr = [] if not parsedConstr else list(normalizeConstraints(parsedConstr))
+    return tuple(normalizedConstr)
 
 
 def eachConstrIsHomogeneous(constrs: ConfigType) -> bool:
