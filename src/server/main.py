@@ -129,6 +129,8 @@ def generateProblemClass(
     stats = computeStats(res)
     prettyPrint(stats)
 
+print('Press Enter to start reclassification...')
+input()
 
 reclassifyIndividualProblems()
 
