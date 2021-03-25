@@ -2,6 +2,7 @@ from problem import ProblemProps
 from complexity import *
 from problem import parseAndNormalize
 
+
 class QueryExcludeInclude:
     def __init__(
         self,
@@ -18,7 +19,7 @@ class QueryExcludeInclude:
     ):
         self.excludeIfConfigHasAllOf = parseAndNormalize(excludeIfConfigHasAllOf)
         self.excludeIfConfigHasSomeOf = parseAndNormalize(excludeIfConfigHasSomeOf)
-        
+
         self.includeIfConfigHasAllOf = parseAndNormalize(includeIfConfigHasAllOf)
         self.includeIfConfigHasSomeOf = parseAndNormalize(includeIfConfigHasSomeOf)
 

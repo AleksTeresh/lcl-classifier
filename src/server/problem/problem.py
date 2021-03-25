@@ -187,7 +187,7 @@ class GenericProblem:
         activeConstraints: UnparsedConfigType,
         passiveConstraints: UnparsedConfigType,
         activeAllowAll: bool,
-        passiveAllowAll: bool
+        passiveAllowAll: bool,
     ) -> None:
         if activeAllowAll and passiveAllowAll:
             raise Exception(
@@ -253,7 +253,8 @@ class GenericProblem:
         self,
         activeConstraints: UnparsedConfigType,
         passiveConstraints: UnparsedConfigType,
-        activeAllowAll: bool, passiveAllowAll: bool
+        activeAllowAll: bool,
+        passiveAllowAll: bool,
     ) -> None:
         self.activeConstraints = parseAndNormalize(activeConstraints)
         self.passiveConstraints = parseAndNormalize(passiveConstraints)
@@ -274,14 +275,18 @@ class GenericProblem:
         if self.getActiveDegree() < self.getPassiveDegree():
             self.__swapConstraints()
 
-    def __assignLeafs(self, leafConstraints: UnparsedConfigType, leafAllowAll: bool) -> None:
+    def __assignLeafs(
+        self, leafConstraints: UnparsedConfigType, leafAllowAll: bool
+    ) -> None:
         if leafAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
             self.leafConstraints = parseAndNormalize(allowAllNotnormnalized)
         else:
             self.leafConstraints = parseAndNormalize(leafConstraints)
 
-    def __assignRoots(self, rootConstraints: UnparsedConfigType, rootAllowAll: bool) -> None:
+    def __assignRoots(
+        self, rootConstraints: UnparsedConfigType, rootAllowAll: bool
+    ) -> None:
         if rootAllowAll:
             allowAllNotnormnalized = ["".join(self.getAlphabet())]
             self.rootConstraints = parseAndNormalize(allowAllNotnormnalized)
@@ -293,7 +298,7 @@ class GenericProblem:
         rootAllowAll: bool,
         rootConstraints: UnparsedConfigType,
         activeConstraints: UnparsedConfigType,
-        passiveConstraints: UnparsedConfigType
+        passiveConstraints: UnparsedConfigType,
     ) -> None:
         # if root degree cannot be deduced because rootConstraints is an empty set,
         # assume (rather arbitrarily) that root is an active node

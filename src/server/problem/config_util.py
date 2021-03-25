@@ -5,11 +5,14 @@ from itertools import product
 from util import flatMap, flatten, areAllTheSame, allSameSizes
 from .parser import parseConfigs
 
+
 def flattenBinaryConfigs(left: List[str], right: List[str]) -> List[str]:
     return [l + r for l in left for r in right]
 
 
-def flattenTernaryConfigs(one: List[str], two: List[str], three: List[str]) -> List[str]:
+def flattenTernaryConfigs(
+    one: List[str], two: List[str], three: List[str]
+) -> List[str]:
     return [o + tw + th for o in one for tw in two for th in three]
 
 

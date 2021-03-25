@@ -2,6 +2,7 @@ from own_types import UnparsedConfigType, ConfigType
 from typing import List
 from util import flatMap, flatten
 
+
 def splitConfig(config: str) -> List[str]:
     res = flatten([x.split(" ") for x in config.split(" : ")])
     return [x for x in res if x.strip() != ""]

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from tqdm import tqdm
 from collections import namedtuple
 from db import updateClassifications
@@ -54,7 +54,10 @@ def batchClassify(problems: List[GenericProblem]):
 
 
 def classifyAndStore(
-    problems: List[GenericProblem], props: ProblemProps, countLimit, skipCount
+    problems: List[GenericProblem],
+    props: ProblemProps,
+    countLimit: Optional[int],
+    skipCount: Optional[int],
 ):
     results = batchClassify(problems)
     updateClassifications(results, props, countLimit, skipCount)

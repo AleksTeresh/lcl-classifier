@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from typing import List
+from typing import List, Dict, Optional
 from psycopg2.extras import execute_values
 import humps
 from problem import GenericProblem, ProblemProps
@@ -31,7 +31,7 @@ def getConnection():
     return conn
 
 
-def getProblem(problem: GenericProblem):
+def getProblem(problem: GenericProblem) -> Optional[Dict]:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
@@ -93,12 +93,12 @@ def getProblem(problem: GenericProblem):
     return res
 
 
-def getClassifiedProblemObj(problem: GenericProblem):
+def getClassifiedProblemObj(problem: GenericProblem) -> Optional[ClassifiedProblem]:
     r = getProblem(problem)
     return mapToClassifiedProblem(r) if r is not None else None
 
 
-def getProblems(query: Query):
+def getProblems(query: Query) -> List[Dict]:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
@@ -270,7 +270,13 @@ def getClassifiedProblemObjs(query: Query) -> List[ClassifiedProblem]:
     return [mapToClassifiedProblem(r) for r in res]
 
 
-def insertBatchClassifyTrace(cur, problemProps, problemCount, countLimit, skipCount):
+def insertBatchClassifyTrace(
+    cur,
+    problemProps: ProblemProps,
+    problemCount: int,
+    countLimit: Optional[int],
+    skipCount: Optional[int],
+) -> None:
     cur.execute(
         """
       DELETE FROM batch_classifications WHERE
@@ -342,7 +348,7 @@ def insertBatchClassifyTrace(cur, problemProps, problemCount, countLimit, skipCo
     )
 
 
-def getBatchlessProblems():
+def getBatchlessProblems() -> List[Dict]:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -357,17 +363,19 @@ def getBatchlessProblems():
     return problems
 
 
-def getBatchlessProblemObjs():
+def getBatchlessProblemObjs() -> List[ClassifiedProblem]:
     problems = getBatchlessProblems()
     return [mapToClassifiedProblem(r) for r in problems]
 
 
-def storeProblemAndClassification(problem: GenericProblem, response: GenericResponse):
+def storeProblemAndClassification(
+    problem: GenericProblem, response: GenericResponse
+) -> None:
     problemId = storeProblem(problem)
     updateClassification(response, problemId)
 
 
-def updateClassification(result: GenericResponse, problemId: int):
+def updateClassification(result: GenericResponse, problemId: int) -> None:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM sources;")
@@ -408,7 +416,9 @@ def updateClassification(result: GenericResponse, problemId: int):
     conn.close()
 
 
-def updateClassifications(results, problemProps=None, countLimit=None, skipCount=None):
+def updateClassifications(
+    results: List[GenericResponse], problemProps=None, countLimit=None, skipCount=None
+) -> None:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM sources;")
@@ -484,7 +494,7 @@ def updateClassifications(results, problemProps=None, countLimit=None, skipCount
     conn.close()
 
 
-def storeProblem(p: GenericProblem):
+def storeProblem(p: GenericProblem) -> int:
     r = getProblem(p)
 
     conn = getConnection()
@@ -541,7 +551,7 @@ def storeProblem(p: GenericProblem):
     return id
 
 
-def storeProblemsAndGetWithIds(problems, problemProps: ProblemProps):
+def storeProblemsAndGetWithIds(problems: List[GenericProblem], problemProps: ProblemProps) -> List[GenericProblem]:
     conn = getConnection()
     cur = conn.cursor()
     cur.execute(
@@ -633,7 +643,7 @@ def storeProblemsAndGetWithIds(problems, problemProps: ProblemProps):
     return problems
 
 
-def getBatchClassifications():
+def getBatchClassifications() -> List[Dict]:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM batch_classifications;")
@@ -644,7 +654,7 @@ def getBatchClassifications():
     return res
 
 
-def getBatchClassificationByQuery(query: Query):
+def getBatchClassificationByQuery(query: Query) -> List[Dict]:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
@@ -691,7 +701,7 @@ def getBatchClassificationByQuery(query: Query):
     return [] if res is None else res
 
 
-def getProblemCount():
+def getProblemCount() -> int:
     conn = getConnection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT COUNT(*) as count FROM problems;")

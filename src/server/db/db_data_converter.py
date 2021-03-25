@@ -1,8 +1,9 @@
+from typing import Dict
 from .classified_problem import ClassifiedProblem
 from response import Sources, Source
 
 
-def mapToClassifiedProblem(dbProblem) -> ClassifiedProblem:
+def mapToClassifiedProblem(dbProblem: Dict) -> ClassifiedProblem:
     return ClassifiedProblem(
         papers=Sources(
             randUpperBoundSource=Source(
