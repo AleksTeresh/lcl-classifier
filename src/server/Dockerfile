@@ -1,19 +1,15 @@
-# FROM rust:1.46.0 as re
-
-# RUN mkdir -p /usr/src/app
-# WORKDIR /usr/src/app
-
-# RUN git clone https://github.com/AleksTeresh/round-eliminator .
-# RUN rustup install nightly
-# RUN RUSTFLAGS="-C target-cpu=native" cargo +nightly build -p re-rust2py --release
-
+# adopted from https://stackoverflow.com/a/54763270
 FROM python:3.8.3
+
+ENV POETRY_VERSION=1.0.0
+RUN pip install "poetry==$POETRY_VERSION"
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY requirements.txt lcl_classifier.ini /usr/src/app/
-RUN pip install -r requirements.txt
+COPY poetry.lock pyproject.toml /usr/src/app/
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-dev --no-interaction --no-ansi
 COPY . .
 RUN rm /usr/src/app/rust2py.so
 COPY ./rust2py-linux.so /usr/src/app/rust2py.so
