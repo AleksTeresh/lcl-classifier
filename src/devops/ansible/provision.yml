@@ -1,0 +1,112 @@
+---
+- hosts: Production
+  remote_user: root
+  become: yes
+  become_method: sudo
+  name: Provision
+  vars:
+    base_dir: /home/ubuntu/projects
+    volume_dir: /home/ubuntu/projects/lcl-classifier/newvolume
+    linux_user: ubuntu
+  tasks:
+  - name: Upgrade packages to latest version
+    apt:
+      name: "*"
+      state: latest
+      force_apt_get: yes
+
+  - name: Add repository keys
+    apt_key: 
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present 
+
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+      state: present
+      update_cache: yes
+
+  - name: Update all packages to the latest version
+    apt:
+      upgrade: dist
+      update-cache: yes
+
+  - name: Create volume directory
+    file:
+      path: "{{ volume_dir }}"
+      state: directory
+      mode: 0755
+      group: "{{ linux_user }}"
+      owner: "{{ linux_user }}"
+
+  - name: Mount volume
+    mount:
+      path: "{{ volume_dir }}"
+      src: /dev/vdb
+      fstype: ext4
+      state: mounted  
+
+  - name: Create src directory
+    file:
+      path: "{{ volume_dir }}/src"
+      state: directory
+      mode: 0755
+      group: "{{ linux_user }}"
+      owner: "{{ linux_user }}"
+
+  - name: Install Docker
+    apt:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+
+  - name: Install Docker Compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.28.6/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      mode: '+x'
+
+  - name: Postinstall Docker
+    shell: "{{ item }}"
+    loop:
+    - "getent group docker || groupadd docker"
+    - "usermod -aG docker {{ linux_user }}"
+
+  - name: Re-evaluated group memberships
+    meta: reset_connection
+
+  - name: Docker to always start on boot
+    shell: "{{ item }}"
+    loop:
+    - "systemctl enable docker.service"
+    - "systemctl enable containerd.service"
+
+  - name: Deploy sources
+    synchronize:
+      src: "{{ playbook_dir }}/../../"
+      dest: "{{ volume_dir }}/src"
+      owner: no
+      group: no
+      rsync_opts:
+        - "-a"
+        - "--exclude=client/node_modules"
+        - "--exclude=postgres"
+        - "--exclude=backup"
+        - "--exclude=data"
+
+  - name: Transfer folders' ownership to ubuntu user
+    file:
+      path: "{{ base_dir }}"
+      state: directory
+      group: "{{ linux_user }}"
+      owner: "{{ linux_user }}"
+      recurse: yes
+
+  - name: Create SSL Certificate
+    shell: "yes 'n' | ./init-letsencrypt.sh"
+    args:
+      chdir: "{{ volume_dir }}/src"
