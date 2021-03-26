@@ -269,7 +269,6 @@ def getClassifiedProblemObjs(query: Query) -> List[ClassifiedProblem]:
     res = getProblems(query)
     return [mapToClassifiedProblem(r) for r in res]
 
-
 def insertBatchClassifyTrace(
     cur,
     problemProps: ProblemProps,

@@ -20,4 +20,6 @@ POSTGRES_HOST=195.148.21.214 POSTGRES_PASSWORD='<DB password>' python ./main.py
 
 # To backup
 
-psql "host=195.148.21.214 port=5432 dbname=postgres user=postgres" -f ./backup/<data>.sql
+```
+psql "host=195.148.21.214 port=5432 dbname=postgres user=postgres" -f ./backup/<date>.sql
+```
