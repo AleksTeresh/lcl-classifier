@@ -1,2 +1,2 @@
 cd ./src/client
-npm run pretify
+npm run lint-staged
