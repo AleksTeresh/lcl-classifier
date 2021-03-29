@@ -40,7 +40,7 @@
       owner: "{{ linux_user }}"
 
   - name: Mount volume
-    mount:
+    ansible.posix.mount:
       path: "{{ volume_dir }}"
       src: /dev/vdb
       fstype: ext4
@@ -86,7 +86,7 @@
     - "systemctl enable containerd.service"
 
   - name: Deploy sources
-    synchronize:
+    ansible.posix.synchronize:
       src: "{{ playbook_dir }}/../../"
       dest: "{{ volume_dir }}/src"
       owner: no

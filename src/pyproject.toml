@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "lcl-classifier-devops"
+version = "0.1.0"
+description = ""
+authors = ["Aleksandr Tereshchenko <aleksandr.tereshchenko@reaktor.com>"]
+
+[tool.poetry.dependencies]
+python = "3.8.3"
+
+[tool.poetry.dev-dependencies]
+python-openstackclient = "5.5.0"
+ansible = "3.1.0"
+ansible-lint = "^5.0.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
