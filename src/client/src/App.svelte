@@ -20,7 +20,10 @@
       >Our research group</a
     >
     <p class="narrow-paragraph">
-      The authors wish to acknowledge <a href="https://www.csc.fi/en" target="_blank">CSC – IT Center for Science, Finland</a>, for computational resources.
+      The authors wish to acknowledge <a
+        href="https://www.csc.fi/en"
+        target="_blank">CSC – IT Center for Science, Finland</a
+      >, for computational resources.
     </p>
   </footer>
 </main>

@@ -10,10 +10,7 @@
   import Collapsible from '../components/Collapsible.svelte'
   import { getQueryResult, getTotalProblemCount } from '../api/api'
   import { persistStateToUrl, loadStateFromUrl } from '../urlStore'
-  import type {
-    Query,
-    QueryResponse
-  } from '../types'
+  import type { Query, QueryResponse } from '../types'
   import { Complexity, ComplexityCodec, GraphTypeCodec } from '../types'
   import ReturnedProblem from '../components/ReturnedProblem.svelte'
 
@@ -42,16 +39,19 @@
       excludeIfConfigHasAllOf: t.string,
       excludeIfConfigHasSomeOf: t.string,
       includeIfConfigHasAllOf: t.string,
-      includeIfConfigHasSomeOf: t.string
+      includeIfConfigHasSomeOf: t.string,
     },
     'QueryFormState'
   )
-  const ExtendedFormStateCodec = t.intersection([
-    FormStateCodec,
-    t.type({
-      fetchStatsOnly: t.boolean
-    })
-  ], 'ExtendedFormStateCodec')
+  const ExtendedFormStateCodec = t.intersection(
+    [
+      FormStateCodec,
+      t.type({
+        fetchStatsOnly: t.boolean,
+      }),
+    ],
+    'ExtendedFormStateCodec'
+  )
 
   type FormState = t.TypeOf<typeof FormStateCodec>
 
@@ -130,9 +130,12 @@
         ...formState,
         fetchStatsOnly: true,
       }
-      const parsedFormState = loadStateFromUrl(augmentedFormState, FORM_PREFIX, ExtendedFormStateCodec)
-      if (parsedFormState === undefined)
-        return
+      const parsedFormState = loadStateFromUrl(
+        augmentedFormState,
+        FORM_PREFIX,
+        ExtendedFormStateCodec
+      )
+      if (parsedFormState === undefined) return
 
       augmentedFormState = parsedFormState
       formState = augmentedFormState
@@ -395,7 +398,7 @@
           >
             <div class="problem-wrapper response">
               <p class="response-boldenned">Problem:</p>
-              <ReturnedProblem item={item} />
+              <ReturnedProblem {item} />
               <p class="response-boldenned">Classification:</p>
               <Classification response={item} />
             </div>
@@ -433,6 +436,4 @@
     border-bottom: 1px solid black;
     margin: 5px;
   }
-
-  
 </style>

@@ -15,15 +15,9 @@
     {
       activeConstraints: t.string,
       passiveConstraints: t.string,
-      leafConstraints: t.union([
-        t.string,
-        t.undefined
-      ]),
-      rootConstraints: t.union([
-        t.string,
-        t.undefined
-      ]),
-      graphType: GraphTypeCodec
+      leafConstraints: t.union([t.string, t.undefined]),
+      rootConstraints: t.union([t.string, t.undefined]),
+      graphType: GraphTypeCodec,
     },
     'ProblemFormState'
   )
@@ -66,10 +60,13 @@ B C C`,
 
   onMount(async () => {
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
-      const parsedFormState = loadStateFromUrl(formState, FORM_PREFIX, FormStateCodec)
-      if (parsedFormState === undefined)
-        return
-        
+      const parsedFormState = loadStateFromUrl(
+        formState,
+        FORM_PREFIX,
+        FormStateCodec
+      )
+      if (parsedFormState === undefined) return
+
       formState = parsedFormState
       const problem = formStateToProblem(formState)
       loading = true

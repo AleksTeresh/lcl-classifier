@@ -20,7 +20,7 @@
 
 <style>
   .wrapper {
-   margin-bottom: 15px; 
+    margin-bottom: 15px;
   }
   .collapsible {
     font-weight: bold;
@@ -36,13 +36,13 @@
   }
 
   .collapsible::after {
-    content: "\002B";
+    content: '\002B';
     float: right;
     margin-left: 5px;
   }
 
   .openCollapsible::after {
-    content: "\2212";
+    content: '\2212';
   }
 
   .content {

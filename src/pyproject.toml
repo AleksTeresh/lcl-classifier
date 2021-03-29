@@ -8,7 +8,6 @@ authors = ["Aleksandr Tereshchenko <aleksandr.tereshchenko@reaktor.com>"]
 python = "3.8.3"
 
 [tool.poetry.dev-dependencies]
-python-openstackclient = "5.5.0"
 ansible = "3.1.0"
 ansible-lint = "^5.0.6"
 

@@ -32,13 +32,13 @@ export const ProblemCodec = t.type(
 export type Problem = t.TypeOf<typeof ProblemCodec>
 
 export type ProblemRequest = {
-  activeConstraints: string[],
-  passiveConstraints: string[],
-  leafConstraints?: string[],
-  rootConstraints?: string[],
-  isTree: boolean,
-  isCycle: boolean,
-  isPath: boolean,
+  activeConstraints: string[]
+  passiveConstraints: string[]
+  leafConstraints?: string[]
+  rootConstraints?: string[]
+  isTree: boolean
+  isCycle: boolean
+  isPath: boolean
 }
 
 const SourceCodec = t.type(
@@ -150,10 +150,7 @@ export type FindProblemResponse = t.TypeOf<typeof FindProblemResponseCodec>
 
 export const QueryResponseCodec = t.type(
   {
-    problems: t.union([
-      t.array(ClassifiedProblemCodec),
-      t.null
-    ]),
+    problems: t.union([t.array(ClassifiedProblemCodec), t.null]),
     stats: QueryStatisticsCodec,
     isComplete: t.boolean,
   },

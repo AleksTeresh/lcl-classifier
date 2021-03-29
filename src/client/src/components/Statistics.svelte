@@ -1,6 +1,6 @@
 <script lang="ts">
-  import "../css/response.css"
-  import type { QueryStatistics } from "../types"
+  import '../css/response.css'
+  import type { QueryStatistics } from '../types'
 
   export let stats: QueryStatistics
 </script>

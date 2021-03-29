@@ -1,1 +1,1 @@
-declare module 'svelte-loading-spinners';
+declare module 'svelte-loading-spinners'
