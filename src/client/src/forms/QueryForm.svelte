@@ -1,7 +1,6 @@
 <script lang="ts">
   /* eslint-env browser */
   import '../css/response.css'
-  import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
@@ -10,52 +9,13 @@
   import { readyQueries } from '../links/readyQueries'
   import Classification from '../components/Classification.svelte'
   import Collapsible from '../components/Collapsible.svelte'
+  import ReturnedProblem from '../components/ReturnedProblem.svelte'
   import { getQueryResult, getTotalProblemCount } from '../api/api'
   import { persistStateToUrl, loadStateFromUrl } from '../urlStore'
   import type { Query, QueryResponse } from '../types'
-  import { Complexity, ComplexityCodec, GraphTypeCodec } from '../types'
-  import ReturnedProblem from '../components/ReturnedProblem.svelte'
-
-  const FormStateCodec = t.type(
-    {
-      graphType: GraphTypeCodec,
-      isDirectedOrRooted: t.boolean,
-
-      randLowerBound: ComplexityCodec,
-      randUpperBound: ComplexityCodec,
-      detLowerBound: ComplexityCodec,
-      detUpperBound: ComplexityCodec,
-
-      activeDegree: t.number,
-      passiveDegree: t.number,
-      labelCount: t.number,
-      activesAllSame: t.boolean,
-      passivesAllSame: t.boolean,
-
-      largestProblemOnly: t.boolean,
-      smallestProblemOnly: t.boolean,
-      completelyRandUnclassifiedOnly: t.boolean,
-      partiallyRandUnclassifiedOnly: t.boolean,
-      completelyDetUnclassifiedOnly: t.boolean,
-      partiallyDetUnclassifiedOnly: t.boolean,
-      excludeIfConfigHasAllOf: t.string,
-      excludeIfConfigHasSomeOf: t.string,
-      includeIfConfigHasAllOf: t.string,
-      includeIfConfigHasSomeOf: t.string,
-    },
-    'QueryFormState'
-  )
-  const ExtendedFormStateCodec = t.intersection(
-    [
-      FormStateCodec,
-      t.type({
-        fetchStatsOnly: t.boolean,
-      }),
-    ],
-    'ExtendedFormStateCodec'
-  )
-
-  type FormState = t.TypeOf<typeof FormStateCodec>
+  import { Complexity } from '../types'
+  import type { QueryFormState as FormState } from './types'
+  import { ExtendedQueryFormStateCodec as AugmentedFormStateCodec } from './types'
 
   interface ExtraConfigs {
     fetchStatsOnly: boolean
@@ -133,7 +93,7 @@
       const parsedFormState = loadStateFromUrl(
         augmentedFormState,
         FORM_PREFIX,
-        ExtendedFormStateCodec
+        AugmentedFormStateCodec
       )
       if (parsedFormState === undefined) return
 

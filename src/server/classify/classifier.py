@@ -6,122 +6,130 @@ from classifier_types import *
 from bindings import ClassifyContext
 from typing import List, Dict, Tuple
 from own_types import ComplexityType
-from bindings import cpClassify
-from bindings import rtClassify
-from bindings import tlpClassify
-from bindings import brtClassify
-from bindings import reClassify
+from bindings import cp_classify
+from bindings import rt_classify
+from bindings import tlp_classify
+from bindings import brt_classify
+from bindings import re_classify
 
 
-def getUpperBound(
-    responses: Dict[Classifier, GenericResponse], attrStr: str
+def get_upper_bound(
+    responses: Dict[Classifier, GenericResponse], attr_str: str
 ) -> Tuple[Classifier, ComplexityType]:
-    classifierToComplexityIdx = {
-        k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
+    classifier_to_complexity_idx = {
+        k: complexities.index(getattr(res, attr_str)) for k, res in responses.items()
     }
-    minClassifier = min(classifierToComplexityIdx, key=classifierToComplexityIdx.get)
-    minComplexityIdx = classifierToComplexityIdx[minClassifier]
-    return minClassifier, complexities[minComplexityIdx]
+    min_classifier = min(
+        classifier_to_complexity_idx, key=classifier_to_complexity_idx.get
+    )
+    min_complexity_idx = classifier_to_complexity_idx[min_classifier]
+    return min_classifier, complexities[min_complexity_idx]
 
 
-def getLowerBound(
-    responses: Dict[Classifier, GenericResponse], attrStr: str
+def get_lower_bound(
+    responses: Dict[Classifier, GenericResponse], attr_str: str
 ) -> Tuple[Classifier, ComplexityType]:
-    classifierToComplexityIdx = {
-        k: complexities.index(getattr(res, attrStr)) for k, res in responses.items()
+    classifier_to_complexity_idx = {
+        k: complexities.index(getattr(res, attr_str)) for k, res in responses.items()
     }
-    maxClassifier = max(classifierToComplexityIdx, key=classifierToComplexityIdx.get)
-    maxComplexityIdx = classifierToComplexityIdx[maxClassifier]
-    return maxClassifier, complexities[maxComplexityIdx]
+    max_classifier = max(
+        classifier_to_complexity_idx, key=classifier_to_complexity_idx.get
+    )
+    max_complexity_idx = classifier_to_complexity_idx[max_classifier]
+    return max_classifier, complexities[max_complexity_idx]
 
 
-def removeUnknowns(response: GenericResponse) -> GenericResponse:
-    if response.randLowerBound == UNKNOWN:
-        response.randLowerBound = CONST
-    if response.detLowerBound == UNKNOWN:
-        response.detLowerBound = CONST
-    if response.randUpperBound == UNKNOWN:
-        response.randUpperBound = UNSOLVABLE
-    if response.detUpperBound == UNKNOWN:
-        response.detUpperBound = UNSOLVABLE
+def remove_unknowns(response: GenericResponse) -> GenericResponse:
+    if response.rand_lower_bound == UNKNOWN:
+        response.rand_lower_bound = CONST
+    if response.det_lower_bound == UNKNOWN:
+        response.det_lower_bound = CONST
+    if response.rand_upper_bound == UNKNOWN:
+        response.rand_upper_bound = UNSOLVABLE
+    if response.det_upper_bound == UNKNOWN:
+        response.det_upper_bound = UNSOLVABLE
     return response
 
 
-def propagateBounds(response: GenericResponse) -> GenericResponse:
+def propagate_bounds(response: GenericResponse) -> GenericResponse:
     # propagate rand upper
-    if complexities.index(response.detUpperBound) < complexities.index(
-        response.randUpperBound
+    if complexities.index(response.det_upper_bound) < complexities.index(
+        response.rand_upper_bound
     ):
-        response.randUpperBound = response.detUpperBound
-        response.papers.randUpperBoundSource = response.papers.detUpperBoundSource
+        response.rand_upper_bound = response.det_upper_bound
+        response.papers.rand_upper_bound_source = response.papers.det_upper_bound_source
 
     # propagate det lower
-    if complexities.index(response.randLowerBound) > complexities.index(
-        response.detLowerBound
+    if complexities.index(response.rand_lower_bound) > complexities.index(
+        response.det_lower_bound
     ):
-        response.detLowerBound = response.randLowerBound
-        response.papers.detLowerBoundSource = response.papers.randLowerBoundSource
+        response.det_lower_bound = response.rand_lower_bound
+        response.papers.det_lower_bound_source = response.papers.rand_lower_bound_source
 
     # propagate det upper
-    if response.randUpperBound != LOGLOG:
-        response.detUpperBound = response.randUpperBound
-        response.papers.detUpperBoundSource = response.papers.randUpperBoundSource
-    elif complexities.index(LOG) < complexities.index(response.detUpperBound):
-        response.detUpperBound = LOG
-        # source of detUpperBound is still in this case
-        # dictated by randUpperBound
-        response.papers.detUpperBoundSource = response.papers.randUpperBoundSource
+    if response.rand_upper_bound != LOGLOG:
+        response.det_upper_bound = response.rand_upper_bound
+        response.papers.det_upper_bound_source = response.papers.rand_upper_bound_source
+    elif complexities.index(LOG) < complexities.index(response.det_upper_bound):
+        response.det_upper_bound = LOG
+        # source of det_upper_bound is still in this case
+        # dictated by rand_upper_bound
+        response.papers.det_upper_bound_source = response.papers.rand_upper_bound_source
 
     # propagate rand lower
-    if response.detLowerBound != LOG:
-        response.randLowerBound = response.detLowerBound
-        response.papers.randLowerBoundSource = response.papers.detLowerBoundSource
-    elif complexities.index(LOGLOG) > complexities.index(response.randLowerBound):
-        response.randLowerBound = LOGLOG
-        # source of randLowerBoundSource is still in this case
-        # dictated by detLowerBoundSource
-        response.papers.randLowerBoundSource = response.papers.detLowerBoundSource
+    if response.det_lower_bound != LOG:
+        response.rand_lower_bound = response.det_lower_bound
+        response.papers.rand_lower_bound_source = response.papers.det_lower_bound_source
+    elif complexities.index(LOGLOG) > complexities.index(response.rand_lower_bound):
+        response.rand_lower_bound = LOGLOG
+        # source of rand_lower_bound_source is still in this case
+        # dictated by det_lower_bound_source
+        response.papers.rand_lower_bound_source = response.papers.det_lower_bound_source
 
     return response
 
 
 def postprocess(response: GenericResponse) -> GenericResponse:
-    response = removeUnknowns(response)
-    response = propagateBounds(response)
+    response = remove_unknowns(response)
+    response = propagate_bounds(response)
     return response
 
 
-def checkForContradictions(responses: Dict[Classifier, GenericResponse]) -> None:
-    _, randUpperBound = getUpperBound(responses, "randUpperBound")
-    _, detUpperBound = getUpperBound(responses, "detUpperBound")
-    _, randLowerBound = getLowerBound(responses, "randLowerBound")
-    _, detLowerBound = getLowerBound(responses, "detLowerBound")
+def check_for_contradictions(responses: Dict[Classifier, GenericResponse]) -> None:
+    _, rand_upper_bound = get_upper_bound(responses, "rand_upper_bound")
+    _, det_upper_bound = get_upper_bound(responses, "det_upper_bound")
+    _, rand_lower_bound = get_lower_bound(responses, "rand_lower_bound")
+    _, det_lower_bound = get_lower_bound(responses, "det_lower_bound")
     for r in responses.values():
-        if complexities.index(r.randLowerBound) > complexities.index(randUpperBound):
+        if complexities.index(r.rand_lower_bound) > complexities.index(
+            rand_upper_bound
+        ):
             raise Exception(
                 "classification-contradiction",
-                "randLowerBound in one of the respones is > randUpperBound in another response",
+                "rand_lower_bound in one of the respones is > rand_upper_bound in another response",
                 responses,
                 r.problem,
             )
-        if complexities.index(r.detLowerBound) > complexities.index(detUpperBound):
+        if complexities.index(r.det_lower_bound) > complexities.index(det_upper_bound):
             raise Exception(
                 "classification-contradiction"
-                "detLowerBound in one of the respones is > detUpperBound in another response",
+                "det_lower_bound in one of the respones is > det_upper_bound in another response",
                 responses,
                 r.problem,
             )
-        if complexities.index(r.randUpperBound) < complexities.index(randLowerBound):
+        if complexities.index(r.rand_upper_bound) < complexities.index(
+            rand_lower_bound
+        ):
             raise Exception(
                 "classification-contradiction"
-                "randUpperBound in one of the respones is < randLowerBound in another response",
+                "rand_upper_bound in one of the respones is < rand_lower_bound in another response",
                 responses,
                 r.problem,
             )
-        if complexities.index(r.detUpperBound) < complexities.index(detLowerBound):
+        if complexities.index(r.det_upper_bound) < complexities.index(det_lower_bound):
             raise Exception(
                 "classification-contradiction"
-                "randUpperBound in one of the respones is < randLowerBound in another response",
+                "rand_upper_bound in one of the respones is < rand_lower_bound in another response",
                 responses,
                 r.problem,
             )
@@ -129,49 +137,49 @@ def checkForContradictions(responses: Dict[Classifier, GenericResponse]) -> None
 
 def classify(
     problem: GenericProblem,
-    existingClassifications: Dict[Classifier, GenericResponse] = {},
+    existing_classifications: Dict[Classifier, GenericResponse] = {},
     context: ClassifyContext = ClassifyContext(),
 ) -> GenericResponse:
     try:
-        cpResult = cpClassify(problem, context)
+        cp_result = cp_classify(problem, context)
     except Exception:
-        cpResult = GenericResponse(problem)
+        cp_result = GenericResponse(problem)
 
     try:
-        rtResult = rtClassify(problem, context)
+        rt_result = rt_classify(problem, context)
     except Exception:
-        rtResult = GenericResponse(problem)
+        rt_result = GenericResponse(problem)
 
     try:
-        tlpResult = tlpClassify(problem, context)
+        tlp_result = tlp_classify(problem, context)
     except Exception:
-        tlpResult = GenericResponse(problem)
+        tlp_result = GenericResponse(problem)
 
     try:
-        brtResult = brtClassify(problem, context)
+        brt_result = brt_classify(problem, context)
     except Exception:
-        brtResult = GenericResponse(problem)
+        brt_result = GenericResponse(problem)
 
     try:
-        reResult = reClassify(problem, context)
+        re_result = re_classify(problem, context)
     except Exception:
-        reResult = GenericResponse(problem)
+        re_result = GenericResponse(problem)
 
     responses = {
-        Classifier.CP: cpResult,
-        Classifier.RT: rtResult,
-        Classifier.TLP: tlpResult,
-        Classifier.BRT: brtResult,
-        Classifier.RE: reResult,
-        **existingClassifications,
+        Classifier.CP: cp_result,
+        Classifier.RT: rt_result,
+        Classifier.TLP: tlp_result,
+        Classifier.BRT: brt_result,
+        Classifier.RE: re_result,
+        **existing_classifications,
     }
 
-    checkForContradictions(responses)
+    check_for_contradictions(responses)
 
-    rubSource, rub = getUpperBound(responses, "randUpperBound")
-    rlbSource, rlb = getLowerBound(responses, "randLowerBound")
-    dubSource, dub = getUpperBound(responses, "detUpperBound")
-    dlbSource, dlb = getLowerBound(responses, "detLowerBound")
+    rub_source, rub = get_upper_bound(responses, "rand_upper_bound")
+    rlb_source, rlb = get_lower_bound(responses, "rand_lower_bound")
+    dub_source, dub = get_upper_bound(responses, "det_upper_bound")
+    dlb_source, dlb = get_lower_bound(responses, "det_lower_bound")
 
     response = GenericResponse(
         problem,
@@ -179,13 +187,13 @@ def classify(
         rlb,
         dub,
         dlb,
-        cpResult.solvableCount,
-        cpResult.unsolvableCount,
+        cp_result.solvable_count,
+        cp_result.unsolvable_count,
         papers=Sources(
-            context.sources[rubSource],
-            context.sources[rlbSource],
-            context.sources[dubSource],
-            context.sources[dlbSource],
+            context.sources[rub_source],
+            context.sources[rlb_source],
+            context.sources[dub_source],
+            context.sources[dlb_source],
         ),
     )
 

@@ -5,26 +5,26 @@ from typing import NamedTuple, List
 from problem import ProblemFlags, ProblemProps
 from query import Query
 from db import ClassifiedProblem
-from db import getProblems
+from db import get_problems
 
 
 class ComplexityClassData:
     def __init__(
         self,
-        randLowerBound: int = 0,
-        detLowerBound: int = 0,
-        randUpperBound: int = 0,
-        detUpperBound: int = 0,
-        randSolvable: int = 0,
-        detSolvable: int = 0,
+        rand_lower_bound: int = 0,
+        det_lower_bound: int = 0,
+        rand_upper_bound: int = 0,
+        det_upper_bound: int = 0,
+        rand_solvable: int = 0,
+        det_solvable: int = 0,
     ):
-        self.randLowerBound = randLowerBound
-        self.detLowerBound = detLowerBound
-        self.randUpperBound = randUpperBound
-        self.detUpperBound = detUpperBound
+        self.rand_lower_bound = rand_lower_bound
+        self.det_lower_bound = det_lower_bound
+        self.rand_upper_bound = rand_upper_bound
+        self.det_upper_bound = det_upper_bound
 
-        self.randSolvable = randSolvable
-        self.detSolvable = detSolvable
+        self.rand_solvable = rand_solvable
+        self.det_solvable = det_solvable
 
     def dict(self):
         return self.__dict__
@@ -33,121 +33,121 @@ class ComplexityClassData:
 class StatisticsData:
     def __init__(self):
         self.const: ComplexityClassData = ComplexityClassData()
-        self.logStar: ComplexityClassData = ComplexityClassData()
-        self.logLog: ComplexityClassData = ComplexityClassData()
+        self.log_star: ComplexityClassData = ComplexityClassData()
+        self.log_log: ComplexityClassData = ComplexityClassData()
         self.log: ComplexityClassData = ComplexityClassData()
         self.linear: ComplexityClassData = ComplexityClassData()
         self.unsolvable: ComplexityClassData = ComplexityClassData()
-        self.totalSize: int = 0
+        self.total_size: int = 0
 
     def dict(self):
         d = self.__dict__
         for key in d:
-            if key != "totalSize":
+            if key != "total_size":
                 d[key] = d[key].dict()
         return d
 
 
 def compute(data: List[ClassifiedProblem]) -> StatisticsData:
     stats = StatisticsData()
-    complexityMap = {
+    complexity_map = {
         CONST: "const",
-        ITERATED_LOG: "logStar",
-        LOGLOG: "logLog",
+        ITERATED_LOG: "log_star",
+        LOGLOG: "log_log",
         LOG: "log",
         GLOBAL: "linear",
         UNSOLVABLE: "unsolvable",
     }
 
     for p in tqdm(data):
-        randLowerBound = p.randLowerBound
-        randUpperBound = p.randUpperBound
-        detLowerBound = p.detLowerBound
-        detUpperBound = p.detUpperBound
+        rand_lower_bound = p.rand_lower_bound
+        rand_upper_bound = p.rand_upper_bound
+        det_lower_bound = p.det_lower_bound
+        det_upper_bound = p.det_upper_bound
 
-        cl = complexityMap[randLowerBound]
-        cu = complexityMap[randUpperBound]
-        getattr(stats, cl).randLowerBound += 1
-        getattr(stats, cu).randUpperBound += 1
+        cl = complexity_map[rand_lower_bound]
+        cu = complexity_map[rand_upper_bound]
+        getattr(stats, cl).rand_lower_bound += 1
+        getattr(stats, cu).rand_upper_bound += 1
         if cl == cu:
-            getattr(stats, cu).randSolvable += 1
+            getattr(stats, cu).rand_solvable += 1
 
-        cl = complexityMap[detLowerBound]
-        cu = complexityMap[detUpperBound]
-        getattr(stats, cl).detLowerBound += 1
-        getattr(stats, cu).detUpperBound += 1
+        cl = complexity_map[det_lower_bound]
+        cu = complexity_map[det_upper_bound]
+        getattr(stats, cl).det_lower_bound += 1
+        getattr(stats, cu).det_upper_bound += 1
         if cl == cu:
-            getattr(stats, cu).detSolvable += 1
+            getattr(stats, cu).det_solvable += 1
 
-    stats.totalSize = len(data)
+    stats.total_size = len(data)
     return stats
 
 
-def prettyPrint(stats: StatisticsData) -> None:
-    print("In total: %s problems" % stats.totalSize)
+def pretty_print(stats: StatisticsData) -> None:
+    print("In total: %s problems" % stats.total_size)
     print()
 
     print("Stats for randomised setting:")
     print("*****************************")
     print()
-    print("Solvable in constant time: %s " % stats.const.randSolvable)
-    print("Solvable in log* time: %s " % stats.logStar.randSolvable)
-    print("Solvable in loglog time: %s " % stats.logLog.randSolvable)
-    print("Solvable in log time: %s " % stats.log.randSolvable)
-    print("Solvable in linear time: %s " % stats.linear.randSolvable)
-    print("Unsolvable: %s" % stats.unsolvable.randSolvable)
+    print("Solvable in constant time: %s " % stats.const.rand_solvable)
+    print("Solvable in log* time: %s " % stats.log_star.rand_solvable)
+    print("Solvable in loglog time: %s " % stats.log_log.rand_solvable)
+    print("Solvable in log time: %s " % stats.log.rand_solvable)
+    print("Solvable in linear time: %s " % stats.linear.rand_solvable)
+    print("Unsolvable: %s" % stats.unsolvable.rand_solvable)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.randSolvable
-            - stats.logStar.randSolvable
-            - stats.logLog.randSolvable
-            - stats.log.randSolvable
-            - stats.linear.randSolvable
-            - stats.unsolvable.randSolvable
+            stats.total_size
+            - stats.const.rand_solvable
+            - stats.log_star.rand_solvable
+            - stats.log_log.rand_solvable
+            - stats.log.rand_solvable
+            - stats.linear.rand_solvable
+            - stats.unsolvable.rand_solvable
         )
     )
     print()
 
     print("Lower bounds:")
-    print("Constant time: %s " % stats.const.randLowerBound)
-    print("Log* time: %s " % stats.logStar.randLowerBound)
-    print("Loglog time: %s " % stats.logLog.randLowerBound)
-    print("Log time: %s " % stats.log.randLowerBound)
-    print("Linear time: %s " % stats.linear.randLowerBound)
-    print("Unsolvable: %s" % stats.unsolvable.randLowerBound)
+    print("Constant time: %s " % stats.const.rand_lower_bound)
+    print("Log* time: %s " % stats.log_star.rand_lower_bound)
+    print("Loglog time: %s " % stats.log_log.rand_lower_bound)
+    print("Log time: %s " % stats.log.rand_lower_bound)
+    print("Linear time: %s " % stats.linear.rand_lower_bound)
+    print("Unsolvable: %s" % stats.unsolvable.rand_lower_bound)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.randLowerBound
-            - stats.logStar.randLowerBound
-            - stats.logLog.randLowerBound
-            - stats.log.randLowerBound
-            - stats.linear.randLowerBound
-            - stats.unsolvable.randLowerBound
+            stats.total_size
+            - stats.const.rand_lower_bound
+            - stats.log_star.rand_lower_bound
+            - stats.log_log.rand_lower_bound
+            - stats.log.rand_lower_bound
+            - stats.linear.rand_lower_bound
+            - stats.unsolvable.rand_lower_bound
         )
     )
     print()
 
     print("Upper bounds:")
-    print("Constant time: %s " % stats.const.randUpperBound)
-    print("Log* time: %s " % stats.logStar.randUpperBound)
-    print("Loglog time: %s " % stats.logLog.randUpperBound)
-    print("Log time: %s " % stats.log.randUpperBound)
-    print("Linear time: %s " % stats.linear.randUpperBound)
-    print("Unsolvable: %s" % stats.unsolvable.randUpperBound)
+    print("Constant time: %s " % stats.const.rand_upper_bound)
+    print("Log* time: %s " % stats.log_star.rand_upper_bound)
+    print("Loglog time: %s " % stats.log_log.rand_upper_bound)
+    print("Log time: %s " % stats.log.rand_upper_bound)
+    print("Linear time: %s " % stats.linear.rand_upper_bound)
+    print("Unsolvable: %s" % stats.unsolvable.rand_upper_bound)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.randUpperBound
-            - stats.logStar.randUpperBound
-            - stats.logLog.randUpperBound
-            - stats.log.randUpperBound
-            - stats.linear.randUpperBound
-            - stats.unsolvable.randUpperBound
+            stats.total_size
+            - stats.const.rand_upper_bound
+            - stats.log_star.rand_upper_bound
+            - stats.log_log.rand_upper_bound
+            - stats.log.rand_upper_bound
+            - stats.linear.rand_upper_bound
+            - stats.unsolvable.rand_upper_bound
         )
     )
     print()
@@ -155,64 +155,64 @@ def prettyPrint(stats: StatisticsData) -> None:
     print("Stats for deterministic setting:")
     print("*****************************")
     print()
-    print("Solvable in constant time: %s " % stats.const.detSolvable)
-    print("Solvable in log* time: %s " % stats.logStar.detSolvable)
-    print("Solvable in loglog time: %s " % stats.logLog.detSolvable)
-    print("Solvable in log time: %s " % stats.log.detSolvable)
-    print("Solvable in linear time: %s " % stats.linear.detSolvable)
-    print("Unsolvable: %s" % stats.unsolvable.detSolvable)
+    print("Solvable in constant time: %s " % stats.const.det_solvable)
+    print("Solvable in log* time: %s " % stats.log_star.det_solvable)
+    print("Solvable in loglog time: %s " % stats.log_log.det_solvable)
+    print("Solvable in log time: %s " % stats.log.det_solvable)
+    print("Solvable in linear time: %s " % stats.linear.det_solvable)
+    print("Unsolvable: %s" % stats.unsolvable.det_solvable)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.detSolvable
-            - stats.logStar.detSolvable
-            - stats.logLog.detSolvable
-            - stats.log.detSolvable
-            - stats.linear.detSolvable
-            - stats.unsolvable.detSolvable
+            stats.total_size
+            - stats.const.det_solvable
+            - stats.log_star.det_solvable
+            - stats.log_log.det_solvable
+            - stats.log.det_solvable
+            - stats.linear.det_solvable
+            - stats.unsolvable.det_solvable
         )
     )
     print()
 
     print("Lower bounds:")
-    print("Constant time: %s " % stats.const.detLowerBound)
-    print("Log* time: %s " % stats.logStar.detLowerBound)
-    print("Loglog time: %s " % stats.logLog.detLowerBound)
-    print("Log time: %s " % stats.log.detLowerBound)
-    print("Linear time: %s " % stats.linear.detLowerBound)
-    print("Unsolvable: %s" % stats.unsolvable.detLowerBound)
+    print("Constant time: %s " % stats.const.det_lower_bound)
+    print("Log* time: %s " % stats.log_star.det_lower_bound)
+    print("Loglog time: %s " % stats.log_log.det_lower_bound)
+    print("Log time: %s " % stats.log.det_lower_bound)
+    print("Linear time: %s " % stats.linear.det_lower_bound)
+    print("Unsolvable: %s" % stats.unsolvable.det_lower_bound)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.detLowerBound
-            - stats.logStar.detLowerBound
-            - stats.logLog.detLowerBound
-            - stats.log.detLowerBound
-            - stats.linear.detLowerBound
-            - stats.unsolvable.detLowerBound
+            stats.total_size
+            - stats.const.det_lower_bound
+            - stats.log_star.det_lower_bound
+            - stats.log_log.det_lower_bound
+            - stats.log.det_lower_bound
+            - stats.linear.det_lower_bound
+            - stats.unsolvable.det_lower_bound
         )
     )
     print()
 
     print("Upper bounds:")
-    print("Constant time: %s " % stats.const.detUpperBound)
-    print("Log* time: %s " % stats.logStar.detUpperBound)
-    print("Loglog time: %s " % stats.logLog.detUpperBound)
-    print("Log time: %s " % stats.log.detUpperBound)
-    print("Linear time: %s " % stats.linear.detUpperBound)
-    print("Unsolvable: %s" % stats.unsolvable.detUpperBound)
+    print("Constant time: %s " % stats.const.det_upper_bound)
+    print("Log* time: %s " % stats.log_star.det_upper_bound)
+    print("Loglog time: %s " % stats.log_log.det_upper_bound)
+    print("Log time: %s " % stats.log.det_upper_bound)
+    print("Linear time: %s " % stats.linear.det_upper_bound)
+    print("Unsolvable: %s" % stats.unsolvable.det_upper_bound)
     print(
         "TBD: %s"
         % (
-            stats.totalSize
-            - stats.const.detUpperBound
-            - stats.logStar.detUpperBound
-            - stats.logLog.detUpperBound
-            - stats.log.detUpperBound
-            - stats.linear.detUpperBound
-            - stats.unsolvable.detUpperBound
+            stats.total_size
+            - stats.const.det_upper_bound
+            - stats.log_star.det_upper_bound
+            - stats.log_log.det_upper_bound
+            - stats.log.det_upper_bound
+            - stats.linear.det_upper_bound
+            - stats.unsolvable.det_upper_bound
         )
     )
     print()

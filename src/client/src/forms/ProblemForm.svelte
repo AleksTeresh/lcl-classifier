@@ -1,6 +1,5 @@
 <script lang="ts">
   /* eslint-env browser */
-  import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import type { SvelteMouseEvent } from '../types'
@@ -10,21 +9,9 @@
   import { getProblem } from '../api/api'
   import { persistStateToUrl, loadStateFromUrl } from '../urlStore'
   import type { FindProblemResponse, ProblemRequest } from '../types'
-  import { GraphTypeCodec } from '../types'
+  import type { ProblemFormState as FormState } from './types'
+  import { ProblemFormStateCodec as FormStateCodec } from './types'
   import { readyProblems } from '../links/readyProblems'
-
-  const FormStateCodec = t.type(
-    {
-      activeConstraints: t.string,
-      passiveConstraints: t.string,
-      leafConstraints: t.union([t.string, t.undefined]),
-      rootConstraints: t.union([t.string, t.undefined]),
-      graphType: GraphTypeCodec,
-    },
-    'ProblemFormState'
-  )
-
-  type FormState = t.TypeOf<typeof FormStateCodec>
 
   const FORM_PREFIX = 'problem'
 

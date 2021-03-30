@@ -2,16 +2,15 @@ import os
 import psycopg2
 from typing import List, Dict, Optional
 from psycopg2.extras import execute_values
-import humps
 from problem import GenericProblem, ProblemProps
 from response import GenericResponse
-from problem import eachConstrIsHomogeneous
-from .db_data_converter import mapToClassifiedProblem
+from problem import each_constr_is_homogeneous
+from .db_data_converter import map_to_classified_problem
 from .classified_problem import ClassifiedProblem
 from query import Query
 
 
-def getConnection():
+def get_connection():
     conn = psycopg2.connect(
         host=(
             os.environ["POSTGRES_HOST"]
@@ -31,8 +30,8 @@ def getConnection():
     return conn
 
 
-def getProblem(problem: GenericProblem) -> Optional[Dict]:
-    conn = getConnection()
+def get_problem(problem: GenericProblem) -> Optional[Dict]:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
         """
@@ -72,20 +71,18 @@ def getProblem(problem: GenericProblem) -> Optional[Dict]:
     is_regular = %s;
   """,
         (
-            list(problem.activeConstraints),
-            list(problem.passiveConstraints),
-            list(problem.leafConstraints),
-            list(problem.rootConstraints),
-            problem.flags.isTree,
-            problem.flags.isCycle,
-            problem.flags.isPath,
-            problem.flags.isDirectedOrRooted,
-            problem.flags.isRegular,
+            list(problem.active_constraints),
+            list(problem.passive_constraints),
+            list(problem.leaf_constraints),
+            list(problem.root_constraints),
+            problem.flags.is_tree,
+            problem.flags.is_cycle,
+            problem.flags.is_path,
+            problem.flags.is_directed_or_rooted,
+            problem.flags.is_regular,
         ),
     )
     res = cur.fetchone()
-    if res is not None:
-        res = humps.camelize(res)
 
     cur.close()
     conn.close()
@@ -93,13 +90,13 @@ def getProblem(problem: GenericProblem) -> Optional[Dict]:
     return res
 
 
-def getClassifiedProblemObj(problem: GenericProblem) -> Optional[ClassifiedProblem]:
-    r = getProblem(problem)
-    return mapToClassifiedProblem(r) if r is not None else None
+def get_classified_problem_obj(problem: GenericProblem) -> Optional[ClassifiedProblem]:
+    r = get_problem(problem)
+    return map_to_classified_problem(r) if r is not None else None
 
 
-def getProblems(query: Query) -> List[Dict]:
-    conn = getConnection()
+def get_problems(query: Query) -> List[Dict]:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
         """
@@ -207,38 +204,37 @@ def getProblems(query: Query) -> List[Dict]:
     );
   """,
         (
-            query.props.activeDegree,
-            query.props.passiveDegree,
-            query.props.labelCount,
-            query.props.activesAllSame,
-            query.props.passivesAllSame,
-            query.bounds.randUpperBound,
-            query.bounds.randLowerBound,
-            query.bounds.detUpperBound,
-            query.bounds.detLowerBound,
-            list(query.excludeInclude.includeIfConfigHasAllOf),
-            list(query.excludeInclude.includeIfConfigHasAllOf),
-            list(query.excludeInclude.includeIfConfigHasSomeOf),
-            list(query.excludeInclude.includeIfConfigHasSomeOf),
-            list(query.excludeInclude.includeIfConfigHasSomeOf),
-            list(query.excludeInclude.excludeIfConfigHasAllOf),
-            list(query.excludeInclude.excludeIfConfigHasAllOf),
-            list(query.excludeInclude.excludeIfConfigHasAllOf),
-            list(query.excludeInclude.excludeIfConfigHasSomeOf),
-            list(query.excludeInclude.excludeIfConfigHasSomeOf),
-            query.props.flags.isTree,
-            query.props.flags.isCycle,
-            query.props.flags.isPath,
-            query.props.flags.isDirectedOrRooted,
-            query.props.flags.isRegular,
-            query.excludeInclude.completelyRandUnclassifedOnly,
-            query.excludeInclude.partiallyRandUnclassifiedOnly,
-            query.excludeInclude.completelyDetUnclassifedOnly,
-            query.excludeInclude.partiallyDetUnclassifiedOnly,
+            query.props.active_degree,
+            query.props.passive_degree,
+            query.props.label_count,
+            query.props.actives_all_same,
+            query.props.passives_all_same,
+            query.bounds.rand_upper_bound,
+            query.bounds.rand_lower_bound,
+            query.bounds.det_upper_bound,
+            query.bounds.det_lower_bound,
+            list(query.exclude_include.include_if_config_has_all_of),
+            list(query.exclude_include.include_if_config_has_all_of),
+            list(query.exclude_include.include_if_config_has_some_of),
+            list(query.exclude_include.include_if_config_has_some_of),
+            list(query.exclude_include.include_if_config_has_some_of),
+            list(query.exclude_include.exclude_if_config_has_all_of),
+            list(query.exclude_include.exclude_if_config_has_all_of),
+            list(query.exclude_include.exclude_if_config_has_all_of),
+            list(query.exclude_include.exclude_if_config_has_some_of),
+            list(query.exclude_include.exclude_if_config_has_some_of),
+            query.props.flags.is_tree,
+            query.props.flags.is_cycle,
+            query.props.flags.is_path,
+            query.props.flags.is_directed_or_rooted,
+            query.props.flags.is_regular,
+            query.exclude_include.completely_rand_unclassifed_only,
+            query.exclude_include.partially_rand_unclassified_only,
+            query.exclude_include.completely_det_unclassifed_only,
+            query.exclude_include.partially_det_unclassified_only,
         ),
     )
     res = cur.fetchall()
-    res = humps.camelize(res)
 
     cur.close()
     conn.close()
@@ -246,36 +242,36 @@ def getProblems(query: Query) -> List[Dict]:
     if len(res) == 0:
         return res
     else:
-        if query.excludeInclude.returnSmallestProblemOnly:
+        if query.exclude_include.return_smallest_problem_only:
             res = [
                 min(
                     res,
-                    key=lambda p: len(p["activeConstraints"])
-                    + len(p["passiveConstraints"]),
+                    key=lambda p: len(p["active_constraints"])
+                    + len(p["passive_constraints"]),
                 )
             ]
-        elif query.excludeInclude.returnLargestProblemOnly:
+        elif query.exclude_include.return_largest_problem_only:
             res = [
                 max(
                     res,
-                    key=lambda p: len(p["activeConstraints"])
-                    + len(p["passiveConstraints"]),
+                    key=lambda p: len(p["active_constraints"])
+                    + len(p["passive_constraints"]),
                 )
             ]
         return res
 
 
-def getClassifiedProblemObjs(query: Query) -> List[ClassifiedProblem]:
-    res = getProblems(query)
-    return [mapToClassifiedProblem(r) for r in res]
+def get_classified_problem_objs(query: Query) -> List[ClassifiedProblem]:
+    res = get_problems(query)
+    return [map_to_classified_problem(r) for r in res]
 
 
-def insertBatchClassifyTrace(
+def insert_batch_classify_trace(
     cur,
-    problemProps: ProblemProps,
-    problemCount: int,
-    countLimit: Optional[int],
-    skipCount: Optional[int],
+    problem_props: ProblemProps,
+    problem_count: int,
+    count_limit: Optional[int],
+    skip_count: Optional[int],
 ) -> None:
     cur.execute(
         """
@@ -295,16 +291,16 @@ def insertBatchClassifyTrace(
        );
       """,
         (
-            problemProps.activeDegree,
-            problemProps.passiveDegree,
-            problemProps.labelCount,
-            problemProps.activesAllSame,
-            problemProps.passivesAllSame,
-            problemProps.flags.isTree,
-            problemProps.flags.isCycle,
-            problemProps.flags.isPath,
-            problemProps.flags.isDirectedOrRooted,
-            problemProps.flags.isRegular,
+            problem_props.active_degree,
+            problem_props.passive_degree,
+            problem_props.label_count,
+            problem_props.actives_all_same,
+            problem_props.passives_all_same,
+            problem_props.flags.is_tree,
+            problem_props.flags.is_cycle,
+            problem_props.flags.is_path,
+            problem_props.flags.is_directed_or_rooted,
+            problem_props.flags.is_regular,
         ),
     )
     cur.execute(
@@ -331,30 +327,29 @@ def insertBatchClassifyTrace(
         %s, %s, %s
       ) RETURNING id;""",
         (
-            problemProps.activeDegree,
-            problemProps.passiveDegree,
-            problemProps.labelCount,
-            problemProps.activesAllSame,
-            problemProps.passivesAllSame,
-            problemProps.flags.isTree,
-            problemProps.flags.isCycle,
-            problemProps.flags.isPath,
-            problemProps.flags.isDirectedOrRooted,
-            problemProps.flags.isRegular,
-            problemCount,
-            countLimit,
-            0 if skipCount is None else skipCount,
+            problem_props.active_degree,
+            problem_props.passive_degree,
+            problem_props.label_count,
+            problem_props.actives_all_same,
+            problem_props.passives_all_same,
+            problem_props.flags.is_tree,
+            problem_props.flags.is_cycle,
+            problem_props.flags.is_path,
+            problem_props.flags.is_directed_or_rooted,
+            problem_props.flags.is_regular,
+            problem_count,
+            count_limit,
+            0 if skip_count is None else skip_count,
         ),
     )
 
 
-def getBatchlessProblems() -> List[Dict]:
-    conn = getConnection()
+def get_batchless_problems() -> List[Dict]:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     cur.execute("SELECT * FROM problems WHERE batch_id = NULL;")
     problems = cur.fetchall()
-    problems = humps.camelize(problems)
 
     conn.commit()
     cur.close()
@@ -363,24 +358,24 @@ def getBatchlessProblems() -> List[Dict]:
     return problems
 
 
-def getBatchlessProblemObjs() -> List[ClassifiedProblem]:
-    problems = getBatchlessProblems()
-    return [mapToClassifiedProblem(r) for r in problems]
+def get_batchless_problem_objs() -> List[ClassifiedProblem]:
+    problems = get_batchless_problems()
+    return [map_to_classified_problem(r) for r in problems]
 
 
-def storeProblemAndClassification(
+def store_problem_and_classification(
     problem: GenericProblem, response: GenericResponse
 ) -> None:
-    problemId = storeProblem(problem)
-    updateClassification(response, problemId)
+    problem_id = store_problem(problem)
+    update_classification(response, problem_id)
 
 
-def updateClassification(result: GenericResponse, problemId: int) -> None:
-    conn = getConnection()
+def update_classification(result: GenericResponse, problem_id: int) -> None:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM sources;")
     sources = cur.fetchall()
-    sourcesMap = {s["short_name"]: s["id"] for s in sources}
+    sources_map = {s["short_name"]: s["id"] for s in sources}
 
     cur.execute(
         """
@@ -398,17 +393,17 @@ def updateClassification(result: GenericResponse, problemId: int) -> None:
       det_lower_bound_source = %s
     WHERE problems.id = %s;""",
         (
-            result.randUpperBound,
-            result.randLowerBound,
-            result.detUpperBound,
-            result.detLowerBound,
-            result.solvableCount,
-            result.unsolvableCount,
-            sourcesMap[result.papers.getRUBSource()],
-            sourcesMap[result.papers.getRLBSource()],
-            sourcesMap[result.papers.getDUBSource()],
-            sourcesMap[result.papers.getDLBSource()],
-            problemId,
+            result.rand_upper_bound,
+            result.rand_lower_bound,
+            result.det_upper_bound,
+            result.det_lower_bound,
+            result.solvable_count,
+            result.unsolvable_count,
+            sources_map[result.papers.get_r_u_b_source()],
+            sources_map[result.papers.get_r_l_b_source()],
+            sources_map[result.papers.get_d_u_b_source()],
+            sources_map[result.papers.get_d_l_b_source()],
+            problem_id,
         ),
     )
     conn.commit()
@@ -416,14 +411,17 @@ def updateClassification(result: GenericResponse, problemId: int) -> None:
     conn.close()
 
 
-def updateClassifications(
-    results: List[GenericResponse], problemProps=None, countLimit=None, skipCount=None
+def update_classifications(
+    results: List[GenericResponse],
+    problem_props=None,
+    count_limit=None,
+    skip_count=None,
 ) -> None:
-    conn = getConnection()
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM sources;")
     sources = cur.fetchall()
-    sourcesMap = {s["short_name"]: s["id"] for s in sources}
+    sources_map = {s["short_name"]: s["id"] for s in sources}
 
     print("Updating classification data...")
     execute_values(
@@ -458,24 +456,26 @@ def updateClassifications(
         [
             (
                 p.problem.id,
-                p.randUpperBound,
-                p.randLowerBound,
-                p.detUpperBound,
-                p.detLowerBound,
-                p.solvableCount,
-                p.unsolvableCount,
-                sourcesMap[p.papers.getRUBSource()],
-                sourcesMap[p.papers.getRLBSource()],
-                sourcesMap[p.papers.getDUBSource()],
-                sourcesMap[p.papers.getDLBSource()],
+                p.rand_upper_bound,
+                p.rand_lower_bound,
+                p.det_upper_bound,
+                p.det_lower_bound,
+                p.solvable_count,
+                p.unsolvable_count,
+                sources_map[p.papers.get_r_u_b_source()],
+                sources_map[p.papers.get_r_l_b_source()],
+                sources_map[p.papers.get_d_u_b_source()],
+                sources_map[p.papers.get_d_l_b_source()],
             )
             for p in results
         ],
     )
 
-    if problemProps is not None:
-        insertBatchClassifyTrace(cur, problemProps, len(results), countLimit, skipCount)
-        batchId = cur.fetchone()["id"]
+    if problem_props is not None:
+        insert_batch_classify_trace(
+            cur, problem_props, len(results), count_limit, skip_count
+        )
+        batch_id = cur.fetchone()["id"]
         execute_values(
             cur,
             """
@@ -486,7 +486,7 @@ def updateClassifications(
             problem_id
           )
           WHERE problems.id = data.problem_id;""",
-            [(batchId, p.problem.id) for p in results],
+            [(batch_id, p.problem.id) for p in results],
         )
 
     conn.commit()
@@ -494,10 +494,10 @@ def updateClassifications(
     conn.close()
 
 
-def storeProblem(p: GenericProblem) -> int:
-    r = getProblem(p)
+def store_problem(p: GenericProblem) -> int:
+    r = get_problem(p)
 
-    conn = getConnection()
+    conn = get_connection()
     cur = conn.cursor()
     if r is not None:
         cur.execute("DELETE FROM problems WHERE id = %s", [r["id"]])
@@ -526,20 +526,20 @@ def storeProblem(p: GenericProblem) -> int:
       %s, %s, %s, %s
     ) RETURNING id;""",
         (
-            p.getActiveDegree(),
-            p.getPassiveDegree(),
-            len(p.getAlphabet()),
-            eachConstrIsHomogeneous(p.activeConstraints),
-            eachConstrIsHomogeneous(p.passiveConstraints),
-            list(p.activeConstraints),
-            list(p.passiveConstraints),
-            list(p.leafConstraints),
-            list(p.rootConstraints),
-            p.flags.isTree,
-            p.flags.isCycle,
-            p.flags.isPath,
-            p.flags.isDirectedOrRooted,
-            p.flags.isRegular,
+            p.get_active_degree(),
+            p.get_passive_degree(),
+            len(p.get_alphabet()),
+            each_constr_is_homogeneous(p.active_constraints),
+            each_constr_is_homogeneous(p.passive_constraints),
+            list(p.active_constraints),
+            list(p.passive_constraints),
+            list(p.leaf_constraints),
+            list(p.root_constraints),
+            p.flags.is_tree,
+            p.flags.is_cycle,
+            p.flags.is_path,
+            p.flags.is_directed_or_rooted,
+            p.flags.is_regular,
         ),
     )
 
@@ -551,10 +551,10 @@ def storeProblem(p: GenericProblem) -> int:
     return id
 
 
-def storeProblemsAndGetWithIds(
-    problems: List[GenericProblem], problemProps: ProblemProps
+def store_problems_and_get_with_ids(
+    problems: List[GenericProblem], problem_props: ProblemProps
 ) -> List[GenericProblem]:
-    conn = getConnection()
+    conn = get_connection()
     cur = conn.cursor()
     cur.execute(
         """
@@ -577,16 +577,16 @@ def storeProblemsAndGetWithIds(
     is_regular = %s;
   """,
         (
-            problemProps.activeDegree,
-            problemProps.passiveDegree,
-            problemProps.labelCount,
-            problemProps.activesAllSame,
-            problemProps.passivesAllSame,
-            problemProps.flags.isTree,
-            problemProps.flags.isCycle,
-            problemProps.flags.isPath,
-            problemProps.flags.isDirectedOrRooted,
-            problemProps.flags.isRegular,
+            problem_props.active_degree,
+            problem_props.passive_degree,
+            problem_props.label_count,
+            problem_props.actives_all_same,
+            problem_props.passives_all_same,
+            problem_props.flags.is_tree,
+            problem_props.flags.is_cycle,
+            problem_props.flags.is_path,
+            problem_props.flags.is_directed_or_rooted,
+            problem_props.flags.is_regular,
         ),
     )
     ids = execute_values(
@@ -611,26 +611,26 @@ def storeProblemsAndGetWithIds(
     ) VALUES %s RETURNING id;""",
         [
             (
-                problemProps.activeDegree,
-                problemProps.passiveDegree,
-                problemProps.labelCount,
+                problem_props.active_degree,
+                problem_props.passive_degree,
+                problem_props.label_count,
                 (
-                    problemProps.activesAllSame
-                    or eachConstrIsHomogeneous(p.activeConstraints)
+                    problem_props.actives_all_same
+                    or each_constr_is_homogeneous(p.active_constraints)
                 ),
                 (
-                    problemProps.passivesAllSame
-                    or eachConstrIsHomogeneous(p.passiveConstraints)
+                    problem_props.passives_all_same
+                    or each_constr_is_homogeneous(p.passive_constraints)
                 ),
-                list(p.activeConstraints),
-                list(p.passiveConstraints),
-                list(p.leafConstraints),
-                list(p.rootConstraints),
-                p.flags.isTree,
-                p.flags.isCycle,
-                p.flags.isPath,
-                p.flags.isDirectedOrRooted,
-                p.flags.isRegular,
+                list(p.active_constraints),
+                list(p.passive_constraints),
+                list(p.leaf_constraints),
+                list(p.root_constraints),
+                p.flags.is_tree,
+                p.flags.is_cycle,
+                p.flags.is_path,
+                p.flags.is_directed_or_rooted,
+                p.flags.is_regular,
             )
             for p in problems
         ],
@@ -645,8 +645,8 @@ def storeProblemsAndGetWithIds(
     return problems
 
 
-def getBatchClassifications() -> List[Dict]:
-    conn = getConnection()
+def get_batch_classifications() -> List[Dict]:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT * FROM batch_classifications;")
     res = cur.fetchall()
@@ -656,8 +656,8 @@ def getBatchClassifications() -> List[Dict]:
     return res
 
 
-def getBatchClassificationByQuery(query: Query) -> List[Dict]:
-    conn = getConnection()
+def get_batch_classification_by_query(query: Query) -> List[Dict]:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute(
         """
@@ -682,29 +682,28 @@ def getBatchClassificationByQuery(query: Query) -> List[Dict]:
       is_regular = %s;
   """,
         (
-            query.props.activeDegree,
-            query.props.passiveDegree,
-            query.props.labelCount,
-            query.props.activesAllSame,
-            query.props.passivesAllSame,
-            query.props.flags.isTree,
-            query.props.flags.isCycle,
-            query.props.flags.isPath,
-            query.props.flags.isDirectedOrRooted,
-            query.props.flags.isRegular,
+            query.props.active_degree,
+            query.props.passive_degree,
+            query.props.label_count,
+            query.props.actives_all_same,
+            query.props.passives_all_same,
+            query.props.flags.is_tree,
+            query.props.flags.is_cycle,
+            query.props.flags.is_path,
+            query.props.flags.is_directed_or_rooted,
+            query.props.flags.is_regular,
         ),
     )
     res = cur.fetchall()
-    if res is not None:
-        res = humps.camelize(res)
+
     cur.close()
     conn.close()
 
     return [] if res is None else res
 
 
-def getProblemCount() -> int:
-    conn = getConnection()
+def get_problem_count() -> int:
+    conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute("SELECT COUNT(*) as count FROM problems;")
     res = cur.fetchone()

@@ -1,33 +1,33 @@
 from typing import List, Optional
 from tqdm import tqdm
 from collections import namedtuple
-from db import updateClassifications
-from db import storeProblemAndClassification
+from db import update_classifications
+from db import store_problem_and_classification
 from .classifier import classify, Classifier
-from bindings import tlpBatchClassify
-from bindings import brtBatchClassify
+from bindings import tlp_batch_classify
+from bindings import brt_batch_classify
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from response import GenericResponse
 from db import ClassifiedProblem
 from bindings import ClassifyContext
 
 
-def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
-    context = ClassifyContext(isBatch=True)
+def batch_classify(problems: List[GenericProblem]) -> List[GenericResponse]:
+    context = ClassifyContext(is_batch=True)
 
     try:
-        tlpResponses = tlpBatchClassify(problems)
-        context.tlpPreclassified = True
+        tlp_responses = tlp_batch_classify(problems)
+        context.tlp_preclassified = True
     except Exception as e:
         print(e)
-        tlpResponses = []
+        tlp_responses = []
 
     try:
-        brtResponses = brtBatchClassify(problems)
-        context.brtPreclassified = True
+        brt_responses = brt_batch_classify(problems)
+        context.brt_preclassified = True
     except Exception as e:
         print(e)
-        brtResponses = []
+        brt_responses = []
 
     return [
         classify(
@@ -36,10 +36,10 @@ def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
                 k: v
                 for k, v in {
                     Classifier.BRT: (
-                        brtResponses[i] if context.brtPreclassified else None
+                        brt_responses[i] if context.brt_preclassified else None
                     ),
                     Classifier.TLP: (
-                        tlpResponses[i] if context.tlpPreclassified else None
+                        tlp_responses[i] if context.tlp_preclassified else None
                     ),
                 }.items()
                 if v is not None
@@ -50,17 +50,17 @@ def batchClassify(problems: List[GenericProblem]) -> List[GenericResponse]:
     ]
 
 
-def classifyAndStore(
+def classify_and_store(
     problems: List[GenericProblem],
     props: ProblemProps,
-    countLimit: Optional[int],
-    skipCount: Optional[int],
+    count_limit: Optional[int],
+    skip_count: Optional[int],
 ) -> None:
-    results = batchClassify(problems)
-    updateClassifications(results, props, countLimit, skipCount)
+    results = batch_classify(problems)
+    update_classifications(results, props, count_limit, skip_count)
 
 
-def reclassifyAndStore(classifiedProblems: List[ClassifiedProblem]) -> None:
-    for p in tqdm(classifiedProblems):
-        res = classify(p.toProblem())
-        storeProblemAndClassification(p, res)
+def reclassify_and_store(classified_problems: List[ClassifiedProblem]) -> None:
+    for p in tqdm(classified_problems):
+        res = classify(p.to_problem())
+        store_problem_and_classification(p, res)

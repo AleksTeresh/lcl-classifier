@@ -1,5 +1,5 @@
 from problem import GenericProblem
-from problem import unparseConfigs
+from problem import unparse_configs
 from response import GenericResponse
 from .classify_context import ClassifyContext
 from complexity import *
@@ -9,20 +9,20 @@ import rust2py
 
 
 def validate(problem: GenericProblem) -> None:
-    if problem.flags.isCycle:
+    if problem.flags.is_cycle:
         raise Exception("re", "Cannot classify if the graph is a cycle")
 
-    if problem.flags.isDirectedOrRooted:
+    if problem.flags.is_directed_or_rooted:
         raise Exception("re", "Cannot classify if the tree is rooted")
 
-    if not problem.flags.isRegular:
+    if not problem.flags.is_regular:
         raise Exception("re", "Cannot classify if the graph is not regular")
 
-    if not problem.rootAllowAll or not problem.leafAllowAll:
+    if not problem.root_allow_all or not problem.leaf_allow_all:
         raise Exception("re", "Leaves and roots must allow all configurations")
 
 
-def runRE(data: str, q: Queue) -> None:
+def run_r_e(data: str, q: Queue) -> None:
     (lb, ub) = rust2py.get_complexity(
         data,
         # if pp_only is set to True, labels param does not matter
@@ -42,52 +42,56 @@ def classify(problem: GenericProblem, context: ClassifyContext) -> GenericRespon
 
     data = (
         "\n".join(
-            unparseConfigs(problem.activeConstraints, problem.flags.isDirectedOrRooted)
+            unparse_configs(
+                problem.active_constraints, problem.flags.is_directed_or_rooted
+            )
         )
         + "\n\n"
         + "\n".join(
-            unparseConfigs(problem.passiveConstraints, problem.flags.isDirectedOrRooted)
+            unparse_configs(
+                problem.passive_constraints, problem.flags.is_directed_or_rooted
+            )
         )
     )
 
-    timeoutSeconds = 0.1 if context.isBatch else 0.5
+    timeout_seconds = 0.1 if context.is_batch else 0.5
     # potentially add here things like labels and iter
     # that depend on whether we're operating in a batch mode
 
     ctx = mp.get_context("fork")
     q = ctx.Queue()
-    process = ctx.Process(target=runRE, kwargs={"data": data, "q": q})
+    process = ctx.Process(target=run_r_e, kwargs={"data": data, "q": q})
     process.start()
     try:
-        (lowerBoundRaw, upperBoundRaw) = q.get(timeout=timeoutSeconds)
+        (lower_bound_raw, upper_bound_raw) = q.get(timeout=timeout_seconds)
     except:
         pass
-    process.join(timeoutSeconds)
+    process.join(timeout_seconds)
     if process.is_alive():
         process.terminate()
         process.join()
 
-    if lowerBoundRaw == "log n":
-        lowerBound = LOG
-        lowerBoundRand = LOGLOG
-    elif lowerBoundRaw == "unknown":
-        lowerBound = CONST
-        lowerBoundRand = CONST
+    if lower_bound_raw == "log n":
+        lower_bound = LOG
+        lower_bound_rand = LOGLOG
+    elif lower_bound_raw == "unknown":
+        lower_bound = CONST
+        lower_bound_rand = CONST
     else:
-        lowerBound = CONST
-        lowerBoundRand = CONST
+        lower_bound = CONST
+        lower_bound_rand = CONST
 
-    if upperBoundRaw == "unknown":
-        upperBound = UNSOLVABLE
-        upperBoundRand = UNSOLVABLE
+    if upper_bound_raw == "unknown":
+        upper_bound = UNSOLVABLE
+        upper_bound_rand = UNSOLVABLE
     else:
-        upperBound = CONST
-        upperBoundRand = CONST
+        upper_bound = CONST
+        upper_bound_rand = CONST
 
     return GenericResponse(
         problem,
-        upperBoundRand,
-        lowerBoundRand,
-        upperBound,
-        lowerBound,
+        upper_bound_rand,
+        lower_bound_rand,
+        upper_bound,
+        lower_bound,
     )

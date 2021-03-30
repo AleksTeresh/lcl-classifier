@@ -2,36 +2,36 @@ import sys, getopt, pickle
 from typing import Optional
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from classify import classify
-from classify import batchClassify
-from classify import reclassifyAndStore
-from classify import classifyAndStore
+from classify import batch_classify
+from classify import reclassify_and_store
+from classify import classify_and_store
 from problem import generate
 from complexity import *
-from statistics import compute as computeStats, prettyPrint
+from statistics import compute as compute_stats, pretty_print
 from query import Query, Bounds, QueryExcludeInclude
-from db import storeProblemsAndGetWithIds
-from db import getClassifiedProblemObjs
-from db import getProblem
-from db import getBatchlessProblemObjs
+from db import store_problems_and_get_with_ids
+from db import get_classified_problem_objs
+from db import get_problem
+from db import get_batchless_problem_objs
 
 
-def reclassifyIndividualProblems():
-    problems = getBatchlessProblemObjs()
-    reclassifyAndStore(problems)
+def reclassify_individual_problems():
+    problems = get_batchless_problem_objs()
+    reclassify_and_store(problems)
 
 
-def reclassifyProblemClass(
-    activeDegree: int,
-    passiveDegree: int,
-    labelCount: int,
-    isDirectedOrRooted: bool,
-    activesAllSame: bool = False,
-    passivesAllSame: bool = False,
-    isTree: bool = False,
-    isCycle: bool = False,
-    isPath: bool = False,
-    countLimit: Optional[int] = None,
-    skipCount: Optional[int] = None,
+def reclassify_problem_class(
+    active_degree: int,
+    passive_degree: int,
+    label_count: int,
+    is_directed_or_rooted: bool,
+    actives_all_same: bool = False,
+    passives_all_same: bool = False,
+    is_tree: bool = False,
+    is_cycle: bool = False,
+    is_path: bool = False,
+    count_limit: Optional[int] = None,
+    skip_count: Optional[int] = None,
 ):
     """
     Reclassify a class of already existing problems that are stored
@@ -40,203 +40,239 @@ def reclassifyProblemClass(
     for big (even if partial) problem classes
     """
     flags = ProblemFlags(
-        isTree=isTree,
-        isCycle=isCycle,
-        isPath=isPath,
-        isDirectedOrRooted=isDirectedOrRooted,
+        is_tree=is_tree,
+        is_cycle=is_cycle,
+        is_path=is_path,
+        is_directed_or_rooted=is_directed_or_rooted,
     )
 
     props = ProblemProps(
-        activeDegree,
-        passiveDegree,
-        labelCount,
-        activesAllSame,
-        passivesAllSame,
+        active_degree,
+        passive_degree,
+        label_count,
+        actives_all_same,
+        passives_all_same,
         flags=flags,
     )
 
     query = Query(props)
-    responses = getClassifiedProblemObjs(query)
-    psWithIds = [r.toProblem() for r in responses]
-    classifyAndStore(
-        psWithIds,
+    responses = get_classified_problem_objs(query)
+    ps_with_ids = [r.to_problem() for r in responses]
+    classify_and_store(
+        ps_with_ids,
         props=props,
-        countLimit=countLimit if countLimit is None else len(psWithIds),
-        skipCount=skipCount,
+        count_limit=count_limit if count_limit is None else len(ps_with_ids),
+        skip_count=skip_count,
     )
 
-    res = getClassifiedProblemObjs(query)
-    stats = computeStats(res)
-    prettyPrint(stats)
+    res = get_classified_problem_objs(query)
+    stats = compute_stats(res)
+    pretty_print(stats)
 
 
-def generateProblemClass(
-    activeDegree: int,
-    passiveDegree: int,
-    labelCount: int,
-    isDirectedOrRooted: bool,
-    activesAllSame: bool = False,
-    passivesAllSame: bool = False,
-    isTree: bool = False,
-    isCycle: bool = False,
-    isPath: bool = False,
-    countLimit: Optional[int] = None,
-    skipCount: Optional[int] = None,
+def generate_problem_class(
+    active_degree: int,
+    passive_degree: int,
+    label_count: int,
+    is_directed_or_rooted: bool,
+    actives_all_same: bool = False,
+    passives_all_same: bool = False,
+    is_tree: bool = False,
+    is_cycle: bool = False,
+    is_path: bool = False,
+    count_limit: Optional[int] = None,
+    skip_count: Optional[int] = None,
 ):
     print("Generating the following:")
-    print("  activeDegree = %s," % activeDegree)
-    print("  passiveDegree = %s," % passiveDegree)
-    print("  labelCount = %s," % labelCount)
-    print("  isDirectedOrRooted = %s" % isDirectedOrRooted)
+    print("  active_degree = %s," % active_degree)
+    print("  passive_degree = %s," % passive_degree)
+    print("  label_count = %s," % label_count)
+    print("  is_directed_or_rooted = %s" % is_directed_or_rooted)
 
     flags = ProblemFlags(
-        isTree=isTree,
-        isCycle=isCycle,
-        isPath=isPath,
-        isDirectedOrRooted=isDirectedOrRooted,
+        is_tree=is_tree,
+        is_cycle=is_cycle,
+        is_path=is_path,
+        is_directed_or_rooted=is_directed_or_rooted,
     )
 
     props = ProblemProps(
-        activeDegree,
-        passiveDegree,
-        labelCount,
-        activesAllSame,
-        passivesAllSame,
+        active_degree,
+        passive_degree,
+        label_count,
+        actives_all_same,
+        passives_all_same,
         flags=flags,
     )
 
     query = Query(props)
 
     ps = generate(
-        activeDegree,
-        passiveDegree,
-        labelCount,
-        activesAllSame,
-        passivesAllSame,
+        active_degree,
+        passive_degree,
+        label_count,
+        actives_all_same,
+        passives_all_same,
         flags,
-        countLimit=(sys.maxsize if countLimit is None else countLimit),
-        skipCount=(0 if skipCount is None else skipCount),
+        count_limit=(sys.maxsize if count_limit is None else count_limit),
+        skip_count=(0 if skip_count is None else skip_count),
     )
 
-    psWithIds = storeProblemsAndGetWithIds(ps, props)
-    classifyAndStore(
-        psWithIds,
+    ps_with_ids = store_problems_and_get_with_ids(ps, props)
+    classify_and_store(
+        ps_with_ids,
         props=props,
-        countLimit=countLimit if countLimit is None else len(ps),
-        skipCount=skipCount,
+        count_limit=count_limit if count_limit is None else len(ps),
+        skip_count=skip_count,
     )
 
-    res = getClassifiedProblemObjs(query)
-    stats = computeStats(res)
-    prettyPrint(stats)
+    res = get_classified_problem_objs(query)
+    stats = compute_stats(res)
+    pretty_print(stats)
 
 
 print("Press Enter to start reclassification...")
 input()
 
-reclassifyIndividualProblems()
+reclassify_individual_problems()
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=2, isDirectedOrRooted=False, isPath=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=False,
+    is_path=True,
 )
 
-generateProblemClass(
-    activeDegree=2,
-    passiveDegree=2,
-    labelCount=2,
-    isDirectedOrRooted=False,
-    isCycle=True,
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=False,
+    is_cycle=True,
 )
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=2, isDirectedOrRooted=True, isPath=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=True,
+    is_path=True,
 )
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=2, isDirectedOrRooted=True, isCycle=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=True,
+    is_cycle=True,
 )
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=3, isDirectedOrRooted=False, isPath=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=3,
+    is_directed_or_rooted=False,
+    is_path=True,
 )
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=3, isDirectedOrRooted=True, isPath=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=3,
+    is_directed_or_rooted=True,
+    is_path=True,
 )
 
-generateProblemClass(
-    activeDegree=2, passiveDegree=2, labelCount=4, isDirectedOrRooted=False, isPath=True
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=4,
+    is_directed_or_rooted=False,
+    is_path=True,
 )
 
-generateProblemClass(
-    activeDegree=3, passiveDegree=2, labelCount=2, isDirectedOrRooted=False, isTree=True
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=False,
+    is_tree=True,
 )
 
-generateProblemClass(
-    activeDegree=3, passiveDegree=2, labelCount=2, isDirectedOrRooted=True, isTree=True
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=2,
+    is_directed_or_rooted=True,
+    is_tree=True,
 )
 
-generateProblemClass(
-    activeDegree=3, passiveDegree=2, labelCount=3, isDirectedOrRooted=False, isTree=True
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=3,
+    is_directed_or_rooted=False,
+    is_tree=True,
 )
 
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=3,
-    isDirectedOrRooted=True,
-    isTree=True,
-    passivesAllSame=True,
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=3,
+    is_directed_or_rooted=True,
+    is_tree=True,
+    passives_all_same=True,
 )
 
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=4,
-    isDirectedOrRooted=True,
-    isTree=True,
-    activesAllSame=True,
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=4,
+    is_directed_or_rooted=True,
+    is_tree=True,
+    actives_all_same=True,
 )
 
 
-generateProblemClass(
-    activeDegree=2,
-    passiveDegree=2,
-    labelCount=4,
-    isDirectedOrRooted=True,
-    isPath=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
+generate_problem_class(
+    active_degree=2,
+    passive_degree=2,
+    label_count=4,
+    is_directed_or_rooted=True,
+    is_path=True,
+    count_limit=sys.maxsize,
+    skip_count=0,
 )
 
 ## Example for reclassifying a class of problems
-# reclassifyProblemClass(
-#     activeDegree=2,
-#     passiveDegree=2,
-#     labelCount=4,
-#     isDirectedOrRooted=True,
-#     isPath=True,
-#     countLimit=sys.maxsize,
-#     skipCount=0,
+# reclassify_problem_class(
+#     active_degree=2,
+#     passive_degree=2,
+#     label_count=4,
+#     is_directed_or_rooted=True,
+#     is_path=True,
+#     count_limit=sys.maxsize,
+#     skip_count=0,
 # )
 
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=3,
-    isDirectedOrRooted=True,
-    isTree=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=3,
+    is_directed_or_rooted=True,
+    is_tree=True,
+    count_limit=sys.maxsize,
+    skip_count=0,
 )
 
-generateProblemClass(
-    activeDegree=3,
-    passiveDegree=2,
-    labelCount=4,
-    isDirectedOrRooted=True,
-    isTree=True,
-    passivesAllSame=True,
-    countLimit=sys.maxsize,
-    skipCount=0,
+generate_problem_class(
+    active_degree=3,
+    passive_degree=2,
+    label_count=4,
+    is_directed_or_rooted=True,
+    is_tree=True,
+    passives_all_same=True,
+    count_limit=sys.maxsize,
+    skip_count=0,
 )

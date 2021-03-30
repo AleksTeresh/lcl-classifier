@@ -2,36 +2,38 @@ import sys
 from typing import Optional, List, Tuple
 from own_types import ConfigType
 from tqdm import tqdm
-from util import letterRange, powerset, flatten
+from util import letter_range, powerset, flatten
 from .problem import GenericProblem as P, BasicProblemFlags, ProblemFlags
 from complexity import *
 from itertools import combinations_with_replacement, product
 
 
-def problemFromConstraints(
+def problem_from_constraints(
     tulpes: List[Tuple[ConfigType, ConfigType]],
     flags: ProblemFlags,
-    countLimit: int,
-    skipCount: int,
+    count_limit: int,
+    skip_count: int,
 ):
     problems = set()
-    startIdx = skipCount
-    endIdx = min(countLimit + skipCount, len(tulpes))
-    for i, (a, b) in enumerate(tqdm(tulpes[startIdx:endIdx])):
+    start_idx = skip_count
+    end_idx = min(count_limit + skip_count, len(tulpes))
+    for i, (a, b) in enumerate(tqdm(tulpes[start_idx:end_idx])):
         try:
             p = P(
                 (
                     a
-                    if (not flags.isDirectedOrRooted)
+                    if (not flags.is_directed_or_rooted)
                     else [c.replace(" ", " : ", 1) for c in a]
                 ),
                 (
                     b
-                    if (not flags.isDirectedOrRooted)
+                    if (not flags.is_directed_or_rooted)
                     else [c.replace(" ", " : ", 1) for c in b]
                 ),
                 flags=BasicProblemFlags(
-                    isTree=flags.isTree, isCycle=flags.isCycle, isPath=flags.isPath
+                    is_tree=flags.is_tree,
+                    is_cycle=flags.is_cycle,
+                    is_path=flags.is_path,
                 ),
                 id=i,
             )
@@ -47,19 +49,19 @@ def problemFromConstraints(
 
 
 def generate(
-    activeDegree: int,
-    passiveDegree: int,
-    labelCount: int,
-    activesAllSame: bool,
-    passivesAllSame: bool,
+    active_degree: int,
+    passive_degree: int,
+    label_count: int,
+    actives_all_same: bool,
+    passives_all_same: bool,
     flags: ProblemFlags,
-    countLimit: int = sys.maxsize,
-    skipCount: int = 0,
+    count_limit: int = sys.maxsize,
+    skip_count: int = 0,
 ):
-    alphabet = letterRange(labelCount)
-    # take activeDegree labels
-    # from a pallete of activeLabelCount
-    if flags.isDirectedOrRooted:
+    alphabet = letter_range(label_count)
+    # take active_degree labels
+    # from a pallete of active_label_count
+    if flags.is_directed_or_rooted:
         # rooted/directed: order of configs does not matter,
         # except for the frist label in each config. Thus,
         # we have additional product() call below.
@@ -67,11 +69,11 @@ def generate(
         # ['AAA', 'AAB', 'ABB', 'BAA', 'BAB', 'BBB']
         actives = [
             "".join(x)
-            for x in combinations_with_replacement(alphabet, activeDegree - 1)
+            for x in combinations_with_replacement(alphabet, active_degree - 1)
         ]
         passives = [
             "".join(x)
-            for x in combinations_with_replacement(alphabet, passiveDegree - 1)
+            for x in combinations_with_replacement(alphabet, passive_degree - 1)
         ]
         actives = ["".join(x) for x in product(alphabet, actives)]
         passives = ["".join(x) for x in product(alphabet, passives)]
@@ -80,26 +82,31 @@ def generate(
         # e.g. degree 3, labels = 2, gives us
         # ['AAA', 'AAB', 'ABB', 'BBB']
         actives = [
-            "".join(x) for x in combinations_with_replacement(alphabet, activeDegree)
+            "".join(x) for x in combinations_with_replacement(alphabet, active_degree)
         ]
         passives = [
-            "".join(x) for x in combinations_with_replacement(alphabet, passiveDegree)
+            "".join(x) for x in combinations_with_replacement(alphabet, passive_degree)
         ]
 
-    if activesAllSame:
+    if actives_all_same:
         actives = [x for x in actives if x[0] * len(x) == x]
-    if passivesAllSame:
+    if passives_all_same:
         passives = [x for x in passives if x[0] * len(x) == x]
 
-    activeConstraints = [
+    active_constraints = [
         tuple([" ".join(y) for y in x]) for x in tqdm(powerset(actives))
     ]
-    passiveConstraints = [
+    passive_constraints = [
         tuple([" ".join(y) for y in x]) for x in tqdm(powerset(passives))
     ]
-    problemTuplesSet = set(
-        [(a, b) for a in tqdm(activeConstraints) for b in passiveConstraints if a and b]
+    problem_tuples_set = set(
+        [
+            (a, b)
+            for a in tqdm(active_constraints)
+            for b in passive_constraints
+            if a and b
+        ]
     )
-    problemTuples = sorted(list(problemTuplesSet))
-    problems = problemFromConstraints(problemTuples, flags, countLimit, skipCount)
+    problem_tuples = sorted(list(problem_tuples_set))
+    problems = problem_from_constraints(problem_tuples, flags, count_limit, skip_count)
     return sorted(list(problems), key=lambda p: p.id)

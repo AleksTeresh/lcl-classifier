@@ -5,8 +5,8 @@ from complexity import *
 
 
 class Source:
-    def __init__(self, shortName: str, name: str, urls: List[str]):
-        self.shortName = shortName
+    def __init__(self, short_name: str, name: str, urls: List[str]):
+        self.short_name = short_name
         self.name = name
         self.urls = urls
 
@@ -14,57 +14,57 @@ class Source:
 class Sources:
     def __init__(
         self,
-        randUpperBoundSource: Source = None,
-        randLowerBoundSource: Source = None,
-        detUpperBoundSource: Source = None,
-        detLowerBoundSource: Source = None,
+        rand_upper_bound_source: Source = None,
+        rand_lower_bound_source: Source = None,
+        det_upper_bound_source: Source = None,
+        det_lower_bound_source: Source = None,
     ):
-        self.randUpperBoundSource = randUpperBoundSource
-        self.randLowerBoundSource = randLowerBoundSource
-        self.detUpperBoundSource = detUpperBoundSource
-        self.detLowerBoundSource = detLowerBoundSource
+        self.rand_upper_bound_source = rand_upper_bound_source
+        self.rand_lower_bound_source = rand_lower_bound_source
+        self.det_upper_bound_source = det_upper_bound_source
+        self.det_lower_bound_source = det_lower_bound_source
 
-    def getRUBSource(self):
+    def get_r_u_b_source(self):
         return (
-            self.randUpperBoundSource.shortName
-            if self.randUpperBoundSource is not None
+            self.rand_upper_bound_source.short_name
+            if self.rand_upper_bound_source is not None
             else None
         )
 
-    def getRLBSource(self):
+    def get_r_l_b_source(self):
         return (
-            self.randLowerBoundSource.shortName
-            if self.randLowerBoundSource is not None
+            self.rand_lower_bound_source.short_name
+            if self.rand_lower_bound_source is not None
             else None
         )
 
-    def getDUBSource(self):
+    def get_d_u_b_source(self):
         return (
-            self.detUpperBoundSource.shortName
-            if self.detUpperBoundSource is not None
+            self.det_upper_bound_source.short_name
+            if self.det_upper_bound_source is not None
             else None
         )
 
-    def getDLBSource(self):
+    def get_d_l_b_source(self):
         return (
-            self.detLowerBoundSource.shortName
-            if self.detLowerBoundSource is not None
+            self.det_lower_bound_source.short_name
+            if self.det_lower_bound_source is not None
             else None
         )
 
     def dict(self):
         return {
-            "randUpperBoundSource": self.randUpperBoundSource.__dict__
-            if self.randUpperBoundSource is not None
+            "rand_upper_bound_source": self.rand_upper_bound_source.__dict__
+            if self.rand_upper_bound_source is not None
             else None,
-            "randLowerBoundSource": self.randLowerBoundSource.__dict__
-            if self.randLowerBoundSource is not None
+            "rand_lower_bound_source": self.rand_lower_bound_source.__dict__
+            if self.rand_lower_bound_source is not None
             else None,
-            "detUpperBoundSource": self.detUpperBoundSource.__dict__
-            if self.detUpperBoundSource is not None
+            "det_upper_bound_source": self.det_upper_bound_source.__dict__
+            if self.det_upper_bound_source is not None
             else None,
-            "detLowerBoundSource": self.detLowerBoundSource.__dict__
-            if self.detLowerBoundSource is not None
+            "det_lower_bound_source": self.det_lower_bound_source.__dict__
+            if self.det_lower_bound_source is not None
             else None,
         }
 
@@ -73,31 +73,31 @@ class GenericResponse:
     def __init__(
         self,
         problem: GenericProblem,
-        randUpperBound: ComplexityType = UNSOLVABLE,
-        randLowerBound: ComplexityType = CONST,
-        detUpperBound: ComplexityType = UNSOLVABLE,
-        detLowerBound: ComplexityType = CONST,
-        solvableCount: str = "",
-        unsolvableCount: str = "",
+        rand_upper_bound: ComplexityType = UNSOLVABLE,
+        rand_lower_bound: ComplexityType = CONST,
+        det_upper_bound: ComplexityType = UNSOLVABLE,
+        det_lower_bound: ComplexityType = CONST,
+        solvable_count: str = "",
+        unsolvable_count: str = "",
         papers: Sources = Sources(),
     ):
         self.problem = problem
-        self.randUpperBound = randUpperBound
-        self.randLowerBound = randLowerBound
-        self.detUpperBound = detUpperBound
-        self.detLowerBound = detLowerBound
-        self.solvableCount = solvableCount
-        self.unsolvableCount = unsolvableCount
+        self.rand_upper_bound = rand_upper_bound
+        self.rand_lower_bound = rand_lower_bound
+        self.det_upper_bound = det_upper_bound
+        self.det_lower_bound = det_lower_bound
+        self.solvable_count = solvable_count
+        self.unsolvable_count = unsolvable_count
         self.papers = papers
 
     def dict(self):
         return {
-            "randUpperBound": self.randUpperBound,
-            "randLowerBound": self.randLowerBound,
-            "detUpperBound": self.detUpperBound,
-            "detLowerBound": self.detLowerBound,
-            "solvableCount": self.solvableCount,
-            "unsolvableCount": self.unsolvableCount,
+            "rand_upper_bound": self.rand_upper_bound,
+            "rand_lower_bound": self.rand_lower_bound,
+            "det_upper_bound": self.det_upper_bound,
+            "det_lower_bound": self.det_lower_bound,
+            "solvable_count": self.solvable_count,
+            "unsolvable_count": self.unsolvable_count,
             "papers": self.papers.dict(),
         }
 
@@ -106,8 +106,8 @@ class GenericResponse:
 Rand. LB: %s\n\
 Det. UB: %s\n\
 Det. LB: %s\n" % (
-            self.randUpperBound,
-            self.randLowerBound,
-            self.detUpperBound,
-            self.detLowerBound,
+            self.rand_upper_bound,
+            self.rand_lower_bound,
+            self.det_upper_bound,
+            self.det_lower_bound,
         )

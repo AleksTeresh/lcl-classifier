@@ -2,76 +2,80 @@ from typing import List
 from own_types import ConfigType, UnparsedConfigType
 from functools import reduce
 from itertools import product
-from util import flatMap, flatten, areAllTheSame, allSameSizes
-from .parser import parseConfigs
+from util import flat_map, flatten, are_all_the_same, all_same_sizes
+from .parser import parse_configs
 
 
-def flattenBinaryConfigs(left: List[str], right: List[str]) -> List[str]:
+def flatten_binary_configs(left: List[str], right: List[str]) -> List[str]:
     return [l + r for l in left for r in right]
 
 
-def flattenTernaryConfigs(
+def flatten_ternary_configs(
     one: List[str], two: List[str], three: List[str]
 ) -> List[str]:
     return [o + tw + th for o in one for tw in two for th in three]
 
 
-def flattenConfigs(configs: List[List[str]]) -> List[str]:
+def flatten_configs(configs: List[List[str]]) -> List[str]:
     if len(configs) == 1:
         return flatten(configs)
     elif len(configs) == 2:
-        return flattenBinaryConfigs(configs[0], configs[1])
+        return flatten_binary_configs(configs[0], configs[1])
     elif len(configs) == 3:
-        return flattenTernaryConfigs(configs[0], configs[1], configs[2])
+        return flatten_ternary_configs(configs[0], configs[1], configs[2])
     else:
         return ["".join(x) for x in product(*configs)]
 
 
-def normalizeConstraints(constr: List[List[List[str]]]) -> List[str]:
-    return flatMap(lambda x: flattenConfigs(x), constr)
+def normalize_constraints(constr: List[List[List[str]]]) -> List[str]:
+    return flat_map(lambda x: flatten_configs(x), constr)
 
 
-def parseAndNormalize(constr: UnparsedConfigType) -> ConfigType:
-    parsedConstr = parseConfigs(constr)
-    normalizedConstr = (
-        [] if not parsedConstr else list(normalizeConstraints(parsedConstr))
+def parse_and_normalize(constr: UnparsedConfigType) -> ConfigType:
+    parsed_constr = parse_configs(constr)
+    normalized_constr = (
+        [] if not parsed_constr else list(normalize_constraints(parsed_constr))
     )
-    return tuple(normalizedConstr)
+    return tuple(normalized_constr)
 
 
-def eachConstrIsHomogeneous(constrs: ConfigType) -> bool:
-    return reduce(lambda acc, x: acc and areAllTheSame(flatten(x)), constrs, True)
+def each_constr_is_homogeneous(constrs: ConfigType) -> bool:
+    return reduce(lambda acc, x: acc and are_all_the_same(flatten(x)), constrs, True)
 
 
-def areRegular(activeConfig: ConfigType, passiveConfig: ConfigType) -> bool:
-    return allSameSizes(activeConfig) and allSameSizes(passiveConfig)
+def are_regular(active_config: ConfigType, passive_config: ConfigType) -> bool:
+    return all_same_sizes(active_config) and all_same_sizes(passive_config)
 
 
-def isDirectedByUnparsedConfig(unparsedConfig: str) -> bool:
-    return ":" in unparsedConfig
+def is_directed_by_unparsed_config(unparsed_config: str) -> bool:
+    return ":" in unparsed_config
 
 
-def areSomeDirectedByUnparsedConfigs(unparsedConfigs: UnparsedConfigType) -> bool:
-    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
+def are_some_directed_by_unparsed_configs(unparsed_configs: UnparsedConfigType) -> bool:
+    unparsed_configs = [x for x in unparsed_configs if x.strip() != ""]
     return reduce(
-        lambda acc, x: acc or isDirectedByUnparsedConfig(x), unparsedConfigs, False
+        lambda acc, x: acc or is_directed_by_unparsed_config(x), unparsed_configs, False
     )
 
 
-def areAllDirectedByUnparsedConfigs(unparsedConfigs: UnparsedConfigType) -> bool:
-    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
+def are_all_directed_by_unparsed_configs(unparsed_configs: UnparsedConfigType) -> bool:
+    unparsed_configs = [x for x in unparsed_configs if x.strip() != ""]
     return reduce(
-        lambda acc, x: acc and isDirectedByUnparsedConfig(x), unparsedConfigs, True
+        lambda acc, x: acc and is_directed_by_unparsed_config(x), unparsed_configs, True
     )
 
 
-def getDegreeByUnparsedConfig(unparsedConfig: str) -> int:
-    perEdgeConfigs = [x.strip().split(" ") for x in unparsedConfig.strip().split(":")]
-    perEdgeConfigs = flatten(perEdgeConfigs)
-    perEdgeConfigs = [x for x in perEdgeConfigs if x != ""]
-    return len(perEdgeConfigs)
+def get_degree_by_unparsed_config(unparsed_config: str) -> int:
+    per_edge_configs = [
+        x.strip().split(" ") for x in unparsed_config.strip().split(":")
+    ]
+    per_edge_configs = flatten(per_edge_configs)
+    per_edge_configs = [x for x in per_edge_configs if x != ""]
+    return len(per_edge_configs)
 
 
-def isRegularByUnparsedConfigs(unparsedConfigs: UnparsedConfigType) -> bool:
-    unparsedConfigs = [x for x in unparsedConfigs if x.strip() != ""]
-    return areAllTheSame([getDegreeByUnparsedConfig(c) for c in unparsedConfigs])
+def is_regular_by_unparsed_configs(unparsed_configs: UnparsedConfigType) -> bool:
+    unparsed_configs = [x for x in unparsed_configs if x.strip() != ""]
+    return are_all_the_same(
+        [get_degree_by_unparsed_config(c) for c in unparsed_configs]
+    )

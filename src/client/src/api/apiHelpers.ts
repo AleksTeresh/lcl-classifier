@@ -1,18 +1,18 @@
 import type { Type } from 'io-ts'
 import * as Either from 'fp-ts/lib/Either'
 import { PathReporter } from 'io-ts/PathReporter'
-import type { ProblemRequest, Query } from '../types'
+import { keysToCamel } from './util'
 
-async function handleResponse<T>(
-  response: Response,
-  codec: Type<T>
-): Promise<T> {
+async function handleResponse(response: Response): Promise<unknown> {
   if (!response.ok) {
     // try to get `error` field from response body.
     // if not, fall back to statusText
     throw new Error((await response.json())?.error ?? response.statusText)
   }
-  const json = await response.json()
+  return await response.json()
+}
+
+function validateResponse<T>(json: unknown, codec: Type<T>): T {
   const result = codec.decode(json)
   if (Either.isRight(result)) {
     return result.right
@@ -34,23 +34,13 @@ export async function fetchJson<T>(
   }
 
   try {
-    return await handleResponse(response, codec)
+    const json = await handleResponse(response)
+    const camelized = keysToCamel(json)
+    return validateResponse(camelized, codec)
   } catch (e) {
     alert(e.message)
     return undefined
   }
-}
-
-type AllowedValues = ProblemRequest[keyof ProblemRequest] | Query[keyof Query]
-// adapted from https://matthiashager.com/converting-snake-case-to-camel-case-object-keys-with-javascript
-export const keysToSnake = function <
-  T extends { [key: string]: AllowedValues },
-  S extends { [key: string]: AllowedValues }
->(o: T): S {
-  const n: S = Object.typedKeys(o).reduce<S>((acc: S, k: keyof T) => {
-    return { ...acc, [toSnake(k as string)]: o[k] }
-  }, {} as S)
-  return n
 }
 
 type UrlParam = [
@@ -83,9 +73,4 @@ export function urlWithParams(
 type Nil = undefined | null
 function isNil<R>(x: R | Nil): x is Nil {
   return x === undefined || x === null
-}
-
-// adapted from https://stackoverflow.com/questions/30970286/convert-javascript-object-camelcase-keys-to-underscore-case
-function toSnake(key: string): string {
-  return key.replace(/([A-Z])/g, '_$1').toLowerCase()
 }

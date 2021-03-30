@@ -1,6 +1,6 @@
 from typing import List
 from own_types import ConfigType
-from problem import unparseConfigs
+from problem import unparse_configs
 from problem import GenericProblem, ProblemFlags
 from response import GenericResponse
 from util import flatten
@@ -10,85 +10,85 @@ class ClassifiedProblem:
     def __init__(
         self,
         id: int,
-        activeConstraints: ConfigType,
-        passiveConstraints: ConfigType,
-        leafConstraints: ConfigType,
-        rootConstraints: ConfigType,
-        isTree: bool,
-        isCycle: bool,
-        isPath: bool,
-        isDirectedOrRooted: bool,
-        isRegular: bool,
-        randUpperBound,
-        randLowerBound,
-        detUpperBound,
-        detLowerBound,
-        solvableCount: str,
-        unsolvableCount: str,
+        active_constraints: ConfigType,
+        passive_constraints: ConfigType,
+        leaf_constraints: ConfigType,
+        root_constraints: ConfigType,
+        is_tree: bool,
+        is_cycle: bool,
+        is_path: bool,
+        is_directed_or_rooted: bool,
+        is_regular: bool,
+        rand_upper_bound,
+        rand_lower_bound,
+        det_upper_bound,
+        det_lower_bound,
+        solvable_count: str,
+        unsolvable_count: str,
         papers,
         **kwargs
     ):
         self.id = id
-        self.activeConstraints = activeConstraints
-        self.passiveConstraints = passiveConstraints
-        self.leafConstraints = leafConstraints
-        self.rootConstraints = rootConstraints
-        self.isTree = isTree
-        self.isCycle = isCycle
-        self.isPath = isPath
-        self.isDirectedOrRooted = isDirectedOrRooted
-        self.isRegular = isRegular
-        self.randUpperBound = randUpperBound
-        self.randLowerBound = randLowerBound
-        self.detUpperBound = detUpperBound
-        self.detLowerBound = detLowerBound
-        self.solvableCount = solvableCount
-        self.unsolvableCount = unsolvableCount
+        self.active_constraints = active_constraints
+        self.passive_constraints = passive_constraints
+        self.leaf_constraints = leaf_constraints
+        self.root_constraints = root_constraints
+        self.is_tree = is_tree
+        self.is_cycle = is_cycle
+        self.is_path = is_path
+        self.is_directed_or_rooted = is_directed_or_rooted
+        self.is_regular = is_regular
+        self.rand_upper_bound = rand_upper_bound
+        self.rand_lower_bound = rand_lower_bound
+        self.det_upper_bound = det_upper_bound
+        self.det_lower_bound = det_lower_bound
+        self.solvable_count = solvable_count
+        self.unsolvable_count = unsolvable_count
         self.papers = papers
 
-    def toProblem(self) -> GenericProblem:
+    def to_problem(self) -> GenericProblem:
         p = GenericProblem(["A A"], ["A A"])
         p.id = self.id
-        p.activeConstraints = self.activeConstraints
-        p.passiveConstraints = self.passiveConstraints
-        p.leafConstraints = self.leafConstraints
-        p.rootConstraints = self.rootConstraints
-        alphabet = p.getAlphabet()
-        p.leafAllowAll = (set(flatten(p.leafConstraints)) - {" "}) == set(alphabet)
-        p.rootAllowAll = (set(flatten(p.rootConstraints)) - {" "}) == set(alphabet)
+        p.active_constraints = self.active_constraints
+        p.passive_constraints = self.passive_constraints
+        p.leaf_constraints = self.leaf_constraints
+        p.root_constraints = self.root_constraints
+        alphabet = p.get_alphabet()
+        p.leaf_allow_all = (set(flatten(p.leaf_constraints)) - {" "}) == set(alphabet)
+        p.root_allow_all = (set(flatten(p.root_constraints)) - {" "}) == set(alphabet)
         p.flags = ProblemFlags(
-            isTree=self.isTree,
-            isCycle=self.isCycle,
-            isPath=self.isPath,
-            isDirectedOrRooted=self.isDirectedOrRooted,
-            isRegular=self.isRegular,
+            is_tree=self.is_tree,
+            is_cycle=self.is_cycle,
+            is_path=self.is_path,
+            is_directed_or_rooted=self.is_directed_or_rooted,
+            is_regular=self.is_regular,
         )
         return p
 
-    def toUnparsedProblem(self):
-        p = self.toProblem()
-        p.activeConstraints = unparseConfigs(
-            p.activeConstraints, p.flags.isDirectedOrRooted
+    def to_unparsed_problem(self):
+        p = self.to_problem()
+        p.active_constraints = unparse_configs(
+            p.active_constraints, p.flags.is_directed_or_rooted
         )
-        p.passiveConstraints = unparseConfigs(
-            p.passiveConstraints, p.flags.isDirectedOrRooted
+        p.passive_constraints = unparse_configs(
+            p.passive_constraints, p.flags.is_directed_or_rooted
         )
-        p.rootConstraints = unparseConfigs(
-            p.rootConstraints, p.flags.isDirectedOrRooted
+        p.root_constraints = unparse_configs(
+            p.root_constraints, p.flags.is_directed_or_rooted
         )
-        p.leafConstraints = unparseConfigs(
-            p.leafConstraints, p.flags.isDirectedOrRooted
+        p.leaf_constraints = unparse_configs(
+            p.leaf_constraints, p.flags.is_directed_or_rooted
         )
         return p
 
-    def toResponse(self) -> GenericResponse:
+    def to_response(self) -> GenericResponse:
         return GenericResponse(
-            problem=self.toProblem(),
-            randUpperBound=self.randUpperBound,
-            randLowerBound=self.randLowerBound,
-            detUpperBound=self.detUpperBound,
-            detLowerBound=self.detLowerBound,
-            solvableCount=self.solvableCount,
-            unsolvableCount=self.unsolvableCount,
+            problem=self.to_problem(),
+            rand_upper_bound=self.rand_upper_bound,
+            rand_lower_bound=self.rand_lower_bound,
+            det_upper_bound=self.det_upper_bound,
+            det_lower_bound=self.det_lower_bound,
+            solvable_count=self.solvable_count,
+            unsolvable_count=self.unsolvable_count,
             papers=self.papers,
         )

@@ -3,37 +3,37 @@ from .classified_problem import ClassifiedProblem
 from response import Sources, Source
 
 
-def mapToClassifiedProblem(dbProblem: Dict) -> ClassifiedProblem:
+def map_to_classified_problem(db_problem: Dict) -> ClassifiedProblem:
     return ClassifiedProblem(
         papers=Sources(
-            randUpperBoundSource=Source(
-                dbProblem["rubSourceShortName"],
-                dbProblem["rubSourceName"],
-                dbProblem["rubSourceUrls"],
+            rand_upper_bound_source=Source(
+                db_problem["rub_source_short_name"],
+                db_problem["rub_source_name"],
+                db_problem["rub_source_urls"],
             )
-            if dbProblem["rubSourceShortName"] is not None
+            if db_problem["rub_source_short_name"] is not None
             else None,
-            randLowerBoundSource=Source(
-                dbProblem["rlbSourceShortName"],
-                dbProblem["rlbSourceName"],
-                dbProblem["rlbSourceUrls"],
+            rand_lower_bound_source=Source(
+                db_problem["rlb_source_short_name"],
+                db_problem["rlb_source_name"],
+                db_problem["rlb_source_urls"],
             )
-            if dbProblem["rlbSourceShortName"] is not None
+            if db_problem["rlb_source_short_name"] is not None
             else None,
-            detUpperBoundSource=Source(
-                dbProblem["dubSourceShortName"],
-                dbProblem["dubSourceName"],
-                dbProblem["dubSourceUrls"],
+            det_upper_bound_source=Source(
+                db_problem["dub_source_short_name"],
+                db_problem["dub_source_name"],
+                db_problem["dub_source_urls"],
             )
-            if dbProblem["dubSourceShortName"] is not None
+            if db_problem["dub_source_short_name"] is not None
             else None,
-            detLowerBoundSource=Source(
-                dbProblem["dlbSourceShortName"],
-                dbProblem["dlbSourceName"],
-                dbProblem["dlbSourceUrls"],
+            det_lower_bound_source=Source(
+                db_problem["dlb_source_short_name"],
+                db_problem["dlb_source_name"],
+                db_problem["dlb_source_urls"],
             )
-            if dbProblem["dlbSourceShortName"] is not None
+            if db_problem["dlb_source_short_name"] is not None
             else None,
         ),
-        **dbProblem
+        **db_problem
     )

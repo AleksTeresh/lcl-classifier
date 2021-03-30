@@ -1,45 +1,49 @@
 from own_types import UnparsedConfigType, ConfigType
 from typing import List
-from util import flatMap, flatten
+from util import flat_map, flatten
 
 
-def splitConfig(config: str) -> List[str]:
+def split_config(config: str) -> List[str]:
     res = flatten([x.split(" ") for x in config.split(" : ")])
     return [x for x in res if x.strip() != ""]
 
 
-def validLabelsFromEdge(edgeConfig: str) -> List[str]:
-    halfBracketSplit = edgeConfig.split("(")
-    halfBracketSplit = [halfBracketSplit[0]] + ["(" + x for x in halfBracketSplit[1:]]
-    halfBracketSplit = [x for x in halfBracketSplit if len(x) > 0]
+def valid_labels_from_edge(edge_config: str) -> List[str]:
+    half_bracket_split = edge_config.split("(")
+    half_bracket_split = [half_bracket_split[0]] + [
+        "(" + x for x in half_bracket_split[1:]
+    ]
+    half_bracket_split = [x for x in half_bracket_split if len(x) > 0]
 
-    fullBracketSplit = flatMap(
-        lambda x: [y for y in x.split(")") if len(y) > 0], halfBracketSplit
+    full_bracket_split = flat_map(
+        lambda x: [y for y in x.split(")") if len(y) > 0], half_bracket_split
     )
-    fullBracketSplit = [(x + ")") if x[0] == "(" else x for x in fullBracketSplit]
+    full_bracket_split = [(x + ")") if x[0] == "(" else x for x in full_bracket_split]
 
-    return flatMap(lambda x: [x] if x[0] == "(" else list(x), fullBracketSplit)
+    return flat_map(lambda x: [x] if x[0] == "(" else list(x), full_bracket_split)
 
 
-def parseConfig(config: str) -> List[List[str]]:
+def parse_config(config: str) -> List[List[str]]:
     config = config.strip()
-    perEdge = splitConfig(config)
-    degree = len(perEdge)
-    labelsPerEdge = [validLabelsFromEdge(x) for x in perEdge]
+    per_edge = split_config(config)
+    degree = len(per_edge)
+    labels_per_edge = [valid_labels_from_edge(x) for x in per_edge]
 
-    return labelsPerEdge
+    return labels_per_edge
 
 
-def parseConfigs(configs: UnparsedConfigType) -> List[List[List[str]]]:
+def parse_configs(configs: UnparsedConfigType) -> List[List[List[str]]]:
     configs = [x for x in configs if x.strip() != ""]
-    return [parseConfig(config) for config in configs]
+    return [parse_config(config) for config in configs]
 
 
-def unparseConfig(config: str, isDirectedOrRooted: bool) -> str:
-    if isDirectedOrRooted and len(config) > 1:
+def unparse_config(config: str, is_directed_or_rooted: bool) -> str:
+    if is_directed_or_rooted and len(config) > 1:
         config = config[0] + ":" + config[1:]
     return " ".join(config)
 
 
-def unparseConfigs(configs: ConfigType, isDirectedOrRooted: bool) -> UnparsedConfigType:
-    return [unparseConfig(config, isDirectedOrRooted) for config in configs]
+def unparse_configs(
+    configs: ConfigType, is_directed_or_rooted: bool
+) -> UnparsedConfigType:
+    return [unparse_config(config, is_directed_or_rooted) for config in configs]

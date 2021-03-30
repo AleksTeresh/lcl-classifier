@@ -9,21 +9,21 @@ from webargs.flaskparser import use_args
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
 from classify import classify
-from statistics import compute as computeStats
-from db import getClassifiedProblemObj
-from db import getClassifiedProblemObjs
-from db import getBatchClassifications
-from db import getProblemCount
-from db import storeProblemAndClassification
-from db import getBatchClassificationByQuery
+from statistics import compute as compute_stats
+from db import get_classified_problem_obj
+from db import get_classified_problem_objs
+from db import get_batch_classifications
+from db import get_problem_count
+from db import store_problem_and_classification
+from db import get_batch_classification_by_query
 from complexity import *
 
 
-def isQueryResponseComplete(batches: List[Dict]) -> bool:
+def is_query_response_complete(batches: List[Dict]) -> bool:
     return (
         len(batches) != 0
-        and batches[-1]["countLimit"] is None
-        and batches[-1]["skipCount"] == 0
+        and batches[-1]["count_limit"] is None
+        and batches[-1]["skip_count"] == 0
     )
 
 
@@ -52,30 +52,30 @@ def problem(args):
         args["passive_constraints"],
         args["leaf_constraints"],
         args["root_constraints"],
-        leafAllowAll=(args["leaf_constraints"] == []),
-        rootAllowAll=(args["root_constraints"] == []),
+        leaf_allow_all=(args["leaf_constraints"] == []),
+        root_allow_all=(args["root_constraints"] == []),
         flags=ProblemFlags(
-            isTree=args["is_tree"], isCycle=args["is_cycle"], isPath=args["is_path"]
+            is_tree=args["is_tree"], is_cycle=args["is_cycle"], is_path=args["is_path"]
         ),
     )
 
-    classifiedProblem = getClassifiedProblemObj(p)
-    if classifiedProblem is not None:
+    classified_problem = get_classified_problem_obj(p)
+    if classified_problem is not None:
         return jsonify(
             {
-                "problem": classifiedProblem.toProblem().dict(),
-                "result": classifiedProblem.toResponse().dict(),
+                "problem": classified_problem.to_problem().dict(),
+                "result": classified_problem.to_response().dict(),
             }
         )
     else:
         res = classify(p)
         if not (
-            res.detLowerBound == CONST
-            and res.detUpperBound == UNSOLVABLE
-            and res.randLowerBound == CONST
-            and res.randUpperBound == UNSOLVABLE
+            res.det_lower_bound == CONST
+            and res.det_upper_bound == UNSOLVABLE
+            and res.rand_lower_bound == CONST
+            and res.rand_upper_bound == UNSOLVABLE
         ):
-            storeProblemAndClassification(p, res)
+            store_problem_and_classification(p, res)
         return jsonify({"problem": p.dict(), "result": res.dict()})
 
 
@@ -120,68 +120,68 @@ query_args = {
 def query(args):
     query = Query(
         props=ProblemProps(
-            activeDegree=args["active_degree"],
-            passiveDegree=args["passive_degree"],
-            labelCount=args["label_count"],
-            activesAllSame=args["actives_all_same"],
-            passivesAllSame=args["passives_all_same"],
+            active_degree=args["active_degree"],
+            passive_degree=args["passive_degree"],
+            label_count=args["label_count"],
+            actives_all_same=args["actives_all_same"],
+            passives_all_same=args["passives_all_same"],
             flags=ProblemFlags(
-                isTree=args["is_tree"],
-                isCycle=args["is_cycle"],
-                isPath=args["is_path"],
-                isDirectedOrRooted=args["is_directed_or_rooted"],
-                isRegular=args["is_regular"],
+                is_tree=args["is_tree"],
+                is_cycle=args["is_cycle"],
+                is_path=args["is_path"],
+                is_directed_or_rooted=args["is_directed_or_rooted"],
+                is_regular=args["is_regular"],
             ),
         ),
         bounds=Bounds(
-            randUpperBound=args["rand_upper_bound"],
-            randLowerBound=args["rand_lower_bound"],
-            detUpperBound=args["det_upper_bound"],
-            detLowerBound=args["det_lower_bound"],
+            rand_upper_bound=args["rand_upper_bound"],
+            rand_lower_bound=args["rand_lower_bound"],
+            det_upper_bound=args["det_upper_bound"],
+            det_lower_bound=args["det_lower_bound"],
         ),
-        excludeInclude=QueryExcludeInclude(
-            excludeIfConfigHasAllOf=args["exclude_if_config_has_all_of"],
-            excludeIfConfigHasSomeOf=args["exclude_if_config_has_some_of"],
-            includeIfConfigHasAllOf=args["include_if_config_has_all_of"],
-            includeIfConfigHasSomeOf=args["include_if_config_has_some_of"],
-            returnLargestProblemOnly=args["largest_problem_only"],
-            returnSmallestProblemOnly=args["smallest_problem_only"],
-            completelyRandUnclassifedOnly=args["completely_rand_unclassified_only"],
-            partiallyRandUnclassifiedOnly=args["partially_rand_unclassified_only"],
-            completelyDetUnclassifedOnly=args["completely_det_unclassified_only"],
-            partiallyDetUnclassifiedOnly=args["partially_det_unclassified_only"],
+        exclude_include=QueryExcludeInclude(
+            exclude_if_config_has_all_of=args["exclude_if_config_has_all_of"],
+            exclude_if_config_has_some_of=args["exclude_if_config_has_some_of"],
+            include_if_config_has_all_of=args["include_if_config_has_all_of"],
+            include_if_config_has_some_of=args["include_if_config_has_some_of"],
+            return_largest_problem_only=args["largest_problem_only"],
+            return_smallest_problem_only=args["smallest_problem_only"],
+            completely_rand_unclassifed_only=args["completely_rand_unclassified_only"],
+            partially_rand_unclassified_only=args["partially_rand_unclassified_only"],
+            completely_det_unclassifed_only=args["completely_det_unclassified_only"],
+            partially_det_unclassified_only=args["partially_det_unclassified_only"],
         ),
     )
 
-    problems = getClassifiedProblemObjs(query)
-    stats = computeStats(problems)
-    batches = getBatchClassificationByQuery(query)
-    isResponseComplete = isQueryResponseComplete(batches)
+    problems = get_classified_problem_objs(query)
+    stats = compute_stats(problems)
+    batches = get_batch_classification_by_query(query)
+    is_response_complete = is_query_response_complete(batches)
     response = {
         "problems": (
             None
             if args["fetch_stats_only"]
             else [
-                {**p.toUnparsedProblem().dict(), **p.toResponse().dict()}
+                {**p.to_unparsed_problem().dict(), **p.to_response().dict()}
                 for p in problems
             ]
         ),
         "stats": stats.dict(),
-        "isComplete": isResponseComplete,
+        "is_complete": is_response_complete,
     }
     return jsonify(response)
 
 
 @app.route("/api/batch_classifications", methods=["GET"])
-def batchClassifications():
-    classifications = getBatchClassifications()
+def batch_classifications():
+    classifications = get_batch_classifications()
     return jsonify(classifications)
 
 
 @app.route("/api/problem_count", methods=["GET"])
-def problemCount():
-    problemCount = getProblemCount()
-    return jsonify({"problemCount": problemCount})
+def problem_count():
+    problem_count = get_problem_count()
+    return jsonify({"problem_count": problem_count})
 
 
 @app.errorhandler(Exception)

@@ -19,17 +19,17 @@ export function loadStateFromUrl<T extends { [key: string]: AllowedProperty }>(
   prefix: string,
   codec: Type<T>
 ): T | undefined {
-  const newState = { ...initState }
+  const newState: Record<keyof T, AllowedProperty> = { ...initState }
   const params = new URLSearchParams(location.search)
   Object.typedKeys(initState).forEach((key: keyof T) => {
     const valueInUrl = params.get(`${prefix}_${key}`)
     if (valueInUrl !== undefined && valueInUrl !== null) {
       if (valueInUrl === 'false' || valueInUrl === 'true') {
-        ;(newState[key] as AllowedProperty) = valueInUrl === 'true'
+        newState[key] = valueInUrl === 'true'
       } else if (isNumeric(valueInUrl)) {
-        ;(newState[key] as AllowedProperty) = parseFloat(valueInUrl)
+        newState[key] = parseFloat(valueInUrl)
       } else {
-        ;(newState[key] as AllowedProperty) = valueInUrl
+        newState[key] = valueInUrl
       }
     }
   })

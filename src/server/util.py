@@ -2,21 +2,21 @@ from typing import Sequence, List, Tuple
 from itertools import chain, combinations
 from functools import reduce
 
-flatMap = lambda f, arr: list(reduce(lambda a, b: a + b, map(f, arr)))
+flat_map = lambda f, arr: list(reduce(lambda a, b: a + b, map(f, arr)))
 
-flatten = lambda arr: flatMap(lambda x: x, arr)
+flatten = lambda arr: flat_map(lambda x: x, arr)
 
 
-def onlyOneIsTrue(a: bool, b: bool, c: bool) -> bool:
+def only_one_is_true(a: bool, b: bool, c: bool) -> bool:
     return (a and not b and not c) or (not a and b and not c) or (not a and not b and c)
 
 
-def areAllTheSame(list: Sequence) -> bool:
+def are_all_the_same(list: Sequence) -> bool:
     return len(list) == 0 or list.count(list[0]) == len(list)
 
 
-def allSameSizes(list: Sequence[Sequence]) -> bool:
-    return areAllTheSame([len(x) for x in list])
+def all_same_sizes(list: Sequence[Sequence]) -> bool:
+    return are_all_the_same([len(x) for x in list])
 
 
 def powerset(iterable: Sequence) -> List[Tuple]:
@@ -25,7 +25,7 @@ def powerset(iterable: Sequence) -> List[Tuple]:
     return list(chain.from_iterable(combinations(s, r) for r in range(len(s) + 1)))
 
 
-def letterRange(count: int) -> List[str]:
+def letter_range(count: int) -> List[str]:
     nums = list(range(count))
-    letters = [chr(x + 65) for x in nums]  # TODO: works only when numLabels < 27
+    letters = [chr(x + 65) for x in nums]  # TODO: works only when num_labels < 27
     return letters

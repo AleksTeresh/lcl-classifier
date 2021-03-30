@@ -10,7 +10,8 @@ import {
   QueryResponseCodec,
   ProblemCountResponseCodec,
 } from '../types'
-import { urlWithParams, keysToSnake, fetchJson } from './apiHelpers'
+import { urlWithParams, fetchJson } from './apiHelpers'
+import { keysToSnake } from './util'
 
 // PRODUCTION variable needs to be in .svelte file
 // that's the reason why isProd is passed as a param here

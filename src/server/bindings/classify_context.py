@@ -5,13 +5,13 @@ from classifier_types import Classifier
 class ClassifyContext:
     def __init__(
         self,
-        brtPreclassified: bool = False,
-        tlpPreclassified: bool = False,
-        isBatch: bool = False,
+        brt_preclassified: bool = False,
+        tlp_preclassified: bool = False,
+        is_batch: bool = False,
     ):
-        self.isBatch = isBatch
-        self.brtPreclassified = brtPreclassified
-        self.tlpPreclassified = tlpPreclassified
+        self.is_batch = is_batch
+        self.brt_preclassified = brt_preclassified
+        self.tlp_preclassified = tlp_preclassified
         # TODO: this probably shouldn't be hardcoded here
         self.sources = {
             Classifier.CP: Source(
@@ -39,8 +39,8 @@ class ClassifyContext:
                 "tlp",
                 "TLP Classifier",
                 [
-                    "https://github.com/trocher/tlpClassifier",
-                    "https://github.com/trocher/tlpDoc",
+                    "https://github.com/trocher/tlp_classifier",
+                    "https://github.com/trocher/tlp_doc",
                 ],
             ),
             Classifier.RE: Source(

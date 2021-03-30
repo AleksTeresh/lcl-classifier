@@ -5,115 +5,117 @@ from .generator import generate
 
 
 class TestGenerator(unittest.TestCase):
-    def __checkEquality(self, results, saved):
+    def __check_equality(self, results, saved):
         self.assertEqual(len(results), len(saved))
         for r, s in zip(results, saved):
-            self.assertEqual(r.activeConstraints, s.activeConstraints)
-            self.assertEqual(r.passiveConstraints, s.passiveConstraints)
-            self.assertEqual(r.leafConstraints, s.leafConstraints)
-            self.assertEqual(r.rootConstraints, s.rootConstraints)
-            self.assertEqual(r.leafAllowAll, s.leafAllowAll)
-            self.assertEqual(r.rootAllowAll, s.rootAllowAll)
-            self.assertEqual(r.flags.isTree, s.flags.isTree)
-            self.assertEqual(r.flags.isCycle, s.flags.isCycle)
-            self.assertEqual(r.flags.isPath, s.flags.isPath)
-            self.assertEqual(r.flags.isDirectedOrRooted, s.flags.isDirectedOrRooted)
-            self.assertEqual(r.flags.isRegular, s.flags.isRegular)
+            self.assertEqual(r.active_constraints, s.activeConstraints)
+            self.assertEqual(r.passive_constraints, s.passiveConstraints)
+            self.assertEqual(r.leaf_constraints, s.leafConstraints)
+            self.assertEqual(r.root_constraints, s.rootConstraints)
+            self.assertEqual(r.leaf_allow_all, s.leafAllowAll)
+            self.assertEqual(r.root_allow_all, s.rootAllowAll)
+            self.assertEqual(r.flags.is_tree, s.flags.isTree)
+            self.assertEqual(r.flags.is_cycle, s.flags.isCycle)
+            self.assertEqual(r.flags.is_path, s.flags.isPath)
+            self.assertEqual(
+                r.flags.is_directed_or_rooted, s.flags.isDirectedOrRooted
+            )
+            self.assertEqual(r.flags.is_regular, s.flags.isRegular)
 
-    def testGenerate1(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = True
+    def test_generate1(self):
+        active_degree = 3
+        passive_degree = 2
+        label_count = 2
+        actives_all_same = False
+        passives_all_same = True
         flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=True
+            is_tree=True, is_cycle=False, is_path=False, is_directed_or_rooted=True
         )
 
         ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
+            active_degree,
+            passive_degree,
+            label_count,
+            actives_all_same,
+            passives_all_same,
             flags,
         )
 
         with open("test_data/problems1.pickle", "rb") as handle:
             saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
+            self.__check_equality(ps, saved)
 
-    def testGenerate2(self):
-        activeDegree = 3
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
+    def test_generate2(self):
+        active_degree = 3
+        passive_degree = 2
+        label_count = 2
+        actives_all_same = False
+        passives_all_same = False
         flags = ProblemFlags(
-            isTree=True, isCycle=False, isPath=False, isDirectedOrRooted=False
+            is_tree=True, is_cycle=False, is_path=False, is_directed_or_rooted=False
         )
 
         ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
+            active_degree,
+            passive_degree,
+            label_count,
+            actives_all_same,
+            passives_all_same,
             flags,
         )
 
         with open("test_data/problems2.pickle", "rb") as handle:
             saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
+            self.__check_equality(ps, saved)
 
-    def testGenerate3(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
+    def test_generate3(self):
+        active_degree = 2
+        passive_degree = 2
+        label_count = 2
+        actives_all_same = False
+        passives_all_same = False
         flags = ProblemFlags(
-            isTree=False,
-            isCycle=False,
-            isPath=True,
-            isDirectedOrRooted=False,
+            is_tree=False,
+            is_cycle=False,
+            is_path=True,
+            is_directed_or_rooted=False,
         )
 
         ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
+            active_degree,
+            passive_degree,
+            label_count,
+            actives_all_same,
+            passives_all_same,
             flags,
         )
 
         with open("test_data/problems3.pickle", "rb") as handle:
             saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
+            self.__check_equality(ps, saved)
 
-    def testGenerate4(self):
-        activeDegree = 2
-        passiveDegree = 2
-        labelCount = 2
-        activesAllSame = False
-        passivesAllSame = False
+    def test_generate4(self):
+        active_degree = 2
+        passive_degree = 2
+        label_count = 2
+        actives_all_same = False
+        passives_all_same = False
         flags = ProblemFlags(
-            isTree=False,
-            isCycle=False,
-            isPath=True,
-            isDirectedOrRooted=True,
+            is_tree=False,
+            is_cycle=False,
+            is_path=True,
+            is_directed_or_rooted=True,
         )
 
         ps = generate(
-            activeDegree,
-            passiveDegree,
-            labelCount,
-            activesAllSame,
-            passivesAllSame,
+            active_degree,
+            passive_degree,
+            label_count,
+            actives_all_same,
+            passives_all_same,
             flags,
         )
 
         with open("test_data/problems4.pickle", "rb") as handle:
             saved = pickle.load(handle)
-            self.__checkEquality(ps, saved)
+            self.__check_equality(ps, saved)

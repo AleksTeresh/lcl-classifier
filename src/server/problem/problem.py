@@ -1,40 +1,42 @@
 from typing import NamedTuple, List, Set, Dict, Tuple
 from own_types import UnparsedConfigType, ConfigType
-from util import onlyOneIsTrue, flatten, letterRange
+from util import only_one_is_true, flatten, letter_range
 from functools import reduce
-from .config_util import parseAndNormalize
-from .config_util import areRegular
-from .config_util import areSomeDirectedByUnparsedConfigs
-from .config_util import areAllDirectedByUnparsedConfigs
-from .config_util import getDegreeByUnparsedConfig
-from .config_util import isRegularByUnparsedConfigs
+from .config_util import parse_and_normalize
+from .config_util import are_regular
+from .config_util import are_some_directed_by_unparsed_configs
+from .config_util import are_all_directed_by_unparsed_configs
+from .config_util import get_degree_by_unparsed_config
+from .config_util import is_regular_by_unparsed_configs
 import itertools, copy
 
 
 class BasicProblemFlags:
     def __init__(
         self,
-        isTree: bool = True,
-        isCycle: bool = False,
-        isPath: bool = False,
+        is_tree: bool = True,
+        is_cycle: bool = False,
+        is_path: bool = False,
     ):
-        self.isTree = isTree
-        self.isCycle = isCycle
-        self.isPath = isPath
+        self.is_tree = is_tree
+        self.is_cycle = is_cycle
+        self.is_path = is_path
 
 
 class ProblemFlags(BasicProblemFlags):
     def __init__(
         self,
-        isTree: bool = True,
-        isCycle: bool = False,
-        isPath: bool = False,
-        isDirectedOrRooted: bool = False,
-        isRegular: bool = True,
+        is_tree: bool = True,
+        is_cycle: bool = False,
+        is_path: bool = False,
+        is_directed_or_rooted: bool = False,
+        is_regular: bool = True,
     ):
-        BasicProblemFlags.__init__(self, isTree=isTree, isCycle=isCycle, isPath=isPath)
-        self.isDirectedOrRooted = isDirectedOrRooted
-        self.isRegular = isRegular
+        BasicProblemFlags.__init__(
+            self, is_tree=is_tree, is_cycle=is_cycle, is_path=is_path
+        )
+        self.is_directed_or_rooted = is_directed_or_rooted
+        self.is_regular = is_regular
 
     def __key(self) -> Tuple:
         return tuple(self.__dict__.values())
@@ -55,66 +57,66 @@ class ProblemFlags(BasicProblemFlags):
 class ProblemProps:
     def __init__(
         self,
-        activeDegree: int,
-        passiveDegree: int,
-        labelCount: int,
-        activesAllSame: bool,
-        passivesAllSame: bool,
+        active_degree: int,
+        passive_degree: int,
+        label_count: int,
+        actives_all_same: bool,
+        passives_all_same: bool,
         flags: ProblemFlags,
     ):
-        self.activeDegree = activeDegree
-        self.passiveDegree = passiveDegree
-        self.labelCount = labelCount
-        self.activesAllSame = activesAllSame
-        self.passivesAllSame = passivesAllSame
+        self.active_degree = active_degree
+        self.passive_degree = passive_degree
+        self.label_count = label_count
+        self.actives_all_same = actives_all_same
+        self.passives_all_same = passives_all_same
         self.flags = flags
 
 
 class GenericProblem:
     def __init__(
         self,
-        activeConstraints: UnparsedConfigType,
-        passiveConstraints: UnparsedConfigType,
-        leafConstraints: UnparsedConfigType = [],
-        rootConstraints: UnparsedConfigType = [],
-        activeAllowAll: bool = False,
-        passiveAllowAll: bool = False,
-        leafAllowAll: bool = True,
-        rootAllowAll: bool = True,
+        active_constraints: UnparsedConfigType,
+        passive_constraints: UnparsedConfigType,
+        leaf_constraints: UnparsedConfigType = [],
+        root_constraints: UnparsedConfigType = [],
+        active_allow_all: bool = False,
+        passive_allow_all: bool = False,
+        leaf_allow_all: bool = True,
+        root_allow_all: bool = True,
         flags: BasicProblemFlags = BasicProblemFlags(),
         id=None,
     ):
-        self.__checkBadConstrInputs(
-            activeConstraints, passiveConstraints, activeAllowAll, passiveAllowAll
+        self.__check_bad_constr_inputs(
+            active_constraints, passive_constraints, active_allow_all, passive_allow_all
         )
 
-        self.__assignActivesAndPassives(
-            activeConstraints, passiveConstraints, activeAllowAll, passiveAllowAll
+        self.__assign_actives_and_passives(
+            active_constraints, passive_constraints, active_allow_all, passive_allow_all
         )
 
-        self.__assumeRootConstr(
-            rootAllowAll, rootConstraints, activeConstraints, passiveConstraints
+        self.__assume_root_constr(
+            root_allow_all, root_constraints, active_constraints, passive_constraints
         )
 
-        self.__assignLeafs(leafConstraints, leafAllowAll)
-        self.leafAllowAll = leafAllowAll
+        self.__assign_leafs(leaf_constraints, leaf_allow_all)
+        self.leaf_allow_all = leaf_allow_all
 
-        self.__assignRoots(rootConstraints, rootAllowAll)
-        self.rootAllowAll = rootAllowAll
+        self.__assign_roots(root_constraints, root_allow_all)
+        self.root_allow_all = root_allow_all
 
-        self.__removeUnusedConfigs()
+        self.__remove_unused_configs()
 
-        self.flags = self.__getFlags(flags, activeConstraints, passiveConstraints)
+        self.flags = self.__get_flags(flags, active_constraints, passive_constraints)
         self.id = id
 
-        self.__checkFlags()
+        self.__check_flags()
         self.normalize()
 
     def __key(self) -> Tuple:
-        variableDict = copy.deepcopy(self.__dict__)
+        variable_dict = copy.deepcopy(self.__dict__)
         if self.id is not None:
-            del variableDict["id"]
-        return tuple(variableDict.values())
+            del variable_dict["id"]
+        return tuple(variable_dict.values())
 
     def dict(self) -> Dict:
         return {**self.__dict__, "flags": self.flags.dict()}
@@ -131,42 +133,44 @@ class GenericProblem:
     def __hash__(self) -> int:
         return hash(self.__key())
 
-    def __getFlags(
+    def __get_flags(
         self,
-        basicFlags: BasicProblemFlags,
-        unparsedActiveConstraints: UnparsedConfigType,
-        unparsedPassiveConstraints: UnparsedConfigType,
+        basic_flags: BasicProblemFlags,
+        unparsed_active_constraints: UnparsedConfigType,
+        unparsed_passive_constraints: UnparsedConfigType,
     ) -> ProblemFlags:
-        isRegular = areRegular(self.activeConstraints, self.passiveConstraints)
-        isPath = basicFlags.isPath or (
-            basicFlags.isTree
-            and isRegular
-            and getDegreeByUnparsedConfig(unparsedActiveConstraints[0]) == 2
-            and getDegreeByUnparsedConfig(unparsedPassiveConstraints[0]) == 2
+        is_regular = are_regular(self.active_constraints, self.passive_constraints)
+        is_path = basic_flags.is_path or (
+            basic_flags.is_tree
+            and is_regular
+            and get_degree_by_unparsed_config(unparsed_active_constraints[0]) == 2
+            and get_degree_by_unparsed_config(unparsed_passive_constraints[0]) == 2
         )
         return ProblemFlags(
-            isTree=basicFlags.isTree and not isPath,
-            isCycle=basicFlags.isCycle,
-            isPath=isPath,
-            isDirectedOrRooted=areAllDirectedByUnparsedConfigs(
-                unparsedActiveConstraints
+            is_tree=basic_flags.is_tree and not is_path,
+            is_cycle=basic_flags.is_cycle,
+            is_path=is_path,
+            is_directed_or_rooted=are_all_directed_by_unparsed_configs(
+                unparsed_active_constraints
             ),
-            isRegular=isRegular,
+            is_regular=is_regular,
         )
 
-    def __checkFlags(self) -> None:
-        if not onlyOneIsTrue(self.flags.isTree, self.flags.isCycle, self.flags.isPath):
+    def __check_flags(self) -> None:
+        if not only_one_is_true(
+            self.flags.is_tree, self.flags.is_cycle, self.flags.is_path
+        ):
             raise Exception(
                 "problem",
-                'Select exactly one option out of "isTree", "isCycle", "isPath"',
+                'Select exactly one option out of "is_tree", "is_cycle", "is_path"',
             )
 
         if (
-            self.flags.isPath
-            and not self.flags.isDirectedOrRooted
+            self.flags.is_path
+            and not self.flags.is_directed_or_rooted
             and (
-                self.leafAllowAll != self.rootAllowAll
-                or self.leafConstraints != self.rootConstraints
+                self.leaf_allow_all != self.root_allow_all
+                or self.leaf_constraints != self.root_constraints
             )
         ):
             raise Exception(
@@ -174,274 +178,276 @@ class GenericProblem:
                 "Leaf and root constraints must be the same on undirected paths",
             )
 
-        if (self.flags.isPath or self.flags.isCycle) and (
-            self.getActiveDegree() != 2 or self.getPassiveDegree() != 2
+        if (self.flags.is_path or self.flags.is_cycle) and (
+            self.get_active_degree() != 2 or self.get_passive_degree() != 2
         ):
             raise Exception(
                 "problem",
                 "Problems on paths or cycles must have active and passive configs of degree 2",
             )
 
-    def __checkBadConstrInputs(
+    def __check_bad_constr_inputs(
         self,
-        activeConstraints: UnparsedConfigType,
-        passiveConstraints: UnparsedConfigType,
-        activeAllowAll: bool,
-        passiveAllowAll: bool,
+        active_constraints: UnparsedConfigType,
+        passive_constraints: UnparsedConfigType,
+        active_allow_all: bool,
+        passive_allow_all: bool,
     ) -> None:
-        if activeAllowAll and passiveAllowAll:
+        if active_allow_all and passive_allow_all:
             raise Exception(
                 "problem",
-                "Both activeAllowAll and passiveAllowAll always yield a trivial problem",
+                "Both active_allow_all and passive_allow_all always yield a trivial problem",
             )
 
-        if (not activeConstraints and not activeAllowAll) or (
-            not passiveConstraints and not passiveAllowAll
+        if (not active_constraints and not active_allow_all) or (
+            not passive_constraints and not passive_allow_all
         ):
             raise Exception(
                 "problem",
                 "If passive or active configuration are empty, the problem is always unsolvable",
             )
 
-        if not activeConstraints:
+        if not active_constraints:
             raise Exception(
                 "problem",
                 "Specify at least one active config, s.t. the tool knows the degree of active nodes",
             )
 
-        if not passiveConstraints:
+        if not passive_constraints:
             raise Exception(
                 "problem",
                 "Specify at least one passive config, s.t. the tool knows the degree of passive nodes",
             )
 
-        someConfigsAreDirected = areSomeDirectedByUnparsedConfigs(
-            activeConstraints + passiveConstraints
+        some_configs_are_directed = are_some_directed_by_unparsed_configs(
+            active_constraints + passive_constraints
         )
-        allConfigsAreDirected = areAllDirectedByUnparsedConfigs(
-            activeConstraints + passiveConstraints
+        all_configs_are_directed = are_all_directed_by_unparsed_configs(
+            active_constraints + passive_constraints
         )
         # if a single constraint is directed, all has to be directed
-        if someConfigsAreDirected != allConfigsAreDirected:
+        if some_configs_are_directed != all_configs_are_directed:
             raise Exception(
                 "problem",
                 "If a single config is directed, all configs have to be directed",
-                activeConstraints,
-                passiveConstraints,
+                active_constraints,
+                passive_constraints,
             )
 
-        if not isRegularByUnparsedConfigs(activeConstraints):
+        if not is_regular_by_unparsed_configs(active_constraints):
             raise Exception(
                 "problem",
                 "Active configurations must be of the same degree",
-                activeConstraints,
+                active_constraints,
             )
 
-        if not isRegularByUnparsedConfigs(passiveConstraints):
+        if not is_regular_by_unparsed_configs(passive_constraints):
             raise Exception(
                 "problem",
                 "Passive configurations must be of the same degree",
-                passiveConstraints,
+                passive_constraints,
             )
 
-    def __swapConstraints(self) -> None:
-        temp = self.activeConstraints
-        self.activeConstraints = self.passiveConstraints
-        self.passiveConstraints = temp
+    def __swap_constraints(self) -> None:
+        temp = self.active_constraints
+        self.active_constraints = self.passive_constraints
+        self.passive_constraints = temp
 
-    def __assignActivesAndPassives(
+    def __assign_actives_and_passives(
         self,
-        activeConstraints: UnparsedConfigType,
-        passiveConstraints: UnparsedConfigType,
-        activeAllowAll: bool,
-        passiveAllowAll: bool,
+        active_constraints: UnparsedConfigType,
+        passive_constraints: UnparsedConfigType,
+        active_allow_all: bool,
+        passive_allow_all: bool,
     ) -> None:
-        self.activeConstraints = parseAndNormalize(activeConstraints)
-        self.passiveConstraints = parseAndNormalize(passiveConstraints)
-        alphabet = self.getAlphabet()
+        self.active_constraints = parse_and_normalize(active_constraints)
+        self.passive_constraints = parse_and_normalize(passive_constraints)
+        alphabet = self.get_alphabet()
 
-        if activeAllowAll:
-            allowAllNotnormnalized = [
-                "".join(alphabet) for _ in activeConstraints[0].split(" ")
+        if active_allow_all:
+            allow_all_notnormnalized = [
+                "".join(alphabet) for _ in active_constraints[0].split(" ")
             ]
-            self.activeConstraints = parseAndNormalize(allowAllNotnormnalized)
+            self.active_constraints = parse_and_normalize(allow_all_notnormnalized)
 
-        if passiveAllowAll:
-            allowAllNotnormnalized = [
-                "".join(alphabet) for _ in passiveConstraints[0].split(" ")
+        if passive_allow_all:
+            allow_all_notnormnalized = [
+                "".join(alphabet) for _ in passive_constraints[0].split(" ")
             ]
-            self.passiveConstraints = parseAndNormalize(allowAllNotnormnalized)
+            self.passive_constraints = parse_and_normalize(allow_all_notnormnalized)
 
-        if self.getActiveDegree() < self.getPassiveDegree():
-            self.__swapConstraints()
+        if self.get_active_degree() < self.get_passive_degree():
+            self.__swap_constraints()
 
-    def __assignLeafs(
-        self, leafConstraints: UnparsedConfigType, leafAllowAll: bool
+    def __assign_leafs(
+        self, leaf_constraints: UnparsedConfigType, leaf_allow_all: bool
     ) -> None:
-        if leafAllowAll:
-            allowAllNotnormnalized = ["".join(self.getAlphabet())]
-            self.leafConstraints = parseAndNormalize(allowAllNotnormnalized)
+        if leaf_allow_all:
+            allow_all_notnormnalized = ["".join(self.get_alphabet())]
+            self.leaf_constraints = parse_and_normalize(allow_all_notnormnalized)
         else:
-            self.leafConstraints = parseAndNormalize(leafConstraints)
+            self.leaf_constraints = parse_and_normalize(leaf_constraints)
 
-    def __assignRoots(
-        self, rootConstraints: UnparsedConfigType, rootAllowAll: bool
+    def __assign_roots(
+        self, root_constraints: UnparsedConfigType, root_allow_all: bool
     ) -> None:
-        if rootAllowAll:
-            allowAllNotnormnalized = ["".join(self.getAlphabet())]
-            self.rootConstraints = parseAndNormalize(allowAllNotnormnalized)
+        if root_allow_all:
+            allow_all_notnormnalized = ["".join(self.get_alphabet())]
+            self.root_constraints = parse_and_normalize(allow_all_notnormnalized)
         else:
-            self.rootConstraints = parseAndNormalize(rootConstraints)
+            self.root_constraints = parse_and_normalize(root_constraints)
 
-    def __assumeRootConstr(
+    def __assume_root_constr(
         self,
-        rootAllowAll: bool,
-        rootConstraints: UnparsedConfigType,
-        activeConstraints: UnparsedConfigType,
-        passiveConstraints: UnparsedConfigType,
+        root_allow_all: bool,
+        root_constraints: UnparsedConfigType,
+        active_constraints: UnparsedConfigType,
+        passive_constraints: UnparsedConfigType,
     ) -> None:
-        # if root degree cannot be deduced because rootConstraints is an empty set,
+        # if root degree cannot be deduced because root_constraints is an empty set,
         # assume (rather arbitrarily) that root is an active node
-        if rootAllowAll and not rootConstraints:
-            rootConstraints = activeConstraints
-            alphabet = set(flatten(activeConstraints + passiveConstraints)) - {" "}
-            self.rootConstraints = tuple(
-                ["".join(alphabet) for _ in rootConstraints[0].split(" ")]
+        if root_allow_all and not root_constraints:
+            root_constraints = active_constraints
+            alphabet = set(flatten(active_constraints + passive_constraints)) - {" "}
+            self.root_constraints = tuple(
+                ["".join(alphabet) for _ in root_constraints[0].split(" ")]
             )
 
-    def __getNewConfig(self, renaming: Dict[str, str], configuration: str) -> str:
+    def __get_new_config(self, renaming: Dict[str, str], configuration: str) -> str:
         "returns a string of chars"
-        newConfig = [renaming[char] for char in configuration]
+        new_config = [renaming[char] for char in configuration]
         # if a graph directed/rooted, the first letter in the config
         # has a special meaning (it is config towards parent/predecessor node)
         # Thus, leave the first letter in the first position. Sort other letters
-        if len(newConfig) != 0 and (self.flags.isDirectedOrRooted):
-            newConfig = [newConfig[0]] + sorted(newConfig[1:])
+        if len(new_config) != 0 and (self.flags.is_directed_or_rooted):
+            new_config = [new_config[0]] + sorted(new_config[1:])
         else:
-            newConfig = sorted(newConfig)
-        return "".join(newConfig)
+            new_config = sorted(new_config)
+        return "".join(new_config)
 
     # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/constraint.rs#L469-L489
-    def __permuteNormalize(
+    def __permute_normalize(
         self, renaming: Dict[str, str], constraints: ConfigType
     ) -> ConfigType:
         "returns a list of strings"
-        newConfigs = [self.__getNewConfig(renaming, x) for x in constraints]
+        new_configs = [self.__get_new_config(renaming, x) for x in constraints]
 
-        newConfigs = list(set(newConfigs))  # i.e. unique()
-        newConfigs = sorted(newConfigs)
-        return tuple(newConfigs)
+        new_configs = list(set(new_configs))  # i.e. unique()
+        new_configs = sorted(new_configs)
+        return tuple(new_configs)
 
-    def __handleAlphabetPerm(
+    def __handle_alphabet_perm(
         self, perm: Tuple[str, ...]
     ) -> Tuple[ConfigType, ConfigType, ConfigType, ConfigType]:
         "returns a tuple of lists"
         renaming = {}
 
-        for (x, y) in zip(self.getAlphabet(), perm):
+        for (x, y) in zip(self.get_alphabet(), perm):
             renaming[x] = y
 
-        newActive = self.__permuteNormalize(renaming, self.activeConstraints)
-        newPassive = self.__permuteNormalize(renaming, self.passiveConstraints)
-        newLeaf = self.__permuteNormalize(renaming, self.leafConstraints)
-        newRoot = self.__permuteNormalize(renaming, self.rootConstraints)
+        new_active = self.__permute_normalize(renaming, self.active_constraints)
+        new_passive = self.__permute_normalize(renaming, self.passive_constraints)
+        new_leaf = self.__permute_normalize(renaming, self.leaf_constraints)
+        new_root = self.__permute_normalize(renaming, self.root_constraints)
 
-        return (newActive, newPassive, newLeaf, newRoot)
+        return (new_active, new_passive, new_leaf, new_root)
 
-    def __removeUnusedConfigs(self) -> None:
-        newActiveConstraints = self.activeConstraints
-        newPassiveConstraints = self.passiveConstraints
+    def __remove_unused_configs(self) -> None:
+        new_active_constraints = self.active_constraints
+        new_passive_constraints = self.passive_constraints
 
-        activeAlphabet = set(flatten(newActiveConstraints)) - {" "}
-        passiveAlphabet = set(flatten(newPassiveConstraints)) - {" "}
+        active_alphabet = set(flatten(new_active_constraints)) - {" "}
+        passive_alphabet = set(flatten(new_passive_constraints)) - {" "}
 
-        while (activeAlphabet - passiveAlphabet) or (passiveAlphabet - activeAlphabet):
-            # print(activeAlphabet, passiveAlphabet)
-            diff = activeAlphabet - passiveAlphabet
+        while (active_alphabet - passive_alphabet) or (
+            passive_alphabet - active_alphabet
+        ):
+            # print(active_alphabet, passive_alphabet)
+            diff = active_alphabet - passive_alphabet
             if diff:
-                newActiveConstraints = tuple(
+                new_active_constraints = tuple(
                     [
                         conf
-                        for conf in newActiveConstraints
+                        for conf in new_active_constraints
                         if not diff.intersection(set(conf))
                     ]
                 )
 
-            diff = passiveAlphabet - activeAlphabet
+            diff = passive_alphabet - active_alphabet
             if diff:
-                newPassiveConstraints = tuple(
+                new_passive_constraints = tuple(
                     [
                         conf
-                        for conf in newPassiveConstraints
+                        for conf in new_passive_constraints
                         if not diff.intersection(set(conf))
                     ]
                 )
 
-            if not newActiveConstraints:
+            if not new_active_constraints:
                 raise Exception(
                     "problem",
                     "After removing configs that can never be used, active configurations become empty.",
                 )
 
-            if not newPassiveConstraints:
+            if not new_passive_constraints:
                 raise Exception(
                     "problem",
                     "After removing configs that can never be used, passive configurations become empty.",
                 )
 
-            activeAlphabet = set(flatten(newActiveConstraints)) - {" "}
-            passiveAlphabet = set(flatten(newPassiveConstraints)) - {" "}
+            active_alphabet = set(flatten(new_active_constraints)) - {" "}
+            passive_alphabet = set(flatten(new_passive_constraints)) - {" "}
 
-        self.activeConstraints = newActiveConstraints
-        self.passiveConstraints = newPassiveConstraints
+        self.active_constraints = new_active_constraints
+        self.passive_constraints = new_passive_constraints
 
-        leafAlphabet = set(flatten(self.leafConstraints)) - {" "}
-        rootAlphabet = set(flatten(self.rootConstraints)) - {" "}
-        allowedAlphabet = activeAlphabet
+        leaf_alphabet = set(flatten(self.leaf_constraints)) - {" "}
+        root_alphabet = set(flatten(self.root_constraints)) - {" "}
+        allowed_alphabet = active_alphabet
 
-        leafDiff = leafAlphabet - allowedAlphabet
-        if leafDiff:
-            self.leafConstraints = tuple(
+        leaf_diff = leaf_alphabet - allowed_alphabet
+        if leaf_diff:
+            self.leaf_constraints = tuple(
                 [
                     conf
-                    for conf in self.leafConstraints
-                    if not leafDiff.intersection(set(conf))
+                    for conf in self.leaf_constraints
+                    if not leaf_diff.intersection(set(conf))
                 ]
             )
 
-        rootDiff = rootAlphabet - allowedAlphabet
-        if rootDiff:
-            self.rootConstraints = tuple(
+        root_diff = root_alphabet - allowed_alphabet
+        if root_diff:
+            self.root_constraints = tuple(
                 [
                     conf
-                    for conf in self.rootConstraints
-                    if not rootDiff.intersection(set(conf))
+                    for conf in self.root_constraints
+                    if not root_diff.intersection(set(conf))
                 ]
             )
 
-    def __getDegree(self, configs: ConfigType) -> int:
+    def __get_degree(self, configs: ConfigType) -> int:
         return len(configs[0])
 
-    def getAlphabet(self) -> List[str]:
+    def get_alphabet(self) -> List[str]:
         return list(
-            set(flatten(self.activeConstraints + self.passiveConstraints)) - {" "}
+            set(flatten(self.active_constraints + self.passive_constraints)) - {" "}
         )
 
-    def getActiveDegree(self) -> int:
-        return self.__getDegree(self.activeConstraints)
+    def get_active_degree(self) -> int:
+        return self.__get_degree(self.active_constraints)
 
-    def getPassiveDegree(self) -> int:
-        return self.__getDegree(self.passiveConstraints)
+    def get_passive_degree(self) -> int:
+        return self.__get_degree(self.passive_constraints)
 
     # adopted from https://github.com/olidennis/round-eliminator/blob/fa43fc97f4ac03273211a08d012de4f77f342fe4/simulation/src/problem.rs#L156-L171
     def normalize(self) -> None:
-        labelCount = len(self.getAlphabet())
-        letters = letterRange(labelCount)
-        allPerms = list(itertools.permutations(letters))
-        normalized = [self.__handleAlphabetPerm(perm) for perm in allPerms]
+        label_count = len(self.get_alphabet())
+        letters = letter_range(label_count)
+        all_perms = list(itertools.permutations(letters))
+        normalized = [self.__handle_alphabet_perm(perm) for perm in all_perms]
         # normalized is a list of tulpes of lists
-        normalizedFirst = sorted(normalized)[0]
-        self.activeConstraints = normalizedFirst[0]
-        self.passiveConstraints = normalizedFirst[1]
-        self.leafConstraints = normalizedFirst[2]
-        self.rootConstraints = normalizedFirst[3]
+        normalized_first = sorted(normalized)[0]
+        self.active_constraints = normalized_first[0]
+        self.passive_constraints = normalized_first[1]
+        self.leaf_constraints = normalized_first[2]
+        self.root_constraints = normalized_first[3]

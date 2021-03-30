@@ -8,79 +8,83 @@ from cyclepath_classifier import CONST as CP_CONST
 from cyclepath_classifier import GLOBAL as CP_GLOBAL
 from cyclepath_classifier import ITERATED_LOG as CP_ITERATED_LOG
 from cyclepath_classifier import UNSOLVABLE as CP_UNSOLVABLE
-from problem import eachConstrIsHomogeneous
+from problem import each_constr_is_homogeneous
 from util import flatten
 from response import GenericResponse
 from complexity import *
 
 
 def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
-    activeDegree = len(p.activeConstraints[0]) if len(p.activeConstraints) else 2
-    passiveDegree = len(p.passiveConstraints[0]) if len(p.passiveConstraints) else 2
-    leafDegree = len(p.leafConstraints[0]) if len(p.leafConstraints) else 1
+    active_degree = len(p.active_constraints[0]) if len(p.active_constraints) else 2
+    passive_degree = len(p.passive_constraints[0]) if len(p.passive_constraints) else 2
+    leaf_degree = len(p.leaf_constraints[0]) if len(p.leaf_constraints) else 1
 
-    if leafDegree != 1:
+    if leaf_degree != 1:
         raise Exception("cyclepath", "Leaf constraints must always be of degree 1")
 
-    if passiveDegree != 2:
+    if passive_degree != 2:
         raise Exception("cyclepath", "Passive constraints must always be of degree 2")
 
-    if p.flags.isTree:
-        if not eachConstrIsHomogeneous(p.activeConstraints):
+    if p.flags.is_tree:
+        if not each_constr_is_homogeneous(p.active_constraints):
             raise Exception(
                 "cyclepath",
                 "On trees, node constraints must be the same for all incident edges.",
             )
-        if not p.flags.isDirectedOrRooted:
+        if not p.flags.is_directed_or_rooted:
             raise Exception(
                 "cyclepath",
                 "In the context of trees, only rooted ones can be classified.",
             )
-    elif activeDegree != 2:
+    elif active_degree != 2:
         raise Exception(
             "cyclepath",
             "In a path or cycle, active constraints must always be of degree 2",
         )
 
-    problemType = (
+    problem_type = (
         Type.TREE
-        if p.flags.isTree
-        else (Type.DIRECTED if p.flags.isDirectedOrRooted else Type.UNDIRECTED)
+        if p.flags.is_tree
+        else (Type.DIRECTED if p.flags.is_directed_or_rooted else Type.UNDIRECTED)
     )
 
-    if not p.flags.isDirectedOrRooted:
-        p.passiveConstraints = p.passiveConstraints + tuple(
-            [cs[::-1] for cs in p.passiveConstraints]
+    if not p.flags.is_directed_or_rooted:
+        p.passive_constraints = p.passive_constraints + tuple(
+            [cs[::-1] for cs in p.passive_constraints]
         )
-        p.activeConstraints = p.activeConstraints + tuple(
-            [cs[::-1] for cs in p.activeConstraints]
+        p.active_constraints = p.active_constraints + tuple(
+            [cs[::-1] for cs in p.active_constraints]
         )
 
-    edgeConstraints = set(p.passiveConstraints)
-    nodeConstraints = {} if problemType == Type.TREE else set(p.activeConstraints)
-    startConstraints = {} if p.rootAllowAll else set(p.rootConstraints)
-    endConstraints = {} if p.leafAllowAll else set(p.leafConstraints)
+    edge_constraints = set(p.passive_constraints)
+    node_constraints = {} if problem_type == Type.TREE else set(p.active_constraints)
+    start_constraints = {} if p.root_allow_all else set(p.root_constraints)
+    end_constraints = {} if p.leaf_allow_all else set(p.leaf_constraints)
 
-    cpProblem = CyclePathProblem(
-        nodeConstraints, edgeConstraints, startConstraints, endConstraints, problemType
+    cp_problem = CyclePathProblem(
+        node_constraints,
+        edge_constraints,
+        start_constraints,
+        end_constraints,
+        problem_type,
     )
 
-    result = cpClassify(cpProblem)
+    result = cpClassify(cp_problem)
 
-    complexityMapping = {
+    complexity_mapping = {
         CP_CONST: CONST,
         CP_GLOBAL: GLOBAL,
         CP_ITERATED_LOG: ITERATED_LOG,
         CP_UNSOLVABLE: UNSOLVABLE,
     }
-    normalisedComplexity = complexityMapping[result["complexity"]]
+    normalised_complexity = complexity_mapping[result["complexity"]]
 
     return GenericResponse(
         p,
-        normalisedComplexity,
-        normalisedComplexity,
-        normalisedComplexity,
-        normalisedComplexity,
+        normalised_complexity,
+        normalised_complexity,
+        normalised_complexity,
+        normalised_complexity,
         result["solvable"],
         result["unsolvable"],
     )
