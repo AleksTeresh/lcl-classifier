@@ -1,2 +1,8 @@
+#!/bin/sh
+
 cd ./src/client
 npm run lint-staged
+cd ../server
+/usr/bin/env -S poetry run black .
+cd ../.. # we need to be in the root of our git repo for the next line to work
+git add $(git diff --name-only --cached)

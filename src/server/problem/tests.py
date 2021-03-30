@@ -17,9 +17,7 @@ class TestGenerator(unittest.TestCase):
             self.assertEqual(r.flags.is_tree, s.flags.isTree)
             self.assertEqual(r.flags.is_cycle, s.flags.isCycle)
             self.assertEqual(r.flags.is_path, s.flags.isPath)
-            self.assertEqual(
-                r.flags.is_directed_or_rooted, s.flags.isDirectedOrRooted
-            )
+            self.assertEqual(r.flags.is_directed_or_rooted, s.flags.isDirectedOrRooted)
             self.assertEqual(r.flags.is_regular, s.flags.isRegular)
 
     def test_generate1(self):
