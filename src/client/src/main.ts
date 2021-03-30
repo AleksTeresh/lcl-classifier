@@ -5,7 +5,7 @@ import './css/global.css'
 import App from './App.svelte'
 
 // see global.d.ts
-Object.typedKeys = Object.keys as any
+Object.typedKeys = Object.keys as KeysFunc
 
 const app = new App({
   target: document.body,

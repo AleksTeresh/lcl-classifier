@@ -165,3 +165,5 @@ export const ProblemCountResponseCodec = t.type(
   'ProblemCountResponse'
 )
 export type ProblemCountResponse = t.TypeOf<typeof ProblemCountResponseCodec>
+
+export type SvelteMouseEvent = MouseEvent

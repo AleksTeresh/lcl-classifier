@@ -1,6 +1,10 @@
 import type { Problem } from '../types'
 
-export function getGraphType(problem: Problem) {
+type HumanReadableGraphType = 'Tree' | 'Cycle' | 'Path'
+
+export function getHumanReadableGraphType(
+  problem: Problem
+): HumanReadableGraphType {
   if (problem.flags.isTree) {
     return 'Tree'
   }
@@ -10,4 +14,5 @@ export function getGraphType(problem: Problem) {
   if (problem.flags.isPath) {
     return 'Path'
   }
+  throw new Error('Unrecognized graph type')
 }

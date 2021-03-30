@@ -1,9 +1,11 @@
 <script lang="ts">
+  /* eslint-env browser */
   import '../css/response.css'
   import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
   import VirtualList from '@sveltejs/svelte-virtual-list'
+  import type { SvelteMouseEvent } from '../types'
   import Statistics from '../components/Statistics.svelte'
   import { readyQueries } from '../links/readyQueries'
   import Classification from '../components/Classification.svelte'
@@ -117,14 +119,12 @@
   let showExplanation = false
 
   onMount(async () => {
-    //@ts-ignore
     const isProd: boolean = PRODUCTION
     const r = await getTotalProblemCount(isProd)
     if (r) {
       problemCount = r.problemCount
     }
     loading = false
-
     if (window.location.search.includes(`${FORM_PREFIX}_`)) {
       let augmentedFormState = {
         ...formState,
@@ -143,7 +143,6 @@
       const query = formStateToQuery(formState, { fetchStatsOnly })
 
       loading = true
-      //@ts-ignore
       const isProd: boolean = PRODUCTION
       response = await getQueryResult(query, isProd)
       loading = false
@@ -160,12 +159,12 @@
     )
   }
 
-  async function fetchStatsAndProblems(e: any) {
+  async function fetchStatsAndProblems(e: SvelteMouseEvent) {
     e.preventDefault()
     handleQuerySubmission(false)
   }
 
-  async function fetchStatsOnly(e: any) {
+  async function fetchStatsOnly(e: SvelteMouseEvent) {
     e.preventDefault()
     handleQuerySubmission(true)
   }

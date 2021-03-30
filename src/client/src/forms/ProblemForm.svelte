@@ -1,7 +1,9 @@
 <script lang="ts">
+  /* eslint-env browser */
   import * as t from 'io-ts'
   import { onMount } from 'svelte'
   import { Stretch } from 'svelte-loading-spinners'
+  import type { SvelteMouseEvent } from '../types'
   import Collapsible from '../components/Collapsible.svelte'
   import Classification from '../components/Classification.svelte'
   import ReturnedProblem from '../components/ReturnedProblem.svelte'
@@ -71,14 +73,13 @@ B C C`,
       const problem = formStateToProblem(formState)
       loading = true
 
-      //@ts-ignore
       const isProd: boolean = PRODUCTION
       response = await getProblem(problem, isProd)
       loading = false
     }
   })
 
-  function handleProblemSubmit(e: any) {
+  function handleProblemSubmit(e: SvelteMouseEvent) {
     e.preventDefault()
     persistStateToUrl(formState, FORM_PREFIX)
   }
