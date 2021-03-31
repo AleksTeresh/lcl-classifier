@@ -1,7 +1,7 @@
 from typing import List
 from own_types import ComplexityType
 from problem import ProblemProps
-from complexity import *
+from complexity import UNSOLVABLE, CONST
 from problem import parse_and_normalize
 
 

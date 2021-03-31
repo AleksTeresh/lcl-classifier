@@ -7,7 +7,8 @@ from problem import GenericProblem
 from problem import each_constr_is_homogeneous
 from response import GenericResponse
 from .classify_context import ClassifyContext
-from complexity import *
+from complexity import CONST, ITERATED_LOG
+from complexity import LOG, GLOBAL, UNSOLVABLE
 from .common import move_root_label_to_center
 
 

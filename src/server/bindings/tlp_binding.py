@@ -5,11 +5,11 @@ from .classify_context import ClassifyContext
 from tlp_classifier import (
     get_problem,
     get_problems,
-    complexity_name,
     Complexity as tlp_complexity,
 )
 from response import GenericResponse
-from complexity import *
+from complexity import CONST, ITERATED_LOG, UNKNOWN
+from complexity import LOG, GLOBAL, UNSOLVABLE
 
 complexity_mapping = {
     tlp_complexity.Constant: CONST,

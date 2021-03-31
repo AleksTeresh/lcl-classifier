@@ -1,7 +1,6 @@
-from typing import NamedTuple, List, Set, Dict, Tuple
+from typing import List, Dict, Tuple
 from own_types import UnparsedConfigType, ConfigType
 from util import only_one_is_true, flatten, letter_range
-from functools import reduce
 from .config_util import parse_and_normalize
 from .config_util import are_regular
 from .config_util import are_some_directed_by_unparsed_configs

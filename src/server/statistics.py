@@ -1,11 +1,8 @@
-from complexity import *
-import json
+from complexity import CONST, ITERATED_LOG
+from complexity import LOGLOG, LOG, GLOBAL, UNSOLVABLE
 from tqdm import tqdm
-from typing import NamedTuple, List
-from problem import ProblemFlags, ProblemProps
-from query import Query
+from typing import List
 from db import ClassifiedProblem
-from db import get_problems
 
 
 class ComplexityClassData:

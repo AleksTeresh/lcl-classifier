@@ -1,10 +1,9 @@
 import os
 import flask
 from typing import List, Dict
-from functools import reduce
-from flask import request, jsonify
+from flask import jsonify
 from flask_cors import CORS
-from webargs import fields, validate
+from webargs import fields
 from webargs.flaskparser import use_args
 from problem import GenericProblem, ProblemFlags, ProblemProps
 from query import Query, QueryExcludeInclude, Bounds
@@ -16,7 +15,7 @@ from db import get_batch_classifications
 from db import get_problem_count
 from db import store_problem_and_classification
 from db import get_batch_classification_by_query
-from complexity import *
+from complexity import CONST, UNSOLVABLE, complexities
 
 
 def is_query_response_complete(batches: List[Dict]) -> bool:

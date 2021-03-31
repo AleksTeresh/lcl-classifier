@@ -2,8 +2,8 @@ import unittest
 import pickle
 from .batch_classify import batch_classify
 from .classifier import classify
-from complexity import *
-from problem import GenericProblem, ProblemFlags, ProblemProps
+from complexity import CONST, ITERATED_LOG, LOG, UNSOLVABLE, LOGLOG
+from problem import GenericProblem, ProblemFlags
 from problem import generate
 
 

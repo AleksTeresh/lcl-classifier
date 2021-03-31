@@ -1,4 +1,3 @@
-from typing import List
 from own_types import ConfigType
 from problem import unparse_configs
 from problem import GenericProblem, ProblemFlags

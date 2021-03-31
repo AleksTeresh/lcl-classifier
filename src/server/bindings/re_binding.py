@@ -2,8 +2,8 @@ from problem import GenericProblem
 from problem import unparse_configs
 from response import GenericResponse
 from .classify_context import ClassifyContext
-from complexity import *
-from multiprocessing import Process, Queue
+from complexity import CONST, UNSOLVABLE, LOG, LOGLOG
+from multiprocessing import Queue
 import multiprocessing as mp
 import rust2py
 

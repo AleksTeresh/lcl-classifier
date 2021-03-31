@@ -1,10 +1,9 @@
 import sys
-from typing import Optional, List, Tuple
+from typing import List, Tuple
 from own_types import ConfigType
 from tqdm import tqdm
-from util import letter_range, powerset, flatten
+from util import letter_range, powerset
 from .problem import GenericProblem as P, BasicProblemFlags, ProblemFlags
-from complexity import *
 from itertools import combinations_with_replacement, product
 
 

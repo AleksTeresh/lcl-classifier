@@ -13,7 +13,8 @@ from .common import move_root_label_to_center
 from util import flatten
 from .classify_context import ClassifyContext
 from response import GenericResponse
-from complexity import *
+from complexity import CONST, ITERATED_LOG, UNKNOWN
+from complexity import LOGLOG, LOG, GLOBAL, UNSOLVABLE
 
 complexity_mapping = {
     BRT_CONST: CONST,

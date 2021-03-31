@@ -3,15 +3,13 @@ from .classify_context import ClassifyContext
 from cyclepath_classifier import classify as cpClassify
 from cyclepath_classifier import Problem as CyclePathProblem
 from cyclepath_classifier import Type
-from cyclepath_classifier import HARD
 from cyclepath_classifier import CONST as CP_CONST
 from cyclepath_classifier import GLOBAL as CP_GLOBAL
 from cyclepath_classifier import ITERATED_LOG as CP_ITERATED_LOG
 from cyclepath_classifier import UNSOLVABLE as CP_UNSOLVABLE
 from problem import each_constr_is_homogeneous
-from util import flatten
 from response import GenericResponse
-from complexity import *
+from complexity import CONST, GLOBAL, ITERATED_LOG, UNSOLVABLE
 
 
 def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:

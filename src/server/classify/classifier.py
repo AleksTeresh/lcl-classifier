@@ -1,10 +1,10 @@
 from problem import GenericProblem
 from response import GenericResponse, Sources
 from complexity import complexities
-from complexity import *
-from classifier_types import *
+from complexity import LOG, LOGLOG, CONST, UNSOLVABLE, UNKNOWN
+from classifier_types import Classifier
 from bindings import ClassifyContext
-from typing import List, Dict, Tuple
+from typing import Dict, Tuple
 from own_types import ComplexityType
 from bindings import cp_classify
 from bindings import rt_classify

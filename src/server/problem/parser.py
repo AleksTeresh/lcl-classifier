@@ -26,7 +26,6 @@ def valid_labels_from_edge(edge_config: str) -> List[str]:
 def parse_config(config: str) -> List[List[str]]:
     config = config.strip()
     per_edge = split_config(config)
-    degree = len(per_edge)
     labels_per_edge = [valid_labels_from_edge(x) for x in per_edge]
 
     return labels_per_edge

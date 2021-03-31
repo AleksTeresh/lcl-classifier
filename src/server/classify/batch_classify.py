@@ -1,12 +1,11 @@
 from typing import List, Optional
 from tqdm import tqdm
-from collections import namedtuple
 from db import update_classifications
 from db import store_problem_and_classification
 from .classifier import classify, Classifier
 from bindings import tlp_batch_classify
 from bindings import brt_batch_classify
-from problem import GenericProblem, ProblemFlags, ProblemProps
+from problem import GenericProblem, ProblemProps
 from response import GenericResponse
 from db import ClassifiedProblem
 from bindings import ClassifyContext

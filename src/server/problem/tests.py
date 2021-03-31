@@ -1,6 +1,6 @@
 import unittest
 import pickle
-from .problem import GenericProblem, ProblemFlags, ProblemProps
+from .problem import ProblemFlags
 from .generator import generate
 
 
