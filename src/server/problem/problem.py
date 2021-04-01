@@ -129,6 +129,12 @@ class GenericProblem:
         else:
             return False
 
+    def __lt__(self, other: object) -> bool:
+        if isinstance(other, self.__class__):
+            return self.__key() < other.__key()
+        else:
+            return False
+
     def __hash__(self) -> int:
         return hash(self.__key())
 

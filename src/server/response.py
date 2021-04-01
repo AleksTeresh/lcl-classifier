@@ -1,4 +1,5 @@
-from typing import List
+import copy
+from typing import List, Tuple
 from own_types import ComplexityType
 from problem import GenericProblem
 from complexity import UNSOLVABLE, CONST
@@ -111,3 +112,9 @@ Det. LB: %s\n" % (
             self.det_upper_bound,
             self.det_lower_bound,
         )
+
+    def __lt__(self, other: object) -> bool:
+        if isinstance(other, self.__class__):
+            return self.problem < other.problem
+        else:
+            return False

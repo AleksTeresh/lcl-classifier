@@ -1,20 +1,44 @@
 import unittest
 import pickle
+from typing import List
 from .batch_classify import batch_classify
 from .classifier import classify
 from complexity import CONST, ITERATED_LOG, LOG, UNSOLVABLE, LOGLOG
 from problem import GenericProblem, ProblemFlags
 from problem import generate
+from response import GenericResponse
+
+OVERWRITE = False
+
+
+def saveToFile(filePath: str, problems: List[GenericResponse]) -> None:
+    with open(filePath, "wb") as handle:
+        pickle.dump(problems, handle)
+
+
+def loadFromFile(filePath: str) -> List[GenericResponse]:
+    with open(filePath, "rb") as handle:
+        r = pickle.load(handle)
+        return r
 
 
 class TestBatchClassifier(unittest.TestCase):
     def __check_equality(self, results, saved):
         self.assertEqual(len(results), len(saved))
-        for r, s in zip(results, saved):
-            self.assertEqual(r.rand_lower_bound, s.randLowerBound)
-            self.assertEqual(r.rand_upper_bound, s.randUpperBound)
-            self.assertEqual(r.det_lower_bound, s.detLowerBound)
-            self.assertEqual(r.det_upper_bound, s.detUpperBound)
+        for r, s in zip(sorted(results), sorted(saved)):
+            self.assertEqual(r.rand_lower_bound, s.rand_lower_bound)
+            self.assertEqual(r.rand_upper_bound, s.rand_upper_bound)
+            self.assertEqual(r.det_lower_bound, s.det_lower_bound)
+            self.assertEqual(r.det_upper_bound, s.det_upper_bound)
+
+    def __runTest(self, filePath: str, ps: List[GenericProblem]) -> None:
+        results = batch_classify(ps)
+        overwrite = OVERWRITE
+        if overwrite:
+            saveToFile(filePath, results)
+        else:
+            saved = loadFromFile(filePath)
+            self.__check_equality(results, saved)
 
     def test_classifier1(self):
         active_degree = 2
@@ -33,10 +57,7 @@ class TestBatchClassifier(unittest.TestCase):
             passives_all_same,
             flags,
         )
-        results = batch_classify(ps)
-        with open("test_data/classifications1.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__check_equality(results, saved)
+        self.__runTest("test_data/classifications1.pickle", ps)
 
     def test_classifier2(self):
         active_degree = 2
@@ -55,10 +76,7 @@ class TestBatchClassifier(unittest.TestCase):
             passives_all_same,
             flags,
         )
-        results = batch_classify(ps)
-        with open("test_data/classifications2.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__check_equality(results, saved)
+        self.__runTest("test_data/classifications2.pickle", ps)
 
     def test_classifier3(self):
         active_degree = 2
@@ -77,10 +95,7 @@ class TestBatchClassifier(unittest.TestCase):
             passives_all_same,
             flags,
         )
-        results = batch_classify(ps)
-        with open("test_data/classifications3.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__check_equality(results, saved)
+        self.__runTest("test_data/classifications3.pickle", ps)
 
     def test_classifier4(self):
         active_degree = 3
@@ -99,10 +114,7 @@ class TestBatchClassifier(unittest.TestCase):
             passives_all_same,
             flags,
         )
-        results = batch_classify(ps)
-        with open("test_data/classifications4.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__check_equality(results, saved)
+        self.__runTest("test_data/classifications4.pickle", ps)
 
     def test_classifier5(self):
         active_degree = 3
@@ -121,10 +133,7 @@ class TestBatchClassifier(unittest.TestCase):
             passives_all_same,
             flags,
         )
-        results = batch_classify(ps)
-        with open("test_data/classifications5.pickle", "rb") as handle:
-            saved = pickle.load(handle)
-            self.__check_equality(results, saved)
+        self.__runTest("test_data/classifications5.pickle", ps)
 
 
 class TestClassifier(unittest.TestCase):
