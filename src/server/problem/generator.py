@@ -12,7 +12,7 @@ def problem_from_constraints(
     flags: ProblemFlags,
     count_limit: int,
     skip_count: int,
-):
+) -> List[P]:
     problems = set()
     start_idx = skip_count
     end_idx = min(count_limit + skip_count, len(tulpes))
@@ -44,7 +44,7 @@ def problem_from_constraints(
 
         problems.add(p)
 
-    return problems
+    return list(problems)
 
 
 def generate(
@@ -56,7 +56,7 @@ def generate(
     flags: ProblemFlags,
     count_limit: int = sys.maxsize,
     skip_count: int = 0,
-):
+) -> List[P]:
     alphabet = letter_range(label_count)
     # take active_degree labels
     # from a pallete of active_label_count
@@ -106,6 +106,5 @@ def generate(
             if a and b
         ]
     )
-    problem_tuples = sorted(list(problem_tuples_set))
-    problems = problem_from_constraints(problem_tuples, flags, count_limit, skip_count)
-    return sorted(list(problems), key=lambda p: p.id)
+    problem_tuples = list(problem_tuples_set)
+    return problem_from_constraints(problem_tuples, flags, count_limit, skip_count)
