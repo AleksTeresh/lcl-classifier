@@ -272,3 +272,11 @@ generate_problem_class(
     count_limit=sys.maxsize,
     skip_count=0,
 )
+
+# generate_problem_class(
+#     active_degree=3,
+#     passive_degree=2,
+#     label_count=4,
+#     is_directed_or_rooted=False,
+#     is_tree=True,
+# )
