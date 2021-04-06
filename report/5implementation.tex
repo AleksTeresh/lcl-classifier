@@ -266,7 +266,7 @@ by the tool previously and saved in the database. Thus, the normalization
 algorithm also allows us to reduce the usage of computational resources.
 
 The algorithm is based on the problem normalization algorithm
-from Round Eliminator~\cite{FIXME}. While the original
+from Round Eliminator~\cite{Olivetti2020}. While the original
 algorithm is written in Rust programming language, we
 reimplemented it in Python and changed some of its
 implementation details to better suit our purpose.
@@ -468,21 +468,21 @@ updated with the received classifications.
 \section{Integration of Round Eliminator}
 
 This section describes how the Round Eliminator
-tool~\cite{FIXME} has been integrated in our solution.
+tool~\cite{Olivetti2020} has been integrated in our solution.
 Prior to integration we had had considered several options:
 
 \begin{itemize}
   \item Using an API of a server that runs the back end of the Round Eliminator tool
   \item Calling REtor as a command line tool from our Python
   application and then parsing the output, which is returned
-  in a text format as part of stdout~\cite{FIXME}
+  in a text format as part of stdout~\cite{stdio}
   \item Compiling REtor's source code to a "Shared Object" file (.so extension)
-  using CPython ~\cite{FIXME} bindings and then importing the compiled
+  using CPython ~\cite{CPython} bindings and then importing the compiled
   functions to our Python application as CPython dependency.
 \end{itemize}
 
 At the moment of writing the thesis, the Round Eliminator tool
-is deployed using WASM~\cite{FIXME}. This virtually means that
+is deployed using WASM~\cite{WASM}. This virtually means that
 there is no back-end part running on a server, but instead
 all of the logic is executed on the client side of the application.
 Redeploying the tool with a standalone server and a separate client
@@ -492,7 +492,7 @@ Thus, the first option was not feasible.
 
 On the other hand, the second option was feasible. Indeed,
 this method of using REtor had already been used in the
-implementation of TLP Classifier~\cite{FIXME}. However,
+implementation of TLP Classifier~\cite{Rocher2020clas}. However,
 this approach has several crucial disadvantages.
 Firstly, the overhead of calling a command line command
 from a Python program is significant compared to just calling
@@ -519,7 +519,7 @@ This, in turn has been achieved by adding CPythin bindings
 to the REtor source code. The bindings wrap the relevant functions
 written in Rust, thus enabling us to pass Python data structures
 as parameters and recieve the return values as python-interpretable values.
-The bindings were implemented using the rust-cpython library~\cite{FIXME}.
+The bindings were implemented using the rust-cpython library~\cite{RustCPython}.
 
 
 \section{Web interface}
@@ -543,8 +543,8 @@ implemented, it is most likely that the popularity and
 frequency of use of the tool would have been nowhere near the current
 levels. Indeed, almost all users of the tool use it via the web
 client. Otherwise, a user would need to install Rust programming
-language~\cite{FIXME}, build the tool locally using the tool
-called "Cargo"~\cite{FIXME} and then run it using the command-line.
+language~\cite{Rust}, build the tool locally using the tool
+called "Cargo"~\cite{Cargo} and then run it using the command-line.
 It is clear that the number of people willing to do that would be
 significantly smaller than number of people who ended up using
 an easy-to-use web interface that requires no installation or 
@@ -553,7 +553,7 @@ configuration.
 By analogy, we can assume with high confidence that significantly more
 user would be willing to use our tool vie the web interface rather
 than downloading the soource of the tool locally and installing
-a specific version of Python programming language~\cite{FIXME}.
+a specific version of Python programming language~\cite{CPython}.
 Moreover, the richness of the web user interface allows us to convey complicated
 ideas related distributed computing in way that is easier to understand, at least for knowledgable audience. Thus, it is has been
 decided to spend some time resources -- even though they were 
@@ -575,24 +575,24 @@ the results will be returned to the client side and rendered
 in a user-friendly format.
 
 As a programming language for our front-end application, we decided
-to use TypeScript~\cite{FiXMEs}. TypeScript is a general purpose
-programming language developed and maintained by Microsoft~\cite{FIXME}. It is closely related to JavaScript programming language~\cite{FIXME}, which has become de facto standard programming language for the Web.
+to use TypeScript~\cite{TypeScript}. TypeScript is a general purpose
+programming language developed and maintained by Microsoft. It is closely related to JavaScript programming language, which has become de facto standard programming language for the Web.
 As a framework for our client application, we have decided to use
-Svelte~\cite{FIXME}. Svelte is an open-source front-end framework
+Svelte~\cite{Svelte}. Svelte is an open-source front-end framework
 written in TypeScript. Among other things, it allows a simplified
 approach for application state management, and reduces initial
-page load times compared to other front-end frameworks~\cite{FIXME}.
+page load times compared to other front-end frameworks~\cite{SvelteVsReactBundleSize}.
 
 For the styling of the front end, we used a minimalist CSS framework
-called "Milligram"~\cite{FIXME}. It provides a good starting point
+called "Milligram"~\cite{Milligram}. It provides a good starting point
 when it comes to styling a modern web application. Besides, the total
-size of the framework is just 2 kilobytes when zipped~\cite{FIXME}.
+size of the framework is just 2 kilobytes when zipped~\cite{Milligram}.
 This, simplicity to use, and our previous positive experience with
 the framework were the decisive factors that influenced our final
 choice.
 
 As a final interesting piece of technology used, we describe properties
-and our reason for choosing to use svelte-virtual-list~\cite{FIXME}.
+and our reason for choosing to use svelte-virtual-list~\cite{svelte-virtual-list}.
 The library allows rendering only part of the content instead of rendering
 the whole of the content on a web page. In our case, this is
 particularly useful as it allows us to
