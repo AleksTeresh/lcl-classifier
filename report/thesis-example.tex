@@ -287,13 +287,13 @@
 % You can just fix the texts there. Just remember to check all the language
 % variants you use (they are all there in the same place). 
 % ------------------------------------------------------------------
-\newcommand{\TITLE}{Software Processes for Dummies:}
+\newcommand{\TITLE}{Automated classification of LCL problems}
 \newcommand{\FTITLE}{Ohjelmistoprosessit m�nteille:}
 \newcommand{\STITLE}{Den stora stygga vargen:}
-\newcommand{\SUBTITLE}{Re-inventing the Wheel}
+\newcommand{\SUBTITLE}{}
 \newcommand{\FSUBTITLE}{Uusi organisaatio, uudet py�r�t}
 \newcommand{\SSUBTITLE}{Lilla Vargens universum}
-\newcommand{\DATE}{February 14, 2018}
+\newcommand{\DATE}{April 15, 2021}
 \newcommand{\FDATE}{14. helmikuuta 2018}
 \newcommand{\SDATE}{Den 18 februari 2018}
 
@@ -317,7 +317,7 @@
 \newcommand{\SSUPERVISOR}{Professor Jukka Suomela}
 
 % If you have only one instructor, just write one name here
-\newcommand{\INSTRUCTOR}{Oili Ohjaaja M.Sc. (Tech.)}
+\newcommand{\INSTRUCTOR}{Professor Jukka Suomela}
 \newcommand{\FINSTRUCTOR}{Diplomi-insinööri Oili Ohjaaja}
 \newcommand{\SINSTRUCTOR}{Diplomingenjör Oili Ohjaaja}
 % If you have two instructors, separate them with \\ to create linefeeds
@@ -346,8 +346,8 @@
 \newcommand{\SPROFESSORSHIP}{Datateknik}
 % Professorship code is the same in all languages
 \newcommand{\PROFCODE}{SCI3042}
-\newcommand{\KEYWORDS}{ocean, sea, marine, ocean mammal, marine
-  mammal, whales, cetaceans, dolphins}
+\newcommand{\KEYWORDS}{distributed algorithms, distributed computing, locally checkable problems,
+round eliminator, classification of LCLs, graph algorithms}
 \newcommand{\FKEYWORDS}{aineistot, aitta, akustiikka, Alankomaat,
 aluerakentaminen, aapinen, ankka, aasinsilta}
 \newcommand{\SKEYWORDS}{oms�ttning, kassafl�de, v�rdepappersmarknadslagen,
@@ -357,12 +357,12 @@ yrkesut�vare, intressef�retag, verifieringskedja}
 \newcommand{\SLANGUAGE}{Engelska}
 
 % Author is the same for all languages
-\newcommand{\AUTHOR}{Stella Student}
+\newcommand{\AUTHOR}{Aleksandr Tereshchenko}
 
 
 % Currently the English versions are used for the PDF file metadata
 % Set the PDF title
-\hypersetup{pdftitle={\TITLE\ \SUBTITLE}}
+\hypersetup{pdftitle={\TITLE}}
 % Set the PDF author
 \hypersetup{pdfauthor={\AUTHOR}}
 % Set the PDF keywords
@@ -451,6 +451,7 @@ yrkesut�vare, intressef�retag, verifieringskedja}
 % Abstract in English
 % ------------------------------------------------------------------
 \thesisabstract{english}{
+FIXME: write abstract
 The abstract provides goal, motivation, background, and conclusions of
 the work. It has to fit to one page together with the bibliographical
 information. 
@@ -500,10 +501,12 @@ pdf in a Section~\ref{section:compilation}.}
 % show up in the TOC
 \chapter*{Acknowledgements}
 
-I wish to thank all students who use \LaTeX\ for formatting their theses,
-because theses formatted with \LaTeX\ are just so nice.
-
-Thank you, and keep up the good work!
+I wish to thank my thesis advisor and supervisor Jukka Suomela
+for invaluable feedback and advice he provided during the process of writing
+the thesis. Besides, I would like to thank Sebastian Brandt,
+Juho Hirvonen, Jan Studený, and Dennis Olivetti for offering their
+ideas for improvement, constructive feedback, and words of advice and 
+encouragement
 \vskip 10mm
 
 \noindent Espoo, \DATE
@@ -584,8 +587,8 @@ Thank you, and keep up the good work!
 % Appendices go here
 % ------------------------------------------------------------------
 % If you do not have appendices, comment out the following lines
-\appendix
-\input{appendices.tex}
+% \appendix
+% \input{appendices.tex}
 
 % End of document!
 % ------------------------------------------------------------------
