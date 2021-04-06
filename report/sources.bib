@@ -76,7 +76,7 @@
    author = {Yi-Jun Chang and Tsvi Kopelowitz and Seth Pettie},
    isbn = {1602.08166v2},
    keywords = {()},
-   title = {An Exponential Separation Between Randomized and Deterministic Complexity in the LOCAL Model *},
+   title = {An Exponential Separation Between Randomized and Deterministic Complexity in the LOCAL Model},
    year = {2016},
 }
 @report{Balliu2016,
@@ -313,6 +313,16 @@
    title = {A virtual list component for Svelte apps},
    url = {https://github.com/sveltejs/svelte-virtual-list},
    author = {Rich Harris and Jacob Wright and Michael Keller}
+}
+@inproceedings{BFHKLRSU16,
+  author = {Brandt, Sebastian and Fischer, Orr and Hirvonen, Juho and Keller, Barbara and Lempi{\"a}inen, Tuomo and Rybicki, Joel and Suomela, Jukka and Uitto, Jara},
+  title = {A lower bound for the distributed {L}ov{\'a}sz local lemma},
+  year = {2016},
+  pages = {479--488},
+  doi = {10.1145/2897518.2897570},
+  eprint = {1511.00900},
+  publisher = {ACM Press},
+  booktitle = {Proc.\ 48th ACM Symposium on Theory of Computing (STOC 2016)}
 }
 @inproceedings{Brandt2019,
    abstract = {Recently, Brandt et al. [STOC'16] proved a lower bound for the distributed Lovasz Local Lemma, which has been conjectured to be tight for sufficiently relaxed LLL criteria by Chang and Pettie [FOCS'17]. At the heart of their result lies a speedup technique that, for graphs of girth at least 2t +2, transforms any t -round algorithm for one specific LLL problem into a (t - 1)-round algorithm for the same problem. We substantially improve on this technique by showing that such a speedup exists for any locally checkable problem ∏, with the difference that the problem ∏1 the inferred (t .1)-round algorithm solves is not (necessarily) the same problem as ∏. Our speedup is automatic in the sense that there is a fixed procedure that transforms a description for ∏ into a description for ∏1 and reversible in the sense that any (t - 1)-round algorithm for ∏1 can be transformed into a t -round algorithm for ∏. In particular, for any locally checkable problem ∏ with exact deterministic time complexity T (n, δ) ≤ t on graphs with n nodes, maximum node degree δ, and girth at least 2t + 2, there is a sequence of problems ∏1, ∏2, ⋯ with time complexities T (n, δ) . 1,T (n, δ) - 2, ⋯ , that can be inferred from ∏. As a first application of our generalized speedup, we solve a longstanding open problem of Naor and Stockmeyer [STOC'93]: we show that weak 2-coloring in odd-degree graphs cannot be solved in o(log.δ) rounds, thereby providing a matching lower bound to their upper bound.},
