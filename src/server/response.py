@@ -1,5 +1,4 @@
-import copy
-from typing import List, Tuple
+from typing import List
 from own_types import ComplexityType
 from problem import GenericProblem
 from complexity import UNSOLVABLE, CONST

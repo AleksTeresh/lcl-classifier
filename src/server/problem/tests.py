@@ -1,4 +1,3 @@
-import sys
 from typing import List
 import unittest
 import pickle
