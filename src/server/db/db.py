@@ -11,7 +11,7 @@ from .db_data_converter import map_to_classified_problem
 from .classified_problem import ClassifiedProblem
 from query import Query
 
-pool = psycopg2.pool.ThreadedConnectionPool(
+pool = psycopg2.pool.SimpleConnectionPool(
     1,
     20,
     host=(
@@ -37,6 +37,8 @@ def get_connection():
 
 
 # the function is copied from https://medium.com/@thegavrikstory/manage-raw-database-connection-pool-in-flask-b11e50cbad3
+
+
 @contextmanager
 def get_db_cursor(commit=False):
     with get_connection() as connection:
