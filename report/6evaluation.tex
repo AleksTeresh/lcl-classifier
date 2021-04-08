@@ -3,7 +3,7 @@
 
 In this chapter, we will attempt to evaluate success of our implementation
 based on the research goals and the scope that we have outlined in Chapter~\ref{chapter:methods}.
-% Besides, we will also evaluate performance of the implementation.
+Besides, we will also evaluate performance of the implementation.
 As seen from the title,
 we have decided to combine the evaluation with discussion on opportunities for further
 development. Therefore, we will also propose several ideas for how our implementation
@@ -93,30 +93,30 @@ The two other goals in our list of the research goals were
 \begin{enumerate}
   \item to be able to find deterministic and randomised complexity of
   of a particular problem $P$, provided that the problem belongs to
-  one of the classes that one tool is capable of classifying,
+  one of the classes that our tool is capable of classifying,
   \item to be able to query for groups of multiple problems based
   on a variety of parameters.
 \end{enumerate}
 
-As can be deduced from Chapter~\ref{chapter:implementation},
+As can be seen from Chapter~\ref{chapter:implementation},
 both of these functionalities have been succesfully implemented.
 Notice that
-% we address performance issues in another section later in
-% this chapter, as well as
+we address performance issues in another section later in
+this chapter, as well as
 we have already evaluated the number of
 problem families our tool is capable of working with. In this section,
 we are discussing just the availability of the functionality itself, while not
 being concerned with other, although related, metrics.
 
-Finding out complexity of a specific problem takes consistently under
-2 seconds, and performing a query might take from as little as several milliseconds
-in some cases to several seconds in most cases
-up to just under 35 seconds in rare cases when the volume of the queried data is particularly large.
-Notice that the rough performance results presented above are as measured
-from the perspective of the Web interface user, and thus include
-network delay as well as time it takes for the front-end logic to process
-and render the results.
-Thus, we can conclude that the two goals have been fully accomplished.
+% Finding out complexity of a specific problem takes consistently under
+% 2 seconds, and performing a query might take from as little as several milliseconds
+% in some cases to several seconds in most cases
+% up to just under 35 seconds in rare cases when the volume of the queried data is particularly large.
+% Notice that the rough performance results presented above are as measured
+% from the perspective of the Web interface user, and thus include
+% network delay as well as time it takes for the front-end logic to process
+% and render the results.
+% Thus, we can conclude that the two goals have been fully accomplished.
 
 As a final research goal in our list, we had a possibility
 to see which of the meta-algorithms has determined each
@@ -131,46 +131,65 @@ persisted in the database at the same time a newly classified problem
 is being stored. Thus, we can consider this research goal as being
 fulfilled as well.
 
-% \section{Performance}
+\section{Performance}
 
-% In this section, we will evaluate our implementation from
-% performance perspective. Performance is essential for
-% our tool to be useful for the research community.
-% We will evaluate performance of our tool
-% in the context of classifying a single LCL problem,
-% generating and classifying a huge but finite family of
-% LCL problem, and querying the database for a group
-% of problems matching user-defined specification.
+In this section, we will evaluate our implementation from
+performance perspective. Performance is essential for
+our tool to be useful for the research community.
+We will evaluate performance of our tool
+in the context of classifying a single LCL problem and
+querying the database for a group
+of problems matching user-defined specification.
 
-% Notice that the purpose of this section is to evaluate how
-% useable the tool is from the perspective of its users.
-% Therefore, we are not concerned with exact millisecond
-% precision of the operations. Instead, we will present
-% the performance results with the precision down to a second.
-% Notice also that the times will vary depending on the underlying
-% hardware, the fact whether other users are using the tool at the same
-% time, etc. All the results presented below are performed on the
-% virtual instance the software is currently deployed to.
+Notice that the purpose of this section is to evaluate how
+useable the tool is from the perspective of its users.
+Therefore, we are not concerned with exact millisecond
+precision of the operations. Instead, we will present
+the performance results with the precision down to a tenth of a second.
+Notice also that the times will vary depending on the underlying
+hardware, the fact whether other users are using the tool at the same
+time, etc. All the results presented below are performed on the
+author's local machine, whose exact specifications are given below.
 
-% Finally, when presenting results for classyfing a problem or
-% performing a query, we measure the time it takes
-% from the moment of pressing a button in the Web user interface
-% to the moment the results are displayed. Therefore, the time
-% includes factors like network delay as well as executing code
-% on the front end. We decided to measure it this way since
-% this is how most of the users are going to use the tool.
+Finally, when presenting results for classifying a problem or
+performing a query, we measure the time it takes
+for the corresponding function to execute as defined in the back-end
+part of our solution. Therefore, the time as experienced by the users of
+the Web interface might be somewhat longer since it would include
+also a network delay and executing front-end logic.
 
-% \subsection{Classifying a problems}
+\subsection{Classifying a problem}
 
-% If a requested problem already exists in the database, finding out
-% the problem's complexity consistently takes less than a second.
-% On the other hand, if a problem has to be classified dynamically,
-% < 1s for RE
-% < 1s for 
+If a requested problem already exists in the database, finding out
+the problem's complexity consistently takes less than a second.
+On the other hand, if a problem has to be classified dynamically,
+classifying it will take less than 3.2 seconds (at least in case when
+problems degrees are less than 5 and the number of labels allowed is less
+than 5 as well). Below are some of the performance measurement results,
+based on which the above-mentioned conclusions has been drawn.
 
-% \subsection{Query}
+\begin{itemize}
+  \item Any 2-labeling problem on undirected paths is classified in \emph{under 0.1 sec.}
+  \item Any 3-labeling problem on directed (3, 2)-biregular trees is classified in \emph{under 0.7 sec.}
+  \item Any 3-labeling problem on undirected (3, 2)-biregular trees where passive configurations are monochromatic is classified in \emph{under 3.2 sec.}
+\end{itemize}
 
-% \subsection{Batch classification}
+\subsection{Querying a problem family}
+
+Below is a similar list of performance results for the querying
+functionality. The query that retrieves the largest problem class, in terms of
+number of problems, takes under 20 seconds. Notice that this query
+finds and fetches several tens of thousands of problems. Queries
+that fetch only a couple of hundred of problems are executed in under 1.5 seconds.
+
+\begin{itemize}
+  \item All 2-labeling problem on undirected paths are fetched in \emph{under 0.2 sec.}
+  \item All 3-labeling problem on directed paths are fetched in \emph{under 7.7 sec.}
+  \item All 3-labeling problem on directed (3, 2)-biregular trees are fetched in \emph{under 20 sec.}
+  \item All 3-labeling problem on directed (3, 2)-biregular trees where passive configurations are monochromatic are fetched in \emph{under 0.3 sec.}
+  \item Any 3-labeling problem on undirected (3, 2)-biregular trees where passive configurations are monochromatic are fetched in \emph{under 3.2 sec.}
+  \item Any 3-labeling problem on undirected (3, 2)-biregular trees where active configurations are monochromatic are fetched in \emph{under 1.1 sec.}
+\end{itemize}
 
 
 \section{Number of preclassified problems}
