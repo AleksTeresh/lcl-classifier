@@ -540,8 +540,8 @@ def store_problem(p: GenericProblem) -> int:
             ),
         )
 
-        id = cur.fetchone()
-        return id
+        res = cur.fetchone()
+        return res["id"]
 
 
 def store_problems_and_get_with_ids(
