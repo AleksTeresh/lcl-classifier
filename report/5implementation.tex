@@ -3,13 +3,13 @@
 
 This chapter will describe the implementation of the tool.
 In particular, we will outline high-level architecture of
-the software, disciss internal representation of
+the software, discuss internal representation of
 LCL problems as well as representation of the query object.
 Moreover, we will discuss how batch classification has been
 implemented. Finally, in the end of the chapter we will cover
 several miscellaneous items such as problem normalization
 algorithm, integration of Round Eliminator tool into
-our software and some of the properties of the user Web interface,
+our software and some of the properties of the Web interface,
 which has also been implemented as part of the thesis project.
 
 \section{General architecture of the tool}
@@ -39,8 +39,8 @@ an understandable and user-friendly user interface
 through which one could classify individual LCL problems
 as well as query for the whole families of problems
 that satisfy specified criteria. Furthermore,
-the clint-side part of the application is
-resonsible for displaying the results returned by the
+the client-side part of the application is
+responsible for displaying the results returned by the
 back-end part in a concise and understandable manner.
 
 \begin{figure}[ht]
@@ -90,10 +90,10 @@ this representation works well for us. For the cases of cycles,
 the only restriction is that degree of both passive and
 active configurations has to be two. Also, the case
 of directed (rooted) cycles (trees) can be handled
-using the "colon notation" that has been already
+using the \emph{colon notation} that has been already
 previously used in a recent paper on automating
 the classification of LCLs in rooted trees~\cite{Balliu2021}.
-Furthermore, the cases when "irregular" nodes, i.e.
+Furthermore, the cases when \emph{irregular} nodes, i.e.
 leaf nodes or root node, are restricted can also
 be handled by specifying those restrictions
 (separately for leaf nodes and a root node)
@@ -193,22 +193,22 @@ more or less directly mapped to an SQL query's WHERE clause.
 The Query class groups those properties in three parent items:
 
 \begin{itemize}
-  \item problem properties
-  \item complexity bounds
-  \item include/exclude configuration
+  \item problem properties,
+  \item complexity bounds,
+  \item include/exclude configuration.
 \end{itemize}
 
 \emph{Problem properties} define a class of problems that are to be
 returned from the database. It includes the following fields:
 
 \begin{itemize}
-  \item active degree
-  \item passive degree
-  \item alphabet size (upper bound on it to be precise)
-  \item Whether active/passive configurations are necessarily monochromatic
-  \item Whether underlyig graph directed/rooted or not
+  \item active degree,
+  \item passive degree,
+  \item alphabet size (upper bound on it to be precise),
+  \item Whether active/passive configurations are necessarily monochromatic,
+  \item Whether underlyig graph directed/rooted or not,
   \item Type of the underlying graph. Which is always one of the following three
-  options: tree, cycle, path
+  options: tree, cycle, path.
 \end{itemize}
 
 \emph{Complexity bounds} limit the returned problems further by
@@ -216,10 +216,10 @@ restricting their complexities. The \emph{complexity bounds} object
 contains the following items:
 
 \begin{itemize}
-  \item upper bound in randomized LOCAL setting (referred to as RUB)
-  \item lower bound in randomized LOCAL setting (referred to as RLB)
-  \item upper bound in deterministic LOCAL setting (referred to as DUB)
-  \item lower bound in deterministic LOCAL setting (referred to as DLB)
+  \item upper bound in randomized LOCAL setting (referred to as RUB),
+  \item lower bound in randomized LOCAL setting (referred to as RLB),
+  \item upper bound in deterministic LOCAL setting (referred to as DUB),
+  \item lower bound in deterministic LOCAL setting (referred to as DLB).
 \end{itemize}
 
 The restriction of the fetched problems is done according to the
@@ -235,18 +235,18 @@ Finally, \emph{include/exclude configuration} has the following
 items encapsulated in it:
 
 \begin{itemize}
-  \item whether only "smallest" problem has to be returned (in terms of the number of configurations)
-  \item whether only "largest" problem has to be returned (in terms of the number of configurations)
+  \item Whether only "smallest" problem has to be returned (in terms of the number of configurations).
+  \item Whether only "largest" problem has to be returned (in terms of the number of configurations).
   \item Whether only those problems must be returned whose randomised upper
-  and lower bounds do not match
+  and lower bounds do not match.
   \item Whether only those problems must be returned whose deterministic upper
-  and lower bounds do not match
+  and lower bounds do not match.
   \item Whether only those problems must be returned whose randomised both
   upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
-  respectively)
+  respectively).
   \item Whether only those problems must be returned whose deterministic both
   upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
-  respectively)
+  respectively).
   \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note
   the item has not effect if left empty.
   \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is excluded. Note
@@ -275,7 +275,7 @@ algorithm also allows us to reduce the usage of computational resources.
 
 The algorithm is based on the problem normalization algorithm
 from Round Eliminator~\cite{Olivetti2020}. While the original
-algorithm is written in Rust programming language, we
+algorithm is written in Rust programming language, I
 reimplemented it in Python and changed some of its
 implementation details to better suit our purpose.
 However, the general idea of the algorithm stays the same.
@@ -605,7 +605,7 @@ The library allows rendering only part of the content instead of rendering
 the whole of the content on a web page. In our case, this is
 particularly useful as it allows us to
 show tens of thousands of LCL problems (returned as part of the described above querying functionality) in a virtual list.
-The virtual list, implemented via the above mentioned svelte-virtual-list library, renders only a small number (about 3-4)
+The virtual list, implemented via the above mentioned svelte-virtual-list library, renders only a small number (about 3--4)
 LCL problems at the same time. At the same time, it allows user to
 scroll through the list of problems with no noticable delay.
 If not for the library, our client application would have to render
