@@ -480,7 +480,7 @@ all valid local neighbourhoods, list all valid input labels, list all valid outp
 labels and specify the maximum degree of a graph. Since all of the beforementioned are
 of size $O(1)$, it is always possible to have a finite representaion of an LCL.
 In practive however, it is in many cases more practical to come up with
-a moe concise representation. We will return to the topic of representing LCL
+a more concise representation. We will return to the topic of representing LCL
 problems later in this thesis.
 
 The study of LCL problems has been one of the major research directions
@@ -539,6 +539,40 @@ In other words, in a \textbf{maximal independent set} all nodes either belong
 to the set $I$ or they \emph{cannot} join it because one of their neighbours has
 already joined. It is trivial to see that the problem is an LCL as checking local
 eighbourhood will suffice to determine if the solution is valid or not.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/vertex-coloring.png}
+      \caption{Vertex coloring}
+      \label{fig:vertex-coloring}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/edge-coloring.png}
+      \caption{Edge coloring}
+      \label{fig:edge-coloring}
+  \end{subfigure}
+
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/maximal-ind-set.png}
+      \caption{Maximal independent set}
+      \label{fig:maximal-independent-set}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{images/maximal-matching.png}
+      \caption{Maximal matching}
+      \label{fig:maximal-matching}
+  \end{subfigure}
+  \caption{Some of the common LCL problems}
+  \label{fig:graph-problems}
+\end{figure}
 
 Finally, a \textbf{maximal matching problem} is a problem in which nodes need to
 produce a matching such that each node is either matched with one of 
@@ -697,6 +731,14 @@ given the problem, will output its complexity. Such decidability
 questions are often studied in relation to the whole
 family of graph problems and not to individual instances
 of problems.
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=\textwidth]{images/meta-algorithm.png}
+    \caption{Conceptual representation of a meta-algorithm}
+    \label{fig:meta-algorithm}
+  \end{center}
+\end{figure}
 
 First of all, it is important to notice that it has been
 proven that in general LCL problems are undecidable.
