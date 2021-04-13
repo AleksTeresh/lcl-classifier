@@ -165,16 +165,42 @@ of LCL on trees.
 Finally, it is worth demonstrating that the formalism used in round
 elimination (and in the Round Eliminator implementation) is universal.
 
-FIXME: Below is rather a sketch instead of a proper proof
 \begin{theorem}\label{theorem:re_formalism_is_general}
-Any LCL problem $P$ on undirected trees of high girth, where
+Any LCL problem $P$ on undirected trees, where
 leaves, nodes close to leaves and nodes of irregular degrees are
 not constrained, can be represented in the formalism of the
 Round Eliminator.
 \end{theorem}
 \begin{proof}
-  If $r$ is the checkability radius of the LCL problem $P$, you can define a new problem that is the same as the old one except that each node has to output its entire radius-r output (potentially including the topology if you do not look at regular graphs). You can also give this whole output on each half-edge around the node together with the information ``where this half-edge is in the radius-r ball'', so encoding things on half-edges is not a problem.
-  The only two things that are special here are that the complexity of the LCL problem may change by r additively (but since r is a constant this does not matter unless you see O(0) and O(1) as different complexity classes), and that we assume that in the original LCL definition, correctness does not depend on whether a cycle is closing or not. For instance, the LCL problem ``am I contained in a triangle'' cannot be translated in this way (or just does not make sense in the translation because we need to assume that we are on high-girth graphs for RE).
+  If $r$ is the checkability radius of the LCL problem $P$,
+  one can define a new problem that is the same as the old
+  one except that each node has to output its entire radius-$r$
+  output (potentially including the topology if the graph in
+  question is not a regular graph). It is also possible to
+  give this whole
+  output on each half-edge around the node together with
+  the information about the location of the half-edge in the
+  radius-$r$ ball (in other words, where this half-edge is in the radius-$r$
+  ball). Therefore, the fact that in REtor we encode configurations
+  on half-edges is not a problem.
+  There are only two things that are special about the REtor representation.
+  The first thing is that the
+  complexity of the LCL problem may change by $r$ additively
+  (but since $r$ is a constant, this does not matter for us since we
+  are only concerned in the current work with asymptotics, and in addition,
+  we treat $O(0)$ and $O(1)$ as the same complexity class -- namely $O(1)$).
+  The second thing is that
+  we assume that in the original LCL definition,
+  correctness does not depend on existence and various properties
+  of cycles in the graph. For instance, the LCL problem ``am I contained in a
+  triangle'' cannot be translated to the REtor representation.
+  But again, in the current work,
+  we are only concerned with LCLs on trees.
+  Therefore, no matter what an LCL problem is, as long as it is a problem on
+  undirected trees, where
+  leaves, nodes close to leaves and nodes of irregular degrees are
+  not constrained, we can represented such problem in the formalism of the
+  Round Eliminator.
 \end{proof}
 
 \section{Automata-theoretic lens classifier}
