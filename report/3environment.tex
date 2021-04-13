@@ -98,7 +98,7 @@ are omitted in the current thesis for brevity. For in-depth technical details, a
 to refer to the original paper by Brandt~\cite{Brandt2019} or to the recently published textbook on distributed algorithms
 by Hirvonen et al.~\cite{Hirvonen2020}.
 
-Let's denote the initial weak 3-labelling problem as $\Pi_0$. After applying round elimination, we get as its
+Let us denote the initial weak 3-labelling problem as $\Pi_0$. After applying round elimination, we get as its
 output another LCL problem $\Pi_1$. The formal description of the problem is as follows:
 \begin{align*}
 \Sigma &= \{A, B, C\}, \\
@@ -130,7 +130,7 @@ weak 3-labelling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Obse
 we have just used round elimination technique to \emph{prove} that an LCL problem can be
 solved in constant number of rounds.
 
-Next, we'll analyse SO in a similar manner. Let's again denote SO as $\Pi_0$ and apply
+Next, we will analyse SO in a similar manner. Let us again denote SO as $\Pi_0$ and apply
 round elimination to it. We obtain the following output problem:
 \begin{align*}
 \Sigma &= \{A, B\}, \\
@@ -149,7 +149,7 @@ it turns out that the key here is to pay attention to the initial assumptions th
 beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be ``too large''.
 Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
 it has been shown that in cases like this, when after applying round elimination repeatedly,
-we encounter a problem that we've already seen before, the initial problem $\Pi_0$ is most of the cases
+we encounter a problem that we have already seen before, the initial problem $\Pi_0$ is most of the cases
 is solvable in $\Omega(\log n)$ rounds in deterministic setting and in $\Omega(\log \log n)$ rounds
 if randomness is allowed. Thus, we can use round elimination not only to prove upper bounds but
 also lower bounds for LCL problems on biregular graphs.
@@ -173,8 +173,8 @@ not constrained, can be represented in the formalism of the
 Round Eliminator.
 \end{theorem}
 \begin{proof}
-  If $r$ is the checkability radius of the LCL problem $P$, you can define a new problem that is the same as the old one except that each node has to output its entire radius-r output (potentially including the topology if you don't look at regular graphs). You can also give this whole output on each half-edge around the node together with the information ``where this half-edge is in the radius-r ball'', so encoding things on half-edges is not a problem.
-  The only two things that are special here are that the complexity of the LCL problem may change by r additively (but since r is a constant this doesn't matter unless you see O(0) and O(1) as different complexity classes), and that we assume that in the original LCL definition, correctness does not depend on whether a cycle is closing or not. For instance, the LCL problem ``am I contained in a triangle'' cannot be translated in this way (or just doesn't make sense in the translation because we need to assume that we are on high-girth graphs for RE).
+  If $r$ is the checkability radius of the LCL problem $P$, you can define a new problem that is the same as the old one except that each node has to output its entire radius-r output (potentially including the topology if you do not look at regular graphs). You can also give this whole output on each half-edge around the node together with the information ``where this half-edge is in the radius-r ball'', so encoding things on half-edges is not a problem.
+  The only two things that are special here are that the complexity of the LCL problem may change by r additively (but since r is a constant this does not matter unless you see O(0) and O(1) as different complexity classes), and that we assume that in the original LCL definition, correctness does not depend on whether a cycle is closing or not. For instance, the LCL problem ``am I contained in a triangle'' cannot be translated in this way (or just does not make sense in the translation because we need to assume that we are on high-girth graphs for RE).
 \end{proof}
 
 \section{Automata-theoretic lens classifier}
@@ -231,10 +231,10 @@ problem into one of the four compplexity classes. The cassification technique wo
 problems on trees and cycles.
 
 Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
-has to be describable in a so-called ``edge-checkable'' formalism. In other words, we're allowed to
+has to be describable in a so-called ``edge-checkable'' formalism. In other words, we are allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{\textrm{edge}}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
-Also, we're not concert in the current formalism with the output of leaves and root -- only nodes in the
+Also, we are not concert in the current formalism with the output of leaves and root -- only nodes in the
 middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
 there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
 is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
