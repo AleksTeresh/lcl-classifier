@@ -2,24 +2,24 @@
 \label{chapter:implementation}
 
 This chapter will describe the implementation of the tool.
-In particular, we will outline high-level architecture of
+In particular, I will outline high-level architecture of
 the software, discuss internal representation of
 LCL problems as well as representation of the query object.
-Moreover, we will discuss how batch classification has been
-implemented. Finally, in the end of the chapter we will cover
+Moreover, I will discuss how batch classification has been
+implemented. Finally, in the end of the chapter I will cover
 several miscellaneous items such as problem normalization
 algorithm, integration of Round Eliminator tool into
-our software and some of the properties of the Web interface,
+my software and some of the properties of the Web interface,
 which has also been implemented as part of the thesis project.
 
 \section{General architecture of the tool}
 
 This section will outline general architecture of the tool and
 will describe in further detail some of its most important
-components. Despite the chapter's name, we are not going
+components. Despite the chapter's name, I am not going
 to describe low-level implementation detail in this section,
 but instead try to convey technical perspective on the tool
-as a whole. We will also discuss and critically analyze some
+as a whole. I will also discuss and critically analyze some
 of the architectural and technological decisions that have been
 made during the implementation phase.
 
@@ -61,16 +61,16 @@ The front end is quite simple from technical perspective
 too. Some of the details about the client side of the
 application will be discussed more in Section~\ref{section:webinterface}.
 The back end, however, contains most of the compplexity of
-the tool. Therefore, in this section, we will concentrate
+the tool. Therefore, in this section, I will concentrate
 mainly on the sever side.
 
 \subsection{Problem}
 
 The core element of the whole application and of the
 back-end part in particular is the Problem class.
-For representing an LCL problem, we have decided
+For representing an LCL problem, I have decided
 to use notation similar to that of Round
-Eliminator. Our representaion however also
+Eliminator. My representaion however also
 allows for graph types other than trees -- namely cycles.
 Besides, it allows the underlying graph of a problem
 to be rooted (or directed in the case of cycles).
@@ -78,7 +78,7 @@ Finally, it allows representing problems where
 leaves' and root's output labels are also constrained.
 The representaion similar to that of a Round
 Eliminator has been chosen because of its generality.
-In particular, as we have shown in Theorem~\ref{theorem:re_formalism_is_general},
+In particular, as I have shown in Theorem~\ref{theorem:re_formalism_is_general},
 any LCL problem
 on $(\beta, \delta)$-biregular unrooted trees -- provided
 that nodes of degrees other than $\beta$ and $\delta$ are unconstrained
@@ -98,11 +98,11 @@ nodes or root node, are restricted can also
 be handled by specifying those restrictions
 (separately for leaf nodes and a root node)
 as separate properties of the Problem object.
-Thus, our representation of LCL problems is general
+Thus, my representation of LCL problems is general
 enough to cover all the LCL problems that are
 included in the scope of the project.
 
-Having explained this, we can finally list all the
+Having explained this, I can finally list all the
 properties that are encapsulated into the
 Problem object. The object contains the already
 mentioned active configuration, passive configurations,
@@ -116,7 +116,7 @@ holding the actual active and passive configs.
 Besides, each problem object contains information
 on the type of the underlhing graph: path, cycle or
 tree. Notice that although any path is always a tree,
-we chose to differentiate between those two
+I chose to differentiate between those two
 for convinience. It is worth mentioning that
 a path graph type will be chosen as internal
 representation whenever both active and
@@ -161,7 +161,7 @@ settings. In the worst case, trivial bounds are returned:
 \emph{unsolvable} for upper bounds and $\Omega(1)$ for lower bounds.
 
 Each of the underlying meta-algorithms or datasets is wrapped
-in a function -- we will refer to it as \emph{subclassify} from now on -- such
+in a function -- I will refer to it as \emph{subclassify} from now on -- such
 that it provides unified interface for the main
 \emph{classify} function. In particular, subclassify takes
 as input an instance of the Problem class and
@@ -169,8 +169,8 @@ returns an instance of Response class. A Response object
 simply encapsulates upper and lower bounds for both
 deterministic and randomized settings. There is
 exactly one subclassify function for each meta-algorithm
-or dataset that we use. Inside each subclassify function,
-we first check if the provided problem can be classified
+or dataset that I use. Inside each subclassify function,
+I first check if the provided problem can be classified
 at all by the underlyinng meta-algorithm. Often, we can
 exit early already at this stage if, for examle, the meta-algorithm
 in question deals only with rooted trees and the provided input is a 
@@ -277,7 +277,7 @@ The algorithm is based on the problem normalization algorithm
 from Round Eliminator~\cite{Olivetti2020}. While the original
 algorithm is written in Rust programming language, I
 reimplemented it in Python and changed some of its
-implementation details to better suit our purpose.
+implementation details to better suit my purpose.
 However, the general idea of the algorithm stays the same.
 
 First, we determine how many labels are used in the description of the
@@ -363,20 +363,20 @@ constraints and root constraints respectively.
 
 This section describes how batch classification and
 batch reclassification mechanisms have been implemented.
-Batch classification is important since we want our database
-to be prepopulated with significant number of classified
+Batch classification is important since we want the database
+to be pre-populated with significant number of classified
 problems already before the first users start using it.
 In particular, we would need to classify huge but finite
 families of problems consisting of tens and hundreds of
 thousands of LCL problems. Moreover, once a family of
-problems is selected, the problems of the famnily need to
+problems is selected, the problems of the family need to
 be generated and turned into instances of Problem class before
 we can actually classify them. Batch reclassify functionality,
 on the other hand, is needed for cases when, for one reason
 or another, we would want to reclassify a certain
-family of LCL problems that is already stored in our
-database. For example, if we integrate a new meta-algorithm
-to our solution in the future, we would need to reclassify
+family of LCL problems that is already stored in the
+database. For example, if I integrate a new meta-algorithm
+to my solution in the future, I would need to reclassify
 all problem families that are compatible with the newly-integrated
 meta-algorithm. Or purhaps, a programming mistake has been
 made when integrating one of the meta-algorithms, and therefore,
@@ -391,7 +391,7 @@ of the problem class. However, this is suboptimal,
 since generation of problems of a certain family
 usually takes significantly longer times than
 the subsequent classification step. For this reason,
-we decided to have separate functionality for
+I decided to have separate functionality for
 batch reclassification.
 
 The batch classification process starts with creating
@@ -433,7 +433,7 @@ family are then generated via the following algorithm:
   \item Return the list of newly-generated problems.
 \end{enumerate}
 
-Once the problems are generated, we store them to the database,
+Once the problems are generated, they are stored to the database,
 even though they are not classified yet. This is done mainly
 because the database will automatically associate a unique
 identifier with each of the problems.
@@ -453,8 +453,8 @@ classifying multiple problems at the same time,
 numerous optimizations can be applied e.g.\ reading the 
 dataset from the disk just once and search for all
 requested problems at the same time. For this reason,
-when batch classifying families of problems we first
-call such batch classiicatio methods of meta-algorithm
+when batch classifying families of problems, the program first
+calls such batch classification methods of meta-algorithm
 if such methods exist. Once this is done, a modification
 of the previously-described classify function is called
 for each individual Problem object. The difference is
@@ -476,17 +476,17 @@ updated with the received classifications.
 \section{Integration of Round Eliminator}
 
 This section describes how the Round Eliminator
-tool~\cite{Olivetti2020} has been integrated in our solution.
-Prior to integration we had had considered several options:
+tool~\cite{Olivetti2020} has been integrated in my solution.
+Prior to integration I had had considered several options:
 
 \begin{itemize}
   \item Using an API of a server that runs the back end of the Round Eliminator tool.
-  \item Calling REtor as a command line tool from our Python
+  \item Calling REtor as a command line tool from my Python
   application and then parsing the output, which is returned
   in a text format as part of stdout~\cite{stdio}.
   \item Compiling REtor's source code to a ``Shared Object'' file (.so extension)
   using CPython ~\cite{CPython} bindings and then importing the compiled
-  functions to our Python application as CPython dependency.
+  functions to my Python application as CPython dependency.
 \end{itemize}
 
 At the moment of writing the thesis, the Round Eliminator tool
@@ -512,17 +512,17 @@ the software. Indeed, one would have to install the specific
 version of Rust programming language as well as download and
 build form source codes the specific version of REtor required.
 
-Instead, we have decided to go with the latter option. This
+Instead, I have decided to go with the latter option. This
 alternative does not have any of the disadvantages listed
 in the previous paragraph while being just as feasible and
 easy to implement. Compiled in this manner, the whole of
 Round Eliminator logic is contained in a single .so file
 that can be easily deployed to e.g.\ a production server.
-Besides, the speed improvement is significant: we were
+Besides, the speed improvement is significant: I was
 able to execute up to three rounds of round eliminator
 in under 100 milliseconds. Finally, the functions
 exposed via the .so file, return python-native
-data structures so that no additional parsing is required on our side.
+data structures so that no additional parsing is required on my side.
 This, in turn has been achieved by adding CPythin bindings
 to the REtor source code. The bindings wrap the relevant functions
 written in Rust, thus enabling us to pass Python data structures
@@ -534,14 +534,14 @@ The bindings were implemented using the rust-cpython library~\cite{RustCPython}.
 \label{section:webinterface}
 
 This section will briefly discuss some implementation details of
-the client side of the application. First, we start explaining why
+the client side of the application. First, I start by explaining why
 the web interface has been implmented in the first place and why it
-is important. Then, we describe some of the technologies that were
-chosen as part of the implementation. Finally, we describe the
+is important. Then, I describe some of the technologies that were
+chosen as part of the implementation. Finally, I describe the
 reasoning behind and advantages of the forms' state being stored
 as a query part of the URL.
 
-The reason why we decided to spend additional time and implement
+The reason why I decided to spend additional time and implement
 the web interface can be best unnderstood when considering
 another tool that has recently been rising in popularity among
 the distributed algorithms community -- Round Eliminator~\cite{Olivetti2020}. The tool has proved to be a very useful utility
@@ -559,7 +559,7 @@ an easy-to-use web interface that requires no installation or
 configuration.
 
 By analogy, we can assume with high confidence that significantly more
-user would be willing to use our tool vie the web interface rather
+user would be willing to use my tool vie the web interface rather
 than downloading the soource of the tool locally and installing
 a specific version of Python programming language~\cite{CPython}.
 Moreover, the richness of the web user interface allows us to convey complicated
@@ -572,7 +572,7 @@ command line -based analog.
 The web interface consists of two forms. One form for classifying
 individual problems, and another one for issueing queries
 about groups of problems against the database. When using the
-first form, our application will first check if the requested
+first form, the application will first check if the requested
 problem can be found in a database. If not, it will proceed to
 running the classifiers (which corresponds with the classify function described above) and will eventially return the newly
 classified result. If the classification result is not trivial (which means that lower bounds are constant and upper bounds are unsolvable),
@@ -582,42 +582,42 @@ submitted will be transformed into the previously described
 the results will be returned to the client side and rendered
 in a user-friendly format.
 
-As a programming language for our front-end application, we decided
+As a programming language for the front-end application, I decided
 to use TypeScript~\cite{TypeScript}. TypeScript is a general purpose
 programming language developed and maintained by Microsoft. It is closely related to JavaScript programming language, which has become de facto standard programming language for the Web.
-As a framework for our client application, we have decided to use
+As a framework for the client application, I decided to use
 Svelte~\cite{Svelte}. Svelte is an open-source front-end framework
 written in TypeScript. Among other things, it allows a simplified
 approach for application state management, and reduces initial
 page load times compared to other front-end frameworks~\cite{SvelteVsReactBundleSize}.
 
-For the styling of the front end, we used a minimalist CSS framework
+For the styling of the front end, I used a minimalist CSS framework
 called Milligram~\cite{Milligram}. It provides a good starting point
 when it comes to styling a modern web application. Besides, the total
 size of the framework is just 2 kilobytes when zipped~\cite{Milligram}.
-This, simplicity to use, and our previous positive experience with
-the framework were the decisive factors that influenced our final
+This, simplicity to use, and my previous positive experience with
+the framework were the decisive factors that influenced my final
 choice.
 
-As a final interesting piece of technology used, we describe properties
-and our reason for choosing to use svelte-virtual-list~\cite{svelte-virtual-list}.
+As a final interesting piece of technology used, I describe properties
+and the reason for choosing to use svelte-virtual-list~\cite{svelte-virtual-list}.
 The library allows rendering only part of the content instead of rendering
-the whole of the content on a web page. In our case, this is
+the whole of the content on a web page. In the given case, this is
 particularly useful as it allows us to
 show tens of thousands of LCL problems (returned as part of the described above querying functionality) in a virtual list.
 The virtual list, implemented via the above mentioned svelte-virtual-list library, renders only a small number (about 3--4)
 LCL problems at the same time. At the same time, it allows user to
 scroll through the list of problems with no noticable delay.
-If not for the library, our client application would have to render
+If not for the library, the client application would have to render
 tens of thousands of LCL problems all at once. This would result in
 the user interface freezing for a prologned period (up to several minutes).
 
-Finally, we will explain the reasoning behind and benefits for
+Finally, I will explain the reasoning behind and benefits for
 storing the state of the two forms as part of the URL's query
 component. When searching for interesting query results, or even
 just classifying different individual LCL problems, it is often
 required to demonstrate the results to somebody else. To allow for such
-a sharing, we decided to encode the state of both forms in the URL.
+sharing, I decided to encode the state of both forms in the URL.
 Thus, once e.g.\ the results of a query are obtained, it is possible
 to copy the link and simply send it to, for example, a colleague.
 When opening the link, both forms will be prefilled with

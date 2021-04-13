@@ -1,12 +1,12 @@
 \chapter{Evaluation and further enhancements}
 \label{chapter:evaluation}
 
-In this chapter, we will attempt to evaluate success of our implementation
-based on the research goals and the scope that we have outlined in Chapter~\ref{chapter:methods}.
-Besides, we will also evaluate performance of the implementation.
+In this chapter, I will attempt to evaluate success of the implementation
+based on the research goals and the scope that I have outlined in Chapter~\ref{chapter:methods}.
+Besides, I will also evaluate performance of the implementation.
 As seen from the title,
-we have decided to combine the evaluation with discussion on opportunities for further
-development. Therefore, we will also propose several ideas for how our implementation
+I have decided to combine the evaluation with discussion on opportunities for further
+development. Therefore, I will also propose several ideas for how my implementation
 can be improved and extended.
 
 \section{Decidability of a wide range of problem families on trees}
@@ -14,18 +14,18 @@ can be improved and extended.
 The first goal among the research goals listed in Chapter~\ref{chapter:methods}
 was to store (or to be able to compute dynamically) most
 (if not all) of the existing knowledge on classification of LCL problems on trees.
-To evaluate how well we have done, we can refer once again to Table~\ref{table:summary}.
+To evaluate how well I have done, we can refer once again to Table~\ref{table:summary}.
 The first three columns under the ``Paths and cycles'' grouping refer to LCL problems on
 paths and cycles where input is not allowed. The graphs can be directed or undirected,
 have arbitrary (but finite) number of labels in the output, and have restrictions
 on nodes of degree 1 (in cases of paths). All of these cases are covered by
 the cycle-path classifier~\cite{Tereshchenko2020}, which is based on the recently
-published paper~\cite{Chang2020}. The classifier has been integrated into our
-solution and, thus, we claim that the problems of this family are fully classifiable by our tool.
+published paper~\cite{Chang2020}. The classifier has been integrated into the
+solution and, thus, I claim that the problems of this family are fully classifiable by the tool.
 The forth column of the table refers to LCL problems on paths and cycles
 where input labelling is allowed. Since none of the used classifiers
 are capable of processing problems with inputs, this family of problems
-has not been covered by our implementation, although it has been shown that
+has not been covered by my implementation, although it has been shown that
 LCLs of this class are decidable (even though it is PSPACE-hard)~\cite{Balliu2018}.
 
 As can be seen from the first column of the ``Tree'' grouping, it is unknown whether
@@ -35,13 +35,13 @@ output labels exceeds two. On the other hand, LCL problems on
 unlabeled regular undirected trees with binary label output is fully decidable, albeit
 only in deterministic setting. In addition to this, for some problems of the problem family,
 complexity is decidable even in randomised setting~\cite{Balliu2019c}.
-Since our solution does not directly include a classifier that would implement
-classification of problems of the described family, our tool is not capable of
+Since my solution does not directly include a classifier that would implement
+classification of problems of the described family, the tool is not capable of
 classifying the problems. It is important to notice however that the TLP
 Classifier~\cite{Rocher2020clas} uses the classifier as part of its implementation.
 Therefore, at least some problems of the described family can be classified. Specifically,
 only problems on (2, 2)-, (2, 3)-, and (3, 2)-biregular trees of the family
-(and only in deterministic setting) can be classified in our implementation.
+(and only in deterministic setting) can be classified in my implementation.
 Therefore, a natural opportunity for extending the current functionality of the tool
 would be to integrate a clasifier that would classify all binary labeling LCL problems
 on unlabeled regular undirected trees. Given that such implementation would
@@ -54,9 +54,9 @@ trees. It has been shown that the problems of this family are fully decidable
 with any finite number of output labels~\cite{Balliu2021}. However, the
 only currently-existing implementation of the decidability algorithm
 works exclusively with binary rooted trees~\cite{Studeny2021}. The
-meta-algorithm has been successfully integrated into our solution, and
-thus all LCL problems on binary rooted trees can be classified also In
-practive using our tool. Nevertheless, an implementation of the
+meta-algorithm has been successfully integrated in the solution, and
+thus all LCL problems on binary rooted trees can be classified also in
+practice using the tool. Nevertheless, an implementation of the
 decidability algorithm that would work for trees of higher degrees
 would be of high interest to the research community. The original
 paper shows that such implementation for arbitrary number of output
@@ -64,7 +64,7 @@ labels is possible at least in principle. Besides, there is no
 evidence that such implementation would be impractical from the
 performance perspective. Therefore, a natural opportunity for
 extending the software would be to build such an implementation and
-consequently integrate it in our tool.
+consequently integrate it in the tool.
 
 All other -- more general -- LCL problem families
 are currently only known to be decidable between complexity classes of
@@ -73,12 +73,12 @@ no known implementation of the classification algorithm described in the
 referenced paper. Although the described meta-algorithm is at least
 EXPTIME-hard, there is also no evidence that the algorithm would not be
 practical at least for a limited subfamily of problems. Therefore, its
-implementation and integration into our solution would be a potential
+implementation and integration into my solution would be a potential
 direction for the tool's future development.
 
 Thus, while many of the listed graph families are already classifiable
-with our tool, a lot more meta-algorithms can be developed
-and integrated in our solution. Moreover, the theoretical
+with the tool, more meta-algorithms can be developed
+and integrated. Moreover, the theoretical
 research of decidability of LCL problems on tree is currently
 developing at a high pace, which will likely bring even more
 positive theoretical decidability results in the future.
@@ -88,12 +88,12 @@ as complete as possible.
 
 \section{Finding a problem's complexity and performing group queries}
 
-The two other goals in our list of the research goals were
+The two other goals in the list of the research goals were
 
 \begin{enumerate}
   \item to be able to find deterministic and randomised complexity of
   of a particular problem $P$, provided that the problem belongs to
-  one of the classes that our tool is capable of classifying,
+  one of the classes that the tool is capable of classifying,
   \item to be able to query for groups of multiple problems based
   on a variety of parameters.
 \end{enumerate}
@@ -101,10 +101,10 @@ The two other goals in our list of the research goals were
 As can be seen from Chapter~\ref{chapter:implementation},
 both of these functionalities have been succesfully implemented.
 Notice that
-we address performance issues in another section later in
-this chapter, as well as
-we have already evaluated the number of
-problem families our tool is capable of working with. In this section,
+I address performance issues in another section later in
+this chapter. Also,
+I have already evaluated the number of
+problem families the tool is capable of working with. In this section,
 we are discussing just the availability of the functionality itself, while not
 being concerned with other, although related, metrics.
 
@@ -118,12 +118,12 @@ being concerned with other, although related, metrics.
 % and render the results.
 % Thus, we can conclude that the two goals have been fully accomplished.
 
-As a final research goal in our list, we had a possibility
+As a final research goal in the list, we had a possibility
 to see which of the meta-algorithms has determined each
 of the lower and upper bounds for each of the preclassified
-LCL problems being stored in our database. As described in the
+LCL problems being stored in the database. As described in the
 previous chapter, this is automatically done for all problems being
-classified via our solution. At the same time as a problem is classified,
+classified via my solution. At the same time as a problem is classified,
 all of its classification results --- deterministic upper bound,
 deterministic lower bound, randomized upper bound, randomized lower bound --
 are associated with one of the meta-algorithms. This information is also
@@ -133,10 +133,10 @@ fulfilled as well.
 
 \section{Performance}
 
-In this section, we will evaluate our implementation from
+In this section, we will evaluate my implementation from
 performance perspective. Performance is essential for
-our tool to be useful for the research community.
-We will evaluate performance of our tool
+the tool to be useful for the research community.
+We will evaluate performance of the tool
 in the context of classifying a single LCL problem and
 querying the database for a group
 of problems matching user-defined specification.
@@ -144,7 +144,7 @@ of problems matching user-defined specification.
 Notice that the purpose of this section is to evaluate how
 useable the tool is from the perspective of its users.
 Therefore, we are not concerned with exact millisecond
-precision of the operations. Instead, we will present
+precision of the operations. Instead, I will present
 the performance results with the precision down to a tenth of a second.
 Notice also that the times will vary depending on the underlying
 hardware, the fact whether other users are using the tool at the same
@@ -152,9 +152,9 @@ time, etc. All the results presented below are performed on the
 author's local machine, whose exact specifications are given below.
 
 Finally, when presenting results for classifying a problem or
-performing a query, we measure the time it takes
+performing a query, I measure the time it takes
 for the corresponding function to execute as defined in the back-end
-part of our solution. Therefore, the time as experienced by the users of
+part of the implementation. Therefore, the time as experienced by the users of
 the Web interface might be somewhat longer since it would include
 also a network delay and executing front-end logic.
 

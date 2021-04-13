@@ -1,7 +1,7 @@
 \chapter{Theoretical background}
 \label{chapter:background}
 
-In this chapter, we introduce the necessary theoretical background as well as
+In this chapter, I introduce the necessary theoretical background as well as
 explain the reasons why the current work is relevant given the latest
 developments in the theory of distributed computing. Unless specified otherwise,
 the material presented in this chapter is based on the textbook on distributed algorithms by Hirvonen et al.~\cite{Hirvonen2020}.
@@ -19,7 +19,7 @@ and $E$ denotes a set of all \emph{edges}. Each edge in $E$ is represented as a 
 2 nodes i.e.\ the nodes the given edge is connecting e.g.\ $e = \{v, u\}$ such that 
 $v \in V$ and $u \in V$.
 
-When talking about the \emph{size of a graph}, or \emph{cardinality} of the graph, we refer
+When talking about the \emph{size of a graph}, or \emph{cardinality} of the graph, I refer
 to the number of nodes in the graph. Or in other words, the size of a graph $G$
 is always $|V|$.
 
@@ -65,7 +65,7 @@ about \emph{indegrees} and \emph{outdegrees}. Indegree of a node $v$ is the numb
 of edges incident to $v$ directed towards the node, while outdegree of a node $v$ is the 
 number of edges incident to $v$ directed outwards from the node. Finally, we are 
 often interested in a maximum degree of a graph $G$, that is, the maximum value of
-degrees of all nodes belonging to the graph $G$. We denote such maximum degree as
+degrees of all nodes belonging to the graph $G$. I denote such maximum degree as
 $\Delta$
 
 A \emph{walk} in an undirected graph $G = (V, E)$ is a sequence $w$ of a form
@@ -101,8 +101,8 @@ is $\diam(G) = \infty$.
 \subsection{Several important graph families}
 
 This subsection will introduce some of the graph families that will be necessary
-for understanding the content of the thesis. First, we will define paths and cycles.
-Then, we will briefly introduce trees and explain the difference between rooted
+for understanding the content of the thesis. First, I will define paths and cycles.
+Then, I will briefly introduce trees and explain the difference between rooted
 and unrooted trees.
 
 A \emph{path} graph is a sequence of nodes that are joined together by edges and
@@ -148,7 +148,7 @@ $G = (V, E)$ is bipartite such that $V$ is partitioned into two
 subsets $U$ and $W$, nodes in these subsets form a proper 2-coloring,
 all nodes in $U$ are of degree $\beta$ and all nodes in $W$ are of
 degree $\delta$. In particular, when we talk about \emph{($\beta$, $\delta$)-biregular trees},
-we mean a bipartite biregular tree where all nodes except for leaves
+I mean a bipartite biregular tree where all nodes except for leaves
 follow the rules of ($\beta$, $\delta$)-biregular graphs described above,
 but leaves themselves are allowed to have degree 1 (otherwise they would not be
 called leaves).
@@ -163,11 +163,11 @@ removal from the graph, connect nodes $v$ and $w$ with an edge.
 
 \section{Distributed computing}
 
-Now that we have introduced some of the key graph theoretic concepts, we will
+Now that I have introduced some of the key graph theoretic concepts, I will
 next outline some of the foundations of distributed computing. We will start with
-a short historical node about the field of distributed computing. Then, we will
+a short historical note about the field of distributed computing. Then, I will
 explain some of the aspects of the model of computation we are concerned with. Finally, 
-we will give some formal definitions to the model of computation that will be our
+I will give some formal definitions to the model of computation that will be our
 major concern throughout the rest of the thesis.
 
 \subsection{General background}
@@ -196,7 +196,7 @@ This model of computation is currently known as Linial's or the \emph{LOCAL mode
 
 \subsection{Model of computation}
 
-Here, we will describe the model of computation that we are going to
+Here, I will describe the model of computation that we are going to
 assume throughout the rest of the thesis. Note that there is a number
 of different models, which are also widely studied in the research
 community.
@@ -276,7 +276,7 @@ and not a result of an accidental fault or an intentional adversary effort
 
 As was already mentioned previously, our model of computation is known
 as Linial's or the LOCAL model~\cite{Linial1987}. Therefore, to complete the
-description, we will describe in more detail two distinctive qualities of the LOCAL model
+description, I will describe in more detail two distinctive qualities of the LOCAL model
 from other models of distributed computing, namely unique identifiers and arbitrarily large
 bandwidth.
 
@@ -334,7 +334,7 @@ node individually. On the next round, each node can output their part of the sol
 
 \subsection{Formalising the LOCAL model}
 
-In this subsection we will formalise LOCAL model that we informally described above.
+In this subsection I will formalise LOCAL model that I informally described above.
 This will, first of all, help to clarify the aspects of the model that are still left ambiguous
 after reading the previous subsections. Besides, it will allow us to introduce
 a randomised model below once the basic deterministic one is unambiguously defined.
@@ -365,7 +365,7 @@ and highlight some of the difference between randomised and deterministic
 models. In this section, the focus will be specifically on the randomised LOCAL
 model as opposed to some other distributed algorithms models.
 
-In the randomised LOCAL model, we have two major differences from the
+In the randomised LOCAL model, there are two major differences from the
 deterministic LOCAL model. First, the function $init_A(u(v), d)$ becomes
 randomised. This means that the initial state $x_0(v) = init_A(u(v), d)$ of a node $v$ is
 chosen from a discrete probability distribution of all possible initial states.
@@ -383,7 +383,7 @@ there is always a probability that the output of the nodes will not be valid.
 Therefore, there is often a probability that the problem has not been solved
 after a certain number of rounds.
 
-But before we define what it means to solve a problem in a randomised setting, it is
+But before I define what it means to solve a problem in a randomised setting, it is
 worth noting that there exist two kinds of randomised algorithms: ``Monte Carlo'' and
 ``Las Vegas''. \emph{Monte Carlo} algorithms always stop after a specified $f(n)$
 number of rounds, where $n$ is the number of nodes in the graph, but
@@ -396,12 +396,12 @@ way, these types of randomised algorithms are complements of each other:
 one guarantees correctness of the output but has a chance of going over some
 specified execution time, while another has a guarantee on the execution time
 but has some probability of producing incorrect output. In the rest of the thesis,
-unless explicitely specified otherwise, we assume that the randomised algorithms
+unless explicitely specified otherwise, we can assume that the randomised algorithms
 are Monte Carlo algorithms.
 
-Finally, we now can define what it means to solve a problem in a randomised context.
+Finally, I now can define what it means to solve a problem in a randomised context.
 When saying that a certain randomised algorithm ``solves'' a cerrtain problem in
-$T(n)$ rounds, unless specified otherwise, we mean that the algorithm stops after
+$T(n)$ rounds, unless specified otherwise, I mean that the algorithm stops after
 $T(n)$ computational rounds and the nodes output (or to be more precise the nodes
 have transitioned to one of the output states) a correct solution ``with high
 probability'' (often denoted as ``w.h.p.''). Formally, if an algorithm succeeds with
@@ -416,7 +416,7 @@ be incorrect. Notice that $c$ does not need to affect running time, but it often
 does since the larger it is the lower is the probability of algorithm's failure,
 and decreasing such probability usually comes at the cost of something else -- 
 often running time. Thus, when saying that something succeeds ``with high probability''
-we do not mean it vaguely but rather refer to a very precise mathematical definition
+I do not mean it vaguely but rather refer to a very precise mathematical definition
 given above.
 
 \section{Iterated logarithm}
@@ -616,7 +616,7 @@ a string $x \in L_P$ if and only if, given that $x$ is an input
 to the problem $P$, the correct output is ``yes''. To clarify,
 for each problem $P$, there is a language $L_P$ such that
 if $P$'s output on some input $x$ is ``yes'', then $x \in L_P$,
-otherwise $x \notin L_P$. From now on, we will call such
+otherwise $x \notin L_P$. From now on, I will call such
 language $L_P$ that ``represents'' a decision problem $P_L$ as
 \emph{corresponding language} of problem $P$.
 
@@ -690,7 +690,7 @@ da-synthesis_Hirvonen2017, da-synthesis_Fathiyeh2015, da-synthesis_Dolev2016,
 Chang2017, Brandt2017, da-synthesis_Bloem2016}. Moreover,
 the notions of automatic synthesis and automatic classification are
 often interconnected in the context of distributed algorithms.
-To demonstrate this, we take an example of a common problem in
+To demonstrate this, I take an example of a common problem in
 a distributed computing: given a problem $\Pi$, we need to
 automatically determine its compelxity. Assigning a complexity
 class to the problem $\Pi$ can be viewed as classification
@@ -720,7 +720,7 @@ and produce the problem's round complexity as an output.
 This being the core topic of the thesis, it is thus important
 to describe all the prior work done in this direction.
 In the rest of the
-section, we will introduce some of the negative as well as positive results
+section, I will introduce some of the negative as well as positive results
 related to automated classification of LCL problems.
 
 The questions of whether a certain class of LCL problems
@@ -807,7 +807,7 @@ Indeed, Olivetti~\cite{Olivetti2020} has
 implemented a computer program that, given an LCL $\Pi_0$ solvable in $T$ rounds,
 it produces another LCL $\Pi_1$ solvable in $T - 1$ rounds. There even exists
 a web interface for the program, and one can apply the technique and obtain
-its results within milliseconds. We will describe the technique and its implications
+its results within milliseconds. I will describe the technique and its implications
 in much more detail in the subsequent section.
 
 Finally, very recently, Balliu et al.~\cite{Balliu2021} demonstrated

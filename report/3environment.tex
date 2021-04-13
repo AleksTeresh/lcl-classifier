@@ -13,7 +13,7 @@ This section explains in detail round elimination (RE)
 technique introduced in Chapter~\ref{chapter:background}, as well as
 implementation of the round elimination technique as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
-Besides, we will explain the relevance of the technique
+Besides, I will explain the relevance of the technique
 and the software implementation for our problem.
 
 As already mentioned in the previous chapter, round elimination
@@ -68,7 +68,7 @@ incident to any active/passive node $v$. Notice also that the order of
 the labels in a single configuration does not matter. Finally, in this particular problem
 and in all problems in the context of round elimination, we usually do not care about
 leaf nodes. That is, leaf nodes are unrestrained and are fine with any 
-configuration.  Next, we will
+configuration.  Next, I will
 describe another problem using the same formalism.
 
 \textbf{Sinkless orientation} (SO) is a problem on a $\delta$-regular tree
@@ -90,8 +90,8 @@ is an outgoing edge for a passive node. Thus, the sets of configurations
 $A$ and $P$ can be interpreted so that each node -- no matter active or passive --
 has to have at least one outgoing edge, and the rest of the edges can be anything.
 
-Now that we have defined our two example problems,
-we will apply round elimination
+Now that I have defined our two example problems,
+I will apply round elimination
 technique on each one, describe intermediate steps, and analyse the results.
 Notice that the low-level technicalities of round elimination
 are omitted in the current thesis for brevity. For in-depth technical details, a reader is encouraged
@@ -145,21 +145,21 @@ P &= \{ \{B, AB, AB\}\}.
 \end{align*}
 It turns out that $\Pi_2 = \Pi_1$. But we also know that round complexity of $\Pi_2$
 has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a contradiction,
-it turns out that the key here is to pay attention to the initial assumptions that we mentioned at the
+it turns out that the key here is to pay attention to the initial assumptions that I mentioned at the
 beginning of the section. Namely, the number of rounds $T$ of the original problem cannot be ``too large''.
 Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
-it has been shown that in cases like this, when after applying round elimination repeatedly,
+it has been shown that in cases like this, when, after applying round elimination repeatedly,
 we encounter a problem that we have already seen before, the initial problem $\Pi_0$ is most of the cases
 is solvable in $\Omega(\log n)$ rounds in deterministic setting and in $\Omega(\log \log n)$ rounds
 if randomness is allowed. Thus, we can use round elimination not only to prove upper bounds but
 also lower bounds for LCL problems on biregular graphs.
 
-Although we have only demonstrated the technique for two problems, the same idea following for most of the
+Although I have only demonstrated the technique for two problems, the same idea following for most of the
 other LCLs on biregular graphs. In general RE can be used in an atomatic manner to prove constant upper or
 logarithmic and polylogarithmic lower bounds for a wide range of LCL problems. Furthermore, the open-source
 implementation
 of the technique written in programming language Rust and publicly available as a command-line tool and via
-a web interface will hugely assist in using RE as part of our software solution for automated classification
+a web interface will hugely assist in using RE as part of my software solution for automated classification
 of LCL on trees.
 
 Finally, it is worth demonstrating that the formalism used in round
@@ -179,7 +179,7 @@ Round Eliminator.
 
 \section{Automata-theoretic lens classifier}
 
-In this section we will describe a technique that can be used to automatically
+In this section I will describe a technique that can be used to automatically
 classify LCL problems on paths, cycles, and in some case on rooted trees.
 Moreover, such classification can be done in polynomial time in the size
 of the description of the problem being classified~\cite{Chang2020}.
@@ -234,7 +234,7 @@ Moreover, some problems on rooted trees can be classified as well. For the techn
 has to be describable in a so-called \emph{edge-checkable} formalism. In other words, we are allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{\textrm{edge}}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
-Also, we are not concert in the current formalism with the output of leaves and root -- only nodes in the
+Also, we are not concerned in the current formalism with the output of leaves and root -- only nodes in the
 middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
 there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
 is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
@@ -269,7 +269,7 @@ $\delta$ and $\sigma$ are degrees of \emph{regular} nodes, $W$ is a set of so-ca
 \emph{white constraints} and $B$ is a set of \emph{black constraints}. In order to
 explain what exactly the sets $W$ and $B$ represent, it is important to recall that
 this setting is concerned with \emph{binary} labeling only, which means that each node
-can only output two labels on its edges. We will refer to such two labels as ``zero'' and ``one''
+can only output two labels on its edges. I will refer to such two labels as ``zero'' and ``one''
 labels (denoted 0 or 1). The problem is assumed to follow the edge-labeling
 formalism, in which each node outputs a label on each of its incident nodes so that
 any two adjacent nodes $v$ and $u$ can only output the same label on their common
@@ -297,7 +297,7 @@ exactly one incoming and one outgoing edge. This is because each edge (which is 
 in the original graph must be properly oriented, or in other words it must
 have exactly one head and one tail.
 
-We will not go into details to describe the reasons why the decidability methods
+I will not go into details to describe the reasons why the decidability methods
 described in the paper work. The details are very technical and require a huge
 thoretical background to cover beforehand. It is worth noting however that
 given a description of a problem $\Pi$, it is possible to classify it in $O(1)$
@@ -365,7 +365,7 @@ can be classified using the techniques.
 
 This section will introduce a recent work by Balliu et al.~\cite{Balliu2021}
 and how it can be used to automatically classify LCL problems on rooted trees.
-In particular, we will concentrate on the practical implementation of the
+In particular, I will concentrate on the practical implementation of the
 ideas presented in the manuscript. The computer program implementing some of the ideas presented in the
 publication was written in Python programming language by Studený and
 Tereshchenko~\cite{Studeny2021}. The program is limited to the case
@@ -403,7 +403,7 @@ does not have any restrictions on its own output labels. However, a leaf's paren
 (and the leaf is a child of $y$). In this case, the restrictions still
 apply to the leaf node.
 
-As an example of an interesting problem, we will consiider
+As an example of an interesting problem, we will consider
 \emph{3-coloring in binary trees}. In the described paradigm,
 the problem can be represented as following:
 \begin{align*}
@@ -442,7 +442,7 @@ nodes near leafs and/or roots~\cite{Balliu2021}. Furthermore, the
 practicality of the package -- especially the fact that most of the
 problems interesting for the purpose of the thesis can be classified
 in a matter of several milliseconds -- makes it a perfect candidate
-to be used as one of the meta-algorithms in our solution.
+to be used as one of the meta-algorithms in my solution.
 
 \section{Summary of decidablity of LCL on trees}
 
@@ -520,7 +520,7 @@ to be used as one of the meta-algorithms in our solution.
   \bottomrule
   \end{tabular}
   \end{adjustbox}
-  \caption{An overview of the landscape and decidability of the round complexity of $\LCL$ problems in the $\LOCAL$ model. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. We have listed a few key references for each column, focusing on decidability aspects; the overall picture of the complexity landscape is the result of a long sequence of papers, including~\cite{Cole1986, Linial1992, Naor1991, Chang2016, BFHKLRSU16, Balliu2020-1, Balliu2016, Balliu2020-2}}
+  \caption{An overview of the landscape and decidability of the round complexity of $\LCL$ problems in the $\LOCAL$ model. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. I have listed a few key references for each column, focusing on decidability aspects; the overall picture of the complexity landscape is the result of a long sequence of papers, including~\cite{Cole1986, Linial1992, Naor1991, Chang2016, BFHKLRSU16, Balliu2020-1, Balliu2016, Balliu2020-2}}
   \label{table:summary}
 \end{table}
   
