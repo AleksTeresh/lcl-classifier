@@ -32,10 +32,10 @@ can be visualised as an error that starts in a ``source'' node and ends in a
 where all edges are undirected, and \emph{directed graphs} -- such graphs where all
 edges are directed. Formally, while an undirected edge $e$ is defined as a
 set of two nodes $e = \{v, u\}$, a directed edge $e$ is defined as a pair
-of two nodes $e = (v, u)$. Recall that in the case of a tuple, the order of its
-elements does matter, hence, the tuple allows us to encode the direction of
+of two nodes $e = (v, u)$. Recall that in the case of a pair, the order of its
+elements does matter, hence, the pair allows us to encode the direction of
 the edge. Unless mentioned otherwise, we assume that an edge is directed
-from the first element of the tuple to the second. Also note that in this
+from the first element of the pair to the second. Also note that in this
 thesis, unless specified explicitly, all graphs are assumed to be undirected.
 
 If two nodes are connected by an edge, we call such nodes \emph{neighbours}. We
@@ -43,14 +43,14 @@ also say that such nodes are \emph{adjacent} to each other. Moreover, in an undi
 if there are two edges $e_1$ and $e_2$ such that $e_1 \neq e_2$ and $e_1 \cap e_2 \neq \emptyset$
 such edges are said to be \emph{adjacent} to each other. Similarly, we can talk about adjacent 
 edges in a directed graph. In that case, two edges $e_1$ and $e_2$ are adjacent if
-$e_1 \neq e_2$ and either first or second element of tuple $e_1$ contains the same
-element as either first or second element of tuple $e_2$.
+$e_1 \neq e_2$ and either first or second element of the pair $e_1$ contains the same
+element as either first or second element of the pair $e_2$.
 
 Besides we often talk about edges and nodes being \emph{incident} to each other.
 In an undirected graph, an edge $e$ is incident to a node $v$ if and only if $v \in e$. In this
 case, we also say that the node $v$ is incident to the edge $e$. Similarly, in a
 directed graph, an edge $e$ is incident to a node $v$ if and only if $v$ is the
-first or the second element of the tuple $e$. Again, in the case described in the
+first or the second element of the pair $e$. Again, in the case described in the
 previous sentence, the node $v$ is said to be incident to the edge $e$.
 
 A \emph{simple graph} is an undirected graph where no two nodes are connected by more
@@ -59,8 +59,8 @@ no multiple edges or self-loops in a simple graph.
 
 A \emph{degree} of a node $v \in V$ in a graph $G = (V, E)$ is the number of all
 edges incident to $v$. That is, it is the number of edges such that for an edge
-$e$, $v \in e$ if $e$ is an undirect edge, or $v$ is the first or second element of
-tuple $e$ if $e$ is a directed edge. Moreover, for directed graphs, we often talk
+$e$, $v \in e$ if $e$ is an undirected edge, or $v$ is the first or second element of
+pair $e$ if $e$ is a directed edge. Moreover, for directed graphs, we often talk
 about \emph{indegrees} and \emph{outdegrees}. Indegree of a node $v$ is the number
 of edges incident to $v$ directed towards the node, while outdegree of a node $v$ is the 
 number of edges incident to $v$ directed outwards from the node. Finally, we are 
