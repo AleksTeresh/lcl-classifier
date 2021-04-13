@@ -149,7 +149,9 @@ the performance results with the precision down to a tenth of a second.
 Notice also that the times will vary depending on the underlying
 hardware, the fact whether other users are using the tool at the same
 time, etc. All the results presented below are performed on the
-author's local machine, whose exact specifications are given below.
+author's local machine (MacBook Pro, 13-inch, 2018, Four Thunderbolt 3 ports).
+Refer to the technical specification on the Internet for exact
+hardware specifications of the machine.
 
 Finally, when presenting results for classifying a problem or
 performing a query, I measure the time it takes
@@ -191,6 +193,19 @@ that fetch only a couple of hundred of problems are executed in under 1.5 second
   \item Any 3-labeling problem on undirected (3, 2)-biregular trees where active configurations are monochromatic are fetched in \emph{under 1.1 sec.}
 \end{itemize}
 
+Based on all the obtained performance results, as
+we as based on the feedback that I have received
+from the members of the research community who
+already used the tool, it is
+evident that the performance is fast enough for the
+tool to be useful for the kinds of tasks it is intended for.
+On the other hand, waiting for more than 20 seconds might prove
+to be impractical or at the very least inconvinient
+in many case. Therefore, improving the
+performance -- especially
+the performance of the querying functionality -- is
+a natural improvement direction that would most
+likely provide a lot of value for the users of the solution.
 
 \section{Number of preclassified problems}
 
@@ -198,7 +213,7 @@ At the moment of writing the thesis, the database contains $335\,314$
 LCL problems. Out of them, $197\,218$ have at least one non-trivial bound. \emph{Trivial bound} here
 refers to $\Omega(1)$ for lower bounds and \emph{unsolvable} for upper bounds.
 
-The following families of LCL groups have been pre-generated batch classified
+The following families of LCL groups have been pre-generated and batch classified
 using the batch classification functionality described in Chapter~\ref{chapter:implementation}:
 
 \begin{itemize}
@@ -220,7 +235,12 @@ were added as a result of the application being used by several of the members o
 distributed algorithms research community.
 
 Thus, it is evident that the number of preclassified problems is already at this stage sufficient
-for the tool to be useful to the research community. Populating the database
+for the tool to be useful to the research community.
+On the other hand, all of the problems currently stored in the database are such
+that the number of the allowed labels is limited to under 5 and degrees of the nodes
+are limited to under 4. This is a huge limitation, and it would be
+highly useful to investigate ways in which it can be mitigated.
+Thus, populating the database
 with more problems of more diverse problem families is a natural opportunity for future
 development.
 
