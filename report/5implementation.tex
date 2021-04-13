@@ -205,9 +205,9 @@ returned from the database. It includes the following fields:
   \item active degree,
   \item passive degree,
   \item alphabet size (upper bound on it to be precise),
-  \item Whether active/passive configurations are necessarily monochromatic,
-  \item Whether underlyig graph directed/rooted or not,
-  \item Type of the underlying graph. Which is always one of the following three
+  \item whether active/passive configurations are necessarily monochromatic,
+  \item whether underlyig graph directed/rooted or not,
+  \item type of the underlying graph, which is always one of the following three
   options: tree, cycle, path.
 \end{itemize}
 
@@ -404,10 +404,10 @@ family are then generated via the following algorithm:
 
 \begin{enumerate}
   \item Based on the specified label count, get a list of
-  all symbols i.e.\ alphabet of the problem family
+  all symbols i.e.\ alphabet of the problem family.
   \item Based on the alphabet and the specified active/passive
   degrees, generate lists of all the possible
-  active and passive one-line configurations
+  active and passive one-line configurations.
   \item Get a list of all possible combinations
   of active one-line configurations and a list of all possible
   combinations of passive one-line configurations. The combinations
@@ -424,7 +424,7 @@ family are then generated via the following algorithm:
   gnerated list of tuples, so that all tuples are unique.
   \item Turn each tuple into a Problem object using
   elements of the tuple as active and passive configurations.
-  \item Normalize all the problems
+  \item Normalize all the problems.
   \item Now that all the problems are in a normalized 
   representation, it is easy to detect whether any two
   problems are isomorphic to each other. Remove such
@@ -480,10 +480,10 @@ tool~\cite{Olivetti2020} has been integrated in our solution.
 Prior to integration we had had considered several options:
 
 \begin{itemize}
-  \item Using an API of a server that runs the back end of the Round Eliminator tool
+  \item Using an API of a server that runs the back end of the Round Eliminator tool.
   \item Calling REtor as a command line tool from our Python
   application and then parsing the output, which is returned
-  in a text format as part of stdout~\cite{stdio}
+  in a text format as part of stdout~\cite{stdio}.
   \item Compiling REtor's source code to a ``Shared Object'' file (.so extension)
   using CPython ~\cite{CPython} bindings and then importing the compiled
   functions to our Python application as CPython dependency.

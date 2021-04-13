@@ -233,16 +233,16 @@ for example, that round $x+1$ is not started by any of the nodes before all of t
 nodes have completed round $x$. Moreover, each round is divided into three stages:
 
 \begin{enumerate}
-\item Sending some information to some (or all) of its neighbours
+\item sending some information to some (or all) of its neighbours,
 
-\item Receiving information
-from some (or all) of its neighbours
+\item receiving information
+from some (or all) of its neighbours,
 
-\item Performing some local computaiton based
+\item performing some local computaiton based
 on the information that has been stored by a node locally before and the information
-received during the current round from its neighbours
+received during the current round from its neighbours,
 
-\item Updating its local state i.e.\ replacing and adding data in its own local storage
+\item updating its local state i.e.\ replacing and adding data in its own local storage.
 \end{enumerate}
 
 Each of these stages is also executed
@@ -457,17 +457,17 @@ Moni Naor and Larry Stockmeyer under the name of Locally Checkable
 Labelling (LCL) problems~\cite{Naor1993}.
 
 In short, an LCL problem is a distributed problem that satisfies the 
-following criteria~\cite{Naor1993, Suomela2020}.
+following criteria~\cite{Naor1993, Suomela2020}:
 
 \begin{itemize}
 
-\item the maximum degree of a graph is a finite number that does not depend on $n$,
+\item The maximum degree of a graph is a finite number that does not depend on $n$.
 
-\item there is a finite number of input labels and the number is not dependent on $n$,
+\item There is a finite number of input labels and the number is not dependent on $n$.
 
-\item there is a finite number of output labels and the number does not depend on $n$,
+\item There is a finite number of output labels and the number does not depend on $n$.
 
-\item the correctness of a solution can be checked locally by each individual node. That is,
+\item The correctness of a solution can be checked locally by each individual node. That is,
 after a solution is produced and all the nodes in the graph have stopped, each node can just
 check a radius-$O(1)$ neighbourhood around itself. The solution is valid if and only if each of
 the individual neighbourhoods for all the nodes are valid.
