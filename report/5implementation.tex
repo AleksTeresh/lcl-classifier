@@ -31,8 +31,8 @@ known upper and lower bounds. The back-end part contains
 the core logic for classifying LCL problems. Besides, it acts
 as a middle layer between the database and the front-end part.
 That is, it is responsible for receiving data from one of the
-components (e.g. database), transforming it to the
-format understandable by the other part (e.g. the front end),
+components (e.g.\ database), transforming it to the
+format understandable by the other part (e.g.\ the front end),
 and finally sending it to that part. Finally, the
 front-end part's main responsibility is to provide
 an understandable and user-friendly user interface
@@ -93,8 +93,8 @@ of directed (rooted) cycles (trees) can be handled
 using the \emph{colon notation} that has been already
 previously used in a recent paper on automating
 the classification of LCLs in rooted trees~\cite{Balliu2021}.
-Furthermore, the cases when \emph{irregular} nodes, i.e.
-leaf nodes or root node, are restricted can also
+Furthermore, the cases when \emph{irregular} nodes, i.e.\ leaf
+nodes or root node, are restricted can also
 be handled by specifying those restrictions
 (separately for leaf nodes and a root node)
 as separate properties of the Problem object.
@@ -174,7 +174,7 @@ we first check if the provided problem can be classified
 at all by the underlyinng meta-algorithm. Often, we can
 exit early already at this stage if, for examle, the meta-algorithm
 in question deals only with rooted trees and the provided input is a 
-problem on unrooted trees (or e.g. a problem on cycles). Then,
+problem on unrooted trees (or e.g.\ a problem on cycles). Then,
 if we haven't exited the function yet,
 we transform an instance of the Problem class to a problem
 representation used by the meta-algorithm that the given
@@ -242,10 +242,10 @@ items encapsulated in it:
   \item Whether only those problems must be returned whose deterministic upper
   and lower bounds do not match.
   \item Whether only those problems must be returned whose randomised both
-  upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
+  upper and lower bounds are trivial (i.e.\ unsolvable and $\Omega(1)$
   respectively).
   \item Whether only those problems must be returned whose deterministic both
-  upper and lower bounds are trivial (i.e. unsolvable and $\Omega(1)$
+  upper and lower bounds are trivial (i.e.\ unsolvable and $\Omega(1)$
   respectively).
   \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note
   the item has not effect if left empty.
@@ -281,7 +281,7 @@ implementation details to better suit our purpose.
 However, the general idea of the algorithm stays the same.
 
 First, we determine how many labels are used in the description of the
-problem $P$ i.e. its alphabet size. Then, we map each letter in the description
+problem $P$ i.e.\ its alphabet size. Then, we map each letter in the description
 to a letter from A to Z. For example, if numbers were used for describing
 the problem, the numbers will be mapped to capital letters of
 English alphabet. It is important to point out already now that
@@ -404,7 +404,7 @@ family are then generated via the following algorithm:
 
 \begin{enumerate}
   \item Based on the specified label count, get a list of
-  all symbols i.e. alphabet of the problem family
+  all symbols i.e.\ alphabet of the problem family
   \item Based on the alphabet and the specified active/passive
   degrees, generate lists of all the possible
   active and passive one-line configurations
@@ -443,14 +443,14 @@ some of the meta-algorithms provide a way to classify
 lists of problems at the same time, which is often
 significantly faster than classifying one problem at a time.
 This is due to the fact that some meta-algorithms
-(e.g. TLP classifier and BRT classifier) are in fact
+(e.g.\ TLP classifier and BRT classifier) are in fact
 huge datasets of preclassified problems. When
 classifying each problem individually, such
 meta-algorithms would need to read out the whole
 dataset from the disk, find one specific problem,
 and return the result. On the other hand, when
 classifying multiple problems at the same time,
-numerous optimizations can be applied e.g. reading the 
+numerous optimizations can be applied e.g.\ reading the 
 dataset from the disk just once and search for all
 requested problems at the same time. For this reason,
 when batch classifying families of problems we first
@@ -517,7 +517,7 @@ alternative does not have any of the disadvantages listed
 in the previous paragraph while being just as feasible and
 easy to implement. Compiled in this manner, the whole of
 Round Eliminator logic is contained in a single .so file
-that can be easily deployed to e.g. a production server.
+that can be easily deployed to e.g.\ a production server.
 Besides, the speed improvement is significant: we were
 able to execute up to 3 rounds of round eliminator
 in under 100 milliseconds. Finally, the functions
@@ -618,7 +618,7 @@ component. When searching for interesting query results, or even
 just classifying different individual LCL problems, it is often
 required to demonstrate the results to somebody else. To allow for such
 a sharing, we decided to encode the state of both forms in the URL.
-Thus, once e.g. the results of a query are obtained, it is possible
+Thus, once e.g.\ the results of a query are obtained, it is possible
 to copy the link and simply send it to, for example, a colleague.
 When opening the link, both forms will be prefilled with
 exactly the same values as those of the sender. This will make sure
