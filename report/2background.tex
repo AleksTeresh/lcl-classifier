@@ -25,7 +25,7 @@ is always $|V|$.
 
 Among other things, edges can be categorised into \emph{directed} and \emph{undirected}.
 The latter ones simply connect a pair of nodes in a graph, while the latter
-ones also contain extra information about which of the 2 connected nodes is
+ones also contain extra information about which of the two connected nodes is
 a ``source'' and which one is a ``destination''. Informally, such a directed edge
 can be visualised as an error that starts in a ``source'' node and ends in a 
 ``destination'' node.  Similarly, we talk about \emph{undirected graphs} -- that is, graphs
@@ -53,7 +53,7 @@ directed graph, an edge $e$ is incident to a node $v$ if and only if $v$ is the
 first or the second element of the tuple $e$. Again, in the case described in the
 previous sentence, the node $v$ is said to be incident to the edge $e$.
 
-A \emph{simple graph} is an undirected graph where no 2 nodes are connected by more
+A \emph{simple graph} is an undirected graph where no two nodes are connected by more
 than one edge and no edge starts and ends at the same node. In other words, there are
 no multiple edges or self-loops in a simple graph.
 
@@ -112,9 +112,9 @@ that have the following properties:
   \item The whole graph is connected. That is, there is a walk from any node of
   the path to any other node of the path.
 
-  \item The graph consists of at least 2 nodes.
+  \item The graph consists of at least two nodes.
 
-  \item Exactly 2 nodes have a degree 1 and all the other nodes have a degree~2.
+  \item Exactly two nodes have a degree 1 and all the other nodes have a degree~2.
 \end{enumerate}
 
 A \emph{cycle} is a connected graph where each node has a degree 2.
@@ -517,7 +517,7 @@ degree. Each element of a tuple represents a label
 that the node outputs on a coresponding edge. The problem
 is also an LCL problem, because after a final output is
 produced, each node $v$ will need to check its radius-1
-neighbourhood to make sure 2 things are in order:
+neighbourhood to make sure two things are in order:
 \begin{enumerate}
   \item All edges incident to $v$ have to be of different color.
 That is, no two elements of node $v$'s output tuple should be the same.
@@ -525,7 +525,7 @@ That is, no two elements of node $v$'s output tuple should be the same.
   \item For each edge incident to $v$, a color that node $v$ colored some incident
 edge $e$, should be the same as the color that node $u$ colored the edge $e$ with.
 Here $e = \{v, u\}$. In other words, because each edge's coloring depends on
-output of 2 nodes, such coloring has to be consistent for each edge i.e.\ the produced
+output of two nodes, such coloring has to be consistent for each edge i.e.\ the produced
 colors need to be the same on both ends of each edge.
 \end{enumerate}
 

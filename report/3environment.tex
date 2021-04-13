@@ -3,14 +3,14 @@
 
 This chapter will describe in detail all the meta-algorithms that are
 used in the final solution as subroutines.
-Chapter 5 will then
+Chapter~\ref{chapter:implementation} will then
 describe how the final solution was built on top of the meta-algorithms
 described in this chapter.
 
 \section{Round elimination}
 
 This section explains in detail round elimination (RE)
-technique introduced in Chapter 2, as well as
+technique introduced in Chapter~\ref{chapter:background}, as well as
 implementation of the round elimination technique as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
 Besides, we will explain the relevance of the technique
@@ -108,7 +108,7 @@ P &= \{ \{A, B ,C\}, \{A, A, B \insetor C\}, \{B, B, A \insetor C\}, \{C, C, A \
 The problem $\Pi_1$ is not zero round solvable since after zero rounds each node only
 knows its own degree and unique identifier. Thus, no matter what is the mapping from
 unique identifiers to the output is, we can construct such a graph, where there exists
-a passive node whose all 3 neighbours will output the same label. But set $P$ does not
+a passive node whose all three neighbours will output the same label. But set $P$ does not
 contain any configurations consisting of the same three labels, therefore such
 output would be invalid. So we just have another problem that looks a lot like our
 previous problem $\Pi_0$ (essentially sets $A$ and $P$ have simply been swapped).
@@ -194,7 +194,7 @@ of LCLs on paths and cycles, and only afterwards cover the extension to rooted t
 The representation is often referred to as ``node-edge-checkable'' formalism.
 In it, each node outputs one label on each of its \emph{ports} associated with
 its incident edges. Since only paths and cycles are allowed as graph families for
-input LCLs, most of the nodes have exactly 2 incident edges (except for endpoints nodes
+input LCLs, most of the nodes have exactly two incident edges (except for endpoints nodes
 in paths, but these will be explained separately below). Therefore, a node constraint
 is a pair of labels, and node constraints is a set of such pairs. Each pair essentially
 means that a node can output these two labels on its incident edges. Edge constraints are,
@@ -225,7 +225,7 @@ C_{\textrm{edge}} &= \{ 01, 10, 11, MM \}.
 It turns out that in the case of paths and cycles, all LCLs belong to one of the four
 complexity classes: $O(1)$, $\Theta(\log* n)$, $\Theta(n)$ and unsolvable. Notice that
 the complexity class of $\Theta(\log n)$ disappears in both deterministic and randomised settings.
-The technique described in the paper then takes the description of a problem as 4 sets: $C_{\textrm{node}}$,
+The technique described in the paper then takes the description of a problem as four sets: $C_{\textrm{node}}$,
 $C_{\textrm{edge}}$, $C_{\textrm{start}}$ and $C_{\textrm{end}}$ end following a polynomial time algorithm classifies the
 problem into one of the four compplexity classes. The cassification technique works for all LCL
 problems on trees and cycles.
@@ -324,7 +324,7 @@ tree, while $W$ and $B$ are constraint sets for white and black nodes respective
 Each constraint in the sets $W$ or $B$ is a 3-tuple of the form $(x_0, x_1, x_2)$
 where $x_0$ represents how many incident (to a given node) edges can be labelled with label ``0'',
 $x_1$ shows how many edges can be labeled with ``1'', and $x_2$ -- with ``2''. Similar to the case
-of binary labeling in unrooted regular trees, we assume that only these 3 labels are allowed to
+of binary labeling in unrooted regular trees, we assume that only these three labels are allowed to
 be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
 in such a way that each edge is labeled with the same label by each of its incident nodes.
 Furthermore, we again are only concerned with nodes of degree $\delta$ or $\sigma$. Nodes of
@@ -410,10 +410,10 @@ the problem can be represented as following:
   \{212~213~313~121~123~323~131~132~232\}.
 \end{align*}
 It is easy to see why the set of configurations represent
-3-coloring problem. Indeed, a node $x$ can be of any of the 3
+3-coloring problem. Indeed, a node $x$ can be of any of the three
 colors. However, if a node $x$ has color $c$, none of its
 children is allowed to have $c$ as its output color. On the
-other hand, children can be of 2 different colors or of the same
+other hand, children can be of two different colors or of the same
 color as long as this color is not $c$.
 
 As a second example, consider \emph{maximal independent set in
