@@ -5,20 +5,33 @@ This chapter will describe in detail the research goals of the thesis project. B
 
 \section{Research goals}
 
-As has been shown in the previous chapters, a lot is known about classificaiton
+As has been shown in the previous chapters, a lot is known about classification
 of LCL problems on trees. In particular, plenty of research has been done
 on the topic of automated classification of LCL problems. However, the
 results of the research are scattered across numerous papers. Moreover,
 all of the meta-algorithms described use different representation for
 the LCL problems that they accept as an input.
-The issue gets even more complicated by the fact that the existing practical representations
+The issue gets even more complicated by the fact that the existing practical implementations
 of the meta-algorithms are written in different programming languages, accept input in
 different forms,
 use different internal representation of a problem and produce output in different
 formats.
 
-The goal of this thesis is a software tool that would store most -- if not all -- of
+In addition to this, researchers would
+have to download and install multiple software packages on their machines and learn
+the formalisms for representing LCL problems for each of the meta-algorithm
+representations. Most importantly, since each of the meta-algorithms' implementations
+is capable of classifying only a relatively narrow subfamily of LCL problems, the
+researchers would have to constantly keep in mind the information about what families
+of problems can be classified by what meta-algorithm.
+All this makes it difficult and impractical for members of
+the research community
+to use the meta-algoithms in their everyday work.
+
+Therefore, the goal of this thesis is a software tool that would store most -- if not all -- of
 the so far existing knowledge on complexity of LCL problems in trees.
+The tool would, in a sense, encapsulate all of the capabilities
+of the existing meta-algorithms.
 The tool would also allow for queries regarding a specific problem or a group of
 problems. As an example, we can imagine the following two types of queries:
 \begin{itemize}
@@ -32,6 +45,13 @@ In addition to this, the tool’s output would include references to
 the sources
 (published papers, certain theorems, ad-hoc implemented scripts, etc.)
 which the returned results are based on.
+
+All this would make it more accessible for members of the research
+community to use the powers of the existing meta-algorithms.
+This, we believe, will be highly useful for the distributed
+algorithms researchers, as it would allow them to get access
+to existing information about complexity of LCL problems on trees
+in a matter of seconds.
 
 \section{Scope}
 
