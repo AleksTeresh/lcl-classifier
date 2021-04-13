@@ -27,10 +27,10 @@ since we rarely know round-complexity of an input problem when using
 round elimination. However, we can nevertheless use this rather inconvinient constraint
 to our advantage, which will be demonstrated below.
 
-Furthermore, when applying round elimination we talk about ``active'' and
-``passive'' nodes. Since $(\delta, \beta)$-bipartition of an input problem is
+Furthermore, when applying round elimination we talk about \emph{active} and
+\emph{passive} nodes. Since $(\delta, \beta)$-bipartition of an input problem is
 already given (see our assumption above), nodes of degree $\delta$ are assumed
-to be ``active'' and nodes of degree $\beta$ are assumed to be passive. For a problem
+to be active and nodes of degree $\beta$ are assumed to be passive. For a problem
 to be a valid input to round elimination, it has to be reformulated as a problem on
 a $(\delta, \beta)$-biregular graph where only one partition of nodes produces
 some output while the other partition does not produce any output but instead
@@ -146,7 +146,7 @@ P &= \{ \{B, AB, AB\}\}.
 It turns out that $\Pi_2 = \Pi_1$. But we also know that round complexity of $\Pi_2$
 has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a contradiction,
 it turns out that the key here is to pay attention to the initial assumptions that we mentioned at the
-beginning of the section. Namely, the number of rounds $T$ of teh original problem cannot be ``too large''.
+beginning of the section. Namely, the number of rounds $T$ of the original problem cannot be ``too large''.
 Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
 it has been shown that in cases like this, when after applying round elimination repeatedly,
 we encounter a problem that we have already seen before, the initial problem $\Pi_0$ is most of the cases
@@ -191,7 +191,7 @@ the case of round elimination, it is important to explain a representation which
 the technique requires the input LCL problem to be in. We will initially concentrate on the case
 of LCLs on paths and cycles, and only afterwards cover the extension to rooted trees.
 
-The representation is often referred to as ``node-edge-checkable'' formalism.
+The representation is often referred to as \emph{node-edge-checkable} formalism.
 In it, each node outputs one label on each of its \emph{ports} associated with
 its incident edges. Since only paths and cycles are allowed as graph families for
 input LCLs, most of the nodes have exactly two incident edges (except for endpoints nodes
@@ -231,7 +231,7 @@ problem into one of the four compplexity classes. The cassification technique wo
 problems on trees and cycles.
 
 Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
-has to be describable in a so-called ``edge-checkable'' formalism. In other words, we are allowed to
+has to be describable in a so-called \emph{edge-checkable} formalism. In other words, we are allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{\textrm{edge}}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
 Also, we are not concert in the current formalism with the output of leaves and root -- only nodes in the
@@ -274,10 +274,10 @@ labels (denoted 0 or 1). The problem is assumed to follow the edge-labeling
 formalism, in which each node outputs a label on each of its incident nodes so that
 any two adjacent nodes $v$ and $u$ can only output the same label on their common
 incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
-restrict the choice of outputs as well. A ``white'' node's output is valid
+restrict the choice of outputs as well. A \emph{white} node's output is valid
 if and only if the sum of labels on all its incident edges (that is, summing
 output labels on its incident edges as zeros and ones) is such a number $s_W$ that
-$s_W \in W$. Similarly, output of a ``black'' node is valid if and only if
+$s_W \in W$. Similarly, output of a \emph{black} node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
 $s_B \ in B$.
 

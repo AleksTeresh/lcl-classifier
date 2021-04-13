@@ -158,12 +158,12 @@ models. Finally, a Response object is constructed based on the bounds
 and is returned as the functions result. In the best case, tight
 complexity bounds are found for both deterministic and randomized
 settings. In the worst case, trivial bounds are returned:
-``unsolvable'' for upper bounds and $\Omega(1)$ for lower bounds.
+\emph{unsolvable} for upper bounds and $\Omega(1)$ for lower bounds.
 
 Each of the underlying meta-algorithms or datasets is wrapped
-in a function -- we will refer to it as ``subclassify'' from now on -- such
+in a function -- we will refer to it as \emph{subclassify} from now on -- such
 that it provides unified interface for the main
-``classify'' function. In particular, subclassify takes
+\emph{classify} function. In particular, subclassify takes
 as input an instance of the Problem class and
 returns an instance of Response class. A Response object
 simply encapsulates upper and lower bounds for both
@@ -235,8 +235,8 @@ Finally, \emph{include/exclude configuration} has the following
 items encapsulated in it:
 
 \begin{itemize}
-  \item Whether only ``smallest'' problem has to be returned (in terms of the number of configurations).
-  \item Whether only ``largest'' problem has to be returned (in terms of the number of configurations).
+  \item Whether only the smallest problem has to be returned (in terms of the number of configurations).
+  \item Whether only the largest problem has to be returned (in terms of the number of configurations).
   \item Whether only those problems must be returned whose randomised upper
   and lower bounds do not match.
   \item Whether only those problems must be returned whose deterministic upper
@@ -412,7 +412,7 @@ family are then generated via the following algorithm:
   of active one-line configurations and a list of all possible
   combinations of passive one-line configurations. The combinations
   can be of any size. This can be accomplished via
-  the ``powerset'' function. Now we have lists of
+  the \emph{powerset} function. Now we have lists of
   all possible active and passive configurations.
   \item Remove configurations that are empty.
   \item Generatate all possible tuples of size two
@@ -459,7 +459,7 @@ if such methods exist. Once this is done, a modification
 of the previously-described classify function is called
 for each individual Problem object. The difference is
 that if a meta-algorithm $A$'s batch classify method has been
-already called, its ``subclassify'' function is not called
+already called, its subclassify function is not called
 anymore during the individual-problem classification which
 can significantly speedup the whole batch classification
 functionality. Finally, when all problems have been classified,
@@ -552,7 +552,7 @@ frequency of use of the tool would have been nowhere near the current
 levels. Indeed, almost all users of the tool use it via the web
 client. Otherwise, a user would need to install Rust programming
 language~\cite{Rust}, build the tool locally using the tool
-called ``Cargo''~\cite{Cargo} and then run it using the command-line.
+called Cargo~\cite{Cargo} and then run it using the command-line.
 It is clear that the number of people willing to do that would be
 significantly smaller than number of people who ended up using
 an easy-to-use web interface that requires no installation or 
@@ -574,11 +574,11 @@ individual problems, and another one for issueing queries
 about groups of problems against the database. When using the
 first form, our application will first check if the requested
 problem can be found in a database. If not, it will proceed to
-running the classifiers (which corresponds with the ``classify'' function described above) and will eventially return the newly
+running the classifiers (which corresponds with the classify function described above) and will eventially return the newly
 classified result. If the classification result is not trivial (which means that lower bounds are constant and upper bounds are unsolvable),
-it will also be stored in the database. The second ``query'' form, once
+it will also be stored in the database. The second query form, once
 submitted will be transformed into the previously described
-``Query'' object. The query will then be executed against the database,
+\emph{Query} object. The query will then be executed against the database,
 the results will be returned to the client side and rendered
 in a user-friendly format.
 
@@ -592,7 +592,7 @@ approach for application state management, and reduces initial
 page load times compared to other front-end frameworks~\cite{SvelteVsReactBundleSize}.
 
 For the styling of the front end, we used a minimalist CSS framework
-called ``Milligram''~\cite{Milligram}. It provides a good starting point
+called Milligram~\cite{Milligram}. It provides a good starting point
 when it comes to styling a modern web application. Besides, the total
 size of the framework is just 2 kilobytes when zipped~\cite{Milligram}.
 This, simplicity to use, and our previous positive experience with

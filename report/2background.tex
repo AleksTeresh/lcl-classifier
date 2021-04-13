@@ -250,7 +250,7 @@ completely synchronously by all nodes in a graph, meaning that e.g.\ no node sta
 any of its data, before all other nodes have received data from their neighbours. The computation
 of a graph is said to be finished when all of the nodes have outputted their final states
 and halted. More formally, this means that there are a set of node states that are
-considered as ``halting states''. Whenever a node switches its internal state to one of the 
+considered as \emph{halting states}. Whenever a node switches its internal state to one of the 
 halting state, it does not perform any of the actions from that point in time, or -- to
 be even more formal -- it does not send any messages to its neighbours, ignores all of the 
 messages sent to it and does not update its internal state in all of the subsequent rounds.
@@ -603,7 +603,7 @@ machine that decides it. That is, a language $L$ is decidable
 if and only if there exists some Turing machine $M$ that given
 and input $x$, such that $x \in L$, always halts.
 
-\emph{A decision problem} is an algorithmic problem, that has only two
+\emph{A decision problem} is an algorithmic problem that has only two
 valid solutions to it: ``yes'' and ``no''. We assume that a decision
 problem has an infinite set of inputs. That is, a decision problem
 defines an infinite but possible restricted set of valid inputs,
