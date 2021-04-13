@@ -130,7 +130,7 @@ that are always provided in a string format,
 the tool automatically decides whether the given problem's
 underlying graph is rooted/directed or not.
 
-It is also worth noting that as a first step of
+It is also worth noting that as the first step of
 creating a Problem object, the specified parameters,
 including nodes' configurations and constraints
 are checked for validity. Thus, if, for example,
@@ -279,6 +279,20 @@ algorithm is written in Rust programming language, I
 reimplemented it in Python and changed some of its
 implementation details to better suit my purpose.
 However, the general idea of the algorithm stays the same.
+
+The reason why I chose the normalization algorithms in my solution
+to be heavily based on the algorithm from the REtor~\cite{Olivetti2020}
+is primarily due to
+the fact that the REtor's problem representation is very similar to the problem
+representation used in my solution. Furthermore, the normalization
+algorithm used in the REtor is known to be correct and work
+sufficiently fast for the REtor to be useful for the research community.
+While it is perhaps true, that better, more efficient normalization
+algorithms exist, I decided to avoid optimizing prematurely, and
+as the first iteration, selected a working, "good enough" algorithm.
+If and when the current implementation of normalization will start
+causing performance problems, it should be relatively easy to
+switch to another more efficient normalization algorithm.
 
 First, we determine how many labels are used in the description of the
 problem $P$ i.e.\ its alphabet size. Then, we map each letter in the description
