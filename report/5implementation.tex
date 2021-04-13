@@ -281,12 +281,12 @@ implementation details to better suit my purpose.
 However, the general idea of the algorithm stays the same.
 
 The reason why I chose the normalization algorithms in my solution
-to be heavily based on the algorithm from the REtor~\cite{Olivetti2020}
+to be heavily based on the algorithm from the Round Eliminator~\cite{Olivetti2020}
 is primarily due to
-the fact that the REtor's problem representation is very similar to the problem
+the fact that the Round Eliminator's problem representation is very similar to the problem
 representation used in my solution. Furthermore, the normalization
-algorithm used in the REtor is known to be correct and work
-sufficiently fast for the REtor to be useful for the research community.
+algorithm used in the Round Eliminator is known to be correct and work
+sufficiently fast for the Round Eliminator to be useful for the research community.
 While it is perhaps true, that better, more efficient normalization
 algorithms exist, I decided to avoid optimizing prematurely, and
 as the first iteration, selected a working, "good enough" algorithm.
@@ -495,10 +495,10 @@ Prior to integration I had had considered several options:
 
 \begin{itemize}
   \item Using an API of a server that runs the back end of the Round Eliminator tool.
-  \item Calling REtor as a command line tool from my Python
+  \item Calling the Round Eliminator as a command line tool from my Python
   application and then parsing the output, which is returned
   in a text format as part of stdout~\cite{stdio}.
-  \item Compiling REtor's source code to a ``Shared Object'' file (.so extension)
+  \item Compiling the Round Eliminator's source code to a ``Shared Object'' file (.so extension)
   using CPython ~\cite{CPython} bindings and then importing the compiled
   functions to my Python application as CPython dependency.
 \end{itemize}
@@ -513,7 +513,7 @@ require a nontrivial amount of work from the tool's maintainers.
 Thus, the first option was not feasible.
 
 On the other hand, the second option was feasible. Indeed,
-this method of using REtor had already been used in the
+this method of using the Round Eliminator had already been used in the
 implementation of TLP Classifier~\cite{Rocher2020clas}. However,
 this approach has several crucial disadvantages.
 Firstly, the overhead of calling a command line command
@@ -524,7 +524,7 @@ would have added an additional complexity of the software.
 Finally, the approach complicates distribution and deployment of
 the software. Indeed, one would have to install the specific
 version of Rust programming language as well as download and
-build form source codes the specific version of REtor required.
+build form source codes the specific version of the Round Eliminator required.
 
 Instead, I have decided to go with the latter option. This
 alternative does not have any of the disadvantages listed
@@ -538,7 +538,7 @@ in under 100 milliseconds. Finally, the functions
 exposed via the .so file, return python-native
 data structures so that no additional parsing is required on my side.
 This, in turn has been achieved by adding CPythin bindings
-to the REtor source code. The bindings wrap the relevant functions
+to the Round Eliminator source code. The bindings wrap the relevant functions
 written in Rust, thus enabling us to pass Python data structures
 as parameters and recieve the return values as python-interpretable values.
 The bindings were implemented using the rust-cpython library~\cite{RustCPython}.
