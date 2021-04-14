@@ -34,7 +34,7 @@ to be active and nodes of degree $\beta$ are assumed to be passive. For a proble
 to be a valid input to round elimination, it has to be reformulated as a problem on
 a $(\delta, \beta)$-biregular graph where only one partition of nodes produces
 some output while the other partition does not produce any output but instead
-checks that their radius-1 neighbourhood's outputs comply to previously
+checks that their radius-1 neighborhood's outputs comply to previously
 specified restrictions.
 
 In order to demonstrate the technique, we will have as our running
@@ -45,7 +45,7 @@ each node labels its incident edges in such a way that no node $v$ in the graph
 has all its incident edges labelled with the same label. Besides if two
 nodes $v$ and $u$ are incident to the same edge $e = \{v, u\}$, such
 edge $e$ has to be labelled with the same label from both ``sides''. In other words,
-two neighbouring nodes cannot output different labels on the same edge.
+two neighboring nodes cannot output different labels on the same edge.
 It is easy to see although the initial problem is specified for a regular
 tree, we can obtain an equivalent problem for a $(\delta, 2)$-biregular tree
 by replacing edges with nodes as described in Section ~\ref{subsection:biregular-trees}.
@@ -108,7 +108,7 @@ P &= \{ \{A, B ,C\}, \{A, A, B \insetor C\}, \{B, B, A \insetor C\}, \{C, C, A \
 The problem $\Pi_1$ is not zero round solvable since after zero rounds each node only
 knows its own degree and unique identifier. Thus, no matter what is the mapping from
 unique identifiers to the output is, we can construct such a graph, where there exists
-a passive node whose all three neighbours will output the same label. But set $P$ does not
+a passive node whose all three neighbors will output the same label. But set $P$ does not
 contain any configurations consisting of the same three labels, therefore such
 output would be invalid. So we just have another problem that looks a lot like our
 previous problem $\Pi_0$ (essentially sets $A$ and $P$ have simply been swapped).
@@ -357,7 +357,7 @@ Furthermore, we again are only concerned with nodes of degree $\delta$ or $\sigm
 any lower degee only make the problem easier.
 
 We will consider vertex 3-coloring as an example problem to demonstrate the formalism.
-In this problem, each node picks one of the three labels such that none of its neighbours
+In this problem, each node picks one of the three labels such that none of its neighbors
 pick the same label. In the case of 3-regular tree (which is the same as $(3, 2)$-biregular tree,
 as we can always turn edges into nodes of degree 2), the problem looks as follows:
 \begin{align*}
