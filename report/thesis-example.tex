@@ -29,7 +29,7 @@
 % environment does not have all the required packages installed.
 % For example, when compiling in vipunen.hut.fi, you get an error that
 % tikz.sty is missing - in this case you must either compile somewhere
-% else, or you cannot use TikZ graphics in your thesis and must therefore
+% else, or you cannot use sTikZ graphics in your thesis and must therefore
 % remove or comment out the tikz package and all the tikz definitions. 
 % ------------------------------------------------------------------
 
@@ -212,6 +212,7 @@
 \usepackage{thmtools}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{url}
 
 \declaretheorem[style=plain,numberwithin=section]{theorem}
 \declaretheorem[style=plain,sibling=theorem]{lemma}
@@ -243,9 +244,9 @@
 %                     first page of the first chapter
 %   twoinstructors  - changes the title of instructors to plural form
 %   twosupervisors  - changes the title of supervisors to plural form
-\usepackage[mydraft,twosupervisors]{aalto-thesis}
+% \usepackage[mydraft]{aalto-thesis}
 %\usepackage[mydraft,doublenumbering]{aalto-thesis}
-%\usepackage{aalto-thesis}
+\usepackage{aalto-thesis}
 
 
 \renewcommand{\algorithmautorefname}{Algorithm} % so algorithm is capitalized when using autoref
@@ -594,5 +595,4 @@ encouragement.
 % floats (that is, figures, tables, and such) to the end of the 
 % document.
 
-FIXME: add publication forums to all the references in the list
 \end{document}
