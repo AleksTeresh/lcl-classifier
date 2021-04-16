@@ -350,7 +350,7 @@
 % Professorship code is the same in all languages
 \newcommand{\PROFCODE}{SCI3042}
 \newcommand{\KEYWORDS}{distributed algorithms, distributed computing, locally checkable problems,
-round eliminator, classification of LCLs, graph algorithms}
+round elimination, graph algorithms}
 \newcommand{\FKEYWORDS}{aineistot, aitta, akustiikka, Alankomaat,
 aluerakentaminen, aapinen, ankka, aasinsilta}
 \newcommand{\SKEYWORDS}{oms�ttning, kassafl�de, v�rdepappersmarknadslagen,
@@ -452,43 +452,51 @@ yrkesut�vare, intressef�retag, verifieringskedja}
 % and if your native language is Finnish or Swedish, one in that language.
 
 % Abstract in English
+% The abstract provides goal, motivation, background, and conclusions of
+% the work. It has to fit to one page together with the bibliographical
+% information. 
 % ------------------------------------------------------------------
 \thesisabstract{english}{
-FIXME: write abstract
-The abstract provides goal, motivation, background, and conclusions of
-the work. It has to fit to one page together with the bibliographical
-information. 
+The field of distributed computing and distributed algorithms
+is a well-established and quickly-developed area of theoretical computer
+science. Similar to the study of traditional centralized
+algorithms, many researchers are particularly interested in
+understanding the complexity of distributed problems.
+In particular, over the last decade, the research community
+has had a series of breakthroughs in understanding the
+complexity landscape of locally checkable problems (LCLs),
+which is one of the most significant and well-studied
+families of problems in distributed computing.
 
-If the thesis is in English and the language of school
-education is Finnish or Swedish, the abstract is written in English
-and in Finnish or in Swedish. If the language of school education is
-other than Finnish or Swedish, the abstract is written in English only.
+As more and more individual LCL problems have been
+understood, people started to investigate
+whether it was possible to automate the process.
+This led to a discovery of a whole range of so-called
+meta-algorithms. These are centralized algorithms, that
+take a distributed LCL problem as their input and
+return information about its complexity as an output.
+Furthermore, many of the meta-algorithms turned out
+to be practical in nature, and were subsequently
+implemented as computer programs that can tell
+something useful about complexities of LCL problems.
 
-The thesis example file (\texttt{thesis-example.tex}), all the chapter content
-files (\texttt{1introduction.tex} and so on), and the Aalto style file
-(\texttt{aalto-thesis.sty}) are commented with explanations on how the Aalto
-thesis works. The files also contain some examples on how to customize various
-details of the thesis layout, and of course the example text works as an
-example in itself. Please read the comments and the example text; that should
-get you well on your way!
+But the problem is that these meta-algorithms are not
+currently used by the research community. This causes
+the scholars to solve the same problems that have been solved
+before. The reason for the failure to adopt the meta-algorithms
+is the fact that their implementations use different formalisms,
+which makes it inconvinient to use them in everyday work.
+The goal of the thesis is to resolve this problem, and
+develop a solution that would unify the numerous meta-algorithms
+making it possible to benefit from them all while using only a single tool.
 
-In the thesis template, you can find the text of the abstract in the
-abstract in the \texttt{thesis-example.tex}
-file, together with the bibliographical information of the abstract tables.
-\fixme{This is an example how to use fixme: add your abstract here.} 
-Fixme is a command that helps you identify parts of your thesis that still
-require some work. When compiled in the custom \texttt{mydraft} mode, text
-parts tagged with fixmes are shown in bold and with fixme tags around them. When
-compiled in normal mode, the fixme-tagged text is shown normally (without
-special formatting). The draft mode also causes the ``Draft'' text to appear on
-the front page, alongside with the document compilation date. The custom
-\texttt{mydraft} mode is selected by the \texttt{mydraft} option given for the
-package \texttt{aalto-thesis}, near the top of the \texttt{thesis-example.tex}
-file.
-
-The instructions on how to compile LaTeX *.tex files to *.pdf files like this 
-are giving in the \texttt{thesis-example.tex} file as comments and also in this 
-pdf in a Section~\ref{section:compilation}.}
+And although we failed to accomplish the goal in its entirety,
+we did develop a unified system that encapsulates most of the
+existing meta-algorithms, providing a unified interface to its users.
+Besides, we also implemented a Web interface, to make the tool even more
+accessible for the community. Finally, we critically analyse the
+solution and propose ideas for its further improvement.
+}
 
 
 % Acknowledgements
