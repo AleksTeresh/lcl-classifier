@@ -2,19 +2,19 @@
 \label{chapter:implementation}
 
 This chapter will describe the implementation of the tool.
-In particular, I will outline high-level architecture of
-the software, discuss internal representation of
-LCL problems as well as representation of the query object.
+In particular, I will outline the high-level architecture of
+the software, discuss the internal representation of
+LCL problems as well as the representation of the query object.
 Moreover, I will discuss how batch classification has been
 implemented. Finally, in the end of the chapter I will cover
-several miscellaneous items such as problem normalization
-algorithm, integration of Round Eliminator tool into
+several miscellaneous items such as the problem normalization
+algorithm, integration of the Round Eliminator tool into
 my software and some of the properties of the Web interface,
-which has also been implemented as part of the thesis project.
+which has also been implemented as a part of the thesis project.
 
 \section{General architecture of the tool}
 
-This section will outline general architecture of the tool and
+This section will outline the general architecture of the tool and
 will describe in further detail some of its most important
 components. Despite the chapter's name, I am not going
 to describe low-level implementation detail in this section,
@@ -26,7 +26,7 @@ made during the implementation phase.
 On the high level, the software consists of three parts:
 front-end application, back-end application and a database.
 The database contains arguably the most important component
-of this project -- definitions of LCL problems as well as their
+of this project: the definitions of LCL problems as well as their
 known upper and lower bounds. The back-end part contains
 the core logic for classifying LCL problems. Besides, it acts
 as a middle layer between the database and the front-end part.
@@ -46,7 +46,7 @@ back-end part in a concise and understandable manner.
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width=\textwidth]{images/tool-architecture.png}
-    \caption{High-level architecture of the implementation}
+    \caption{The high-level architecture of the implementation}
     \label{fig:implementation-architecture}
   \end{center}
 \end{figure}
@@ -60,9 +60,9 @@ of the meta-algorithms used in classifying the LCLs.
 The front end is quite simple from technical perspective
 too. Some of the details about the client side of the
 application will be discussed more in Section~\ref{section:webinterface}.
-The back end, however, contains most of the compplexity of
+The back end, however, contains most of the complexity of
 the tool. Therefore, in this section, I will concentrate
-mainly on the sever side.
+mainly on the server side.
 
 \subsection{Problem}
 
@@ -146,42 +146,46 @@ described below in Section~\ref{section:problem-normalization}.
 \subsection{Classification}
 
 Another central component of the back end is
-the function responsible for classification of LCL problems.
+a function responsible for classifying LCL problems.
 On the high level, the function takes as input an LCL problem and
 runs underlying meta-algorithms, some of which might be
 able to provide some useful information about the complexity of the
 problem. After that, the function combines the results
-returned by all the meta-algorithms. Based on teh results returned,
+returned by all the meta-algorithms. Based on the results returned,
 the function determines the tightest known lower and upper bounds of
 the LCL problem both in the deterministic and randomised LOCAL
 models. Finally, a Response object is constructed based on the bounds
-and is returned as the functions result. In the best case, tight
+and is returned as the function's result. In the best case, tight
 complexity bounds are found for both deterministic and randomized
 settings. In the worst case, trivial bounds are returned:
 \emph{unsolvable} for upper bounds and $\Omega(1)$ for lower bounds.
 
 Each of the underlying meta-algorithms or datasets is wrapped
 in a function -- I will refer to it as \emph{subclassify} from now on -- such
-that it provides unified interface for the main
+that it provides a unified interface for the main
 \emph{classify} function. In particular, subclassify takes
 as input an instance of the Problem class and
-returns an instance of Response class. A Response object
+returns an instance of the Response class. A Response object
 simply encapsulates upper and lower bounds for both
 deterministic and randomized settings. There is
 exactly one subclassify function for each meta-algorithm
 or dataset that I use. Inside each subclassify function,
 I first check if the provided problem can be classified
-at all by the underlyinng meta-algorithm. Often, we can
-exit early already at this stage if, for examle, the meta-algorithm
+at all by the underlying meta-algorithm. Often, we can
+exit early already at this stage if, for example, the meta-algorithm
 in question deals only with rooted trees and the provided input is a 
 problem on unrooted trees (or e.g.\ a problem on cycles). Then,
 if we have not exited the function yet,
 we transform an instance of the Problem class to a problem
 representation used by the meta-algorithm that the given
-subclassify wraps around. The meta-algorithm is then executed,
+subclassify function wraps around. The meta-algorithm is then executed,
 the retured result is transformed into an instance of the
 Response class and the Response object is returned as
-a result of the subclassify function.
+a result of the subclassify function. Once the subclassify
+function is called for each of the meta-algorithms,
+the results of the calls are combined together, and
+a single Response object is returned from the
+classify function.
 
 \subsection{Query}
 
@@ -198,16 +202,22 @@ The Query class groups those properties in three parent items:
   \item include/exclude configuration.
 \end{itemize}
 
-\emph{Problem properties} define a class of problems that are to be
+\emph{Problem properties} define a family of problems that are to be
 returned from the database. It includes the following fields:
 
 \begin{itemize}
   \item active degree,
   \item passive degree,
-  \item alphabet size (upper bound on it to be precise),
-  \item whether active/passive configurations are necessarily monochromatic,
-  \item whether underlyig graph directed/rooted or not,
-  \item type of the underlying graph, which is always one of the following three
+  \item alphabet size (an upper bound on it to be precise),
+  \item whether active/passive configurations are necessarily monochromatic
+  (meaning that only such configurations are allowed where the same label is outputted
+  on all ports by a single node, e.g. $\{A,~A,~A\}$, or $\{B,~B,~B,~B\}$, etc.
+  Note that different nodes can still output different labels on their ports,
+  as long as the labels are the same on the ports of a single node. For example,
+  some node $v$ can output $A$
+  on all its ports, while some node $u$ can output $B$ on all its ports.),
+  \item whether the underlying graph is directed/rooted or not,
+  \item the type of the underlying graph, which is always one of the following three
   options: tree, cycle, path.
 \end{itemize}
 
@@ -216,10 +226,10 @@ restricting their complexities. The \emph{complexity bounds} object
 contains the following items:
 
 \begin{itemize}
-  \item upper bound in randomized LOCAL setting (referred to as RUB),
-  \item lower bound in randomized LOCAL setting (referred to as RLB),
-  \item upper bound in deterministic LOCAL setting (referred to as DUB),
-  \item lower bound in deterministic LOCAL setting (referred to as DLB).
+  \item an upper bound in randomized LOCAL setting (referred to as RUB),
+  \item a lower bound in randomized LOCAL setting (referred to as RLB),
+  \item an upper bound in deterministic LOCAL setting (referred to as DUB),
+  \item a lower bound in deterministic LOCAL setting (referred to as DLB).
 \end{itemize}
 
 The restriction of the fetched problems is done according to the
@@ -247,18 +257,18 @@ items encapsulated in it:
   \item Whether only those problems must be returned whose deterministic both
   upper and lower bounds are trivial (i.e.\ unsolvable and $\Omega(1)$
   respectively).
-  \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note
-  the item has not effect if left empty.
-  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is excluded. Note
-  the item has not effect if left empty.
+  \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note that
+  the item has no effect if left empty.
+  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is excluded. Note that
+  the item has no effect if left empty.
   \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is included.
   Otherwise a problem is excluded.
-  Note
-  the item has not effect if left empty.
+  Note that
+  the item has no effect if left empty.
   \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is included.
   Otherwise a problem is excluded.
-  Note
-  the item has not effect if left empty.
+  Note that
+  the item has no effect if left empty.
 \end{itemize}
 
 \section{Problem normalization}
