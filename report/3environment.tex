@@ -211,6 +211,59 @@ not constrained, can be represented in the formalism of round elimination.
   round elimination.
 \end{proof}
 
+\section{Isomorphic LCL problems}
+
+This section will introduce a notion of \emph{problem isomorphism}
+in the context of LCL problems. I will also give an example
+of two isomorphic LCL problems.
+
+When dealing with LCL problems, it is often useful to
+recognize whether certain problems are isomorphic to
+each other. The notion of LCL problem isomorphism is
+in many ways similar to the notion of graph isomorphism.
+We will give the definition of problem isomorphism
+for the representation used in round elimination.
+Because we can represent any LCL problem in the formalism
+of round elimination (as was
+shown in Theorem~\ref{theorem:re_formalism_is_general}),
+the isomorphism definition is useful
+for all LCL problems too.
+An \emph{isomorphism} between two problems $P_1$ and $P_2$ is
+a function $f$ such that $f$ is a 
+bijection, and $f$ maps an allowed output label of the problem
+$P_1$ to an allowed output label of the problem $P_2$, and 
+the underlying graph of problem $P_1$ is the same as the
+underlying graph of problem $P_2$, and the number of
+allowed configurations for active and passive nodes in $P_1$ is
+the same as the number of allowed configurations for
+active and passive nodes respectively in $P_2$, and if we apply the function $f$
+to labels used in the configurations of active and passive nodes in
+$P_1$, we will receive
+all those and only those configurations that are allowed for
+active and passive nodes respectively in $P_2$. Similar to graph isomorphism, if an
+isomorphism exists from $P_1$ to $P_2$, then
+also an isomorphism exists from $P_2$ to $P_1$. If there exists an
+isomorphism between some two problems, we say that such problems
+are isomorphic (to each other).
+
+Consider a problem $P_1$ on $3$-regular trees, where leaves can
+produce any output, and non-leaves can output only one of the
+following 2 sets of labels on their ports: $\{A, B, B\}$ and
+$\{A, A, A\}$. Now consider another problem $P_2$ on $3$-regular
+trees, where we also do not care about leaf nodes, and non-leaf
+nodes can output one of the following 2 sets of labels on their
+ports: $\{A, A, B\}$ and $\{B, B, B\}$. Here, we will ignore
+the actual meaning of the problem. What is important is to
+notice that these two
+problems are isomorphic to each other. Indeed, function $f$
+that maps label $A$ of $P_1$ to $B$ of $P_2$ and label
+$B$ of $P_1$ to $A$ of $P_2$ is an isomorphism.
+Among other things, this implies that the problems can
+in some way be viewed as two name variations of the same single
+LCL problem. This means, for example, that if we know
+the round complexity of $P_1$, we also know the round
+complexity of $P_2$.
+
 \section{Automata-theoretic lens classifier}
 
 In this section I will describe a technique that can be used to automatically
