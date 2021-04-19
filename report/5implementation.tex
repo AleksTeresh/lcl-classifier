@@ -284,7 +284,7 @@ by the tool previously and saved in the database. Thus, the normalization
 algorithm also allows us to reduce the usage of computational resources.
 
 The algorithm is based on the problem normalization algorithm
-from Round Eliminator~\cite{Olivetti2020}. While the original
+from the Round Eliminator~\cite{Olivetti2020}. While the original
 algorithm is written in Rust programming language, I
 reimplemented it in Python and changed some of its
 implementation details to better suit my purpose.
@@ -497,7 +497,7 @@ After that, the fetched problems undergo the same
 batch classification process. Finally, the database is
 updated with the received classifications.
 
-\section{Integration of Round Eliminator}
+\section{Integration of the Round Eliminator}
 
 This section describes how the Round Eliminator
 tool~\cite{Olivetti2020} has been integrated in my solution.
@@ -528,7 +528,7 @@ implementation of TLP Classifier~\cite{Rocher2020clas}. However,
 this approach has several crucial disadvantages.
 Firstly, the overhead of calling a command line command
 from a Python program is significant compared to just calling
-a Python function. Secondly, the output of Round Eliminator
+a Python function. Secondly, the output of the Round Eliminator
 would have to be parsed from the plain textual format, which
 would have added an additional complexity of the software.
 Finally, the approach complicates distribution and deployment of
@@ -539,11 +539,11 @@ build form source codes the specific version of the Round Eliminator required.
 Instead, I have decided to go with the latter option. This
 alternative does not have any of the disadvantages listed
 in the previous paragraph while being just as feasible and
-easy to implement. Compiled in this manner, the whole of
+easy to implement. Compiled in this manner, the whole of the
 Round Eliminator logic is contained in a single .so file
 that can be easily deployed to e.g.\ a production server.
 Besides, the speed improvement is significant: I was
-able to execute up to three rounds of round eliminator
+able to execute up to three rounds of the Round Eliminator
 in under 100 milliseconds. Finally, the functions
 exposed via the .so file, return python-native
 data structures so that no additional parsing is required on my side.
@@ -568,7 +568,7 @@ as a query part of the URL.
 The reason why I decided to spend additional time and implement
 the web interface can be best unnderstood when considering
 another tool that has recently been rising in popularity among
-the distributed algorithms community -- Round Eliminator~\cite{Olivetti2020}. The tool has proved to be a very useful utility
+the distributed algorithms community -- the Round Eliminator~\cite{Olivetti2020}. The tool has proved to be a very useful utility
 when doing research connected to LCL problems on biregular trees.
 However, if it was not for the web interface that Olivetti has
 implemented, it is most likely that the popularity and
