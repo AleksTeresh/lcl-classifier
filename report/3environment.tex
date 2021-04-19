@@ -11,10 +11,12 @@ described in this chapter.
 
 This section explains in detail round elimination (RE)
 technique introduced in Chapter~\ref{chapter:background}, as well as
-implementation of the round elimination technique as a computer
+implementation of round elimination technique as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
-Besides, I will explain the relevance of the technique
-and the software implementation for our problem.
+Besides, I will demonstrate that all LCL problems that
+we're interested in can be represented in a formalism
+of round elimination, which implies
+its wide applicability.
 
 As already mentioned in the previous chapter, round elimination
 is a technique that, given an LCL problem $\Pi_0$ as an input, produces
@@ -27,7 +29,7 @@ since we rarely know round-complexity of an input problem when using
 round elimination. However, we can nevertheless use this rather inconvinient constraint
 to our advantage, which will be demonstrated below.
 
-Furthermore, when applying round elimination we talk about \emph{active} and
+Furthermore, when applying round elimination, we talk about \emph{active} and
 \emph{passive} nodes. Since $(\delta, \beta)$-bipartition of an input problem is
 already given (see our assumption above), nodes of degree $\delta$ are assumed
 to be active and nodes of degree $\beta$ are assumed to be passive. For a problem
@@ -38,44 +40,51 @@ checks that their radius-1 neighborhood's outputs comply to previously
 specified restrictions.
 
 In order to demonstrate the technique, we will have as our running
-examples two canonical problems: weak 3-labelling and sinkless orientation.
+examples two canonical problems: weak 3-labeling and sinkless orientation.
 
 \textbf{Weak 3-labeling} in this context is a problem on $\delta$-regular trees where
 each node labels its incident edges in such a way that no node $v$ in the graph
-has all its incident edges labelled with the same label. Besides if two
+has all its incident edges labeled with the same label. Besides if two
 nodes $v$ and $u$ are incident to the same edge $e = \{v, u\}$, such
-edge $e$ has to be labelled with the same label from both ``sides''. In other words,
+edge $e$ has to be labeled with the same label from both ``sides''. In other words,
 two neighboring nodes cannot output different labels on the same edge.
-It is easy to see although the initial problem is specified for a regular
+It is easy to see that, although the initial problem is specified for a regular
 tree, we can obtain an equivalent problem for a $(\delta, 2)$-biregular tree
 by replacing edges with nodes as described in Section ~\ref{subsection:biregular-trees}.
 Further, if we assume that all nodes of degree $\delta$ are active and all nodes of 
 degree 2 are passive and that nodes of degree $\delta$ cannot have their incident
-edges labelled all with the same label, and nodes of degree 2 must have both of their
-incident edges labelled with the same label, we obtain an LCL problem equivalent to
-weak 3-labelling but in a formalism suitable for round elimination. To formalise, we
-can define the problem as following:
+edges labeled all with the same label, and nodes of degree 2 must have both of their
+incident edges labeled with the same label, we obtain an LCL problem equivalent to
+weak 3-labeling but in a formalism suitable for round elimination. To formalise, we
+can define the problem as follows:
 \begin{align*}
 \Sigma &= \{A, B, C\}, \\
 A &= \{ \{A, B, C\}, \{A, A, B \insetor C\}, \{B, B, A \insetor C\}, \{C, C, A \insetor B\} \}, \\
 P &= \{ \{A, A\}, \{B, B\}, \{C, C\}\},
 \end{align*}
-where $\Sigma$ is an allowed alphabet, $A$ is a set of \emph{configuration}
-allowed for active nodes and $P$ is a set of configuration allowed for
-passive nodes. Here we assumed that $\delta = 3$. Notice that each
-configuration is a set of labels that are allowed to be on edges 
+where $\Sigma$ is an allowed alphabet, $A$ is a set of \emph{configurations}
+allowed for active nodes, and $P$ is a set of configurations allowed for
+passive nodes. Here, we assumed that $\delta = 3$. Notice that each
+configuration is a set of labels that are allowed to be outputted on ports
 incident to any active/passive node $v$. Notice also that the order of
 the labels in a single configuration does not matter. Finally, in this particular problem
 and in all problems in the context of round elimination, we usually do not care about
-leaf nodes. That is, leaf nodes are unrestrained and are fine with any 
+leaf nodes. That is, leaf nodes are unconstrained and are fine with any 
 configuration.  Next, I will
 describe another problem using the same formalism.
 
-\textbf{Sinkless orientation} (SO) is a problem on a $\delta$-regular tree
-where each non-leaf node has outdegree of atleast 1. Similar to the case of weak 3-labelling,
-we can replace each edge with a node of degree 2 to get to $(\delta, 2)-biregular$ tree with
-nodes of degree $\delta$ being active and nodes of degree 2 being passive.
-Then we can define the problem formally as follows:
+\textbf{Sinkless orientation} (SO) is a problem
+where each non-leaf node has outdegree of atleast 1.
+We will consider the problem in the context of
+a $\delta$-regular tree.
+Notice that we can interpret $\delta$-regular
+tree as a
+$(\delta, \delta)$-biregular tree with
+both active and passive nodes being of degree $\delta$.
+Recall also that since the tree is biregular, we
+necessarily assume bipartition of the nodes. In other words,
+we assume that 2-coloring is already given for the tree.
+Then, we can define the problem formally as follows:
 \begin{align*}
 \Sigma &= \{I, O\}, \\
 A &= \{ \{O, I \insetor O, I \insetor O\} \}, \\
@@ -98,7 +107,7 @@ are omitted in the current thesis for brevity. For in-depth technical details, a
 to refer to the original paper by Brandt~\cite{Brandt2019} or to the recently published textbook on distributed algorithms
 by Hirvonen et al.~\cite{Hirvonen2020}.
 
-Let us denote the initial weak 3-labelling problem as $\Pi_0$. After applying round elimination, we get as its
+Let us denote the initial weak 3-labeling problem as $\Pi_0$. After applying round elimination, we get as its
 output another LCL problem $\Pi_1$. The formal description of the problem is as follows:
 \begin{align*}
 \Sigma &= \{A, B, C\}, \\
@@ -113,7 +122,7 @@ contain any configurations consisting of the same three labels, therefore such
 output would be invalid. So we just have another problem that looks a lot like our
 previous problem $\Pi_0$ (essentially sets $A$ and $P$ have simply been swapped).
 Let us run round elimination once again, now using $\Pi_1$ as its input. We obtain
-$\Pi_2$ the following:
+$\Pi_2$, which looks as follows:
 \begin{align*}
 \Sigma &= \{A, B, C, D, E, F, G\}, \\
 A &= \{ \{C, E, F\}, \{C, D, G\}, \{B, E, G\}, \{A, F, G\}\}, \\
@@ -122,11 +131,11 @@ P &= \{ \{ACEG, ACEG\}, \{BCFG, BCFG\}, \{DEFG, DEFG\} \},
 where we use $X_1X_2...X_k$ notation to mean the same as $X_1 \insetor X_2 \insetor ... \insetor X_k$.
 Now this problem is zero round solvable. Indeed, if all active nodes output $\{C, E, F\}$
 on their incident edges in an arbitrary order, passive nodes will be satisfied (that is to say
-that all passive nodes will find a configuration from the ste $P$) in all cases.
+that all passive nodes will find a configuration from the set $P$) in all cases.
 
-Now since we know that $\Pi_2$ is 0-round solvable, using the jutification already described
+Now since we know that $\Pi_2$ is 0-round solvable, using the justification already described
 above, we can conclude that our original problem $\Pi_0$ is exactly 2-round solvable. Thus,
-weak 3-labelling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Observe that
+weak 3-labeling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Observe that
 we have just used round elimination technique to \emph{prove} that an LCL problem can be
 solved in constant number of rounds.
 
@@ -149,7 +158,7 @@ it turns out that the key here is to pay attention to the initial assumptions th
 beginning of the section. Namely, the number of rounds $T$ of the original problem cannot be ``too large''.
 Hence, in the case of SO, the number of rounds necessary to solve it is ``too large''. Moreover,
 it has been shown that in cases like this, when, after applying round elimination repeatedly,
-we encounter a problem that we have already seen before, the initial problem $\Pi_0$ is most of the cases
+we encounter a problem that we have already seen before, the initial problem $\Pi_0$, in most of the cases,
 is solvable in $\Omega(\log n)$ rounds in deterministic setting and in $\Omega(\log \log n)$ rounds
 if randomness is allowed. Thus, we can use round elimination not only to prove upper bounds but
 also lower bounds for LCL problems on biregular graphs.
@@ -168,8 +177,7 @@ elimination (and in the Round Eliminator implementation) is universal.
 \begin{theorem}\label{theorem:re_formalism_is_general}
 Any LCL problem $P$ on undirected trees, where
 leaves, nodes close to leaves and nodes of irregular degrees are
-not constrained, can be represented in the formalism of the
-Round Eliminator.
+not constrained, can be represented in the formalism of round elimination.
 \end{theorem}
 \begin{proof}
   If $r$ is the checkability radius of the LCL problem $P$,
@@ -178,9 +186,9 @@ Round Eliminator.
   output (potentially including the topology if the graph in
   question is not a regular graph). It is also possible to
   give this whole
-  output on each half-edge around the node together with
-  the information about the location of the half-edge in the
-  radius-$r$ ball (in other words, where this half-edge is in the radius-$r$
+  output on each port around the node together with
+  the information about the location of the port in the
+  radius-$r$ ball (in other words, where this port is in the radius-$r$
   ball). Therefore, the fact that in the Round Eliminator we encode configurations
   on half-edges is not a problem.
   There are only two things that are special about the Round Eliminator representation.
@@ -199,8 +207,8 @@ Round Eliminator.
   Therefore, no matter what an LCL problem is, as long as it is a problem on
   undirected trees, where
   leaves, nodes close to leaves and nodes of irregular degrees are
-  not constrained, we can represented such problem in the formalism of the
-  Round Eliminator.
+  not constrained, we can represented such problem in the formalism of
+  round elimination.
 \end{proof}
 
 \section{Automata-theoretic lens classifier}
@@ -252,41 +260,46 @@ It turns out that in the case of paths and cycles, all LCLs belong to one of the
 complexity classes: $O(1)$, $\Theta(\log* n)$, $\Theta(n)$ and unsolvable. Notice that
 the complexity class of $\Theta(\log n)$ disappears in both deterministic and randomised settings.
 The technique described in the paper then takes the description of a problem as four sets: $C_{\textrm{node}}$,
-$C_{\textrm{edge}}$, $C_{\textrm{start}}$ and $C_{\textrm{end}}$ end following a polynomial time algorithm classifies the
-problem into one of the four compplexity classes. The cassification technique works for all LCL
+$C_{\textrm{edge}}$, $C_{\textrm{start}}$ and $C_{\textrm{end}}$, and following a polynomial time algorithm classifies the
+problem into one of the four complexity classes. The cassification technique works for all LCL
 problems on trees and cycles.
 
 Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
 has to be describable in a so-called \emph{edge-checkable} formalism. In other words, we are allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{\textrm{edge}}$ set, nodes can output any label
 on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
-Also, we are not concerned in the current formalism with the output of leaves and root -- only nodes in the
-middle of the graph are restricted. Although such a formalism imposes ceftain restrictions on problem families,
-there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind]
-is that in edge-checkable formalism it is not possible to place restrictoins on number of certain label
-among children of some node $v$. For example, problems of type ``a node with label X can have at most one child with label Y''
-are not possible, because if $(X, Y) \in C_{\textrm{edge}}$, then a node labelled with $X$ can have arbitrary number of children
-with labelled with $Y$. If, on the other hand, $(X, Y) \notin C_{\textrm{edge}}$ and a node $v$ is labelled with $X$, then
-none of its children can be labelled with $Y$.
+Also, we are not concerned in the current formalism with the output of leaves and the root -- only nodes in the
+middle of the graph are constrained. Although such a formalism imposes certain restrictions on what
+problem families can be used,
+there are still a lot of interesting problems that can be classified this way. One restriction to keep in mind
+is that in the edge-checkable formalism it is not possible to
+place restrictions on the number of nodes with a certain output label
+among children of some node $v$.
+For example, it is not possible to represent problems of type
+``a node with label X can have at most one child with label Y'',
+because if $(X, Y) \in C_{\textrm{edge}}$, then a
+node labeled with $X$ can have an arbitrary number of children
+labeled with $Y$. If, on the other hand, $(X, Y) \notin C_{\textrm{edge}}$ and a node $v$ is labeled with $X$, then
+none of its children can be labeled with $Y$.
 
-\section{Classification of binary labelling problems}
+\section{Classification of binary labeling problems}
 
 This section is based on the results obtained by Balliu et al.~\cite{Balliu2019c}. The paper demonstrates
-that the case of binary labelling problems on (bi)regular unrooted regular trees is fully decidable in
+that the case of binary labeling problems on (bi)regular unrooted regular trees is fully decidable in
 the deterministic LOCAL model. The paper also shows that in many cases, randomised complexity of an LCL problem
-can also be decided following the described technique, although complete decidability in randomised setting
+can also be decided following the described technique, although the complete decidability in randomised setting
 still remains an open research question.
 
-As in the previous cases, we will start the section by explaining representation of an LCL that is compatible
+As in the previous cases, we will start the section by explaining the representation of an LCL that is compatible
 with the described methods. The representation assumes a $(\delta, \sigma)$-biregular unrooted tree.
-Such biregularity assumes proper 2-coloring of the graph is initially known.
+Such biregularity assumes that the proper 2-coloring of the graph is initially known.
 As was already shown previously, biregularity is not actually necessary. It is
 sufficient that an underlying graph of an input problem is simply a regular
 unrooted tree. Given that, it is then easy to transform the $\delta$-regular tree
 to a $(\delta, 2)$-biregular tree by replacing each edge $e = \{u, v\}$ with a new node that is
 connected to nodes $u$ and $v$ via new edges and not connected to any other nodes. Finally,
 in the given setting we do not care about nodes with smaller degrees e.g.\ leaves. This is
-because any the irregularities in a graph can only make it easier for nodes around to solve
+because any irregularities in a graph can only make it easier for nodes around to solve
 the problem, therefore, it was decided to leave any nodes with degrees other than $\delta$
 and $\sigma$ unconstrained~\cite{Balliu2019c}.
 
@@ -296,7 +309,7 @@ $\delta$ and $\sigma$ are degrees of \emph{regular} nodes, $W$ is a set of so-ca
 explain what exactly the sets $W$ and $B$ represent, it is important to recall that
 this setting is concerned with \emph{binary} labeling only, which means that each node
 can only output two labels on its edges. I will refer to such two labels as ``zero'' and ``one''
-labels (denoted 0 or 1). The problem is assumed to follow the edge-labeling
+labels (denoted as 0 and 1). The problem is assumed to follow the edge-labeling
 formalism, in which each node outputs a label on each of its incident nodes so that
 any two adjacent nodes $v$ and $u$ can only output the same label on their common
 incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
@@ -305,7 +318,7 @@ if and only if the sum of labels on all its incident edges (that is, summing
 output labels on its incident edges as zeros and ones) is such a number $s_W$ that
 $s_W \in W$. Similarly, output of a \emph{black} node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
-$s_B \ in B$.
+$s_B \in B$.
 
 As an example, we will consider the already familiar \emph{sinkless orientation}
 problem. The problem can be represented as $\Pi = (\delta, 2, \{0, 1, 2, \dots, \delta~-~1\}, \{ 1 \})$,
@@ -315,9 +328,9 @@ nodes of an underlying graph, while black nodes represent edges in the original 
 Furthermore, an output label $1$ represents an edge
 that is directed from a white node towards a black node, while label $0$ represents
 an edge directed from a black node towards a white node. That is why
-$W$ contains all integers from 1 to $\delta - 1$ but not $\delta$,
-this signifies that each white node must have an outdegree of at least 1,
-or in other words that edges of a white node cannot all be incoming.
+$W$ contains all integers from 1 to $\delta - 1$ but not $\delta$.
+This highlights the fact that each white node must have an outdegree of at least 1,
+or in other words, that edges of a white node cannot all be incoming.
 From the set $B$ we can see that each black node must have 
 exactly one incoming and one outgoing edge. This is because each edge (which is represented by a black node)
 in the original graph must be properly oriented, or in other words it must
@@ -328,8 +341,8 @@ described in the paper work. The details are very technical and require a huge
 thoretical background to cover beforehand. It is worth noting however that
 given a description of a problem $\Pi$, it is possible to classify it in $O(1)$
 time since the authors of the paper provide a simple table where one can
-easily lookup what compplexity class a certain LCL problem belongs to. Thus,
-given a description of an binary labelling LCL on (bi)regular unrooted tree,
+easily lookup what complexity class a certain LCL problem belongs to. Thus,
+given a description of a binary labeling LCL on (bi)regular unrooted tree,
 it is trivial to determine its complexity class (albeit only in deterministic setting)
 for both computers and human beings.
 
@@ -337,9 +350,9 @@ for both computers and human beings.
 
 This section will describe an unpublished work by Rocher that builds on top
 of the results introduced in the previous section~\cite{Rocher2020doc, Rocher2020clas}.
-The write-up shows that decidability of a majority of ternary labeling LCL problems on unrooted
-(bi)regular trees is possible in the deterministic LOCAL model. Although not all such problems
-can be classified using the techniques, many interesting ternary labelling problems on trees
+The report shows that a majority of ternary labeling LCL problems on unrooted
+(bi)regular trees are decidable in the deterministic LOCAL model. Although not all such problems
+can be classified using the techniques, many interesting ternary labeling problems on trees
 are indeed covered by the presented methods.
 Similar to the previous sections, inputs are not allowed in the current setup.
 
@@ -348,7 +361,7 @@ ternary labeling problem is represented as $\Pi = (\delta, \sigma, W, B)$
 where $\delta$ and $\sigma$ are degrees in the underlying $(\delta, \sigma)$-biregular
 tree, while $W$ and $B$ are constraint sets for white and black nodes respectively.
 Each constraint in the sets $W$ or $B$ is a 3-tuple of the form $(x_0, x_1, x_2)$
-where $x_0$ represents how many incident (to a given node) edges can be labelled with label ``0'',
+where $x_0$ represents how many incident (to a given node) edges can be labeled with label ``0'',
 $x_1$ shows how many edges can be labeled with ``1'', and $x_2$ -- with ``2''. Similar to the case
 of binary labeling in unrooted regular trees, we assume that only these three labels are allowed to
 be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
@@ -370,21 +383,21 @@ the single picked color on all of its incident edges. Then, black nodes that rep
 original underlying graph, make sure (hence the constraint set $B$) that no two adjacent nodes
 pick the same color.
 
-Nevertheless, it is important to discuss limitation of the manuscript as well. First of all,
+Nevertheless, it is also important to discuss limitations of the work. First of all,
 the work concentrates mainly on the case of $(3, 2)$-biregular trees. The author claims that
 the methods described can just as well be applied to cases of higher degrees, but it is unclear
 how practical it would be both in terms of time it would require to classify a single problem
 and in terms of how many problems of higher degrees will actaully be tightly classified. Secondly,
 even in the case when $\delta = 3$ and $\sigma = 2$, 106 non-isomorphic problems have not been
-classified tighly, or in other words there are 106 problems with non-matching lower and upper bounds.
-Finally, the developed methods are not well suited for situations when we would need to
-classify only one problem. Instead, the algorithms first classify all non-isomorphic
-problems on $(\delta, \sigma)$-biregular tree, and afterwards allow to a user to query
+classified tightly, or in other words there are 106 problems with non-matching lower and upper bounds.
+Finally, the developed methods are not well-suited for situations when we would need to
+classify only one problem. Instead, the algorithm first classifies all non-isomorphic
+problems on $(\delta, \sigma)$-biregular tree, and afterwards allows the user to query
 one problem at a time from the list of already classified problems. Among other things,
 it means that to classify a single problem on $(4, 2)$-biregular trees, in the current
 implementation, it is necessary to first classify all non-isomorphic problems on $(4, 2)$-biregular trees,
 which might take considerable amount of time. Finally, the write-up presents classification
-techniques only for deterministic setting, which further limits the kinds of LCLs that
+techniques only for the deterministic setting, which further limits the kinds of LCLs that
 can be classified using the techniques.
 
 \section{Classification of problems on rooted trees}
@@ -398,13 +411,13 @@ Tereshchenko~\cite{Studeny2021}. The program is limited to the case
 of binary trees only, although the theoremes presented in the manuscript
 generalize to rooted trees of any bounded degree.
 
-The manuscript demonstrate that for LCL problems on rooted trees,
+The manuscript demonstrates that for LCL problems on rooted trees,
 randomness does not help at all. That means that if a problem $\Pi$
-has the round complexity of $\Theta(X)$ in determiniistic setting, $\Pi$
-also has the round complexity of $\Theta(X)$ in randomised setting. The
-converse also holds, i.e.\ a randomised complexity of $\Theta(X)$ for some
+has the round complexity of $\Theta(X)$ in the deterministic setting, $\Pi$
+also has the round complexity of $\Theta(X)$ in the randomized setting. The
+converse also holds, i.e.\ a randomized complexity of $\Theta(X)$ for some
 problem implies deterministic complexity of $\Theta(X)$ for the same problem.
-The aforementioned holds for any LCL problem where a graph family is
+The aforementioned holds for any LCL problem where the graph family is
 a rooted tree. Moreover, the manuscript also shows that any such LCL will
 necessarily fall into one of the four complexity classes (if it is solvable at all). The complexity classes are $O(1)$, $\Theta(\log* n)$, $\Theta(\log n)$
 and $\Omega(n)$. In particual, the complexity class of $\Theta(\log \log n)$
@@ -412,7 +425,7 @@ is non-existent for LCL problems of this graph family.
 
 In turn, the developed software provides a simple way to ask for a complexity
 of any LCL problem on binary trees. As an output, the program returns
-one of the above listed complexity classes. The program takes as input a
+one of the above-listed complexity classes. The program takes as input a
 number of allowed \emph{configurations}, each in the following format:\\*
 \mbox{(child's~output~label)(node's~own~output~label)(another~child's~output~label)}.
 For example $\{112~121\}$ means that if a node $x$ outputs 1 as its output label,
@@ -431,9 +444,9 @@ apply to the leaf node.
 
 As an example of an interesting problem, we will consider
 \emph{3-coloring in binary trees}. In the described paradigm,
-the problem can be represented as following:
+the problem can be represented as follows:
 \begin{align*}
-  \{212~213~313~121~123~323~131~132~232\}.
+  \{212,~213,~313,~121,~123,~323,~131,~132,~232\}.
 \end{align*}
 It is easy to see why the set of configurations represent
 3-coloring problem. Indeed, a node $x$ can be of any of the three
@@ -444,9 +457,9 @@ color as long as this color is not $c$.
 
 As a second example, consider \emph{maximal independent set in
 binary trees}. Its representaion in the described formalism would be
-as following:
+as follows:
 \begin{align*}
-  \{a1a~a1b~b1b~bab~bb1~1b1\}.
+  \{a1a,~a1b,~b1b,~bab,~bb1,~1b1\}.
 \end{align*}
 Here label $1$ indicates belonging to the independent set $I$, label $b$
 indicates the fact that the node has at least one child which belongs to
@@ -463,15 +476,14 @@ that the set $I$ is independent and maximal.
 
 Thus, despite its simplicity, the representation language is very
 powerful and can represent almost all LCL problems in rooted trees, with
-the exceptions of problems that in one way or another emphasise
-nodes near leafs and/or roots~\cite{Balliu2021}. Furthermore, the
+the exceptions of problems that in one way or another emphasize
+nodes near leaves and/or roots~\cite{Balliu2021}. Furthermore, the
 practicality of the package -- especially the fact that most of the
 problems interesting for the purpose of the thesis can be classified
 in a matter of several milliseconds -- makes it a perfect candidate
 to be used as one of the meta-algorithms in my solution.
 
-\section{Summary of decidablity of LCL on trees}
-
+\section{Summary of the decidablity of LCLs on trees}
 
 \begin{table}
   \centering
@@ -546,7 +558,11 @@ to be used as one of the meta-algorithms in my solution.
   \bottomrule
   \end{tabular}
   \end{adjustbox}
-  \caption{An overview of the landscape and decidability of the round complexity of $\LCL$ problems in the $\LOCAL$ model. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. I have listed a few key references for each column, focusing on decidability aspects; the overall picture of the complexity landscape is the result of a long sequence of papers, including~\cite{Cole1986, Linial1992, Naor1991, Chang2016, BFHKLRSU16, Balliu2020-1, Balliu2016, Balliu2020-2}}
+  \caption{An overview of the decidability of $\LCL$ problems on paths, cycles, and trees\textsuperscript{1}. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. Apart from the references given in the table for each of the columns,
+  the works that contributed to the discovery of the presented knowledge include~\cite{Cole1986, Linial1992, Naor1991, Chang2016, BFHKLRSU16, Balliu2020-1, Balliu2016, Balliu2020-2}}
+  \small{\textsuperscript{1} The table was copied from the manuscript
+    by Balliu et al.~\cite{Balliu2021} with
+    minor modifications with the permission of the authors.
+  }
   \label{table:summary}
 \end{table}
-  
