@@ -40,13 +40,21 @@ indeed valid when considered together.
       \caption{Perspective in distributed computing}
       \label{fig:three sin x}
   \end{subfigure}
-  \caption{The difference in perspectives in classical and distributed computing}
+  \caption{
+    The difference in perspectives in classical and distributed computing\protect\footnotemark.
+    In the classifical setting, a single all-seeing entity is given the whole graph,
+    it solves a problem on the whole graph, and outputs the entire solution.
+    In the distributed setting, there is no all seeing entity. Instead, each node
+    in the graph is performing some local computation, based on which each node
+    produces only a part of the solution. The outputs of all the nodes are then combined
+    to obtain the entire solution.
+  }
   \label{fig:classical-vs-distributed-computing}
 \end{figure}
 
 The field of distributed algorithms has several
 decades of research history and has grown
-in width significantly since its inception in the 1980s.
+significantly since its inception in the 1980s.
 One specific
 area of the field that has received a lot of
 attention in recent years from the scientific
@@ -71,7 +79,7 @@ problems in distributed computing. Apart from
 individual complexity results, the research
 community has invented several \emph{meta-algorithms}.
 These are centralized algorithms that
-automatically determine the
+automatically determine the\footnotetext{The image was copied from the video~\cite{DA2020Introduction} that was a part of Distributed Algorithms 2020 course at Aalto Universty with the permission of the authors.}
 computational complexity of a provided
 problem.
 
@@ -87,7 +95,7 @@ centralized place exists that would accumulate all of the
 above-mentioned results.
 
 I will attempt to rectify the
-situation by designing and implementing a system
+problem by designing and implementing a system
 that would allow researchers to quickly
 access complexity-related results for locally
 verifiable problems, provided such problems have been
