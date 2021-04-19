@@ -5,7 +5,7 @@ This chapter will describe in detail the research goals of the thesis project. B
 
 \section{Research goals}
 
-As has been shown in the previous chapters, a lot is known about classification
+As has been shown in the previous chapters, a lot is known about the decidability
 of LCL problems on trees. In particular, plenty of research has been done
 on the topic of automated classification of LCL problems. However, the
 results of the research are scattered across numerous papers. Moreover,
@@ -14,7 +14,7 @@ the LCL problems that they accept as an input.
 The issue gets even more complicated by the fact that the existing practical implementations
 of the meta-algorithms are written in different programming languages, accept input in
 different forms,
-use different internal representation of a problem and produce output in different
+use different internal representations of a problem and produce output in different
 formats.
 
 Due to this, researchers would
@@ -29,7 +29,7 @@ the research community
 to use the meta-algoithms in their everyday work.
 
 Therefore, the goal of this thesis is a software tool that would store most -- if not all -- of
-the so far existing knowledge on complexity of LCL problems in trees.
+the so far existing knowledge on the complexity of LCL problems in trees.
 The tool would, in a sense, encapsulate all of the capabilities
 of the existing meta-algorithms.
 The tool would also allow for queries regarding a specific problem or a group of
@@ -103,17 +103,17 @@ filtering based on the following properties of a problem:
   \item The graph family of problems (e.g.\ whether the problem in on
   rooted or unrooted trees, whether the underlying graph is a tree
   or a cycle, degree of the grah if a graph is regular, etc.).
-  \item The number of labels allowed in the solution of the problems.
+  \item The number of labels allowed in the solutions to the problems.
   \item Restrictions on what outputs can nodes produce (e.g.\ the
-  produced output must always iniclude 2-coloring of a graph,
+  produced outputs must always include 2-coloring of a graph,
   or all passive nodes in a graph must output the same
   label on all incident edges, etc.).
-  \item Possibilty to query for only the \emph{smallest} problem that
-  satisfies other query parameters. Noice that the \emph{smallest} term here is
-  defined rather ambiguously and is open for interretation while implementing. Roughly speaking, it means a problem with the smallest
+  \item The possibility to query for only the \emph{smallest} problem that
+  satisfies other query parameters. Notice that the \emph{smallest} term here is
+  defined rather ambiguously and is open for an interpretation while implementing. Roughly speaking, it means a problem with the smallest
   number of valid outputs.
-  \item Possibilty to query for only the \emph{largest} problem. Here again
-  the \emph{largest} term is a rather ambiguous term and is used in a simlar sense
-  as explained above.
-  \item Possibility to query for the smallest not-yet-classified problem.
+  \item The possibility to query for only the \emph{largest} problem. Here again
+  the \emph{largest} term is a rather ambiguous one and means a problem with the largest
+  number of valid outputs.
+  \item The possibility to query for the smallest not-yet-classified problem.
 \end{itemize}
