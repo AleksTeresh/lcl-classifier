@@ -9,9 +9,9 @@ described in this chapter.
 
 \section{Round elimination}
 
-This section explains in detail round elimination (RE)
+This section explains in detail the round elimination (RE)
 technique introduced in Chapter~\ref{chapter:background}, as well as
-implementation of round elimination technique as a computer
+the implementation of the round elimination technique as a computer
 program written in Rust \cite{Brandt2019, Olivetti2020}.
 Besides, I will demonstrate that all LCL problems that
 we're interested in can be represented in a formalism
@@ -22,11 +22,11 @@ As already mentioned in the previous chapter, round elimination
 is a technique that, given an LCL problem $\Pi_0$ as an input, produces
 another LCL problem $\Pi_1$ which can be solved exactly one round
 faster. For round elimination to work, the input must comply
-to the following two constraints: $\Pi_0$ has to be a problem on a $(\delta, \beta)$-biregular
+with the following two constraints: $\Pi_0$ has to be a problem on a $(\delta, \beta)$-biregular
 graph, and the number of rounds in which $\Pi_0$ can be solved
 should not be ``too large''. Indeed, the last constraint is a rather curious one
-since we rarely know round-complexity of an input problem when using
-round elimination. However, we can nevertheless use this rather inconvinient constraint
+since we rarely know the round complexity of an input problem when using
+round elimination. However, we can nevertheless use this rather inconvenient constraint
 to our advantage, which will be demonstrated below.
 
 Furthermore, when applying round elimination, we talk about \emph{active} and
@@ -55,7 +55,7 @@ Further, if we assume that all nodes of degree $\delta$ are active and all nodes
 degree 2 are passive and that nodes of degree $\delta$ cannot have their incident
 edges labeled all with the same label, and nodes of degree 2 must have both of their
 incident edges labeled with the same label, we obtain an LCL problem equivalent to
-weak 3-labeling but in a formalism suitable for round elimination. To formalise, we
+weak 3-labeling but in a formalism suitable for round elimination. To formalize, we
 can define the problem as follows:
 \begin{align*}
 \Sigma &= \{A, B, C\}, \\
@@ -68,13 +68,13 @@ passive nodes. Here, we assumed that $\delta = 3$. Notice that each
 configuration is a set of labels that are allowed to be outputted on ports
 incident to any active/passive node $v$. Notice also that the order of
 the labels in a single configuration does not matter. Finally, in this particular problem
-and in all problems in the context of round elimination, we usually do not care about
+and all problems in the context of round elimination, we usually do not care about
 leaf nodes. That is, leaf nodes are unconstrained and are fine with any 
-configuration.  Next, I will
+configuration. Next, I will
 describe another problem using the same formalism.
 
 \textbf{Sinkless orientation} (SO) is a problem
-where each non-leaf node has outdegree of atleast 1.
+where each non-leaf node has an outdegree of at least 1.
 We will consider the problem in the context of
 a $\delta$-regular tree.
 Notice that we can interpret $\delta$-regular
@@ -93,15 +93,15 @@ P &= \{ \{I, I \insetor O, I \insetor O\}\}.
 Here we again assumed that $\delta = 3$. Label $I$ here represents
 an incoming edge and label $O$ represents an outgoing edge.
 Note that because the labels are produced only by active nodes,
-outgoing edge $O$ for an active node is an incoming edge for a 
+an outgoing edge $O$ for an active node is an incoming edge for a 
 passive node. And vise versa: an incoming edge $I$ for an active node
 is an outgoing edge for a passive node. Thus, the sets of configurations
 $A$ and $P$ can be interpreted so that each node -- no matter active or passive --
 has to have at least one outgoing edge, and the rest of the edges can be anything.
 
 Now that I have defined our two example problems,
-I will apply round elimination
-technique on each one, describe intermediate steps, and analyse the results.
+I will apply the round elimination
+technique on each one, describe intermediate steps, and analyze the results.
 Notice that the low-level technicalities of round elimination
 are omitted in the current thesis for brevity. For in-depth technical details, a reader is encouraged
 to refer to the original paper by Brandt~\cite{Brandt2019} or to the recently published textbook on distributed algorithms
@@ -136,10 +136,10 @@ that all passive nodes will find a configuration from the set $P$) in all cases.
 Now since we know that $\Pi_2$ is 0-round solvable, using the justification already described
 above, we can conclude that our original problem $\Pi_0$ is exactly 2-round solvable. Thus,
 weak 3-labeling on $(3, 2)$-biregular graphs is solvable in $O(1)$ rounds. Observe that
-we have just used round elimination technique to \emph{prove} that an LCL problem can be
-solved in constant number of rounds.
+we have just used the round elimination technique to \emph{prove} that an LCL problem can be
+solved in a constant number of rounds.
 
-Next, we will analyse SO in a similar manner. Let us again denote SO as $\Pi_0$ and apply
+Next, we will analyze SO in a similar manner. Let us again denote SO as $\Pi_0$ and apply
 round elimination to it. We obtain the following output problem:
 \begin{align*}
 \Sigma &= \{A, B\}, \\
@@ -152,7 +152,8 @@ Applying round elimination once again, we get
 A &= \{ \{A, B, B\} \}, \\
 P &= \{ \{B, AB, AB\}\}.
 \end{align*}
-It turns out that $\Pi_2 = \Pi_1$. But we also know that round complexity of $\Pi_2$
+It turns out that $\Pi_2 = \Pi_1$. But we also know that
+the round complexity of $\Pi_2$
 has to be smaller by 1 round than that of $\Pi_1$. Although this sounds like a contradiction,
 it turns out that the key here is to pay attention to the initial assumptions that I mentioned at the
 beginning of the section. Namely, the number of rounds $T$ of the original problem cannot be ``too large''.
@@ -164,10 +165,10 @@ if randomness is allowed. Thus, we can use round elimination not only to prove u
 also lower bounds for LCL problems on biregular graphs.
 
 Although I have only demonstrated the technique for two problems, the same idea following for most of the
-other LCLs on biregular graphs. In general RE can be used in an atomatic manner to prove constant upper or
+other LCLs on biregular graphs. In general, RE can be used in an automatic manner to prove constant upper or
 logarithmic and polylogarithmic lower bounds for a wide range of LCL problems. Furthermore, the open-source
 implementation
-of the technique written in programming language Rust and publicly available as a command-line tool and via
+of the technique written in Rust programming languages and publicly available as a command-line tool and via
 a web interface will hugely assist in using RE as part of my software solution for automated classification
 of LCL on trees.
 
@@ -176,7 +177,7 @@ elimination (and in the Round Eliminator implementation) is universal.
 
 \begin{theorem}\label{theorem:re_formalism_is_general}
 Any LCL problem $P$ on undirected trees, where
-leaves, nodes close to leaves and nodes of irregular degrees are
+leaves, nodes close to leaves, and nodes of irregular degrees are
 not constrained, can be represented in the formalism of round elimination.
 \end{theorem}
 \begin{proof}
@@ -199,15 +200,15 @@ not constrained, can be represented in the formalism of round elimination.
   we treat $O(0)$ and $O(1)$ as the same complexity class -- namely $O(1)$).
   The second thing is that
   we assume that in the original LCL definition,
-  correctness does not depend on existence and various properties
+  correctness does not depend on the existence and various properties
   of cycles in the graph. For instance, the LCL problem ``am I contained in a
   triangle'' cannot be translated to the Round Eliminator's representation.
   But again, in the current work,
   we are only concerned with LCLs on trees.
   Therefore, no matter what an LCL problem is, as long as it is a problem on
   undirected trees, where
-  leaves, nodes close to leaves and nodes of irregular degrees are
-  not constrained, we can represented such problem in the formalism of
+  leaves, nodes close to leaves, and nodes of irregular degrees are
+  not constrained, we can represent such problem in the formalism of
   round elimination.
 \end{proof}
 
