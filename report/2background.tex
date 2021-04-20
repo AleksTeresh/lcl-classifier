@@ -44,7 +44,7 @@ edges in a directed graph. In that case, two edges $e_1$ and $e_2$ are adjacent 
 $e_1 \neq e_2$ and either first or second element of the pair $e_1$ contains the same
 element as either first or second element of the pair $e_2$.
 
-Besides we often talk about edges and nodes being \emph{incident} to each other.
+Besides, we often talk about edges and nodes being \emph{incident} to each other.
 In an undirected graph, an edge $e$ is incident to a node $v$ if and only if $v \in e$. In this
 case, we also say that the node $v$ is incident to the edge $e$. Similarly, in a
 directed graph, an edge $e$ is incident to a node $v$ if and only if $v$ is the
@@ -52,7 +52,7 @@ first or the second element of the pair $e$. Again, in the case described in the
 previous sentence, the node $v$ is said to be incident to the edge $e$.
 
 We also often talk about \emph{ports}. A port can be thought of as an end
-of an edge $e$ associated with a node $v$, so that $e$ is an incident edge
+of an edge $e$ associated with a node $v$ so that $e$ is an incident edge
 of $v$. Therefore, each edge $e = \{v, u\}$ has two ports associated
 with it. One port belongs to node $v$, and another port belongs to
 node $u$. From this, it follows that each node has as many ports
@@ -72,7 +72,7 @@ number of edges incident to $v$ directed outwards from the node. Finally, we are
 often interested in a maximum degree of a graph $G$, that is, the maximum value of
 degrees of all nodes belonging to the graph $G$. I denote such maximum degree as
 $\Delta$. In this work, we only consider graphs whose nodes' degrees
-are bounded by a constant. That is a degree of each node is
+are bounded by a constant. That is, the degree of each node is
 necessarily finite and does not depend on the size of the graph.
 
 A \emph{walk} in an undirected graph $G = (V, E)$ is a sequence $w$ of a form
@@ -102,9 +102,9 @@ $v = u$, in which case the shortest walk between $v$ and $u$ is 0.
 A diameter of a graph (denoted as $\diam(G)$) is the length of the longest walk
 in a list $W$, where $W$ is a list of the shortest walks, i.e.\ the one between each pair of nodes
 $v$ and $u$ in a graph $G = (V, E)$ such that $v \in V$ and $u \in V$. If a graph
-$G$ is not connected, and therefore there is a pair of nodes $v$ and $u$ that do not
+$G$ is not connected and, therefore, there is a pair of nodes $v$ and $u$ that does not
 have a walk between them, we say that a diameter of such a graph $G$ is infinity. That
-is $\diam(G) = \infty$.
+is, $\diam(G) = \infty$.
 
 \subsection{Several important graph families}
 
@@ -122,7 +122,7 @@ have the following properties:
 
   \item The graph consists of at least two nodes.
 
-  \item Exactly two nodes have a degree 1 and all the other nodes have a degree~2.
+  \item Exactly two nodes have a degree 1, and all the other nodes have a degree~2.
 \end{enumerate}
 
 A \emph{cycle} is a connected graph where each node has a degree 2.
@@ -137,7 +137,7 @@ A \emph{tree} is an undirected acyclic connected graph. A \emph{rooted tree}
 has a single \emph{root vertex}, and thus some nodes have a \emph{parent} node
 (some because e.g.\ a root node never has a parent) and one or more \emph{children}
 nodes. For a node $v$, a node $u$ is its parent if and only if $v$ and $u$ are
-neighbor nodes and the shortest walk from the root to $u$ is shorter by exactly
+neighbor nodes, and the shortest walk from the root to $u$ is shorter by exactly
 1 compared to the shortest walk from the root to $v$. Node $v$ is a child of node
 $u$ if and only if $u$ is a parent of node $v$. Finally, in the context of rooted trees,
 a node $l$ that has no children is referred to as a \emph{leaf} node.
@@ -158,9 +158,9 @@ A \emph{regular} graph is a graph where each vertex has the same degree.
 A \emph{biregular} graph is a graph where each vertex has one of the two
 allowed degrees and only them. In this thesis, when we talk about
 \emph{($\beta$, $\delta$)-biregular} graph $G$, we always assume that 
-$G = (V, E)$ is bipartite such that $V$ is partitioned into two
+$G = (V, E)$ is bipartite so that $V$ is partitioned into two
 subsets $U$ and $W$, nodes of these subsets together form a proper 2-coloring,
-all nodes in $U$ are of degree $\beta$ and all nodes in $W$ are of
+all nodes in $U$ are of degree $\beta$, and all nodes in $W$ are of
 degree $\delta$. In particular, when I talk about \emph{($\beta$, $\delta$)-biregular trees},
 I mean a bipartite biregular tree where all nodes except for the leaves
 follow the rules of ($\beta$, $\delta$)-biregular graphs described above,
@@ -211,9 +211,10 @@ This model of computation is currently known as Linial's or the \emph{LOCAL mode
 \subsection{Model of computation}
 
 Here, I will describe the model of computation that we are going to
-assume throughout the rest of the thesis. Note that there is a number
-of different models, which are also widely studied in the research
-community.
+assume throughout the rest of the thesis.
+Note that there are several
+different models, which are also widely studied
+in the research community.
 
 First, as it was already stated, unlike in the case of centralized
 computation, we are concerned with multiple interconnected computing entities
@@ -290,7 +291,7 @@ and not a result of an accidental fault or an intentional adversary effort.
 As was already mentioned previously, our model of computation is known
 as Linial's or the LOCAL model~\cite{Linial1987}. Therefore, to complete the
 description, I will describe in more detail two distinctive qualities of the LOCAL model
-from other models of distributed computing, namely unique identifiers and arbitrarily large
+from other models of distributed computing: namely unique identifiers and arbitrarily large
 bandwidth.
 
 Each node in the LOCAL model is provided with a unique identifier as part of the initial input.
@@ -314,8 +315,8 @@ In particular, this implies that a node can send all of its information -- no ma
 large it is -- to all its neighbors in just one round.
 
 This, in turn, implies a rather
-curious property. Imagine that every node sends all of its information during the first round,
-and having received some data from its neighbors, saves all this information locally. Consider
+curious property. Imagine that every node sends all of its information during the first round
+and, having received some data from its neighbors, saves all this information locally. Consider
 some node $v$ in the middle of a graph $G = (V, E)$. Since all nodes send all their data,
 after the first round, node $v$
 will have all the data that all its neighbors had initially, plus its own initial information.
@@ -345,12 +346,12 @@ computation locally. And because local computation in the LOCAL model is virtual
 anything that could be computed in a centralized setting will be computed locally by each
 node individually. Then, in the next round, each node can output its part of the solution.
 
-\subsection{Formalising the LOCAL model}
+\subsection{Formalizing the LOCAL model}
 
-In this subsection I will formalise LOCAL model that I informally described above.
+In this subsection, I will formalize the LOCAL model that I informally described above.
 This will, first of all, help to clarify the aspects of the model that are still left ambiguous
 after reading the previous subsections. Besides, it will allow us to introduce
-a randomised model below once the basic deterministic one is unambiguously defined.
+a randomized model below once the basic deterministic one is unambiguously defined.
 
 An algorithm being executed by each node consists of 
 three functions. One for local state initialization, which is executed only once, after
@@ -371,14 +372,14 @@ $$\receive_A(x(v), m(v), d)$$
 The function returns a new local internal state of the node $v$, which becomes a
 starting internal state $x(v)$ in the next round.
 
-\subsection{Randomised algorithms}
+\subsection{Randomized algorithms}
 
-This subsection will introduce a randomised distributed model of computation
-and highlight some of the difference between randomised and deterministic
-models. In this section, the focus will be specifically on the randomised LOCAL
+This subsection will introduce the randomized distributed model of computation
+and highlight some of the differences between randomized and deterministic
+models. In this section, the focus will be specifically on the randomized LOCAL
 model as opposed to some other distributed algorithms models.
 
-In the randomised LOCAL model, there are two major differences from the
+In the randomized LOCAL model, there are two major differences from the
 deterministic LOCAL model. First, the function $\init_A(u(v), d)$ becomes
 randomised. This means that the initial state $x_0(v) = \init_A(u(v), d)$ of a node $v$ is
 chosen from a discrete probability distribution of all possible initial states.
@@ -389,36 +390,36 @@ discrete probability distribution. Everything else in the model remains exactly
 as it is in the deterministic case, that is, no changes are made to the $\send_A(x(v), d)$
 function.
 
-Since probabilities are involved when in randomised setting, it might not be
+Since probabilities are involved when in the randomized setting, it might not be
 obvious what it means to ``solve'' a problem. The major problem is that
 since states of the nodes are chosen from a discrete probability distribution,
 there is always a probability that the output of the nodes will not be valid.
 Therefore, there is often a probability that the problem has not been solved
 after a certain number of rounds.
 
-But before I define what it means to solve a problem in a randomised setting, it is
-worth noting that there exists two kinds of randomized algorithms: ``Monte Carlo'' and
+But before I define what it means to solve a problem in the randomized setting, it is
+worth noting that there exist two kinds of randomized algorithms: ``Monte Carlo'' and
 ``Las Vegas''. \emph{Monte Carlo} algorithms always stop after a specified $f(n)$
 number of rounds, where $n$ is the number of nodes in the graph, but
 it is not guaranteed that the output will be a valid one. Monte Carlo algorithms
-only guarantee their execution time, and succeed only with probability $p$.
-\emph{Las Vegas} algorithms, on the other hand, always produce a correct output,
+only guarantee their execution time and succeed only with probability $p$.
+\emph{Las Vegas} algorithms, on the other hand, always produce correct output,
 once all the nodes in a graph have stopped, but the algorithm will stop after a
 specified $f(n)$ number of rounds only with some probability $p$. Thus, in some
-way, these types of randomised algorithms are complements of each other:
-one guarantees correctness of the output but has a chance of going over some
+way, these types of randomized algorithms are complements of each other:
+one guarantees the correctness of the output but has a chance of going over some
 specified execution time, while another has a guarantee on the execution time
 but has some probability of producing incorrect output. In the rest of the thesis,
-unless explicitely specified otherwise, we can assume that the randomised algorithms
+unless explicitly specified otherwise, we can assume that the randomized algorithms
 are Monte Carlo algorithms.
 
-Finally, I now can define what it means to solve a problem in a randomised context.
-When saying that a certain randomised algorithm ``solves'' a certain problem in
+Finally, I now can define what it means to solve a problem in a randomized context.
+When saying that a certain randomized algorithm ``solves'' a certain problem in
 $T(n)$ rounds, unless specified otherwise, I mean that the algorithm stops after
-$T(n)$ computational rounds and the nodes output (or to be more precise the nodes
+$T(n)$ computational rounds, and the nodes output (or to be more precise the nodes
 have transitioned to one of the output states) a correct solution ``with high
 probability'' (often denoted as ``w.h.p.''). Formally, if an algorithm succeeds with
-high probability, it means that the algorithm succeds with probability of at least
+high probability, it means that the algorithm succeeds with the probability of at least
 $1 - 1 / n^c$, where $n$ is a number of nodes in a graph and $c$ is some constant
 such that $c > 0$. Moreover, $c$ is a constant that can be freely chosen when 
 running the algorithm. To give a simple example, an algorithm's running time may
@@ -426,7 +427,7 @@ linearly depend on such a constant $c$, then before an algorithm is executed,
 one may freely choose the constant so that the larger the constant the longer is
 the running time, but also the lower the chance that the produced output will
 be incorrect. Notice that $c$ does not need to affect running time, but it often
-does since the larger it is the lower is the probability of algorithm's failure,
+does since the larger it is the lower is the probability of the algorithm's failure,
 and decreasing such probability usually comes at the cost of something else -- 
 often running time. Thus, when saying that something succeeds ``with high probability''
 I do not mean it vaguely but rather refer to a very precise mathematical definition
@@ -438,7 +439,7 @@ This section will introduce the iterated logarithm function. The function is
 one of the most common complexity results of distributed algorithms and will
 appear often in the rest of the document.
 
-The interated logarithm function, denoted as $\log^*(x)$ is defined as follows:
+The iterated logarithm function, denoted as $\log^*(x)$ is defined as follows:
 \[
     \log^*(x) = \begin{cases}
         0 & \text{ if $x \le 1$}, \\
@@ -464,7 +465,7 @@ LCL problems.
 
 As the field of distributed algorithms started to develop, it became clear
 that some classes of problems
-are of a particular interest to the theoretical research community.
+are of particular interest to the theoretical research community.
 One class of such problems has been first introduced in 1993 by
 Moni Naor and Larry Stockmeyer under the name of Locally Checkable 
 Labeling (LCL) problems~\cite{Naor1993}.
@@ -476,23 +477,23 @@ following criteria~\cite{Naor1993, Suomela2020}:
 
 \item The maximum degree of a graph is a finite number that does not depend on $n$.
 
-\item There is a finite number of input labels and the number is not dependent on $n$.
+\item There is a finite number of input labels, and the number is not dependent on $n$.
 
-\item There is a finite number of output labels and the number does not depend on $n$.
+\item There is a finite number of output labels, and the number does not depend on $n$.
 
 \item The correctness of a solution can be checked locally by each individual node. That is,
 after a solution is produced and all the nodes in the graph have stopped, each node can just
 check a radius-$O(1)$ neighborhood around itself. The solution is valid if and only if each of
-the individual neighborhoods for all the nodes are valid.
+the individual neighborhoods for all the nodes is valid.
 
 \end{itemize}
 In the list above, $n$ is the number of nodes in the graph. Finally, as is easy to see from the definition of LCL
-probles
+problems
 above, there is always a finite representation of any LCL problem. Indeed, one can simply list
 all valid local neighborhoods, list all valid input labels, list all valid output
-labels and specify the maximum degree of a graph. Since all of the beforementioned are
-of size $O(1)$, it is always possible to have a finite representaion of an LCL.
-In practice however, in many cases it is more practical to come up with
+labels, and specify the maximum degree of a graph. Since all of the beforementioned are
+of size $O(1)$, it is always possible to have a finite representation of an LCL.
+In practice, however, in many cases, it is more practical to come up with
 a more concise representation. We will return to the topic of representing LCL
 problems later in this thesis.
 
@@ -507,7 +508,7 @@ almost entirely understood~\cite{Suomela2020, Chang2020a}.
 \section{Major LCL problems}
 
 This section will introduce some of the common LCL problems
-widely studied in distributed algorithms research community.
+widely studied in the distributed algorithms research community.
 Note that all of the problems also exist in the context of 
 centralized computing.
 
@@ -528,16 +529,16 @@ with the setting in which only nodes output the labels.
 Each node will output a tuple of the size equal to the node's
 degree. Each element of a tuple represents a label
 that the node outputs on a corresponding incident edge. The problem
-is also an LCL problem, because after a final output is
+is also an LCL problem because after a final output is
 produced, each node $v$ will need to check its radius-1
 neighborhood to make sure two things are in order:
 \begin{enumerate}
-  \item All edges incident to $v$ have to be of different color.
-That is, no two elements of node $v$'s output tuple should be the same.
+  \item All edges incident to $v$ have to be of a different color.
+That is, no two elements of node $v$'s output tuple can be the same.
 
   \item For each edge incident to $v$, a color that node $v$ colored some incident
-edge $e$, should be the same as the color that node $u$ colored the edge $e$ with.
-Here $e = \{v, u\}$. In other words, because each edge's coloring depends on
+edge $e$ must be the same as the color that node $u$ colored the edge $e$ with.
+Here $e = \{v, u\}$. In other words, because each edge's coloring depends on the
 output of two nodes, such coloring has to be consistent for each edge i.e.\ the produced
 colors need to be the same on both ends of each edge.
 \end{enumerate}
@@ -551,7 +552,7 @@ is not in the set $I$ but also does not have any adjacent nodes in the set $I$.
 In other words, in a \textbf{maximal independent set} all nodes either belong
 to the set $I$ or they \emph{cannot} join it because one of their neighbors has
 already joined. It is trivial to see that the problem is an LCL as checking local
-eighbourhood will suffice to determine if the solution is valid or not.
+neighborhoods will suffice to determine if the solution is valid or not.
 
 \begin{figure}
   \centering
@@ -601,8 +602,8 @@ is invalid.
 
 Before moving forward, it is important to remind about a notion of
 decidability in the context of theoretical computer science. It is
-assumed that the reader already has some basic knowledge on
-complexity theory, computability, Turing machines, automata and
+assumed that the reader already has some basic knowledge of
+complexity theory, computability, Turing machines, automata, and
 languages. The content of this section follows
 the definitions and formalisms as defined in the book by Sipser~\cite{Sipser2012}
 unless specified otherwise.
@@ -620,7 +621,7 @@ an input $x$, where $x \in L$, it always halts.
 valid solutions to it: ``yes'' and ``no''. We assume that a decision
 problem has an infinite set of inputs. That is, a decision problem
 defines an infinite but possibly restricted set of valid inputs,
-and for each input only one of the two outputs is the correct
+and for each input, only one of the two outputs is the correct
 output. An algorithm is said to solve a problem $P$ if and only
 if, given any input from a set of valid inputs, it can
 always produce the correct output. Recall also that we can
@@ -655,19 +656,19 @@ the problem can be reduced to the Halting problem~\cite{Margenstern2000, Turing1
 \section{Automated synthesis and classification}
 
 \emph{Automated classification}, broadly speaking, is a problem
-where objects of certain type, which possibly share some
+where objects of a certain type, which possibly share some
 properties in common, are required to be classified into
 several, often in-advance known categories automatically,
 that is, without or with minimal human supervision.
 Due to the recent successes in the field of machine learning,
 numerous automated classification problems have been solved,
 or at least for many of the problems, significant
-progress have been made. In particular, automated classification
-of image, sound and text data
+progress has been made. In particular, the field of automated classification
+of image, sound, and text data
 based on deep neural networks -- one of the popular machine learning
-techniques that have had multiple breakthroughs in the recent years --
+techniques that have had multiple breakthroughs in recent years --
 had some significant results in the areas of medicine, biology,
-agriculture and many others~\cite{auto-class_Sharma2017,
+agriculture, and many others~\cite{auto-class_Sharma2017,
 auto-class_Capizzi2015, auto-class_Ibrahim2018, auto-class_Colonna2016,
 auto-class_Winkler2017, auto-class_FabioDelFrate}.
 
@@ -686,9 +687,9 @@ objectives. For example, automated synthesis is fairly common
 in the field of electrical engineering, and is commonly
 applied when designing analog and digital circuits~\cite{synthesis_,
 synthesis_autoAx}. Furthermore, with the recent rise in popularity
-of quantum computing, the need has arisen for design of quantum
-circuits. Similar to the classical cases, synthesis of
-quantum circuits have become a popular research direction
+of quantum computing, the need has arisen for the design of quantum
+circuits. Similar to the classical cases, the synthesis of
+quantum circuits has become a popular research direction
 with numerous publications on the matter~\cite{synthesis_Khan2017,
 synthesis_Meuli2018, synthesis_Miller2003}.
 
@@ -696,7 +697,7 @@ In general, algorithm synthesis in the context of theoretical
 computer science is undecidable. However, there are some
 research directions in the field of distributed computing and
 distributed algorithms, where some forms of automated synthesis and/or
-automated problem classifications have led to succesfull
+automated problem classifications have led to successful
 developments~\cite{Balliu2018, da-synthesis_Rybicki2015,
 da-synthesis_Klinkhamer2016,
 da-synthesis_Hirvonen2017, da-synthesis_Fathiyeh2015, da-synthesis_Dolev2016,
@@ -705,22 +706,22 @@ the notions of automated synthesis and automated classification are
 often interconnected in the context of distributed algorithms.
 To demonstrate this, I take an example of a common problem in
 a distributed computing: given a problem $\Pi$, we need to
-automatically determine its compelxity. Assigning a complexity
-class to the problem $\Pi$ can be viewed as classification
+automatically determine its complexity. Assigning a complexity
+class to the problem $\Pi$ can be viewed as a classification
 problem here. On the other hand, proofs of the type that
 demonstrate that $\Pi$ belongs to a certain complexity class
 are often constructive in nature. That is, to show that a
 problem can be solved in the number of rounds $x$, we
-often need to develop and algorithm that solves the problem
-in the stated number of rounds. But developing such algorithm
+often need to develop an algorithm that solves the problem
+in the stated number of rounds. But developing such an algorithm
 can potentially be automated, meaning that \emph{automated
 algorithm synthesis} can be used. Thus, in the context of
 distributed computing, automated algorithm
 synthesis and automated problem classification are often two perspectives
-on the same thing: determinging whether a problem $\Pi$ can be solved
-in $x$ rounds or is it fundamentally more difficult.
+on the same thing: determining whether a problem $\Pi$ can be solved
+in $x$ rounds or is fundamentally more difficult.
 
-\section{Recent developments in automated classification of LCL problems}
+\section{Recent developments in the automated classification of LCL problems}
 
 At this point that the theoretical background has been given, it is
 useful to give a background to much more recent developments in the
@@ -734,7 +735,7 @@ This being the core topic of the thesis, it is thus important
 to describe all the prior work done in this direction.
 In the rest of the
 section, I will introduce some of the negative as well as positive results
-related to automated classification of LCL problems.
+related to the automated classification of LCL problems.
 
 The questions of whether a certain family of LCL problems
 can be automatically classified are often referred to
@@ -777,14 +778,14 @@ interesting and sufficiently broad families of LCL
 problems are both decidable, and it is feasible to
 automatically classify them in practice. Indeed a lot of work
 has been done attempting to derive practical algorithms
-that determine complexity of a given LCL problem,
+that determine the complexity of a given LCL problem,
 especially in trees.
 
-Balliu at al.~\cite{Balliu2019c} has shown that a complete classification
+Balliu et al.~\cite{Balliu2019c} has shown that a complete classification
 of binary labeling problems (problems where a node's
 output is allowed to be only one of the two possible labels)
 at least in a deterministic setting is possible and moreover
-can be done in $O(1)$ time, since computational
+can be done in $O(1)$ time since computational
 complexity of such problems can be simply looked up in a
 table in a constant time. In addition
 to this, the paper also shows that it is decidable to
@@ -793,7 +794,7 @@ LCL problems~\cite{Balliu2019c}.
 
 Building on top of the work outlined in the paper, Rocher~\cite{Rocher2020clas}
 has developed a meta-algorithm that classifies \emph{almost}
-all ternary labeling problems on trees in deterministic
+all ternary labeling problems on trees in the deterministic
 setting. Furthermore,
 he also implemented the meta-algorithm as a
 computer program written in Python programming language~\cite{Rocher2020doc}.
@@ -809,13 +810,13 @@ Distributed Algorithms research group~\cite{Tereshchenko2020}.
 
 Furthermore, a technique called round elimination was introduced in the context
 of LCL problems by Brandt et al.~\cite{Brandt2019}. It is a series of mechanical
-steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumption and the fact that
+steps that, if followed, in many cases transform an LCL problem $\Pi_0$ into another LCL problem $\Pi_1$. An interesting property is that, given certain assumptions and the fact that
 $\Pi_0$ is solvable in constant time e.g.\ in $T$ rounds, $\Pi_1$ is guaranteed to be
 solvable in exactly $T - 1$ rounds. This single property has numerous implications.
 For example, if we apply the technique $k$ times and in the end obtain an LCL problem $\Pi_k$
 such that it is zero-round solvable, we know that the original problem $\Pi_0$ is
 exactly $k$-round solvable. Moreover, round elimination is not only possible
-in theory but is also very much feasible in practive.
+in theory but is also very much feasible in practice.
 Indeed, Olivetti~\cite{Olivetti2020} has
 implemented a computer program that, given an LCL $\Pi_0$ solvable in $T$ rounds,
 it produces another LCL $\Pi_1$ solvable in $T - 1$ rounds. There even exists
@@ -826,10 +827,10 @@ in much more detail in the next section.
 Finally, very recently, Balliu et al.~\cite{Balliu2021} demonstrated
 that LCL problems on rooted trees are completely decidable.
 In particular, an LCL problem on rooted trees can be completely
-classified in both deterministic and randomised settings. The only
+classified in both deterministic and randomized settings. The only
 exception to this completeness is deciding whether a given problem
 has round complexity of $\Theta(n)$ or it is unsolvable. In addition
 to the theoretical results in the manuscript, the authors also
-provide a freely available open source software that is able to
-classify an LCL with relatively small number of labels in a matter
+provide a freely available open-source software that can
+classify an LCL with a relatively small number of labels in a matter
 of milliseconds~\cite{Studeny2021}.
