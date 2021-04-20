@@ -43,11 +43,12 @@ Therefore, at least some problems of the described family can be classified. Spe
 only problems on (2, 2)-, (2, 3)-, and (3, 2)-biregular trees of the family
 (and only in deterministic setting) can be classified in my implementation.
 Therefore, a natural opportunity for extending the current functionality of the tool
-would be to integrate a clasifier that would classify all binary labeling LCL problems
+would be to integrate a classifier that would classify all binary labeling LCL problems
 on unlabeled regular undirected trees. Given that such implementation would
 essentially involve a simple table lookup (the authors of the original paper
 reduce the classification problem to a two-dimensional table lookup), the
-classifier could work efficiently even with trees of relatively high degree.
+classifier could work efficiently even with trees of
+a relatively high degree.
 
 The next column in the table is for LCL problems on unlabeled regular directed
 trees. It has been shown that the problems of this family are fully decidable
@@ -79,7 +80,7 @@ direction for the tool's future development.
 Thus, while many of the listed graph families are already classifiable
 with the tool, more meta-algorithms can be developed
 and integrated. Moreover, the theoretical
-research of decidability of LCL problems on tree is currently
+research of decidability of LCL problems on trees is currently
 developing at a high pace, which will likely bring even more
 positive theoretical decidability results in the future.
 It is then the task of the practitioners to catch up with
@@ -91,7 +92,7 @@ as complete as possible.
 The two other goals in the list of the research goals were
 
 \begin{enumerate}
-  \item to be able to find deterministic and randomised complexity of
+  \item to be able to find deterministic and randomised complexity
   of a particular problem $P$, provided that the problem belongs to
   one of the classes that the tool is capable of classifying,
   \item to be able to query for groups of multiple problems based
@@ -99,7 +100,7 @@ The two other goals in the list of the research goals were
 \end{enumerate}
 
 As can be seen from Chapter~\ref{chapter:implementation},
-both of these functionalities have been succesfully implemented.
+both of these functionalities have been successfully implemented.
 Notice that
 I address performance issues in another section later in
 this chapter. Also,
@@ -143,14 +144,14 @@ of problems matching user-defined specification.
 
 Notice that the purpose of this section is to evaluate how
 useable the tool is from the perspective of its users.
-Therefore, we are not concerned with exact millisecond
+Therefore, we are not concerned with the exact millisecond
 precision of the operations. Instead, I will present
 the performance results with the precision down to a tenth of a second.
 Notice also that the times will vary depending on the underlying
 hardware, the fact whether other users are using the tool at the same
 time, etc. All the results presented below are performed on the
 author's local machine (MacBook Pro, 13-inch, 2018, Four Thunderbolt 3 ports).
-Refer to the technical specification on the Internet for exact
+Refer to the technical specification on the Internet for the exact
 hardware specifications of the machine.
 
 Finally, when presenting results for classifying a problem or
@@ -165,10 +166,11 @@ also a network delay and executing front-end logic.
 If a requested problem already exists in the database, finding out
 the problem's complexity consistently takes less than a second.
 On the other hand, if a problem has to be classified dynamically,
-classifying it will take less than 3.2 seconds (at least in case when
-problems degrees are less than 5 and the number of labels allowed is less
+classifying it will take less than 3.2 seconds (at
+least in cases where
+problems' degrees are less than 5 and the number of labels allowed is less
 than 5 as well). Below are some of the performance measurement results,
-based on which the above-mentioned conclusions has been drawn.
+based on which the above-mentioned conclusions have been drawn.
 
 \begin{itemize}
   \item Any 2-labeling problem on undirected paths is classified in \emph{under 0.1 sec.}
@@ -207,7 +209,7 @@ the performance of the querying functionality -- is
 a natural improvement direction that would most
 likely provide a lot of value for the users of the solution.
 
-\section{Number of preclassified problems}
+\section{The number of preclassified problems}
 
 At the moment of writing the thesis, the database contains $335\,314$
 LCL problems. Out of them, $197\,218$ have at least one non-trivial bound. \emph{Trivial bound} here
@@ -231,7 +233,8 @@ using the batch classification functionality described in Chapter~\ref{chapter:i
 Notice that in all of the problem families listed above, leaf and root nodes
 (or equivalently nodes of degree one on paths) are unconstrained. Moreover, in addition to the
 groups of preclassified problems, the database contains several individual problems that
-were added as a result of the application being used by several of the members of the
+were added as a result of the application being used by several
+members of the
 distributed algorithms research community.
 
 Thus, it is evident that the number of preclassified problems is already at this stage sufficient
@@ -248,7 +251,7 @@ development.
 
 This section contains some of the possibilities
 for improving and extending the solution. The ideas collected
-here has been obtained as a result of feedback
+here have been obtained as a result of the feedback
 received from members of the distributed algorithms
 research community who had already used the system
 as part of their research process.
@@ -259,8 +262,11 @@ A common request was to also be able to specify a lower bound for the
 number of labels.
 
 Another request was the ability to query only for those problems that are
-or lead to periodic points as a result of applying round elimination.
-The information about whether a problem is a periodic point ot not
+or lead to \emph{periodic points} as a result of applying round elimination.
+We call a problem $P$ a periodic point if we can obtain
+the same problem $P$ by applying round elimination to it one or more
+times.
+The information about whether a problem is a periodic point or not
 is currently only available at the time of classification but is
 not stored in the database. Storing the data and allowing for
 querying based on it would be yet another possibility to expand the tool.
@@ -277,7 +283,7 @@ in the Query object would be another useful extension to the tool.
 Finally, the query functionality is still currently rather limited.
 Moreover, it is not clear which features of it are going to be the
 most useful to the users and which will not be used often.
-Thus, investigating this via collecting feedback from
+Thus, investigating this by collecting feedback from the
 research community and then modifying the tool based on
 this feedback is yet another opportunity for improving the software.
 
