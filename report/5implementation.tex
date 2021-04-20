@@ -297,8 +297,8 @@ the fact that the Round Eliminator's problem representation is very similar to t
 representation used in my solution. Furthermore, the normalization
 algorithm used in the Round Eliminator is known to be correct and work
 sufficiently fast for the Round Eliminator to be useful for the research community.
-While it is perhaps true, that better, more efficient normalization
-algorithms exist, I decided to avoid optimizing prematurely, and
+While it is perhaps true that better, more efficient normalization
+algorithms exist, I decided to avoid optimizing prematurely and,
 as the first iteration, selected a working, "good enough" algorithm.
 If and when the current implementation of normalization will start
 causing performance problems, it should be relatively easy to
@@ -306,49 +306,49 @@ switch to another more efficient normalization algorithm.
 
 First, we determine how many labels are used in the description of the
 problem $P$ i.e.\ its alphabet size. Then, we map each letter in the description
-to a letter from A to Z. For example, if numbers were used for describing
-the problem, the numbers will be mapped to capital letters of
-English alphabet. It is important to point out already now that
+to a letter from A to Z. For example, if integers were used for describing
+the problem, the integers will be mapped to capital letters of
+the English alphabet. It is important to point out already now that
 one limitation of the current implementation is the fact that
-a problem with more than 26 labels cannot be correctly normalized.
+a problem with more than 26 labels cannot be normalized correctly.
 Once we obtain the list of letters used, we calculate all
-permutations of the list. For each permutation, we execute the following
+the permutations of the list. For each permutation, we execute the following
 subroutine:
 
-\begin{itemize}
+\begin{enumerate}
   \item Based on the given permutation, create a mapping from each
   element of the problem's alphabet to each symbol in the permutation.
-  That is, we map the $i$'th letter of the $P$ alphabet to the $i$'th symbol
+  That is, we map the $i$'th letter of the $P$'s alphabet to the $i$'th symbol
   in the permutation for all $i$ from 1 to the size of $P$'s alphabet.
   \item Based on the obtained mapping, do the following with the problem's
   active configurations, passive configurations, leaf constraints and
   root constraints one at a time.
   
-  \begin{itemize}
-    \item For each line of the configurations/restrictions, rename symbols
+  \begin{enumerate}
+    \item For each line of the configurations/constraints, rename the symbols
     according to the mapping constructed above.
-    \item If the problem $P$ is specified on unrooted/undirected graph,
-    change position of all symbols on each line of the configurations/restrictions according to symbols alphabetical order.
+    \item If the problem $P$ is specified on an unrooted/undirected graph,
+    change the positions of all symbols on each line of the configurations/constraints according to the symbols' alphabetical order.
     If the underlying graph of $P$ is directed/rooted, keep the currently first
-    symbol as first, but change positions of all the rest symbols (again separately for each line)
-    according to symbols alphabetical order.
+    symbol as the first (this is because it is assumed that the first configuration symbol in directed/rooted graphs always points towards a predecessor/parent node, so it's position must be preserved), but change the positions of all the other symbols (again separately for each line)
+    according to the symbols' alphabetical order.
     \item If at this point, some configuration lines are
     duplicated, remove all the duplicates so that each configuration
     line is unique.
-    \item Sort the unique configuration lines in alphabetical order
+    \item Sort the unique configuration lines in the alphabetical order
     treating the lines as strings.
-  \end{itemize}
+  \end{enumerate}
 
   \item Return the newly constructed active configurations,
   passive configurations, leaf constraints and root constraints as
   a tuple of four elements.
-\end{itemize}
+\end{enumerate}
 
 Each execution of the subroutine described above yields a tuple
 of size four. Thus, after executing the subroutine on each permutation of
-labels, we eventually obtain a list of tuples of size four.
+the labels, we eventually obtain a list of tuples of size four.
 Then we sort the list, and take its first element. The four
-tuple's elements are then assigned to the $P$'s
+elements of this first tuple are then assigned to the $P$'s
 active configurations, passive configurations, leaf
 constraints and root constraints respectively.
 
@@ -388,7 +388,7 @@ constraints and root constraints respectively.
 This section describes how batch classification and
 batch reclassification mechanisms have been implemented.
 Batch classification is important since we want the database
-to be pre-populated with significant number of classified
+to be pre-populated with a significant number of classified
 problems already before the first users start using it.
 In particular, we would need to classify huge but finite
 families of problems consisting of tens and hundreds of
@@ -400,7 +400,7 @@ on the other hand, is needed for cases when, for one reason
 or another, we would want to reclassify a certain
 family of LCL problems that is already stored in the
 database. For example, if I integrate a new meta-algorithm
-to my solution in the future, I would need to reclassify
+into my solution in the future, I would need to reclassify
 all problem families that are compatible with the newly-integrated
 meta-algorithm. Or purhaps, a programming mistake has been
 made when integrating one of the meta-algorithms, and therefore,
@@ -442,7 +442,7 @@ family are then generated via the following algorithm:
   \item Generatate all possible tuples of size two
   where the first element is an active configuration and
   the second is a passive configuration. This corresponds
-  to cartesian product between the previousy generated
+  to the Cartesian product between the previousy generated
   lists of all active and passive configurations.
   \item Remove tuples that have exact duplicates in the
   gnerated list of tuples, so that all tuples are unique.
@@ -454,7 +454,7 @@ family are then generated via the following algorithm:
   problems are isomorphic to each other. Remove such
   problems from the list so that the list contains only
   unique non-isomorphic problems.
-  \item Return the list of newly-generated problems.
+  \item Return the list of the newly-generated problems.
 \end{enumerate}
 
 Once the problems are generated, they are stored to the database,
@@ -476,7 +476,7 @@ and return the result. On the other hand, when
 classifying multiple problems at the same time,
 numerous optimizations can be applied e.g.\ reading the 
 dataset from the disk just once and search for all
-requested problems at the same time. For this reason,
+the requested problems at the same time. For this reason,
 when batch classifying families of problems, the program first
 calls such batch classification methods of meta-algorithm
 if such methods exist. Once this is done, a modification
@@ -490,7 +490,7 @@ functionality. Finally, when all problems have been classified,
 the database is updated with the classification results.
 
 The batch reclassification functionality resembles
-what has been described above with the excpetion that,
+what has been described above with the exception that,
 once a family of problems has been specified, it is
 not generated but is instead queries from the database.
 After that, the fetched problems undergo the same
@@ -500,14 +500,14 @@ updated with the received classifications.
 \section{Integration of the Round Eliminator}
 
 This section describes how the Round Eliminator
-tool~\cite{Olivetti2020} has been integrated in my solution.
-Prior to integration I had had considered several options:
+tool~\cite{Olivetti2020} has been integrated into my solution.
+Prior to the integration I had considered several options:
 
 \begin{itemize}
   \item Using an API of a server that runs the back end of the Round Eliminator tool.
   \item Calling the Round Eliminator as a command line tool from my Python
   application and then parsing the output, which is returned
-  in a text format as part of stdout~\cite{stdio}.
+  in a text format via stdout~\cite{stdio}.
   \item Compiling the Round Eliminator's source code to a ``Shared Object'' file (.so extension)
   using CPython ~\cite{CPython} bindings and then importing the compiled
   functions to my Python application as CPython dependency.
@@ -530,8 +530,9 @@ Firstly, the overhead of calling a command line command
 from a Python program is significant compared to just calling
 a Python function. Secondly, the output of the Round Eliminator
 would have to be parsed from the plain textual format, which
-would have added an additional complexity of the software.
-Finally, the approach complicates distribution and deployment of
+would have added an additional complexity to the software.
+Finally, the approach complicates the distribution and
+deployment process of
 the software. Indeed, one would have to install the specific
 version of Rust programming language as well as download and
 build form source codes the specific version of the Round Eliminator required.
@@ -547,7 +548,7 @@ able to execute up to three rounds of the Round Eliminator
 in under 100 milliseconds. Finally, the functions
 exposed via the .so file, return python-native
 data structures so that no additional parsing is required on my side.
-This, in turn has been achieved by adding CPythin bindings
+This, in turn has been achieved by adding CPython bindings
 to the Round Eliminator source code. The bindings wrap the relevant functions
 written in Rust, thus enabling us to pass Python data structures
 as parameters and recieve the return values as python-interpretable values.
@@ -600,14 +601,14 @@ first form, the application will first check if the requested
 problem can be found in a database. If not, it will proceed to
 running the classifiers (which corresponds with the classify function described above) and will eventially return the newly
 classified result. If the classification result is not trivial (which means that lower bounds are constant and upper bounds are unsolvable),
-it will also be stored in the database. The second query form, once
+it will also be stored in the database. The second form, once
 submitted will be transformed into the previously described
 \emph{Query} object. The query will then be executed against the database,
 the results will be returned to the client side and rendered
 in a user-friendly format.
 
 As a programming language for the front-end application, I decided
-to use TypeScript~\cite{TypeScript}. TypeScript is a general purpose
+to use TypeScript~\cite{TypeScript}, which is a general purpose
 programming language developed and maintained by Microsoft. It is closely related to JavaScript programming language, which has become de facto standard programming language for the Web.
 As a framework for the client application, I decided to use
 Svelte~\cite{Svelte}. Svelte is an open-source front-end framework
@@ -625,7 +626,7 @@ choice.
 
 As a final interesting piece of technology used, I describe properties
 and the reason for choosing to use svelte-virtual-list~\cite{svelte-virtual-list}.
-The library allows rendering only part of the content instead of rendering
+The library allows rendering only a part of the content instead of rendering
 the whole of the content on a web page. In the given case, this is
 particularly useful as it allows us to
 show tens of thousands of LCL problems (returned as part of the described above querying functionality) in a virtual list.
@@ -634,9 +635,9 @@ LCL problems at the same time. At the same time, it allows user to
 scroll through the list of problems with no noticable delay.
 If not for the library, the client application would have to render
 tens of thousands of LCL problems all at once. This would result in
-the user interface freezing for a prologned period (up to several minutes).
+the user interface freezing for a prolonged period of time (up to several minutes).
 
-Finally, I will explain the reasoning behind and benefits for
+Finally, I will explain the reasoning behind and benefits of
 storing the state of the two forms as part of the URL's query
 component. When searching for interesting query results, or even
 just classifying different individual LCL problems, it is often
@@ -646,7 +647,7 @@ Thus, once e.g.\ the results of a query are obtained, it is possible
 to copy the link and simply send it to, for example, a colleague.
 When opening the link, both forms will be prefilled with
 exactly the same values as those of the sender. This will make sure
-that in most cases the sender and the reciever of the link will end
+that, in most cases, the sender and the receiver of the link will end
 up with the same results displayed. Besides, if a particularly
 interesting query has been discovered, it is possible to
 simply copy and store the link. Opening the link in the future,
