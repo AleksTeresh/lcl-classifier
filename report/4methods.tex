@@ -9,7 +9,7 @@ As has been shown in the previous chapters, a lot is known about the decidabilit
 of LCL problems on trees. In particular, plenty of research has been done
 on the topic of automated classification of LCL problems. However, the
 results of the research are scattered across numerous papers. Moreover,
-all of the meta-algorithms described use different representation for
+all of the meta-algorithms described before use different representations for
 the LCL problems that they accept as an input.
 The issue gets even more complicated by the fact that the existing practical implementations
 of the meta-algorithms are written in different programming languages, accept input in
@@ -26,10 +26,10 @@ researchers would have to constantly keep in mind the information about what fam
 of problems can be classified by what meta-algorithm.
 All this makes it difficult and impractical for members of
 the research community
-to use the meta-algoithms in their everyday work.
+to use the meta-algorithms in their everyday work.
 
 Therefore, the goal of this thesis is a software tool that would store most -- if not all -- of
-the so far existing knowledge on the complexity of LCL problems in trees.
+so far existing knowledge on the complexity of LCL problems in trees.
 The tool would, in a sense, encapsulate all of the capabilities
 of the existing meta-algorithms.
 The tool would also allow for queries regarding a specific problem or a group of
@@ -37,20 +37,21 @@ problems. As an example, we can imagine the following two types of queries:
 \begin{itemize}
   \item Is the complexity of a problem $X$ already known (based on the existing meta-algorithms
   and/or accumulated individual complexity results)? If so, what is the complexity in both
-  deterministic and randomised settings?
+  deterministic and randomized settings?
   \item Return all problems on \emph{binary rooted trees} that have complexity of
   $\Theta(\log^* n)$.
 \end{itemize}
 In addition to this, the tool’s output would include references to
 the sources
 (published papers, certain theorems, ad-hoc implemented scripts, etc.)
-which the returned results are based on.
+that the returned results are based on.
 
 All this would make it more accessible for members of the research
 community to use the powers of the existing meta-algorithms.
 This, we believe, will be highly useful for the distributed
 algorithms researchers, as it would allow them to get access
-to existing information about complexity of LCL problems on trees
+to the existing information about the
+complexity of LCL problems on trees
 in a matter of seconds.
 
 \section{Scope}
@@ -72,18 +73,31 @@ To answer these questions, I utilize the existing literature on the subject, whi
 I have decided to limit ourselves to trees as an answer to the first question in the list.
 
 At the moment of writing the thesis, the number of meta-algorithms is
-quite small. Indeed, all of the meta-algorithms that the author is aware of were listed and explained in Chapter~\ref{chapter:environment}. Therefore, there are only five meta-algorithms to use: round elimination technique, the automata-theoretic lens classifier, classifier for binary labeling problems on unrooted trees, classifier for ternary labeling problems on unrooted trees, and classifier for problems on rooted trees. Moreover, for each of these classifiers, there exists an practical implementation of the meta-algorithm, even if in a limited form (e.g.\ an implementation of the classifier for problems on rooted trees, currently only supports problems on \emph{binary} rooted trees). Thus, I have decided to use all of the five listed meta-algorithm as part of the solution.
+quite small. Indeed, all of the meta-algorithms that the author
+is aware of were listed and explained in
+Chapter~\ref{chapter:environment}. Therefore, there are only
+five meta-algorithms to use: round elimination technique,
+the automata-theoretic lens classifier, classifier for
+binary labeling problems on unrooted trees, classifier for
+ternary labeling problems on unrooted trees, and classifier
+for problems on rooted trees. Moreover, for each of these
+classifiers, there exists a practical implementation of the
+meta-algorithm, even if in a limited form (e.g.\ an implementation
+of the classifier for problems on rooted trees, currently only
+supports problems on \emph{binary} rooted trees). Thus, I have
+decided to use all of the five listed meta-algorithms as part of
+the solution.
 
 There are only two LCL problem datasets the author is aware of. One of them is the dataset of binary and ternary labeling problems on binary rooted trees, which is a
 part of the Python package for classifying binary rooted trees~\cite{Tereshchenko2020brt}. The other one is the dataset of binary and ternary labeling problems on
-unrooted $(2, 2)$-biregular and $(3, 2)$-biregular trees, which is a part of the TLP classifier Python package~\cite{Rocher2020clas}. Since the latter dataseet is already incorporated in the TLP classifier,
+unrooted $(2, 2)$-biregular and $(3, 2)$-biregular trees, which is a part of the TLP classifier Python package~\cite{Rocher2020clas}. Since the latter dataset is already incorporated in the TLP classifier,
 the former dataset is the only one that I eventually decided to use
 in addition to the aforementioned meta-algorithms.
 
 Finally, I will attempt to answer the last question.
 This is perhaps the most difficult one from the list,
 as the research needs of different people involved in
-the distributed algorthms research might differ a lot, and thus
+the distributed algorithms research might differ a lot, and thus
 the parameters of the query that might prove to be useful
 will vary from case to case too. It was thus decided to first,
 based on some assumptions and general knowledge of the
@@ -98,11 +112,11 @@ decided that the query functionality should be able to perform
 filtering based on the following properties of a problem:
 
 \begin{itemize}
-  \item Randomised complexity.
+  \item Randomized complexity.
   \item Deterministic complexity.
-  \item The graph family of problems (e.g.\ whether the problem in on
+  \item The graph family of problems (e.g.\ whether the problem is on
   rooted or unrooted trees, whether the underlying graph is a tree
-  or a cycle, degree of the grah if a graph is regular, etc.).
+  or a cycle, degree of the graph if a graph is regular, etc.).
   \item The number of labels allowed in the solutions to the problems.
   \item Restrictions on what outputs can nodes produce (e.g.\ the
   produced outputs must always include 2-coloring of a graph,
@@ -112,7 +126,7 @@ filtering based on the following properties of a problem:
   satisfies other query parameters. Notice that the \emph{smallest} term here is
   defined rather ambiguously and is open for an interpretation while implementing. Roughly speaking, it means a problem with the smallest
   number of valid outputs.
-  \item The possibility to query for only the \emph{largest} problem. Here again
+  \item The possibility to query for only the \emph{largest} problem. Here again,
   the \emph{largest} term is a rather ambiguous one and means a problem with the largest
   number of valid outputs.
   \item The possibility to query for the smallest not-yet-classified problem.
