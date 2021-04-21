@@ -11,24 +11,41 @@ from .db_data_converter import map_to_classified_problem
 from .classified_problem import ClassifiedProblem
 from query import Query
 
-pool = psycopg2.pool.SimpleConnectionPool(
-    1,
-    20,
-    host=(
-        os.environ["POSTGRES_HOST"] if "POSTGRES_HOST" in os.environ else "localhost"
-    ),
-    database="postgres",
-    user=(os.environ["POSTGRES_USER"] if "POSTGRES_USER" in os.environ else "postgres"),
-    password=(
-        os.environ["POSTGRES_PASSWORD"]
-        if "POSTGRES_PASSWORD" in os.environ
-        else "mysecretpassword"
-    ),
-)
+_connection_pool = None
+
+
+def get_connection_pool():
+    # needed to avoid "local variable referenced before assignment" error
+    # see e.g. https://vbsreddy1.medium.com/unboundlocalerror-when-the-variable-has-a-value-in-python-e34e097547d6
+    global _connection_pool
+    if _connection_pool is None:
+        _connection_pool = psycopg2.pool.SimpleConnectionPool(
+            1,
+            20,
+            host=(
+                os.environ["POSTGRES_HOST"]
+                if "POSTGRES_HOST" in os.environ
+                else "localhost"
+            ),
+            database="postgres",
+            user=(
+                os.environ["POSTGRES_USER"]
+                if "POSTGRES_USER" in os.environ
+                else "postgres"
+            ),
+            password=(
+                os.environ["POSTGRES_PASSWORD"]
+                if "POSTGRES_PASSWORD" in os.environ
+                else "mysecretpassword"
+            ),
+        )
+    return _connection_pool
+
 
 # the function is copied from https://medium.com/@thegavrikstory/manage-raw-database-connection-pool-in-flask-b11e50cbad3
 @contextmanager
 def get_connection():
+    pool = get_connection_pool()
     try:
         connection = pool.getconn()
         yield connection
