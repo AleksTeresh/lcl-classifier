@@ -222,7 +222,7 @@ When dealing with LCL problems, it is often useful to
 recognize whether certain problems are isomorphic to
 each other. The notion of LCL problem isomorphism is
 in many ways similar to the notion of graph isomorphism.
-I will give the definition of problem isomorphism
+I will define problem isomorphism
 for the representation used in round elimination.
 Because we can represent any LCL problem in the formalism
 of round elimination (as was
@@ -249,10 +249,10 @@ are isomorphic (to each other).
 
 Consider a problem $P_1$ on $3$-regular trees, where leaves can
 produce any output, and non-leaves can output only one of the
-following 2 sets of labels on their ports: $\{A, B, B\}$ and
+following two sets of labels on their ports: $\{A, B, B\}$ and
 $\{A, A, A\}$. Now consider another problem $P_2$ on $3$-regular
 trees, where we also do not care about leaf nodes, and non-leaf
-nodes can output one of the following 2 sets of labels on their
+nodes can output one of the following two sets of labels on their
 ports: $\{A, A, B\}$ and $\{B, B, B\}$. Here, we will ignore
 the actual meaning of the problem. What is important is to
 notice that these two
@@ -267,17 +267,17 @@ complexity of $P_2$.
 
 \section{Automata-theoretic lens classifier}
 
-In this section I will describe a technique that can be used to automatically
-classify LCL problems on paths, cycles, and in some case on rooted trees.
+In this section, I will describe a technique that can be used to automatically
+classify LCL problems on paths, cycles, and in some cases, on rooted trees.
 Moreover, such classification can be done in polynomial time in the size
 of the description of the problem being classified~\cite{Chang2020}.
 
 On a high level, the classification algorithm first represents an input LCL problem as
-a directed graph and then by analysing the graph and its properties decides
+a directed graph and then, by analyzing the graph and its properties, decides
 which complexity class the given LCL problem belongs to. First, however, similar to
-the case of round elimination, it is important to explain a representation which
+the case of round elimination, it is important to explain a representation that
 the technique requires the input LCL problem to be in. We will initially concentrate on the case
-of LCLs on paths and cycles, and only afterwards cover the extension to rooted trees.
+of LCLs on paths and cycles and only afterward cover the extension to rooted trees.
 
 The representation is often referred to as \emph{node-edge-checkable} formalism.
 In it, each node outputs one label on each of its \emph{ports} associated with
@@ -289,8 +289,8 @@ means that a node can output these two labels on its incident edges. Edge constr
 similarly, a set of pairs of allowed labels from the perspective of an edge. For example,
 consider an edge $e = \{u, v\}$. If $u$ outputs label $A$ on its port associated with edge $e$
 and $v$ outputs label $B$ on its port associated with the edge $e$, then the constraint $(AB)$
-(or alternatively $(BA)$) must be included in the set of edge constraints. Otherwise such output
-would be invalid. For case of paths, where two nodes have only one incident edge, it is also
+(or $(BA)$) must be included in the set of edge constraints. Otherwise, such output
+would be invalid. For the case of paths, where two nodes have only one incident edge, it is also
 necessary to specify start-constraints and end-constraints, each consisting of a set of labels
 that two of the endpoint nodes are allowed to output on their only ports. To make the
 representation of the input LCLs clearer, here is an example of vertex 3-coloring in cycles
@@ -302,7 +302,7 @@ representation of the input LCLs clearer, here is an example of vertex 3-colorin
 where $C_{\textrm{node}}$ is a set of node-constraints and $C_{\textrm{edge}}$ is a set of edge-constraints.
 
 Set $\{ 11, 22, 33 \}$ here allows each node to be colored in one of the three colors
-(each node outputs its color to both ports) and each edge is allowed to connect
+(each node outputs its color to both ports), and each edge is allowed to connect
 two nodes of any color as long as these colors are not the same (note that there is no
 e.g.\ $11$ or $22$ in the set $C_{\textrm{edge}}$). To give another example, maximal matching (MM) in cycles
 would be encoded in the node-edge-checkable formalism as follows:
@@ -312,16 +312,16 @@ C_{\textrm{edge}} &= \{ 01, 10, 11, MM \}.
 \end{align*}
 It turns out that in the case of paths and cycles, all LCLs belong to one of the four
 complexity classes: $O(1)$, $\Theta(\log* n)$, $\Theta(n)$ and unsolvable. Notice that
-the complexity class of $\Theta(\log n)$ disappears in both deterministic and randomised settings.
+the complexity class of $\Theta(\log n)$ disappears in both deterministic and randomized settings.
 The technique described in the paper then takes the description of a problem as four sets: $C_{\textrm{node}}$,
-$C_{\textrm{edge}}$, $C_{\textrm{start}}$ and $C_{\textrm{end}}$, and following a polynomial time algorithm classifies the
-problem into one of the four complexity classes. The cassification technique works for all LCL
+$C_{\textrm{edge}}$, $C_{\textrm{start}}$ and $C_{\textrm{end}}$, and following a polynomial-time algorithm classifies the
+problem into one of the four complexity classes. The classification technique works for all LCL
 problems on trees and cycles.
 
 Moreover, some problems on rooted trees can be classified as well. For the technique to work, the problem
 has to be describable in a so-called \emph{edge-checkable} formalism. In other words, we are allowed to
 only specify constraints for the edges of the tree i.e.\ $C_{\textrm{edge}}$ set, nodes can output any label
-on the ports, but any node $v$ is allowed to output exactly one and the same label on all its ports.
+on the ports, but any single node $v$ is allowed to only output the same label on all its ports.
 Also, we are not concerned in the current formalism with the output of leaves and the root -- only nodes in the
 middle of the graph are constrained. Although such a formalism imposes certain restrictions on what
 problem families can be used,
@@ -340,14 +340,14 @@ none of its children can be labeled with $Y$.
 
 This section is based on the results obtained by Balliu et al.~\cite{Balliu2019c}. The paper demonstrates
 that the case of binary labeling problems on (bi)regular unrooted regular trees is fully decidable in
-the deterministic LOCAL model. The paper also shows that in many cases, randomised complexity of an LCL problem
-can also be decided following the described technique, although the complete decidability in randomised setting
+the deterministic LOCAL model. The paper also shows that in many cases, the randomized complexity of an LCL problem
+can also be decided following the described technique, although the complete decidability in the randomized setting
 still remains an open research question.
 
 As in the previous cases, we will start the section by explaining the representation of an LCL that is compatible
 with the described methods. The representation assumes a $(\delta, \sigma)$-biregular unrooted tree.
-Such biregularity assumes that the proper 2-coloring of the graph is initially known.
-As was already shown previously, biregularity is not actually necessary. It is
+Such biregularity assumes that a proper 2-coloring of the graph is initially known.
+As was already shown previously, biregularity is not necessary. It is
 sufficient that an underlying graph of an input problem is simply a regular
 unrooted tree. Given that, it is then easy to transform the $\delta$-regular tree
 to a $(\delta, 2)$-biregular tree by replacing each edge $e = \{u, v\}$ with a new node that is
@@ -359,7 +359,7 @@ and $\sigma$ unconstrained~\cite{Balliu2019c}.
 
 Each problem is represented as a 4-tuple $\Pi = (\delta, \sigma, W, B)$, where
 $\delta$ and $\sigma$ are degrees of \emph{regular} nodes, $W$ is a set of so-called
-\emph{white constraints} and $B$ is a set of \emph{black constraints}. In order to
+\emph{white constraints} and $B$ is a set of \emph{black constraints}. To
 explain what exactly the sets $W$ and $B$ represent, it is important to recall that
 this setting is concerned with \emph{binary} labeling only, which means that each node
 can only output two labels on its edges. I will refer to such two labels as ``zero'' and ``one''
@@ -370,14 +370,14 @@ incident edge $e = \{u, v\}$. In addition to this restriction, sets $W$ and $B$
 restrict the choice of outputs as well. A \emph{white} node's output is valid
 if and only if the sum of labels on all its incident edges (that is, summing
 output labels on its incident edges as zeros and ones) is such a number $s_W$ that
-$s_W \in W$. Similarly, output of a \emph{black} node is valid if and only if
+$s_W \in W$. Similarly, the output of a \emph{black} node is valid if and only if
 the sum of all labels on its incident edges sums to some number $s_B$ such that
 $s_B \in B$.
 
 As an example, we will consider the already familiar \emph{sinkless orientation}
 problem. The problem can be represented as $\Pi = (\delta, 2, \{0, 1, 2, \dots, \delta~-~1\}, \{ 1 \})$,
-where $\delta$ is any interger $> 2$. In this case, the degree of white nodes is
-$\delta$ and the degree of black nodes is $2$. Thus, white nodes here are the ``actual''
+where $\delta$ is any integer $> 2$. In this case, the degree of white nodes is
+$\delta$, and the degree of black nodes is $2$. Thus, white nodes here are the ``actual''
 nodes of an underlying graph, while black nodes represent edges in the original graph.
 Furthermore, an output label $1$ represents an edge
 that is directed from a white node towards a black node, while label $0$ represents
@@ -387,17 +387,17 @@ This highlights the fact that each white node must have an outdegree of at least
 or in other words, that edges of a white node cannot all be incoming.
 From the set $B$ we can see that each black node must have 
 exactly one incoming and one outgoing edge. This is because each edge (which is represented by a black node)
-in the original graph must be properly oriented, or in other words it must
+in the original graph must be properly oriented, or in other words, it must
 have exactly one head and one tail.
 
-I will not go into details to describe the reasons why the decidability methods
+I will not go into detail to describe the reasons how the decidability methods
 described in the paper work. The details are very technical and require a huge
-thoretical background to cover beforehand. It is worth noting however that
+theoretical background to cover beforehand. It is worth noting, however, that
 given a description of a problem $\Pi$, it is possible to classify it in $O(1)$
 time since the authors of the paper provide a simple table where one can
-easily lookup what complexity class a certain LCL problem belongs to. Thus,
+easily look up what complexity class a certain LCL problem belongs to. Thus,
 given a description of a binary labeling LCL on (bi)regular unrooted tree,
-it is trivial to determine its complexity class (albeit only in deterministic setting)
+it is trivial to determine its complexity class (albeit only in the deterministic setting)
 for both computers and human beings.
 
 \section{Classification of ternary labeling problems}
@@ -421,36 +421,36 @@ of binary labeling in unrooted regular trees, we assume that only these three la
 be outputted by each node. Also, each node outputs one of the labels of each of its incident edges
 in such a way that each edge is labeled with the same label by each of its incident nodes.
 Furthermore, we again are only concerned with nodes of degree $\delta$ or $\sigma$. Nodes of
-any lower degee only make the problem easier.
+any lower degree only make the problem easier.
 
 We will consider vertex 3-coloring as an example problem to demonstrate the formalism.
 In this problem, each node picks one of the three labels such that none of its neighbors
-pick the same label. In the case of 3-regular tree (which is the same as $(3, 2)$-biregular tree,
+pick the same label. In the case of a 3-regular tree (which is the same as $(3, 2)$-biregular tree,
 as we can always turn edges into nodes of degree 2), the problem looks as follows:
 \begin{align*}
   \Pi &= (3, 2, W, B), \\
   \W &= \{ (3, 0, 0), (0, 3, 0), (0, 0, 3) \}, \\
   \B &= \{ (1, 1, 0), (1, 0, 1), (0, 1, 1) \}.
 \end{align*}
-Here, $W$ signifies that fact that each node has to be colored with exactly one label. The node then outputs
+Here, $W$ signifies the fact that each node has to be colored with exactly one label. The node then outputs
 the single picked color on all of its incident edges. Then, black nodes that represent edges in the
-original underlying graph, make sure (hence the constraint set $B$) that no two adjacent nodes
+original underlying graph make sure (hence the constraint set $B$) that no two adjacent nodes
 pick the same color.
 
-Nevertheless, it is also important to discuss limitations of the work. First of all,
+Nevertheless, it is also important to discuss the limitations of the work. First of all,
 the work concentrates mainly on the case of $(3, 2)$-biregular trees. The author claims that
 the methods described can just as well be applied to cases of higher degrees, but it is unclear
-how practical it would be both in terms of time it would require to classify a single problem
-and in terms of how many problems of higher degrees will actaully be tightly classified. Secondly,
+how practical it would be both in terms of the time it would require to classify a single problem
+and in terms of how many problems of higher degrees will be tightly classified. Secondly,
 even in the case when $\delta = 3$ and $\sigma = 2$, 106 non-isomorphic problems have not been
-classified tightly, or in other words there are 106 problems with non-matching lower and upper bounds.
+classified tightly, or in other words, there are 106 problems with non-matching lower and upper bounds.
 Finally, the developed methods are not well-suited for situations when we would need to
 classify only one problem. Instead, the algorithm first classifies all non-isomorphic
-problems on $(\delta, \sigma)$-biregular tree, and afterwards allows the user to query
+problems on $(\delta, \sigma)$-biregular tree, and afterward allows the user to query
 one problem at a time from the list of already classified problems. Among other things,
 it means that to classify a single problem on $(4, 2)$-biregular trees, in the current
 implementation, it is necessary to first classify all non-isomorphic problems on $(4, 2)$-biregular trees,
-which might take considerable amount of time. Finally, the write-up presents classification
+which might take a considerable amount of time. Finally, the write-up presents classification
 techniques only for the deterministic setting, which further limits the kinds of LCLs that
 can be classified using the techniques.
 
@@ -462,11 +462,11 @@ In particular, I will concentrate on the practical implementation of the
 ideas presented in the manuscript. The computer program implementing some of the ideas presented in the
 publication was written in Python programming language by Studený and
 Tereshchenko~\cite{Studeny2021}. The program is limited to the case
-of binary trees only, although the theoremes presented in the manuscript
+of binary trees only, although the theorems presented in the manuscript
 generalize to rooted trees of any bounded degree.
 
 The manuscript demonstrates that for LCL problems on rooted trees,
-randomness does not help at all. That means that if a problem $\Pi$
+randomness does not help at all. This means that if a problem $\Pi$
 has the round complexity of $\Theta(X)$ in the deterministic setting, $\Pi$
 also has the round complexity of $\Theta(X)$ in the randomized setting. The
 converse also holds, i.e.\ a randomized complexity of $\Theta(X)$ for some
@@ -474,10 +474,10 @@ problem implies deterministic complexity of $\Theta(X)$ for the same problem.
 The aforementioned holds for any LCL problem where the graph family is
 a rooted tree. Moreover, the manuscript also shows that any such LCL will
 necessarily fall into one of the four complexity classes (if it is solvable at all). The complexity classes are $O(1)$, $\Theta(\log* n)$, $\Theta(\log n)$
-and $\Omega(n)$. In particual, the complexity class of $\Theta(\log \log n)$
+and $\Omega(n)$. In particular, the complexity class of $\Theta(\log \log n)$
 is non-existent for LCL problems of this graph family.
 
-In turn, the developed software provides a simple way to ask for a complexity
+In turn, the developed software provides a simple way to ask for the complexity
 of any LCL problem on binary trees. As an output, the program returns
 one of the above-listed complexity classes. The program takes as input a
 number of allowed \emph{configurations}, each in the following format:\\*
@@ -502,29 +502,29 @@ the problem can be represented as follows:
 \begin{align*}
   \{212,~213,~313,~121,~123,~323,~131,~132,~232\}.
 \end{align*}
-It is easy to see why the set of configurations represent
+It is easy to see why the set of configurations represent the
 3-coloring problem. Indeed, a node $x$ can be of any of the three
 colors. However, if a node $x$ has color $c$, none of its
 children is allowed to have $c$ as its output color. On the
-other hand, children can be of two different colors or of the same
+other hand, children can be of two different colors or the same
 color as long as this color is not $c$.
 
 As a second example, consider \emph{maximal independent set in
-binary trees}. Its representaion in the described formalism would be
+binary trees}. Its representation in the described formalism would be
 as follows:
 \begin{align*}
   \{a1a,~a1b,~b1b,~bab,~bb1,~1b1\}.
 \end{align*}
-Here label $1$ indicates belonging to the independent set $I$, label $b$
+Here, label $1$ indicates belonging to the independent set $I$, label $b$
 indicates the fact that the node has at least one child which belongs to
 $I$, and $a$ indicates that the node's parent belongs to $I$.
-Notice that nodes wth label $1$ are not allowed to have children with
+Notice that nodes with label $1$ are not allowed to have children with
 label $1$ -- this ensures independence of the independent set $I$.
-Besides, nodes with label $a$ or $b$ must have a parent or at least one
-child respectively that belongs to $I$. This ensures maximality of the
+Besides, nodes with labels $a$ or $b$ must have a parent or at least one
+child, respectively, that belongs to $I$. This ensures maximality of the
 independent set.
 Therefore,
-each node is either part of the independent set, has a child that belongs
+each node is either a part of the independent set, has a child that belongs
 to $I$ or a parent that belongs to $I$. All this together makes sure
 that the set $I$ is independent and maximal.
 
@@ -537,7 +537,7 @@ problems interesting for the purpose of the thesis can be classified
 in a matter of several milliseconds -- makes it a perfect candidate
 to be used as one of the meta-algorithms in my solution.
 
-\section{Summary of the decidablity of LCLs on trees}
+\section{Summary of the decidability of LCLs on trees}
 
 \begin{table}
   \centering
