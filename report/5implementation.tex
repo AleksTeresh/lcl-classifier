@@ -5,26 +5,26 @@ This chapter will describe the implementation of the tool.
 In particular, I will outline the high-level architecture of
 the software, discuss the internal representation of
 LCL problems as well as the representation of the query object.
-Moreover, I will discuss how batch classification has been
-implemented. Finally, in the end of the chapter I will cover
+Moreover, I will discuss how the batch classification has been
+implemented. Finally, at the end of the chapter, I will cover
 several miscellaneous items such as the problem normalization
 algorithm, integration of the Round Eliminator tool into
-my software and some of the properties of the Web interface,
+my software, and some of the properties of the Web interface,
 which has also been implemented as a part of the thesis project.
 
-\section{General architecture of the tool}
+\section{The high-level architecture of the tool}
 
-This section will outline the general architecture of the tool and
+This section will outline the high-level architecture of the tool and
 will describe in further detail some of its most important
 components. Despite the chapter's name, I am not going
 to describe low-level implementation detail in this section,
-but instead try to convey technical perspective on the tool
+but instead, try to convey a technical perspective on the tool
 as a whole. I will also discuss and critically analyze some
 of the architectural and technological decisions that have been
 made during the implementation phase.
 
 On the high level, the software consists of three parts:
-front-end application, back-end application and a database.
+front-end application, back-end application, and a database.
 The database contains arguably the most important component
 of this project: the definitions of LCL problems as well as their
 known upper and lower bounds. The back-end part contains
@@ -57,26 +57,26 @@ lower bounds, one for keeping track of what families of
 problems have been generated and classified via batch
 classification mechanisms, and one storing meta-data
 of the meta-algorithms used in classifying the LCLs.
-The front end is quite simple from technical perspective
-too. Some of the details about the client side of the
+The front end is quite simple from a technical perspective
+too. Some of the details about the client-side of the
 application will be discussed more in Section~\ref{section:webinterface}.
 The back end, however, contains most of the complexity of
 the tool. Therefore, in this section, I will concentrate
-mainly on the server side.
+mainly on the server-side.
 
 \subsection{Problem}
 
-The core element of the whole application and of the
-back-end part in particular is the Problem class.
+The core element of the whole application and the
+back-end part, in particular, is the Problem class.
 For representing an LCL problem, I have decided
-to use notation similar to that of Round
-Eliminator. My representaion however also
+to use a notation similar to that of Round
+Eliminator. My representation, however, also
 allows for graph types other than trees -- namely cycles.
 Besides, it allows the underlying graph of a problem
 to be rooted (or directed in the case of cycles).
 Finally, it allows representing problems where
 leaves' and root's output labels are also constrained.
-The representaion similar to that of a Round
+The representation similar to that of a Round
 Eliminator has been chosen because of its generality.
 In particular, as I have shown in Theorem~\ref{theorem:re_formalism_is_general},
 any LCL problem
@@ -110,21 +110,21 @@ leaf constraints (which can be an empty set), root constraints
 (which can be an empty set too), as well as special flag variables
 indicating whether all active or all passive configurations
 are allowed for active and passive nodes respectively.
-If one of the two flag variables are set to true,
+If one of the two flag variables is set to true,
 it overrides whatever is contained in the variables
 holding the actual active and passive configs.
 Besides, each problem object contains information
-on the type of the underlhing graph: path, cycle or
+on the type of the underlying graph: path, cycle, or
 tree. Notice that although any path is always a tree,
 I chose to differentiate between those two
-for convinience. It is worth mentioning that
-a path graph type will be chosen as internal
+for convenience. It is worth mentioning that
+a path graph type will be chosen as an internal
 representation whenever both active and
 passive configurations are of degree two and
 the user-selected graph type is not cycle.
-In particular, if a user specifies tree as a graph
+In particular, if a user specifies a tree as a graph
 type and provides configurations of degree two,
-tree will still be chosen as a graph type of the problem
+a tree will still be chosen as a graph type of the problem
 internally. Finally, after parsing the configs
 that are always provided in a string format,
 the tool automatically decides whether the given problem's
@@ -153,7 +153,7 @@ able to provide some useful information about the complexity of the
 problem. After that, the function combines the results
 returned by all the meta-algorithms. Based on the results returned,
 the function determines the tightest known lower and upper bounds of
-the LCL problem both in the deterministic and randomised LOCAL
+the LCL problem both in the deterministic and randomized LOCAL
 models. Finally, a Response object is constructed based on the bounds
 and is returned as the function's result. In the best case, tight
 complexity bounds are found for both deterministic and randomized
@@ -179,11 +179,11 @@ if we have not exited the function yet,
 we transform an instance of the Problem class to a problem
 representation used by the meta-algorithm that the given
 subclassify function wraps around. The meta-algorithm is then executed,
-the retured result is transformed into an instance of the
+the returned result is transformed into an instance of the
 Response class and the Response object is returned as
 a result of the subclassify function. Once the subclassify
 function is called for each of the meta-algorithms,
-the results of the calls are combined together, and
+the results of the calls are combined, and
 a single Response object is returned from the
 classify function.
 
@@ -194,7 +194,7 @@ based on which the database is queried for problems.
 Only problems that satisfy the provided Query object will be
 returned. The properties encapsulated by a Query object are
 more or less directly mapped to an SQL query's WHERE clause.
-The Query class groups those properties in three parent items:
+The Query class groups those properties into three parent items:
 
 \begin{itemize}
   \item problem properties,
@@ -226,10 +226,10 @@ restricting their complexities. The \emph{complexity bounds} object
 contains the following items:
 
 \begin{itemize}
-  \item an upper bound in randomized LOCAL setting (referred to as RUB),
-  \item a lower bound in randomized LOCAL setting (referred to as RLB),
-  \item an upper bound in deterministic LOCAL setting (referred to as DUB),
-  \item a lower bound in deterministic LOCAL setting (referred to as DLB).
+  \item an upper bound in the randomized LOCAL setting (referred to as RUB),
+  \item a lower bound in the randomized LOCAL setting (referred to as RLB),
+  \item an upper bound in the deterministic LOCAL setting (referred to as DUB),
+  \item a lower bound in the deterministic LOCAL setting (referred to as DLB).
 \end{itemize}
 
 The restriction of the fetched problems is done according to the
@@ -238,7 +238,7 @@ whose known randomized upper bound is at most as high as RUB, whose
 known randomized lower bound is at least as high as RLB, whose
 known deterministic upper bound is at most as high as DUB and whose
 known deterministic lower bounds is at least as high as DLB. Notice that
-for a problem not to be filtered out, all the four criteria must be
+for a problem not to be filtered out, all four criteria must be
 satisfied.
 
 Finally, \emph{include/exclude configuration} has the following
@@ -247,11 +247,11 @@ items encapsulated in it:
 \begin{itemize}
   \item Whether only the smallest problem has to be returned (in terms of the number of configurations).
   \item Whether only the largest problem has to be returned (in terms of the number of configurations).
-  \item Whether only those problems must be returned whose randomised upper
+  \item Whether only those problems must be returned whose randomized upper
   and lower bounds do not match.
   \item Whether only those problems must be returned whose deterministic upper
   and lower bounds do not match.
-  \item Whether only those problems must be returned whose randomised both
+  \item Whether only those problems must be returned whose randomized both
   upper and lower bounds are trivial (i.e.\ unsolvable and $\Omega(1)$
   respectively).
   \item Whether only those problems must be returned whose deterministic both
@@ -259,14 +259,14 @@ items encapsulated in it:
   respectively).
   \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is excluded. Note that
   the item has no effect if left empty.
-  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is excluded. Note that
+  \item List of configurations $L$ such that if a problem's configurations contain all of the configurations from $L$, the problem is excluded. Note that
   the item has no effect if left empty.
   \item List of configurations $L$ such that if a problem's configurations contain at least one configuration from $L$, the problem is included.
-  Otherwise a problem is excluded.
+  Otherwise, a problem is excluded.
   Note that
   the item has no effect if left empty.
-  \item List of configurations $L$ such that if a problem's configurations contain all of the configuration from $L$, the problem is included.
-  Otherwise a problem is excluded.
+  \item List of configurations $L$ such that if a problem's configurations contain all of the configurations from $L$, the problem is included.
+  Otherwise, a problem is excluded.
   Note that
   the item has no effect if left empty.
 \end{itemize}
@@ -274,11 +274,11 @@ items encapsulated in it:
 \section{Problem normalization}
 \label{section:problem-normalization}
 
-This section describes the above mentioned problem normalization
+This section describes the above-mentioned problem normalization
 algorithm. The algorithm is used for determining which problems
 are equivalent to each other. This, in turn, allows us
 to reduce the amount of needed storage. Besides, this prevents
-situtaions when a tool needs to run classification for a problem $A$
+situations when a tool needs to run classification for a problem $A$
 from the very beginning while an isomorphic problem $B$ has already been classified
 by the tool previously and saved in the database. Thus, the normalization
 algorithm also allows us to reduce the usage of computational resources.
@@ -295,7 +295,7 @@ to be heavily based on the algorithm from the Round Eliminator~\cite{Olivetti202
 is primarily due to
 the fact that the Round Eliminator's problem representation is very similar to the problem
 representation used in my solution. Furthermore, the normalization
-algorithm used in the Round Eliminator is known to be correct and work
+algorithm used in the Round Eliminator is known to be correct and works
 sufficiently fast for the Round Eliminator to be useful for the research community.
 While it is perhaps true that better, more efficient normalization
 algorithms exist, I decided to avoid optimizing prematurely and,
@@ -321,7 +321,7 @@ subroutine:
   That is, we map the $i$'th letter of the $P$'s alphabet to the $i$'th symbol
   in the permutation for all $i$ from 1 to the size of $P$'s alphabet.
   \item Based on the obtained mapping, do the following with the problem's
-  active configurations, passive configurations, leaf constraints and
+  active configurations, passive configurations, leaf constraints, and
   root constraints one at a time.
   
   \begin{enumerate}
@@ -330,27 +330,27 @@ subroutine:
     \item If the problem $P$ is specified on an unrooted/undirected graph,
     change the positions of all symbols on each line of the configurations/constraints according to the symbols' alphabetical order.
     If the underlying graph of $P$ is directed/rooted, keep the currently first
-    symbol as the first (this is because it is assumed that the first configuration symbol in directed/rooted graphs always points towards a predecessor/parent node, so it's position must be preserved), but change the positions of all the other symbols (again separately for each line)
+    symbol as the first (this is because it is assumed that the first configuration symbol in configurations of LCLs on directed/rooted graphs always points towards a predecessor/parent node, so its position must be preserved), but change the positions of all the other symbols (again separately for each line)
     according to the symbols' alphabetical order.
     \item If at this point, some configuration lines are
     duplicated, remove all the duplicates so that each configuration
     line is unique.
-    \item Sort the unique configuration lines in the alphabetical order
+    \item Sort the unique configuration lines in alphabetical order
     treating the lines as strings.
   \end{enumerate}
 
   \item Return the newly constructed active configurations,
-  passive configurations, leaf constraints and root constraints as
+  passive configurations, leaf constraints, and root constraints as
   a tuple of four elements.
 \end{enumerate}
 
 Each execution of the subroutine described above yields a tuple
 of size four. Thus, after executing the subroutine on each permutation of
 the labels, we eventually obtain a list of tuples of size four.
-Then we sort the list, and take its first element. The four
+Then we sort the list and take its first element. The four
 elements of this first tuple are then assigned to the $P$'s
 active configurations, passive configurations, leaf
-constraints and root constraints respectively.
+constraints, and root constraints, respectively.
 
 % \begin{algorithm}
 % \DontPrintSemicolon
@@ -385,7 +385,7 @@ constraints and root constraints respectively.
 
 \section{Batch classification and reclassification}
 
-This section describes how batch classification and
+This section describes how the batch classification and
 batch reclassification mechanisms have been implemented.
 Batch classification is important since we want the database
 to be pre-populated with a significant number of classified
@@ -395,24 +395,24 @@ families of problems consisting of tens and hundreds of
 thousands of LCL problems. Moreover, once a family of
 problems is selected, the problems of the family need to
 be generated and turned into instances of Problem class before
-we can actually classify them. Batch reclassify functionality,
+we can classify them. Batch reclassify functionality,
 on the other hand, is needed for cases when, for one reason
 or another, we would want to reclassify a certain
 family of LCL problems that is already stored in the
 database. For example, if I integrate a new meta-algorithm
 into my solution in the future, I would need to reclassify
-all problem families that are compatible with the newly-integrated
-meta-algorithm. Or purhaps, a programming mistake has been
+all problem families that are compatible with the newly integrated
+meta-algorithm. Or perhaps, a programming mistake has been
 made when integrating one of the meta-algorithms, and therefore,
 the problems need to be reclassified again.
 
 One option for implementing batch reclassification
 mechanisms would be to simply delete all of the problems
 of the class in question from the database and execute
-the batch classificatoin logic from the beginning
+the batch classification logic from the beginning
 including its first step of generating the problems
 of the problem class. However, this is suboptimal,
-since generation of problems of a certain family
+since the generation of problems of a certain family
 usually takes significantly longer times than
 the subsequent classification step. For this reason,
 I decided to have separate functionality for
@@ -420,7 +420,7 @@ batch reclassification.
 
 The batch classification process starts with creating
 an object that specifies a family of problems to be
-generated, classified and stored in the database.
+generated, classified, and stored in the database.
 The specification includes properties like
 active and passive degrees, label count, type of the
 underlying graph, etc. The problems of the given
@@ -428,7 +428,7 @@ family are then generated via the following algorithm:
 
 \begin{enumerate}
   \item Based on the specified label count, get a list of
-  all symbols i.e.\ alphabet of the problem family.
+  all symbols i.e.\ the alphabet of the problem family.
   \item Based on the alphabet and the specified active/passive
   degrees, generate lists of all the possible
   active and passive one-line configurations.
@@ -438,26 +438,26 @@ family are then generated via the following algorithm:
   can be of any size. This can be accomplished via
   the \emph{powerset} function. Now we have lists of
   all possible active and passive configurations.
-  \item Remove configurations that are empty.
-  \item Generatate all possible tuples of size two
+  \item Remove empty configurations.
+  \item Generate all possible tuples of size two
   where the first element is an active configuration and
   the second is a passive configuration. This corresponds
-  to the Cartesian product between the previousy generated
+  to the Cartesian product between the previously generated
   lists of all active and passive configurations.
   \item Remove tuples that have exact duplicates in the
-  gnerated list of tuples, so that all tuples are unique.
+  generated list of tuples, so that all tuples are unique.
   \item Turn each tuple into a Problem object using
   elements of the tuple as active and passive configurations.
   \item Normalize all the problems.
   \item Now that all the problems are in a normalized 
   representation, it is easy to detect whether any two
   problems are isomorphic to each other. Remove such
-  problems from the list so that the list contains only
-  unique non-isomorphic problems.
+  problems from the list so that the list contains
+  unique non-isomorphic problems only.
   \item Return the list of the newly-generated problems.
 \end{enumerate}
 
-Once the problems are generated, they are stored to the database,
+Once the problems are generated, they are inserted into the database,
 even though they are not classified yet. This is done mainly
 because the database will automatically associate a unique
 identifier with each of the problems.
@@ -467,8 +467,8 @@ some of the meta-algorithms provide a way to classify
 lists of problems at the same time, which is often
 significantly faster than classifying one problem at a time.
 This is due to the fact that some meta-algorithms
-(e.g.\ TLP classifier and BRT classifier) are in fact
-huge datasets of preclassified problems. When
+(e.g.\ TLP classifier and BRT classifier) are
+huge datasets of pre-classified problems. When
 classifying each problem individually, such
 meta-algorithms would need to read out the whole
 dataset from the disk, find one specific problem,
@@ -485,7 +485,7 @@ for each individual Problem object. The difference is
 that if a meta-algorithm $A$'s batch classify method has been
 already called, its subclassify function is not called
 anymore during the individual-problem classification which
-can significantly speedup the whole batch classification
+can significantly speed up the whole batch classification
 functionality. Finally, when all problems have been classified,
 the database is updated with the classification results.
 
@@ -501,11 +501,11 @@ updated with the received classifications.
 
 This section describes how the Round Eliminator
 tool~\cite{Olivetti2020} has been integrated into my solution.
-Prior to the integration I had considered several options:
+Before the integration, I had considered several options:
 
 \begin{itemize}
   \item Using an API of a server that runs the back end of the Round Eliminator tool.
-  \item Calling the Round Eliminator as a command line tool from my Python
+  \item Calling the Round Eliminator as a command-line tool from my Python
   application and then parsing the output, which is returned
   in a text format via stdout~\cite{stdio}.
   \item Compiling the Round Eliminator's source code to a ``Shared Object'' file (.so extension)
@@ -515,8 +515,8 @@ Prior to the integration I had considered several options:
 
 At the moment of writing the thesis, the Round Eliminator tool
 is deployed using WASM~\cite{WASM}. This virtually means that
-there is no back-end part running on a server, but instead
-all of the logic is executed on the client side of the application.
+there is no back-end part running on a server, but instead,
+all of the logic is executed on the client-side of the application.
 Redeploying the tool with a standalone server and a separate client
 part did not seem like a feasible alternative since this would
 require a nontrivial amount of work from the tool's maintainers.
@@ -526,16 +526,16 @@ On the other hand, the second option was feasible. Indeed,
 this method of using the Round Eliminator had already been used in the
 implementation of TLP Classifier~\cite{Rocher2020clas}. However,
 this approach has several crucial disadvantages.
-Firstly, the overhead of calling a command line command
+Firstly, the overhead of calling a command-line command
 from a Python program is significant compared to just calling
 a Python function. Secondly, the output of the Round Eliminator
-would have to be parsed from the plain textual format, which
-would have added an additional complexity to the software.
+would have to be parsed from the plain text format, which
+would have added additional complexity to the software.
 Finally, the approach complicates the distribution and
 deployment process of
 the software. Indeed, one would have to install the specific
 version of Rust programming language as well as download and
-build form source codes the specific version of the Round Eliminator required.
+build from source codes the specific version of the Round Eliminator required.
 
 Instead, I have decided to go with the latter option. This
 alternative does not have any of the disadvantages listed
@@ -548,10 +548,10 @@ able to execute up to three rounds of the Round Eliminator
 in under 100 milliseconds. Finally, the functions
 exposed via the .so file, return python-native
 data structures so that no additional parsing is required on my side.
-This, in turn has been achieved by adding CPython bindings
+This, in turn, has been achieved by adding CPython bindings
 to the Round Eliminator source code. The bindings wrap the relevant functions
 written in Rust, thus enabling us to pass Python data structures
-as parameters and recieve the return values as python-interpretable values.
+as parameters and receive the return values as python-interpretable values.
 The bindings were implemented using the rust-cpython library~\cite{RustCPython}.
 
 
@@ -559,15 +559,15 @@ The bindings were implemented using the rust-cpython library~\cite{RustCPython}.
 \label{section:webinterface}
 
 This section will briefly discuss some implementation details of
-the client side of the application. First, I start by explaining why
-the web interface has been implmented in the first place and why it
+the client-side of the application. First, I start by explaining why
+the web interface has been implemented in the first place and why it
 is important. Then, I describe some of the technologies that were
 chosen as part of the implementation. Finally, I describe the
 reasoning behind and advantages of the forms' state being stored
 as a query part of the URL.
 
 The reason why I decided to spend additional time and implement
-the web interface can be best unnderstood when considering
+the web interface can be best understood when considering
 another tool that has recently been rising in popularity among
 the distributed algorithms community -- the Round Eliminator~\cite{Olivetti2020}. The tool has proved to be a very useful utility
 when doing research connected to LCL problems on biregular trees.
@@ -577,43 +577,45 @@ frequency of use of the tool would have been nowhere near the current
 levels. Indeed, almost all users of the tool use it via the web
 client. Otherwise, a user would need to install Rust programming
 language~\cite{Rust}, build the tool locally using the tool
-called Cargo~\cite{Cargo} and then run it using the command-line.
+called Cargo~\cite{Cargo} and then run it using a command line.
 It is clear that the number of people willing to do that would be
-significantly smaller than number of people who ended up using
+significantly smaller than the number of people who ended up using
 an easy-to-use web interface that requires no installation or 
 configuration.
 
 By analogy, we can assume with high confidence that significantly more
-user would be willing to use my tool vie the web interface rather
-than downloading the soource of the tool locally and installing
+users would be willing to use my tool via the web interface rather
+than downloading the source of the tool locally and installing
 a specific version of Python programming language~\cite{CPython}.
 Moreover, the richness of the web user interface allows us to convey complicated
-ideas related distributed computing in way that is easier to understand, at least for knowledgable audience. Thus, it is has been
+ideas related to distributed computing in a way that is easier to understand, at least for a knowledgeable audience. Thus, it is has been
 decided to spend some time resources -- even though they were 
 quite limited -- on implementing a web user interface that is
 relatively easy to use and understand compared to its
-command line -based analog.
+command-line-based analog.
 
 The web interface consists of two forms. One form for classifying
-individual problems, and another one for issueing queries
+individual problems, and another one for issuing queries
 about groups of problems against the database. When using the
 first form, the application will first check if the requested
 problem can be found in a database. If not, it will proceed to
-running the classifiers (which corresponds with the classify function described above) and will eventially return the newly
+run the classifiers (which corresponds with the classify function described above) and will eventually return the newly
 classified result. If the classification result is not trivial (which means that lower bounds are constant and upper bounds are unsolvable),
 it will also be stored in the database. The second form, once
-submitted will be transformed into the previously described
+submitted, will be transformed into the previously described
 \emph{Query} object. The query will then be executed against the database,
-the results will be returned to the client side and rendered
+the results will be returned to the client-side and rendered
 in a user-friendly format.
 
 As a programming language for the front-end application, I decided
-to use TypeScript~\cite{TypeScript}, which is a general purpose
-programming language developed and maintained by Microsoft. It is closely related to JavaScript programming language, which has become de facto standard programming language for the Web.
+to use TypeScript~\cite{TypeScript}, which is a general-purpose
+programming language developed and maintained by Microsoft. It
+is closely related to JavaScript programming language, which
+has become the de facto standard programming language for the Web.
 As a framework for the client application, I decided to use
 Svelte~\cite{Svelte}. Svelte is an open-source front-end framework
 written in TypeScript. Among other things, it allows a simplified
-approach for application state management, and reduces initial
+approach for application state management and reduces initial
 page load times compared to other front-end frameworks~\cite{SvelteVsReactBundleSize}.
 
 For the styling of the front end, I used a minimalist CSS framework
@@ -630,9 +632,9 @@ The library allows rendering only a part of the content instead of rendering
 the whole of the content on a web page. In the given case, this is
 particularly useful as it allows us to
 show tens of thousands of LCL problems (returned as part of the described above querying functionality) in a virtual list.
-The virtual list, implemented via the above mentioned svelte-virtual-list library, renders only a small number (about 3--4)
-LCL problems at the same time. At the same time, it allows user to
-scroll through the list of problems with no noticable delay.
+The virtual list, implemented via the above-mentioned svelte-virtual-list library, renders only a small number (about 3--4)
+LCL problems at the same time. At the same time, it allows users to
+scroll through the list of problems with no noticeable delay.
 If not for the library, the client application would have to render
 tens of thousands of LCL problems all at once. This would result in
 the user interface freezing for a prolonged period of time (up to several minutes).
