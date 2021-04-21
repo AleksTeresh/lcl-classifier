@@ -1,9 +1,9 @@
 \chapter{Evaluation and further enhancements}
 \label{chapter:evaluation}
 
-In this chapter, I will attempt to evaluate success of the implementation
+In this chapter, I will attempt to evaluate the success of the implementation
 based on the research goals and the scope that I have outlined in Chapter~\ref{chapter:methods}.
-Besides, I will also evaluate performance of the implementation.
+Besides, I will also evaluate the performance of the implementation.
 As seen from the title,
 I have decided to combine the evaluation with discussion on opportunities for further
 development. Therefore, I will also propose several ideas for how my implementation
@@ -13,16 +13,16 @@ can be improved and extended.
 
 The first goal among the research goals listed in Chapter~\ref{chapter:methods}
 was to store (or to be able to compute dynamically) most
-(if not all) of the existing knowledge on classification of LCL problems on trees.
+(if not all) of the existing knowledge on the classification of LCL problems on trees.
 To evaluate how well I have done, we can refer once again to Table~\ref{table:summary}.
 The first three columns under the ``Paths and cycles'' grouping refer to LCL problems on
 paths and cycles where input is not allowed. The graphs can be directed or undirected,
-have arbitrary (but finite) number of labels in the output, and have restrictions
+have an arbitrary (but finite) number of labels in the output, and have restrictions
 on nodes of degree 1 (in cases of paths). All of these cases are covered by
 the cycle-path classifier~\cite{Tereshchenko2020}, which is based on the recently
 published paper~\cite{Chang2020}. The classifier has been integrated into the
 solution and, thus, I claim that the problems of this family are fully classifiable by the tool.
-The forth column of the table refers to LCL problems on paths and cycles
+The fourth column of the table refers to LCL problems on paths and cycles
 where input labeling is allowed. Since none of the used classifiers
 are capable of processing problems with inputs, this family of problems
 has not been covered by my implementation, although it has been shown that
@@ -32,11 +32,11 @@ As can be seen from the first column of the ``Tree'' grouping, it is unknown whe
 unlabeled regular homogeneous~\cite{BalliuHomogeneous}
 undirected trees are classifiable if the number of
 output labels exceeds two. On the other hand, LCL problems on
-unlabeled regular undirected trees with binary label output is fully decidable, albeit
-only in deterministic setting. In addition to this, for some problems of the problem family,
-complexity is decidable even in randomised setting~\cite{Balliu2019c}.
+unlabeled regular undirected trees with binary label output are fully decidable, albeit
+only in the deterministic setting. In addition to this, for some problems of the problem family,
+complexity is decidable even in the randomized setting~\cite{Balliu2019c}.
 Since my solution does not directly include a classifier that would implement
-classification of problems of the described family, the tool is not capable of
+the classification of problems of the described family, the tool is not capable of
 classifying the problems. It is important to notice however that the TLP
 Classifier~\cite{Rocher2020clas} uses the classifier as part of its implementation.
 Therefore, at least some problems of the described family can be classified. Specifically,
@@ -60,7 +60,7 @@ thus all LCL problems on binary rooted trees can be classified also in
 practice using the tool. Nevertheless, an implementation of the
 decidability algorithm that would work for trees of higher degrees
 would be of high interest to the research community. The original
-paper shows that such implementation for arbitrary number of output
+paper shows that such implementation for an arbitrary number of output
 labels is possible at least in principle. Besides, there is no
 evidence that such implementation would be impractical from the
 performance perspective. Therefore, a natural opportunity for
@@ -69,7 +69,7 @@ consequently integrate it into the tool.
 
 All other -- more general -- LCL problem families
 are currently only known to be decidable between complexity classes of
-$\Omega(\log n)$ and $O(n)$~\cite{Chang2020a}. There are currently
+$\Omega(\log n)$ and $O(n)$~\cite{Chang2020a}. There is currently
 no known implementation of the classification algorithm described in the
 referenced paper. Although the described meta-algorithm is at least
 EXPTIME-hard, there is also no evidence that the algorithm would not be
@@ -92,7 +92,7 @@ as complete as possible.
 The two other goals in the list of the research goals were
 
 \begin{enumerate}
-  \item to be able to find deterministic and randomised complexity
+  \item to be able to find deterministic and randomized complexity
   of a particular problem $P$, provided that the problem belongs to
   one of the classes that the tool is capable of classifying,
   \item to be able to query for groups of multiple problems based
@@ -121,7 +121,7 @@ being concerned with other, although related, metrics.
 
 As a final research goal in the list, we had a possibility
 to see which of the meta-algorithms has determined each
-of the lower and upper bounds for each of the preclassified
+of the lower and upper bounds for each of the pre-classified
 LCL problems being stored in the database. As described in the
 previous chapter, this is automatically done for all problems being
 classified via my solution. At the same time as a problem is classified,
@@ -134,19 +134,19 @@ fulfilled as well.
 
 \section{Performance}
 
-In this section, we will evaluate my implementation from
+In this section, we will evaluate my implementation from a
 performance perspective. Performance is essential for
 the tool to be useful for the research community.
-We will evaluate performance of the tool
+We will evaluate the performance of the tool
 in the context of classifying a single LCL problem and
 querying the database for a group
-of problems matching user-defined specification.
+of problems matching user-defined specifications.
 
 Notice that the purpose of this section is to evaluate how
 useable the tool is from the perspective of its users.
 Therefore, we are not concerned with the exact millisecond
 precision of the operations. Instead, I will present
-the performance results with the precision down to a tenth of a second.
+the performance results with precision down to a tenth of a second.
 Notice also that the times will vary depending on the underlying
 hardware, the fact whether other users are using the tool at the same
 time, etc. All the results presented below are performed on the
@@ -182,15 +182,15 @@ based on which the above-mentioned conclusions have been drawn.
 
 Below is a similar list of performance results for the querying
 functionality. The query that retrieves the largest problem class, in terms of
-number of problems, takes under 20 seconds. Notice that this query
+the number of problems, takes under 20 seconds. Notice that this query
 finds and fetches several tens of thousands of problems. Queries
-that fetch only a couple of hundred of problems are executed in under 1.5 seconds.
+that fetch only a couple of hundred problems are executed in under 1.5 seconds.
 
 \begin{itemize}
-  \item All 2-labeling problem on undirected paths are fetched in \emph{under 0.2 sec.}
-  \item All 3-labeling problem on directed paths are fetched in \emph{under 7.7 sec.}
-  \item All 3-labeling problem on directed (3, 2)-biregular trees are fetched in \emph{under 20 sec.}
-  \item All 3-labeling problem on directed (3, 2)-biregular trees where passive configurations are monochromatic are fetched in \emph{under 0.3 sec.}
+  \item All 2-labeling problems on undirected paths are fetched in \emph{under 0.2 sec.}
+  \item All 3-labeling problems on directed paths are fetched in \emph{under 7.7 sec.}
+  \item All 3-labeling problems on directed (3, 2)-biregular trees are fetched in \emph{under 20 sec.}
+  \item All 3-labeling problems on directed (3, 2)-biregular trees where passive configurations are monochromatic are fetched in \emph{under 0.3 sec.}
   \item Any 3-labeling problem on undirected (3, 2)-biregular trees where passive configurations are monochromatic are fetched in \emph{under 3.2 sec.}
   \item Any 3-labeling problem on undirected (3, 2)-biregular trees where active configurations are monochromatic are fetched in \emph{under 1.1 sec.}
 \end{itemize}
@@ -202,14 +202,14 @@ already used the tool, it is
 evident that the performance is fast enough for the
 tool to be useful for the kinds of tasks it is intended for.
 On the other hand, waiting for more than 20 seconds might prove
-to be impractical or at the very least inconvinient
-in many case. Therefore, improving the
+to be impractical or at the very least inconvenient.
+Therefore, improving the
 performance -- especially
 the performance of the querying functionality -- is
 a natural improvement direction that would most
 likely provide a lot of value for the users of the solution.
 
-\section{The number of preclassified problems}
+\section{The number of pre-classified problems}
 
 At the moment of writing the thesis, the database contains $335\,314$
 LCL problems. Out of them, $197\,218$ have at least one non-trivial bound. \emph{Trivial bound} here
@@ -219,7 +219,7 @@ The following families of LCL groups have been pre-generated and batch classifie
 using the batch classification functionality described in Chapter~\ref{chapter:implementation}:
 
 \begin{itemize}
-  \item binary labeling problems on both directed and undericted paths and cycles,
+  \item binary labeling problems on both directed and undirected paths and cycles,
   \item ternary labeling problems on both directed and undirected paths,
   \item 4-labeling problems on undirected paths,
   \item binary labeling problems on both rooted and unrooted (3, 2)-biregular trees,
@@ -232,15 +232,16 @@ using the batch classification functionality described in Chapter~\ref{chapter:i
 \end{itemize}
 Notice that in all of the problem families listed above, leaf and root nodes
 (or equivalently nodes of degree one on paths) are unconstrained. Moreover, in addition to the
-groups of preclassified problems, the database contains several individual problems that
+groups of pre-classified problems, the database contains several individual problems that
 were added as a result of the application being used by several
 members of the
 distributed algorithms research community.
 
-Thus, it is evident that the number of preclassified problems is already at this stage sufficient
+Thus, it is evident that the number of pre-classified problems is already at this stage sufficient
 for the tool to be useful to the research community.
 On the other hand, all of the problems currently stored in the database are such
-that the number of the allowed labels is limited to under 5 and degrees of the nodes
+that the number of the allowed labels is limited to under 5,
+and the degrees of the nodes
 are limited to under 4. This is a huge limitation, and it would be
 highly useful to investigate ways in which it can be mitigated.
 Therefore, populating the database
@@ -274,10 +275,10 @@ querying based on it would be yet another possibility to expand the tool.
 Similarly, it would be useful to query for problems based on their
 exact constant complexity (as opposed to asymptotics) if such
 information is available. Besides, displaying precise constant complexity
-would also be benefitial when classifying a single problem.
+would also be beneficial when classifying a single problem.
 Currently, precise constant complexity is sometimes available when
 classifying a problem with the Round Eliminator. Storing this
-information to the database, showing it to users and incorporating it
+information to the database, showing it to users, and incorporating it
 in the Query object would be another useful extension to the tool.
 
 Finally, the query functionality is still currently rather limited.
