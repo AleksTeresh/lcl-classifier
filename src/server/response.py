@@ -24,28 +24,28 @@ class Sources:
         self.det_upper_bound_source = det_upper_bound_source
         self.det_lower_bound_source = det_lower_bound_source
 
-    def get_r_u_b_source(self):
+    def get_rub_source(self):
         return (
             self.rand_upper_bound_source.short_name
             if self.rand_upper_bound_source is not None
             else None
         )
 
-    def get_r_l_b_source(self):
+    def get_rlb_source(self):
         return (
             self.rand_lower_bound_source.short_name
             if self.rand_lower_bound_source is not None
             else None
         )
 
-    def get_d_u_b_source(self):
+    def get_dub_source(self):
         return (
             self.det_upper_bound_source.short_name
             if self.det_upper_bound_source is not None
             else None
         )
 
-    def get_d_l_b_source(self):
+    def get_dlb_source(self):
         return (
             self.det_lower_bound_source.short_name
             if self.det_lower_bound_source is not None

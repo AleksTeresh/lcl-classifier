@@ -422,10 +422,10 @@ def update_classification(result: GenericResponse, problem_id: int) -> None:
                 result.det_lower_bound,
                 result.solvable_count,
                 result.unsolvable_count,
-                sources_map[result.papers.get_r_u_b_source()],
-                sources_map[result.papers.get_r_l_b_source()],
-                sources_map[result.papers.get_d_u_b_source()],
-                sources_map[result.papers.get_d_l_b_source()],
+                sources_map[result.papers.get_rub_source()],
+                sources_map[result.papers.get_rlb_source()],
+                sources_map[result.papers.get_dub_source()],
+                sources_map[result.papers.get_dlb_source()],
                 problem_id,
             ),
         )
@@ -446,32 +446,32 @@ def update_classifications(
         execute_values(
             cur,
             """
-        UPDATE problems SET 
-        rand_upper_bound = CAST (data.rand_upper_bound AS complexity),
-        rand_lower_bound = CAST (data.rand_lower_bound AS complexity),
-        det_upper_bound = CAST (data.det_upper_bound AS complexity),
-        det_lower_bound = CAST (data.det_lower_bound AS complexity),
-        solvable_count = data.solvable_count,
-        unsolvable_count = data.unsolvable_count,
+            UPDATE problems SET 
+            rand_upper_bound = CAST (data.rand_upper_bound AS complexity),
+            rand_lower_bound = CAST (data.rand_lower_bound AS complexity),
+            det_upper_bound = CAST (data.det_upper_bound AS complexity),
+            det_lower_bound = CAST (data.det_lower_bound AS complexity),
+            solvable_count = data.solvable_count,
+            unsolvable_count = data.unsolvable_count,
 
-        rand_upper_bound_source = data.rub_source,
-        rand_lower_bound_source = data.rlb_source,
-        det_upper_bound_source = data.dub_source,
-        det_lower_bound_source = data.dlb_source
-        FROM (VALUES %s) AS data (
-        id,
-        rand_upper_bound,
-        rand_lower_bound,
-        det_upper_bound,
-        det_lower_bound,
-        solvable_count,
-        unsolvable_count,
+            rand_upper_bound_source = data.rub_source,
+            rand_lower_bound_source = data.rlb_source,
+            det_upper_bound_source = data.dub_source,
+            det_lower_bound_source = data.dlb_source
+            FROM (VALUES %s) AS data (
+            id,
+            rand_upper_bound,
+            rand_lower_bound,
+            det_upper_bound,
+            det_lower_bound,
+            solvable_count,
+            unsolvable_count,
 
-        rub_source,
-        rlb_source,
-        dub_source,
-        dlb_source
-        ) WHERE problems.id = data.id;""",
+            rub_source,
+            rlb_source,
+            dub_source,
+            dlb_source
+            ) WHERE problems.id = data.id;""",
             [
                 (
                     p.problem.id,
@@ -481,10 +481,10 @@ def update_classifications(
                     p.det_lower_bound,
                     p.solvable_count,
                     p.unsolvable_count,
-                    sources_map[p.papers.get_r_u_b_source()],
-                    sources_map[p.papers.get_r_l_b_source()],
-                    sources_map[p.papers.get_d_u_b_source()],
-                    sources_map[p.papers.get_d_l_b_source()],
+                    sources_map[p.papers.get_rub_source()],
+                    sources_map[p.papers.get_rlb_source()],
+                    sources_map[p.papers.get_dub_source()],
+                    sources_map[p.papers.get_dlb_source()],
                 )
                 for p in results
             ],
@@ -598,7 +598,7 @@ def store_problems_and_get_with_ids(
                 problem_props.flags.is_regular,
             ),
         )
-        ids = execute_values(
+        idObjecets = execute_values(
             cur,
             """
             INSERT INTO problems (
@@ -647,7 +647,7 @@ def store_problems_and_get_with_ids(
         )
 
     for i, p in enumerate(problems):
-        p.id = ids[i]
+        p.id = idObjecets[i]["id"]
     return problems
 
 
