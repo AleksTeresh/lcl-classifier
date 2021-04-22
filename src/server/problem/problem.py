@@ -70,6 +70,19 @@ class ProblemProps:
         self.passives_all_same = passives_all_same
         self.flags = flags
 
+        if self.active_degree < self.passive_degree:
+            self.__swap_active_passive()
+
+    def __swap_active_passive(self):
+        self.active_degree, self.passive_degree = (
+            self.passive_degree,
+            self.active_degree,
+        )
+        self.actives_all_same, self.passives_all_same = (
+            self.passives_all_same,
+            self.actives_all_same,
+        )
+
 
 class GenericProblem:
     def __init__(
