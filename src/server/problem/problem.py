@@ -98,6 +98,11 @@ class GenericProblem:
         flags: BasicProblemFlags = BasicProblemFlags(),
         id=None,
     ):
+        self.active_constraints = tuple()
+        self.passive_constraints = tuple()
+        self.root_constraints = tuple()
+        self.leaf_constraints = tuple()
+
         self.__check_bad_constr_inputs(
             active_constraints, passive_constraints, active_allow_all, passive_allow_all
         )
@@ -448,7 +453,15 @@ class GenericProblem:
 
     def get_alphabet(self) -> List[str]:
         return list(
-            set(flatten(self.active_constraints + self.passive_constraints)) - {" "}
+            set(
+                flatten(
+                    self.active_constraints
+                    + self.passive_constraints
+                    + self.root_constraints
+                    + self.leaf_constraints
+                )
+            )
+            - {" "}
         )
 
     def get_active_degree(self) -> int:
