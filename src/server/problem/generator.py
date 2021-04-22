@@ -1,5 +1,5 @@
 import sys
-from typing import List, Tuple
+from typing import List, Sequence, Tuple
 from own_types import ConfigType
 from tqdm import tqdm
 from util import letter_range, powerset
@@ -8,15 +8,12 @@ from itertools import combinations_with_replacement, product
 
 
 def problem_from_constraints(
-    tulpes: List[Tuple[ConfigType, ConfigType]],
+    tulpes: Sequence[Tuple[ConfigType, ConfigType]],
     flags: ProblemFlags,
     count_limit: int,
     skip_count: int,
 ) -> List[P]:
-    problems = set()
-    start_idx = skip_count
-    end_idx = min(count_limit + skip_count, len(tulpes))
-    for i, (a, b) in enumerate(tqdm(tulpes[start_idx:end_idx])):
+    for i, (a, b) in enumerate(tqdm(tulpes)):
         try:
             p = P(
                 (
@@ -42,9 +39,7 @@ def problem_from_constraints(
             else:
                 raise e
 
-        problems.add(p)
-
-    return list(problems)
+        yield p
 
 
 def generate(
@@ -66,45 +61,40 @@ def generate(
         # we have additional product() call below.
         # e.g. degree = 3, labels = 2, gives us:
         # ['AAA', 'AAB', 'ABB', 'BAA', 'BAB', 'BBB']
-        actives = [
+        actives = (
             "".join(x)
             for x in combinations_with_replacement(alphabet, active_degree - 1)
-        ]
-        passives = [
+        )
+        passives = (
             "".join(x)
             for x in combinations_with_replacement(alphabet, passive_degree - 1)
-        ]
-        actives = ["".join(x) for x in product(alphabet, actives)]
-        passives = ["".join(x) for x in product(alphabet, passives)]
+        )
+        actives = ("".join(x) for x in product(alphabet, actives))
+        passives = ("".join(x) for x in product(alphabet, passives))
     else:
         # unrooted/undirected: order of configs does not matter
         # e.g. degree 3, labels = 2, gives us
         # ['AAA', 'AAB', 'ABB', 'BBB']
-        actives = [
+        actives = (
             "".join(x) for x in combinations_with_replacement(alphabet, active_degree)
-        ]
-        passives = [
+        )
+        passives = (
             "".join(x) for x in combinations_with_replacement(alphabet, passive_degree)
-        ]
+        )
 
     if actives_all_same:
-        actives = [x for x in actives if x[0] * len(x) == x]
+        actives = (x for x in actives if x[0] * len(x) == x)
     if passives_all_same:
-        passives = [x for x in passives if x[0] * len(x) == x]
+        passives = (x for x in passives if x[0] * len(x) == x)
 
-    active_constraints = [
-        tuple([" ".join(y) for y in x]) for x in tqdm(powerset(actives))
-    ]
-    passive_constraints = [
-        tuple([" ".join(y) for y in x]) for x in tqdm(powerset(passives))
-    ]
-    problem_tuples_set = set(
-        [
-            (a, b)
-            for a in tqdm(active_constraints)
-            for b in passive_constraints
-            if a and b
-        ]
+    active_constraints = (
+        tuple([" ".join(y) for y in x]) for x in tqdm(powerset(actives)) if x
     )
-    problem_tuples = list(problem_tuples_set)
+    passive_constraints = (
+        tuple([" ".join(y) for y in x]) for x in tqdm(powerset(passives)) if x
+    )
+
+    problem_tuples = (
+        (a, b) for (a, b) in product(active_constraints, passive_constraints)
+    )
     return problem_from_constraints(problem_tuples, flags, count_limit, skip_count)

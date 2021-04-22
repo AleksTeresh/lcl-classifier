@@ -2,7 +2,7 @@ import os
 import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
-from typing import List, Dict, Optional
+from typing import Iterator, List, Dict, Optional
 from psycopg2.extras import execute_values
 from problem import GenericProblem, ProblemProps
 from response import GenericResponse
@@ -561,45 +561,11 @@ def store_problem(p: GenericProblem) -> int:
         return res["id"]
 
 
-def store_problems_and_get_with_ids(
-    problems: List[GenericProblem], problem_props: ProblemProps
+def store_problem_and_get_id(
+    p: GenericProblem, problem_props: ProblemProps
 ) -> List[GenericProblem]:
     with get_db_cursor(commit=True) as cur:
         cur.execute(
-            """
-            DELETE FROM problems WHERE
-                active_degree = %s AND
-                passive_degree = %s AND
-                label_count = %s AND
-                (
-                actives_all_same = %s OR
-                actives_all_same = true
-                ) AND
-                (
-                passives_all_same = %s OR
-                passives_all_same = true 
-                ) AND
-                is_tree = %s AND
-                is_cycle = %s AND
-                is_path = %s AND
-                is_directed_or_rooted = %s AND
-                is_regular = %s;
-            """,
-            (
-                problem_props.active_degree,
-                problem_props.passive_degree,
-                problem_props.label_count,
-                problem_props.actives_all_same,
-                problem_props.passives_all_same,
-                problem_props.flags.is_tree,
-                problem_props.flags.is_cycle,
-                problem_props.flags.is_path,
-                problem_props.flags.is_directed_or_rooted,
-                problem_props.flags.is_regular,
-            ),
-        )
-        idObjecets = execute_values(
-            cur,
             """
             INSERT INTO problems (
             active_degree,
@@ -617,38 +583,42 @@ def store_problems_and_get_with_ids(
             is_path,
             is_directed_or_rooted,
             is_regular
-            ) VALUES %s RETURNING id;""",
-            [
+            ) VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s
+            ) ON CONFLICT DO NOTHING RETURNING id;""",
+            (
+                problem_props.active_degree,
+                problem_props.passive_degree,
+                len(p.get_alphabet()),
                 (
-                    problem_props.active_degree,
-                    problem_props.passive_degree,
-                    len(p.get_alphabet()),
-                    (
-                        problem_props.actives_all_same
-                        or each_constr_is_homogeneous(p.active_constraints)
-                    ),
-                    (
-                        problem_props.passives_all_same
-                        or each_constr_is_homogeneous(p.passive_constraints)
-                    ),
-                    list(p.active_constraints),
-                    list(p.passive_constraints),
-                    list(p.leaf_constraints),
-                    list(p.root_constraints),
-                    p.flags.is_tree,
-                    p.flags.is_cycle,
-                    p.flags.is_path,
-                    p.flags.is_directed_or_rooted,
-                    p.flags.is_regular,
-                )
-                for p in problems
-            ],
-            fetch=True,
+                    problem_props.actives_all_same
+                    or each_constr_is_homogeneous(p.active_constraints)
+                ),
+                (
+                    problem_props.passives_all_same
+                    or each_constr_is_homogeneous(p.passive_constraints)
+                ),
+                list(p.active_constraints),
+                list(p.passive_constraints),
+                list(p.leaf_constraints),
+                list(p.root_constraints),
+                p.flags.is_tree,
+                p.flags.is_cycle,
+                p.flags.is_path,
+                p.flags.is_directed_or_rooted,
+                p.flags.is_regular,
+            ),
         )
 
-    for i, p in enumerate(problems):
-        p.id = idObjecets[i]["id"]
-    return problems
+        res = cur.fetchone()
+        if res is None:
+            p.id = None
+        else:
+            p.id = res["id"]
+
+    return p
 
 
 def get_batch_classifications() -> List[Dict]:

@@ -19,10 +19,10 @@ def all_same_sizes(list: Sequence[Sequence]) -> bool:
     return are_all_the_same([len(x) for x in list])
 
 
-def powerset(iterable: Sequence) -> List[Tuple]:
+def powerset(iterable: Sequence) -> Sequence[Tuple]:
     "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
     s = list(iterable)
-    return list(chain.from_iterable(combinations(s, r) for r in range(len(s) + 1)))
+    return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
 
 
 def letter_range(count: int) -> List[str]:
