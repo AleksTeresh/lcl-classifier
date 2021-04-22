@@ -622,7 +622,7 @@ def store_problems_and_get_with_ids(
                 (
                     problem_props.active_degree,
                     problem_props.passive_degree,
-                    problem_props.label_count,
+                    len(p.get_alphabet()),
                     (
                         problem_props.actives_all_same
                         or each_constr_is_homogeneous(p.active_constraints)
