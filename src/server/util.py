@@ -1,4 +1,4 @@
-from typing import Sequence, List, Tuple
+from typing import Iterable, Iterator, Sequence, List, Tuple
 from itertools import chain, combinations
 from functools import reduce
 
@@ -19,7 +19,7 @@ def all_same_sizes(list: Sequence[Sequence]) -> bool:
     return are_all_the_same([len(x) for x in list])
 
 
-def powerset(iterable: Sequence) -> Sequence[Tuple]:
+def powerset(iterable: Iterable) -> Iterator[Tuple]:
     "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))

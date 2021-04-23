@@ -1,5 +1,5 @@
 import sys
-from typing import List, Sequence, Tuple
+from typing import Iterator, List, Tuple
 from own_types import ConfigType
 from tqdm import tqdm
 from util import letter_range, powerset
@@ -8,10 +8,8 @@ from itertools import combinations_with_replacement, product
 
 
 def problem_from_constraints(
-    tulpes: Sequence[Tuple[ConfigType, ConfigType]],
+    tulpes: Iterator[Tuple[ConfigType, ConfigType]],
     flags: ProblemFlags,
-    count_limit: int,
-    skip_count: int,
 ) -> List[P]:
     for i, (a, b) in enumerate(tqdm(tulpes)):
         try:
@@ -49,8 +47,8 @@ def generate(
     actives_all_same: bool,
     passives_all_same: bool,
     flags: ProblemFlags,
-    count_limit: int = sys.maxsize,
-    skip_count: int = 0,
+    count_limit: int = sys.maxsize,  # TODO: remove the param or use it
+    skip_count: int = 0,  # TODO: remove the param or use it
 ) -> List[P]:
     alphabet = letter_range(label_count)
     # take active_degree labels
@@ -97,4 +95,4 @@ def generate(
     problem_tuples = (
         (a, b) for (a, b) in product(active_constraints, passive_constraints)
     )
-    return problem_from_constraints(problem_tuples, flags, count_limit, skip_count)
+    return problem_from_constraints(problem_tuples, flags)
