@@ -1,8 +1,7 @@
 import os
 import psycopg2
-from psycopg2 import pool
 from contextlib import contextmanager
-from typing import Iterator, List, Dict, Optional
+from typing import List, Dict, Optional
 from psycopg2.extras import execute_values
 from problem import GenericProblem, ProblemProps
 from response import GenericResponse
