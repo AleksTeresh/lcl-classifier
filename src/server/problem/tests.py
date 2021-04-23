@@ -1,4 +1,4 @@
-from typing import List
+from typing import Iterator, List
 import unittest
 import pickle
 from .problem import ProblemFlags, GenericProblem
@@ -36,13 +36,14 @@ class TestGenerator(unittest.TestCase):
             )
             self.assertEqual(r.flags.is_regular, s.flags.is_regular)
 
-    def __runTest(self, filePath: str, ps: List[GenericProblem]) -> None:
+    def __runTest(self, filePath: str, ps: Iterator[GenericProblem]) -> None:
         overwrite = OVERWRITE
+        unique_problems = list(set(ps))
         if overwrite:
-            saveToFile(filePath, ps)
+            saveToFile(filePath, unique_problems)
         else:
             saved = loadFromFile(filePath)
-            self.__check_equality(ps, saved)
+            self.__check_equality(unique_problems, saved)
 
     def test_generate1(self):
         active_degree = 3

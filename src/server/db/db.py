@@ -19,7 +19,7 @@ def get_connection_pool():
     # see e.g. https://vbsreddy1.medium.com/unboundlocalerror-when-the-variable-has-a-value-in-python-e34e097547d6
     global _connection_pool
     if _connection_pool is None:
-        _connection_pool = psycopg2.pool.SimpleConnectionPool(
+        _connection_pool = pool.SimpleConnectionPool(
             1,
             20,
             host=(
@@ -390,8 +390,8 @@ def get_batchless_problem_objs() -> List[ClassifiedProblem]:
 def store_problem_and_classification(
     problem: GenericProblem, response: GenericResponse
 ) -> None:
-    problem_id = store_problem(problem)
-    update_classification(response, problem_id)
+    problem_with_id = store_problem_and_get_with_id(problem)
+    update_classification(response, problem_with_id.id)
 
 
 def update_classification(result: GenericResponse, problem_id: int) -> None:
@@ -509,97 +509,25 @@ def update_classifications(
             )
 
 
-def store_problem(p: GenericProblem) -> int:
-    r = get_problem(p)
-
+def store_problem_and_get_with_id(p: GenericProblem) -> GenericProblem:
     with get_db_cursor(commit=True) as cur:
-        if r is not None:
-            cur.execute("DELETE FROM problems WHERE id = %s", [r["id"]])
-
-        cur.execute(
-            """
-        INSERT INTO problems (
-        active_degree,
-        passive_degree,
-        label_count,
-        actives_all_same,
-        passives_all_same,
-
-        active_constraints,
-        passive_constraints,
-        root_constraints,
-        leaf_constraints,
-        is_tree,
-        is_cycle,
-        is_path,
-        is_directed_or_rooted,
-        is_regular
-        ) VALUES (
-        %s, %s, %s, %s, %s,
-        %s, %s, %s, %s, %s,
-        %s, %s, %s, %s
-        ) RETURNING id;""",
-            (
-                p.get_active_degree(),
-                p.get_passive_degree(),
-                len(p.get_alphabet()),
-                each_constr_is_homogeneous(p.active_constraints),
-                each_constr_is_homogeneous(p.passive_constraints),
-                list(p.active_constraints),
-                list(p.passive_constraints),
-                list(p.leaf_constraints),
-                list(p.root_constraints),
-                p.flags.is_tree,
-                p.flags.is_cycle,
-                p.flags.is_path,
-                p.flags.is_directed_or_rooted,
-                p.flags.is_regular,
-            ),
+        problem_data = (
+            p.get_active_degree(),
+            p.get_passive_degree(),
+            len(p.get_alphabet()),
+            each_constr_is_homogeneous(p.active_constraints),
+            each_constr_is_homogeneous(p.passive_constraints),
+            list(p.active_constraints),
+            list(p.passive_constraints),
+            list(p.leaf_constraints),
+            list(p.root_constraints),
+            p.flags.is_tree,
+            p.flags.is_cycle,
+            p.flags.is_path,
+            p.flags.is_directed_or_rooted,
+            p.flags.is_regular,
         )
-
-        res = cur.fetchone()
-        return res["id"]
-
-
-def store_problems_and_get_with_ids(
-    problems: List[GenericProblem], problem_props: ProblemProps
-) -> List[GenericProblem]:
-    with get_db_cursor(commit=True) as cur:
         cur.execute(
-            """
-            DELETE FROM problems WHERE
-                active_degree = %s AND
-                passive_degree = %s AND
-                label_count = %s AND
-                (
-                actives_all_same = %s OR
-                actives_all_same = true
-                ) AND
-                (
-                passives_all_same = %s OR
-                passives_all_same = true 
-                ) AND
-                is_tree = %s AND
-                is_cycle = %s AND
-                is_path = %s AND
-                is_directed_or_rooted = %s AND
-                is_regular = %s;
-            """,
-            (
-                problem_props.active_degree,
-                problem_props.passive_degree,
-                problem_props.label_count,
-                problem_props.actives_all_same,
-                problem_props.passives_all_same,
-                problem_props.flags.is_tree,
-                problem_props.flags.is_cycle,
-                problem_props.flags.is_path,
-                problem_props.flags.is_directed_or_rooted,
-                problem_props.flags.is_regular,
-            ),
-        )
-        idObjecets = execute_values(
-            cur,
             """
             INSERT INTO problems (
             active_degree,
@@ -617,38 +545,43 @@ def store_problems_and_get_with_ids(
             is_path,
             is_directed_or_rooted,
             is_regular
-            ) VALUES %s RETURNING id;""",
-            [
-                (
-                    problem_props.active_degree,
-                    problem_props.passive_degree,
-                    len(p.get_alphabet()),
-                    (
-                        problem_props.actives_all_same
-                        or each_constr_is_homogeneous(p.active_constraints)
-                    ),
-                    (
-                        problem_props.passives_all_same
-                        or each_constr_is_homogeneous(p.passive_constraints)
-                    ),
-                    list(p.active_constraints),
-                    list(p.passive_constraints),
-                    list(p.leaf_constraints),
-                    list(p.root_constraints),
-                    p.flags.is_tree,
-                    p.flags.is_cycle,
-                    p.flags.is_path,
-                    p.flags.is_directed_or_rooted,
-                    p.flags.is_regular,
-                )
-                for p in problems
-            ],
-            fetch=True,
+            ) VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s
+            ) ON CONFLICT DO NOTHING RETURNING id;""",
+            problem_data,
         )
 
-    for i, p in enumerate(problems):
-        p.id = idObjecets[i]["id"]
-    return problems
+        res = cur.fetchone()
+        if res is None:
+            cur.execute(
+                """
+                SELECT id FROM problems
+                WHERE
+                    active_degree = %s AND
+                    passive_degree = %s AND
+                    label_count = %s AND
+                    actives_all_same = %s AND
+                    passives_all_same = %s AND
+
+                    active_constraints = %s AND
+                    passive_constraints = %s AND
+                    root_constraints = %s AND
+                    leaf_constraints = %s AND
+                    is_tree = %s AND
+                    is_cycle = %s AND
+                    is_path = %s AND
+                    is_directed_or_rooted = %s AND
+                    is_regular = %s;
+            """,
+                problem_data,
+            )
+            res = cur.fetchone()
+
+        p.id = res["id"]
+
+    return p
 
 
 def get_batch_classifications() -> List[Dict]:

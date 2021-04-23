@@ -1,6 +1,6 @@
 import unittest
 import pickle
-from typing import List
+from typing import Iterator, List
 from .batch_classify import batch_classify
 from .classifier import classify
 from complexity import CONST, ITERATED_LOG, LOG, UNSOLVABLE, LOGLOG
@@ -31,8 +31,8 @@ class TestBatchClassifier(unittest.TestCase):
             self.assertEqual(r.det_lower_bound, s.det_lower_bound)
             self.assertEqual(r.det_upper_bound, s.det_upper_bound)
 
-    def __runTest(self, filePath: str, ps: List[GenericProblem]) -> None:
-        results = batch_classify(ps)
+    def __runTest(self, filePath: str, ps: Iterator[GenericProblem]) -> None:
+        results = batch_classify(list(set(ps)))
         overwrite = OVERWRITE
         if overwrite:
             saveToFile(filePath, results)

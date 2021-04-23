@@ -6,7 +6,7 @@ from classify import classify_and_store
 from problem import generate
 from statistics import compute as compute_stats, pretty_print
 from query import Query
-from db import store_problems_and_get_with_ids
+from db import store_problem_and_get_with_id
 from db import get_classified_problem_objs
 from db import get_batchless_problem_objs
 
@@ -79,6 +79,9 @@ def generate_problem_class(
     count_limit: Optional[int] = None,
     skip_count: Optional[int] = None,
 ):
+    print("Press Enter to generate next class of problems...")
+    input()
+
     print("Generating the following:")
     print("  active_degree = %s," % active_degree)
     print("  passive_degree = %s," % passive_degree)
@@ -114,9 +117,11 @@ def generate_problem_class(
         skip_count=(0 if skip_count is None else skip_count),
     )
 
-    ps_with_ids = store_problems_and_get_with_ids(ps, props)
+    problems_with_id = (store_problem_and_get_with_id(p) for p in ps)
+
     classify_and_store(
-        ps_with_ids,
+        # TODO: replace the classification part with generators-based pipeline too
+        list(problems_with_id),
         props=props,
         count_limit=count_limit if count_limit is None else len(ps),
         skip_count=skip_count,
@@ -241,7 +246,7 @@ generate_problem_class(
     skip_count=0,
 )
 
-## Example for reclassifying a class of problems
+# Example for reclassifying a class of problems
 # reclassify_problem_class(
 #     active_degree=2,
 #     passive_degree=2,
