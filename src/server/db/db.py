@@ -1,5 +1,6 @@
 import os
 import psycopg2
+from psycopg2 import pool
 from contextlib import contextmanager
 from typing import List, Dict, Optional
 from psycopg2.extras import execute_values
@@ -18,7 +19,7 @@ def get_connection_pool():
     # see e.g. https://vbsreddy1.medium.com/unboundlocalerror-when-the-variable-has-a-value-in-python-e34e097547d6
     global _connection_pool
     if _connection_pool is None:
-        _connection_pool = psycopg2.pool.SimpleConnectionPool(
+        _connection_pool = pool.SimpleConnectionPool(
             1,
             20,
             host=(
