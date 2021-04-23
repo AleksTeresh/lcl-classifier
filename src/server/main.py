@@ -6,7 +6,7 @@ from classify import classify_and_store
 from problem import generate
 from statistics import compute as compute_stats, pretty_print
 from query import Query
-from db import store_problem_and_get_id
+from db import store_problem_and_get_with_id
 from db import get_classified_problem_objs
 from db import get_batchless_problem_objs
 
@@ -116,13 +116,12 @@ def generate_problem_class(
         count_limit=(sys.maxsize if count_limit is None else count_limit),
         skip_count=(0 if skip_count is None else skip_count),
     )
-    # print(len(list(ps)))
-    stored_problems = (store_problem_and_get_id(p, props) for p in ps)
-    problems_with_ids = (p for p in stored_problems if p.id is not None)
+
+    problems_with_id = (store_problem_and_get_with_id(p) for p in ps)
 
     classify_and_store(
         # TODO: replace the classification part with generators-based pipeline too
-        list(problems_with_ids),
+        list(problems_with_id),
         props=props,
         count_limit=count_limit if count_limit is None else len(ps),
         skip_count=skip_count,
