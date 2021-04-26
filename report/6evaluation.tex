@@ -11,10 +11,93 @@ can be improved and extended.
 
 \section{Decidability of a wide range of problem families on trees}
 
+
+\begin{table}
+  \centering
+  \newcommand{\mysp}{0.1mm}
+  \newcommand{\mys}{0.1mm}
+  \newcommand{\myss}{0.1mm}
+  \newcommand{\mysl}{0.1mm}
+  \newcommand{\hsp}{\hspace{\mysp}}
+  \newcommand{\hs}{\hspace{\mys}}
+  \newcommand{\hsl}{\hspace{\mysl}}
+  \newcommand{\plog}{\log^\alpha}
+  \newcommand{\yy}{$\checkmark$}
+  \newcommand{\kludge}{\\[-0.02mm]}
+  \newcommand{\hl}[1]{\multicolumn{1}{@{}T@{}}{#1}}
+  \begin{adjustbox}{center}
+  \begin{tabular}{@{}ll@{\hsp}c@{\hs}c@{\hs}c@{\hs}c@{\hsp}c@{\hs}c@{\hs}c@{\hs}c@{\hs}c@{\hsp}}
+  \toprule
+  \textbf{Setting}
+  &
+  & \multicolumn{4}{@{}l@{}}{\emph{Paths and cycles}}
+  & \multicolumn{5}{@{}l@{}}{\emph{Trees}} \\
+  \cmidrule(r{\mysp}){3-6}\cmidrule(r{\mysp}){7-11}
+  & unlabeled input           & \yy & \yy & \yy &     & \yy & \yy &    \yy & \yy &  \kludge
+  & regular                   & \yy & \yy &     &     & \yy & \yy &    \yy & \yy &  \kludge
+  & directed or rooted        & \yy & \yy &     &     &     &     &    \yy &     &  \kludge
+  & binary output             & \yy &     &     &     &     & \yy &        &     &  \\
+  & homogeneous~\cite{BalliuHomogeneous}               &     &     &     &     & \yy &     &        &     &  \kludge
+  \midrule
+  \textbf{Complexity}
+  & $O(1)$                    & D+R & D+R & D+R & D+R & D+R & D+R &    D+R & D+R & D+R \kludge
+  \textbf{classes}
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log \log^* n)$   & --- & --- & --- & --- & --- & --- &    --- & ?   & ?   \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & ?   & ?   \kludge
+  & $\Theta(\log^* n)$        & --- & D+R & D+R & D+R & D+R & --- &    D+R & D+R & D+R \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log \log n)$     & --- & --- & --- & --- & R   & R   &    --- & R   & R   \kludge
+  & $\Theta(\plog \log n)$    & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(\log n)$          & --- & --- & --- & --- & D+R & D+R &    D+R & D+R & D+R \kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(n^{1/k})$         & --- & --- & --- & --- & --- & --- &    --- & ?   &($n$)\kludge
+  & $\cdots$                  & --- & --- & --- & --- & --- & --- &    --- & --- & --- \kludge
+  & $\Theta(n)$               & D+R & D+R & D+R & D+R & --- & D+R &    D+R & D+R & D+R \\
+  \midrule
+  \textbf{Decidability}
+  & P                         & \yy & \yy & \yy & --- & ?   & (D) &    ?   & ?   & --- \kludge
+  & PSPACE                    & \yy & \yy & \yy & ?   & ?   & (D) &    ?   & ?   & --- \kludge
+  & EXPTIME                   & \yy & \yy & \yy & ?   & ?   & (D) &    \yy & ?   & ?   \kludge
+  & decidable                 & \yy & \yy & \yy & \yy & ?   & (D) &    \yy & (H) & (H) \\
+  \midrule
+  \textbf{References} &
+  & \cite{Naor1993, Brandt2017, Balliu2019c}
+  & \cite{Naor1993, Brandt2017}
+  & \cite{Chang2020}
+  & \cite{Balliu2018}
+  & \cite{BalliuHomogeneous}
+  & \cite{Balliu2019c}
+  & \cite{Balliu2021}
+  & \cite{Chang2020a, Chang2017}
+  & \cite{Chang2020a, Chang2017}
+  \kludge
+  & & & & & & & & & &
+  \\
+  \midrule
+  \textbf{Legend}
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ \yy = yes,\hsl ? = unknown,\hsl --- = not possible,\hsl $\alpha > 1$,\hsl $k = 2, 3, \dotsc$.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ D = class exists for deterministic algorithms,\hsl R = class exists for randomized algorithms.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ ($n$) = the current construction assumes the knowledge of $n$; unknown without this information.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ (D) = known only for deterministic complexities, unknown for randomized.} \\
+  & \multicolumn{10}{@{}l@{}}{$\cdot$ (H) = known only for classes between $\Omega(\log n)$ and $O(n)$.} \\
+  \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+  \caption{An overview of the decidability of $\LCL$ problems on paths, cycles, and trees\textsuperscript{1}. The decidability is given assuming P $\ne$ PSPACE $\ne$ EXPTIME. Apart from the references given in the table for each of the columns,
+  the works that contributed to the discovery of the presented knowledge include~\cite{Cole1986, Linial1992, Naor1991, Chang2016, BFHKLRSU16, Balliu2020-1, Balliu2016, Balliu2020-2}}
+  \small{\textsuperscript{1} The table was copied from the manuscript
+    by Balliu et al.~\cite{Balliu2021} with
+    minor modifications with the permission of the authors.
+  }
+  \label{table:summary}
+\end{table}
+
 The first goal among the research goals listed in Chapter~\ref{chapter:methods}
 was to store (or to be able to compute dynamically) most
 (if not all) of the existing knowledge on the classification of LCL problems on trees.
-To evaluate how well I have done, we can refer once again to Table~\ref{table:summary}.
+To evaluate how well I have done, we can refer to Table~\ref{table:summary}.
 The first three columns under the ``Paths and cycles'' grouping refer to LCL problems on
 paths and cycles where input is not allowed. The graphs can be directed or undirected,
 have an arbitrary (but finite) number of labels in the output, and have restrictions
