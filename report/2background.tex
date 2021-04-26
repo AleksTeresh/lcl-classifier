@@ -520,6 +520,8 @@ LCL problem because it is sufficient and necessary for each node to check
 its radius-1 neighborhood. If each node's radius-1 neighborhood is
 a valid one i.e.\ none of the neighbors of node $v$ have the same color as $v$
 itself, then and only then the output is a valid vertex coloring.
+An example of a solved instance of the vertex coloring problem
+is presented in Figure~\ref{fig:vertex-coloring}.
 
 Another well-known and widely studied problem on graphs is
 \textbf{edge coloring}. Informally, each edge needs to be
@@ -542,6 +544,8 @@ Here $e = \{v, u\}$. In other words, because each edge's coloring depends on the
 output of two nodes, such coloring has to be consistent for each edge i.e.\ the produced
 colors need to be the same on both ends of each edge.
 \end{enumerate}
+An example of a solved instance of the edge coloring problem
+is presented in Figure~\ref{fig:edge-coloring}.
 
 An \textbf{independent set} is a set $I$ of vertices in a graph $G = (V, E)$ such that
 $I \subseteq V$. The only condition, however, is that no pair of vertices in the set $I$
@@ -553,6 +557,8 @@ In other words, in a \textbf{maximal independent set} all nodes either belong
 to the set $I$ or they \emph{cannot} join it because one of their neighbors has
 already joined. It is trivial to see that the problem is an LCL as checking local
 neighborhoods will suffice to determine if the solution is valid or not.
+For an example of a solved instance of the maximal
+independent set problem, see Figure~\ref{fig:maximal-independent-set}.
 
 \begin{figure}
   \centering
@@ -597,6 +603,8 @@ since each node can check its radius-1 neighborhood to check whether it
 is matched with a neighbor or all neighbors are matched with someone else.
 And if the condition of the previous sentence is not satisfied, the output
 is invalid.
+Refer to Figure~\ref{fig:maximal-matching}, for a
+solved instance of the maximal matching problem.
 
 \section{Decidability and undecidability}
 
@@ -731,6 +739,8 @@ on the idea of automated classification of LCL problems. That is,
 the question of interest is whether we can create meta-algorithms
 that would take the description of an LCL problem as its input
 and produce the problem's round complexity as an output.
+Figure~\ref{fig:meta-algorithm} conceptually depicts
+an example of a meta-algorithm.
 This being the core topic of the thesis, it is thus important
 to describe all the prior work done in this direction.
 In the rest of the
