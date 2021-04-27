@@ -30,9 +30,10 @@
   "scripts": {
     "prepare": "cd ../.. && husky install src/client/.husky",
     "build": "cross-env NODE_ENV=production webpack",
-    "svelte-check": "svelte-check --watch",
+    "svelte-check": "svelte-check",
+    "svelte-check-watch": "svelte-check --watch",
     "serve": "webpack serve --content-base public",
-    "dev": "npm-run-all --parallel svelte-check serve",
+    "dev": "npm-run-all --parallel svelte-check-watch serve",
     "pretify": "prettier --write ./**/*.svelte .",
     "eslint": "eslint . --ext .ts,.svelte",
     "lint-staged": "lint-staged"
@@ -48,6 +49,7 @@
   "lint-staged": {
     "*.{ts,js,scss,svelte}": [
       "npm run pretify",
+      "npm run svelte-check",
       "npm run eslint --fix"
     ]
   }
