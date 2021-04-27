@@ -47,7 +47,8 @@
   },
   "lint-staged": {
     "*.{ts,js,scss,svelte}": [
-      "npm run pretify"
+      "npm run pretify",
+      "npm run eslint --fix"
     ]
   }
 }
