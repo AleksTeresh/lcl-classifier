@@ -1,7 +1,9 @@
 #!/bin/sh
 
 cd ./src/client
-npm run lint-staged
+if ! npm run lint-staged; then
+  exit 1
+fi
 cd ../server
 /usr/bin/env -S poetry run black .
 cd ../.. # we need to be in the root of our git repo for the next line to work
