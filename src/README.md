@@ -103,8 +103,56 @@ and then `black`, `pyflakes` for the server.
 ## Deployment
 
 The app is available at [lcl-classifier.cs.aalto.fi](https://lcl-classifier.cs.aalto.fi)
-### Creating an instance
 
+### Setting up an instance and volume in CSC
+
+1. A production floating IP address (195.148.21.214) should
+be already reserved. If not, or a new one is needed: go to
+`Network / Floating IPs` and then do `Allocate IP`.
+
+2. Create a security group that allows access from your home's IP address to the DB instance. `Network / Security groups`, then do `Create security group`, give name e.g. "From \<Your name\>'s home to 5432", set it up so that incoming TCP connections to port **5432** from **your home's IP address** (e.g. get [here](https://www.google.com/search?q=what%27s+my+IP)) are allowed.
+
+3. `Compute / Key pairs`, then `Import Public Key`, put your SSH public key there, give descriptive name e.g. "\<Your name\> SSH key".
+
+4. `Compute / Instances`, then `Launch instance`, pick e.g. `standard.tiny` flavor, boot source e.g. `Boot from image / Ubuntu-20.04`. In the `Access & security` page pick the right key pair and the following security groups:
+      1. one that allows TCP from everywhere to port 22 (currently called `ssh open`)
+      2. one that allows TCP from everywhere to port 80 (currrently called `From everywhere to port 80`)
+      3. one that allows TCP from everywhere to port 443 (currrently called `From everywhere to port 443`)
+      4. the ones that allow access from certain IP addresses to
+       port 5432 (database). (currently e.g. `From Alex's home to 5432` and `From Jan's home to 5432`)
+
+5. Other defaults are fine. Press `Launch`.
+
+6. Once it's listed in the list of instances, you should see that in the dropdown menu you can do something like `associate floating IP`, do that so that there is also a public IP address with which you can connect to the virtual machine.
+
+7. Once the instance is up and running try to SSH into it via
+    `ssh ubuntu@<whatever-is-the-ip-address>`
+
+8. `Volumes / Volumes`. A volume called "Storage 50G" should
+   already be created. If not, create a new one. Make sure that
+   the volume is attached to the instance (Dropdown / `Manage attachments`). Make sure only one volume is attached to the
+   instance.
+
+### Povisioning the instance
+
+You'll need `ansible` as a dependency. You can install it with
+e.g. `brew install ansible`.
+
+Then, run the following command:
+```
+ansible-playbook -i ./devops/ansible/hosts.ini ./devops/ansible/provision.yml
+```
+
+### Deploying the app
+
+Now you can actually deploy the app.
+
+```
+./deploy
+```
+
+The script will also create a backup and save it locally in
+the backup folder.
 
 ## Generating problems on the remote server
 
@@ -117,13 +165,6 @@ POSTGRES_HOST=195.148.21.214 POSTGRES_PASSWORD='<DB password>' python ./main.py
 ```
 psql "host=195.148.21.214 port=5432 dbname=postgres user=postgres" -f ./backup/<date>.sql
 ```
-
-## To provision
-
-```
-ansible-playbook -i ./devops/ansible/hosts.ini ./devops/ansible/provision.yml
-```
-
 
 ## Acknowledgements
 
