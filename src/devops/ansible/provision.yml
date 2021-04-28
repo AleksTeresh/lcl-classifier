@@ -106,7 +106,12 @@
       owner: "{{ linux_user }}"
       recurse: yes
 
+  - name: Start-up all containers
+    shell: "docker-compose up -d --build"
+    args:
+      chdir: "{{ volume_dir }}/src"
+
   - name: Create SSL Certificate
-    shell: "yes 'n' | ./init-letsencrypt.sh"
+    shell: "yes | ./init-letsencrypt.sh"
     args:
       chdir: "{{ volume_dir }}/src"
