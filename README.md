@@ -78,3 +78,7 @@ to exclude some problems if they contain some/all of the specified
 configurations. Alternatively, one can ask to include **only** those
 problems that contain some/all of the specified
 configurations.
+
+## Acknowledgements
+
+The authors wish to acknowledge [CSC – IT Center for Science, Finland](https://www.csc.fi/en), for computational resources.

@@ -4,10 +4,20 @@
 
 ### Requirements
 
-- Docker
-- docker-compose
+For provisioning and deployment, one needs
 - Ansible
 - psql
+
+For running locally, one needs
+- Docker
+- docker-compose
+
+For developing locally, one needs
+- Docker
+- docker-compose
+- npm
+- Python (at least version 3.8.3)
+- Python Poetry
 
 ### Environment variables
 
@@ -35,6 +45,16 @@ once)
 ```
 docker-compose up --build
 ```
+
+Go to localhost:80 (or localhost:443).
+
+If using Google Chrome, one might be prevented
+from navigating to localhost:80 due to
+Chrome showing a certificate warning and not allowing
+to bypass it. If presented with such a warning with no visble
+options to ignore it, type `thisisunsafe` on your keyboard.
+Yes, just type it when presented with the warning screen,
+and Chrome should let you in. See e.g. [https://dev.to/brettimus/this-is-unsafe-and-a-bad-idea-5ej4](https://dev.to/brettimus/this-is-unsafe-and-a-bad-idea-5ej4)
 
 ### Developing locally
 
@@ -129,7 +149,7 @@ be already reserved. If not, or a new one is needed: go to
     `ssh ubuntu@<whatever-is-the-ip-address>`
 
 8. `Volumes / Volumes`. A volume called "Storage 50G" should
-   already be created. If not, create a new one. Make sure that
+   already be created. If not, create a new one (see instructions [here](https://docs.csc.fi/cloud/pouta/persistent-volumes/)). Make sure that
    the volume is attached to the instance (Dropdown / `Manage attachments`). Make sure only one volume is attached to the
    instance.
 
@@ -138,10 +158,24 @@ be already reserved. If not, or a new one is needed: go to
 You'll need `ansible` as a dependency. You can install it with
 e.g. `brew install ansible`.
 
+Check that `./devops/ansible/hosts.ini` contains the correct IP
+address (the IP address of the machine that needs to be provisioned).
+
+Install necessary Ansible collections:
+
+```
+ansible-galaxy collection install ansible.posix
+```
+
 Then, run the following command:
 ```
 ansible-playbook -i ./devops/ansible/hosts.ini ./devops/ansible/provision.yml
 ```
+
+Note: If the last "Create SSL Certificate" step takes "forever" (more than 10 min, let's say), do it
+manually: ssh into the host, navigate to the correct directory,
+and issue the same command as specified in the Ansible's
+yaml file under "Create SSL Certificate".
 
 ### Deploying the app
 
@@ -151,10 +185,23 @@ Now you can actually deploy the app.
 ./deploy
 ```
 
+If asked for a password, input `<DB_PASSWORD>`
+
 The script will also create a backup and save it locally in
 the backup folder.
 
+## Running tests
+
+```
+cd ./server
+python -m unittest discover
+```
+
 ## Generating problems on the remote server
+
+`server/main.py` specifies what families should be
+generated. Feel free to comment existing statements or
+add new ones as needed.
 
 ```
 POSTGRES_HOST=195.148.21.214 POSTGRES_PASSWORD='<DB password>' python ./main.py
