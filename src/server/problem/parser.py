@@ -4,7 +4,7 @@ from util import flat_map, flatten
 
 
 def split_config(config: str) -> List[str]:
-    res = flatten([x.split(" ") for x in config.split(" : ")])
+    res = flatten([x.strip().split(" ") for x in config.split(":")])
     return [x for x in res if x.strip() != ""]
 
 
