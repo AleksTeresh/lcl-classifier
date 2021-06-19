@@ -124,7 +124,7 @@ B C C`,
       </p>
       <p>
         For more instructions and source code see <a
-          href="https://github.com/AleksTeresh/master-thesis"
+          href="https://github.com/AleksTeresh/lcl-classifier"
           target="_blank">this repo on GitHub</a
         >
       </p>

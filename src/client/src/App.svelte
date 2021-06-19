@@ -13,7 +13,7 @@
     </div>
   </div>
   <footer>
-    <a href="https://github.com/AleksTeresh/master-thesis" target="_blank"
+    <a href="https://github.com/AleksTeresh/lcl-classifier" target="_blank"
       >GitHub repo</a
     >
     <a href="https://research.cs.aalto.fi/da/" target="_blank"
