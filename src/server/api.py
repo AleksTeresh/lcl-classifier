@@ -68,13 +68,13 @@ def problem(args):
     #     )
     # else:
     res = classify(p)
-        # if not (
-        #     res.det_lower_bound == CONST
-        #     and res.det_upper_bound == UNSOLVABLE
-        #     and res.rand_lower_bound == CONST
-        #     and res.rand_upper_bound == UNSOLVABLE
-        # ):
-        #     store_problem_and_classification(p, res)
+    # if not (
+    #     res.det_lower_bound == CONST
+    #     and res.det_upper_bound == UNSOLVABLE
+    #     and res.rand_lower_bound == CONST
+    #     and res.rand_upper_bound == UNSOLVABLE
+    # ):
+    #     store_problem_and_classification(p, res)
     return jsonify({"problem": p.dict(), "result": res.dict()})
 
 
