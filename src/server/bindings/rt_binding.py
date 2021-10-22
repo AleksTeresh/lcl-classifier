@@ -7,8 +7,8 @@ from problem import GenericProblem
 from problem import each_constr_is_homogeneous
 from response import GenericResponse
 from .classify_context import ClassifyContext
-from complexity import CONST, ITERATED_LOG
-from complexity import LOG, GLOBAL, UNSOLVABLE
+from complexity import CONST, ITERATED_LOG, POLY
+from complexity import LOG, UNSOLVABLE
 from .common import move_root_label_to_center
 
 
@@ -62,8 +62,8 @@ def classify(p: GenericProblem, context: ClassifyContext) -> GenericResponse:
             rand_upper_bound = LOG
             rand_lower_bound = LOG  # because LOGLOG does not exist in the setting
     else:
-        det_lower_bound = GLOBAL
-        rand_lower_bound = GLOBAL
+        det_lower_bound = POLY
+        rand_lower_bound = POLY
 
     return GenericResponse(
         p, rand_upper_bound, rand_lower_bound, det_upper_bound, det_lower_bound

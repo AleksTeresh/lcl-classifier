@@ -58,24 +58,24 @@ def problem(args):
         ),
     )
 
-    classified_problem = get_classified_problem_obj(p)
-    if classified_problem is not None:
-        return jsonify(
-            {
-                "problem": classified_problem.to_problem().dict(),
-                "result": classified_problem.to_response().dict(),
-            }
-        )
-    else:
-        res = classify(p)
-        if not (
-            res.det_lower_bound == CONST
-            and res.det_upper_bound == UNSOLVABLE
-            and res.rand_lower_bound == CONST
-            and res.rand_upper_bound == UNSOLVABLE
-        ):
-            store_problem_and_classification(p, res)
-        return jsonify({"problem": p.dict(), "result": res.dict()})
+    # classified_problem = get_classified_problem_obj(p)
+    # if classified_problem is not None:
+    #     return jsonify(
+    #         {
+    #             "problem": classified_problem.to_problem().dict(),
+    #             "result": classified_problem.to_response().dict(),
+    #         }
+    #     )
+    # else:
+    res = classify(p)
+        # if not (
+        #     res.det_lower_bound == CONST
+        #     and res.det_upper_bound == UNSOLVABLE
+        #     and res.rand_lower_bound == CONST
+        #     and res.rand_upper_bound == UNSOLVABLE
+        # ):
+        #     store_problem_and_classification(p, res)
+    return jsonify({"problem": p.dict(), "result": res.dict()})
 
 
 query_args = {

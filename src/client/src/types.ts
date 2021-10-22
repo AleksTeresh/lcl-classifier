@@ -6,6 +6,7 @@ export enum Complexity {
   IteratedLog = '(log* n)',
   LogLog = '(loglog n)',
   Log = '(log n)',
+  Poly = '(n^(1/k))',
   Global = '(n)',
   Unsolvable = 'unsolvable',
 }

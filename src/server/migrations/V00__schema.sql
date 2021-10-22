@@ -3,6 +3,7 @@ CREATE TYPE complexity AS ENUM (
   '(log* n)',
   '(loglog n)',
   '(log n)',
+  -- '(n^(1/k))',
   '(n)',
   'unsolvable'
 );
@@ -32,3 +33,6 @@ CREATE TABLE problems (
   solvable_count TEXT,
   unsolvable_count TEXT
 );
+
+
+-- select count(*) from problems where (det_lower_bound_source = 3 OR rand_lower_bound_source = 3) AND (det_lower_bound = '(n)' OR rand_lower_bound = '(n)');
